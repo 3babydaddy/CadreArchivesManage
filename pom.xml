@@ -5,10 +5,10 @@
 
     <groupId>com.tftech</groupId>
     <version>1.0.0</version>
-    <artifactId>platform</artifactId>
+    <artifactId>CadreArchivesManage</artifactId>
     <packaging>war</packaging>
 
-    <name>platform</name>
+    <name>CadreArchivesManage</name>
 
     <repositories>
 		<repository>
