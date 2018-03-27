@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2018-03-22 17:24:57</creation_date>
-			<updated_date>2018-03-23 11:47:11</updated_date>
+			<updated_date>2018-03-27 09:03:06</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -531,7 +531,7 @@
 					<auto_increment>false</auto_increment>
 					<foreign_key>false</foreign_key>
 					<not_null>true</not_null>
-					<primary_key>false</primary_key>
+					<primary_key>true</primary_key>
 					<unique_key>false</unique_key>
 					<character_set></character_set>
 					<collation></collation>
