@@ -143,7 +143,7 @@ public class TrackSupervision extends DataEntity<TrackSupervision> {
   }
 
   public String getTaskTypeText() {
-    return DictUtils.getDictName(this.taskType,"RWLX");
+    return DictUtils.getDictLabel(this.taskType,"RWLX","");
   }
 
   public void setTaskTypeText(String taskTypeText) {

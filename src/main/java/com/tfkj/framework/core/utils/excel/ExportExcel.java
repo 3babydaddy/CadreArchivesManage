@@ -499,7 +499,7 @@ public class ExportExcel {
 						}
 						// 如果有dictType属性
 						if (StringUtils.isNotBlank(ef.dictType())) {
-							val = DictUtils.getDictChname(val == null ? "" : val.toString(), ef.dictType(), "");
+							val = DictUtils.getDictValue(val == null ? "" : val.toString(), ef.dictType(), "");
 						}
 					}
 				} catch (Exception ex) {

@@ -409,7 +409,7 @@ public class InstructionsElement extends DataEntity<InstructionsElement> {
 
 	public String getParentIn0019Text() {
 
-		return DictUtils.getDictChname(parentIn0019, "YW_PS_BJ", "");
+		return DictUtils.getDictValue(parentIn0019, "YW_PS_BJ", "");
 	}
 
 	public String getParentIn0019() {
@@ -882,18 +882,18 @@ public class InstructionsElement extends DataEntity<InstructionsElement> {
 	@ExcelField(align = 2,  sort = 1000, type=0, title = "文件类型" , exportListType = "1,2,3")
 	public String getParentIn0016Text() {
 
-		return DictUtils.getDictChname(parentIn0016, "YW_PS_WJLX", "");
+		return DictUtils.getDictValue(parentIn0016, "YW_PS_WJLX", "");
 	}
 
 	@ExcelField(align = 2,  sort = 1100, type=0, title = "批示领导" , exportListType = "1,2")
 	public String getParentIn0017ShowText() {
-		return DictUtils.getDictChname(parentIn0017, "YW_PS_LY", "");
+		return DictUtils.getDictValue(parentIn0017, "YW_PS_LY", "");
 	}
 
 	@ExcelField(align = 2,  sort = 2000, type=0, title = "来源" , exportListType = "3")
 	public String getParentIn0017Text() {
 
-		return DictUtils.getDictChname(parentIn0017, "YW_PS_LY", "");
+		return DictUtils.getDictValue(parentIn0017, "YW_PS_LY", "");
 	}
 
 	@ExcelField(align = 2,  sort = 3000, type=0, title = "文件名", exportListType = "1,2,3")
@@ -930,17 +930,17 @@ public class InstructionsElement extends DataEntity<InstructionsElement> {
 
 	@ExcelField(align = 2,  sort = 7000, type=0, title = "按轻重分类" ,exportListType = "3")
 	public String getParentIn0006Text() {
-		return DictUtils.getDictChname(parentIn0006, "YW_PS_FL_QZ", "");
+		return DictUtils.getDictValue(parentIn0006, "YW_PS_FL_QZ", "");
 	}
 
 	@ExcelField(align = 2,  sort = 8000, type=0, title = "按要求分类" ,exportListType = "3")
 	public String getParentIn0007Text() {
-		return DictUtils.getDictChname(parentIn0007, "YW_PS_FL_YQ", "");
+		return DictUtils.getDictValue(parentIn0007, "YW_PS_FL_YQ", "");
 	}
 
 	@ExcelField(align = 2,  sort = 9000, type=0, title = "按内容分类" ,exportListType = "3")
 	public String getParentIn0008Text() {
-		return DictUtils.getDictChname(parentIn0008, "YW_PS_FL_NR", "");
+		return DictUtils.getDictValue(parentIn0008, "YW_PS_FL_NR", "");
 	}
 
 	@ExcelField(align = 2,  sort = 10000, type=0, title = "备注" ,exportListType = "3")
@@ -965,12 +965,12 @@ public class InstructionsElement extends DataEntity<InstructionsElement> {
 
 	@ExcelField(align = 2,  sort = 14000, type=0, title = "是否超期", exportListType = "1,2,3")
 	public String getParentIn0013Text() {
-		return DictUtils.getDictChname(parentIn0013, "YW_SF", "");
+		return DictUtils.getDictValue(parentIn0013, "YW_SF", "");
 	}
 
 	@ExcelField(align = 2,  sort = 15000, type=0, title = "办理情况", exportListType = "1,2,3")
 	public String getParentIn0012Text() {
-		return DictUtils.getDictChname(parentIn0012, "YW_PS_BLQK", "");
+		return DictUtils.getDictValue(parentIn0012, "YW_PS_BLQK", "");
 	}
 
 	@ExcelField(align = 2,  sort = 16000, type=0, title = "落实及上报情况",exportListType = "1,2,3")

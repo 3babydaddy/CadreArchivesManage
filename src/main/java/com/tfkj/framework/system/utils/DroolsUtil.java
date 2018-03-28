@@ -35,7 +35,8 @@ public class DroolsUtil extends org.apache.commons.lang3.StringUtils {
 		if (StringUtils.isBlank(dictValue)) {
 			return null;
 		}
-		String dictRemarks = dictDao.findDictRemarks("YW_ZJ", dictValue);
+		String dictRemarks = "";
+		//String dictRemarks = dictDao.findDictRemarks("YW_ZJ", dictValue);
 		if (StringUtils.isBlank(dictRemarks)) {
 			return null;
 		}
@@ -55,7 +56,8 @@ public class DroolsUtil extends org.apache.commons.lang3.StringUtils {
 		if (StringUtils.isBlank(dictValue)) {
 			return null;
 		}
-		String dictRemarks = dictDao.findDictRemarks("YW_JSDJ_ZJ", dictValue);
+		String dictRemarks = "";
+		//String dictRemarks = dictDao.findDictRemarks("YW_JSDJ_ZJ", dictValue);
 		if (StringUtils.isBlank(dictRemarks)) {
 			return null;
 		}

@@ -17,6 +17,7 @@ import com.tfkj.framework.core.exception.ServiceRuntimeException;
 import com.tfkj.framework.core.persistence.BaseEntity;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.DataEntity;
+import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
 import com.tfkj.framework.core.web.page.PageParam;
 import com.tfkj.framework.core.web.page.PageResult;
@@ -103,6 +104,18 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>>
         return pageResult;
     }
 
+    /**
+	 * 查询分页数据
+	 * @param page 分页对象
+	 * @param entity
+	 * @return
+	 */
+	public Page<T> findPage(Page<T> page, T entity) {
+		entity.setPage(page);
+		page.setList(dao.findList(entity));
+		return page;
+	}
+    
     /**
      * 保存数据（插入或更新）
      *

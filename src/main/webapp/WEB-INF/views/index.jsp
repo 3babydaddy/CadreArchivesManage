@@ -207,7 +207,7 @@ ul li {
 				}
 				// 初始化点击第一个三级菜单
 				$(menuId + " .accordion-body li:first li:first a:first i").click();
-				debugger;
+				//debugger;
 			}else{
 				// 获取二级菜单数据
 				$.get($(this).attr("data-href"), function(data){
@@ -216,7 +216,7 @@ ul li {
 						top.location = "${ctx}";
 						return false;
 					}
-					debugger;
+					//debugger;
 					$("#left .accordion").hide();
 					$("#left").append(data);
 					// 链接去掉虚框

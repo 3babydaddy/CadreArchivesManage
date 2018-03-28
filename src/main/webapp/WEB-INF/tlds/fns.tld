@@ -114,51 +114,52 @@
 
   <!-- DictUtils -->
   <function>
-    <description>获取字典标签</description>
-    <name>getDictChname</name>
-    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
-    <function-signature>java.lang.String getDictChname(java.lang.String, java.lang.String, java.lang.String)</function-signature>
-    <example>${fns:getDictChname(value, type, defaultValue)}</example>
-  </function>
-
-  <function>
-    <description>获取字典标签(多个)</description>
-    <name>getDictChnames</name>
-    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
-    <function-signature>java.lang.String getDictChnames(java.lang.String, java.lang.String, java.lang.String)</function-signature>
-    <example>${fns:getDictChnames(values, type, defaultValue)}</example>
-  </function>
-
-  <function>
-    <description>获取字典值</description>
-    <name>getDictEnname</name>
-    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
-    <function-signature>java.lang.String getDictEnname(java.lang.String, java.lang.String, java.lang.String)</function-signature>
-    <example>${fns:getDictEnname(chname, type, defaultValue)}</example>
-  </function>
-
-  <function>
-    <description>获取字典对象列表</description>
-    <name>getDictList</name>
-    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
-    <function-signature>java.util.List getDictList(java.lang.String)</function-signature>
-    <example>${fns:getDictList(type)}</example>
-  </function>
-
-  <function>
-    <description>获取字典对象列表</description>
-    <name>getDictListJson</name>
-    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
-    <function-signature>java.lang.String getDictListJson(java.lang.String)</function-signature>
-    <example>${fns:getDictListJson(type)}</example>
-  </function>
-  <function>
     <description>获取uuId</description>
     <name>getUuId</name>
     <function-class>com.tfkj.framework.core.config.Global</function-class>
     <function-signature>java.lang.Object getUuId()</function-signature>
     <example>${fns:getUuId()}</example>
   </function>
+  <function>
+    <description>获取字典标签</description>
+    <name>getDictLabel</name>
+    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
+    <function-signature>java.lang.String getDictLabel(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    <example>${fns:getDictLabel(value, type, defaultValue)}</example>  
+  </function>
+
+  <function>
+    <description>获取字典标签(多个)</description>
+    <name>getDictLabels</name>
+    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
+    <function-signature>java.lang.String getDictLabels(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    <example>${fns:getDictLabels(values, type, defaultValue)}</example>  
+  </function>
+
+  <function>
+    <description>获取字典值</description>
+    <name>getDictValue</name>
+    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
+    <function-signature>java.lang.String getDictValue(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    <example>${fns:getDictValue(label, type, defaultValue)}</example>  
+  </function>
+  
+  <function>
+    <description>获取字典对象列表</description>
+    <name>getDictList</name>
+    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
+    <function-signature>java.util.List getDictList(java.lang.String)</function-signature>
+    <example>${fns:getDictList(type)}</example>  
+  </function>
+  
+  <function>
+    <description>获取字典对象列表</description>
+    <name>getDictListJson</name>
+    <function-class>com.tfkj.framework.system.utils.DictUtils</function-class>
+    <function-signature>java.lang.String getDictListJson(java.lang.String)</function-signature>
+    <example>${fns:getDictListJson(type)}</example>  
+  </function>
+  
   <!-- Encodes -->
   <function>
     <description>URL编码</description>

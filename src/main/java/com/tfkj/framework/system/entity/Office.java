@@ -124,7 +124,7 @@ public class Office extends TreeEntity<Office> {
 	@ExcelField(align = 2, sort = 4, title = "单位性质", exportListType = "15")
 	public String getJgxzTextString() {
 
-		return DictUtils.getDictChname(this.jgxz, "YW_JGXZ", "");
+		return DictUtils.getDictValue(this.jgxz, "YW_JGXZ", "");
 	}
 
 	@ExcelFields({ @ExcelField(align = 2, sort = 5, title = "使用版本", dictType = "DWYH_VERSION", exportListType = "16"),
@@ -171,7 +171,7 @@ public class Office extends TreeEntity<Office> {
 	// 单位性质
 	public String getJgxzText() {
 
-		return DictUtils.getDictChname(this.jgxz, "YW_JGXZ", "");
+		return DictUtils.getDictValue(this.jgxz, "YW_JGXZ", "");
 	}
 
 	public void setJgxz(String jgxz) {

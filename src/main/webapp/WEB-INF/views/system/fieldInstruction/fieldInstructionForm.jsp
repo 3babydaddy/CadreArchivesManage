@@ -48,7 +48,7 @@
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">数据类型：</label>
-			<div class="controls">${fns:getDictChname(fieldInstruction.dataType, 'YW_SJLX', '')}
+			<div class="controls">${fns:getDictLabel(fieldInstruction.dataType, 'YW_SJLX', '')}
 			</div>
 		</div>
 		<%-- <div class="control-group">

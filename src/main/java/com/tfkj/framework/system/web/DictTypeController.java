@@ -112,7 +112,7 @@ public class DictTypeController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequiresPermissions("user")
+	//@RequiresPermissions("user")
 	@ResponseBody
 	@RequestMapping(value = "treeData")
 	public List<Map<String, Object>> treeData(HttpServletResponse response) {

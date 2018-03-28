@@ -1,101 +1,92 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tfkj.framework.system.dao.DictDao">
-	<select id="findDictRemarks" resultType="String">
-		SELECT
-			REMARKS
-		FROM
-			sys_dict
-		WHERE
-			TYPEENNAME = #{dictType}
-		AND ENNAME = #{dictValue};
-	</select>
 	<select id="get" resultType="Dict">
-		SELECT
-			*
-		FROM sys_dict
+		SELECT 
+			* 
+		FROM sys_dict 
 		WHERE id = #{id}
 	</select>
-
+	
 	<select id="findList" resultType="Dict">
-		SELECT
-			*
-		FROM sys_dict
-		WHERE del_flag = #{DEL_FLAG_NORMAL}
-		<if test="typeEnname != null and typeEnname != ''">
-			AND typeEnname = #{typeEnname}
+		SELECT 
+			* 
+		FROM sys_dict 
+		WHERE del_flag = #{DEL_FLAG_NORMAL} 
+		<if test="type != null and type != ''">
+			AND type = #{type}
 		</if>
-		<if test="id != null and id != ''">
-			AND ID = #{id}
+		<if test="description != null and description != ''">
+			AND description LIKE 
+					<if test="dbName == 'oracle'">'%'||#{description}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{description}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{description}, '%')</if>
 		</if>
-		<if test="enname != null and enname != ''">
-			AND enname = #{enname}
-		</if>
-		<if test="chname != null and chname != ''">
-            AND chname like
-            <if test="dbName == 'mysql'">CONCAT('%', #{chname}, '%')</if>
-        </if>
-		ORDER BY sort
+		ORDER BY type, sort, update_date DESC
 	</select>
-	<select id="selectType" resultType="Dict">
-		SELECT
-			*
-		FROM sys_dict
-		WHERE typeenname = #{typeenName}
-		AND enname in('1','2','3','4')
+	
+	<select id="findAllList" resultType="Dict">
+		SELECT 
+			* 
+		FROM sys_dict 
+		WHERE del_flag = #{DEL_FLAG_NORMAL} 
+		ORDER BY type, sort, update_date DESC
 	</select>
-	<select id="findDictListByDictType" resultType="Dict">
-		SELECT
-			*
-		FROM
-			sys_dict
-		WHERE
-			TYPEENNAME = #{dictType}
-		ORDER BY
-			SORT
+	
+	<select id="findTypeList" resultType="string">
+		SELECT 
+			type 
+		FROM sys_dict 
+		WHERE del_flag = #{DEL_FLAG_NORMAL} 
+		GROUP BY type
+		ORDER BY type
 	</select>
+	
 	<insert id="insert">
 		INSERT INTO sys_dict(
-			id,
-			enname,
-			chname,
-			typeEnname,
-			sort,
-			create_by,
-			create_date,
-			update_by,
-			update_date,
-			remarks,
+			id, 
+			value, 
+			label, 
+			type, 
+			description, 
+			sort, 
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
 			del_flag
 		) VALUES (
-			#{id},
-			#{enname},
-			#{chname},
-			#{typeEnname},
-			#{sort},
-			#{createBy.id},
-			#{createDate},
-			#{updateBy.id},
-			#{updateDate},
-			#{remarks},
+			#{id}, 
+			#{value}, 
+			#{label}, 
+			#{type}, 
+			#{description}, 
+			#{sort}, 
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
 			#{delFlag}
 		)
 	</insert>
-
+	
 	<update id="update">
-		UPDATE sys_dict SET
-			enname = #{enname},
-			chname = #{chname},
-			typeEnname = #{typeEnname},
-			sort = #{sort},
-			update_by = #{updateBy.id},
-			update_date = #{updateDate},
+		UPDATE sys_dict SET 
+			value = #{value}, 
+			label = #{label}, 
+			type = #{type}, 
+			description = #{description}, 
+			sort = #{sort}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
-
+	
 	<update id="delete">
-		UPDATE sys_dict SET
+		UPDATE sys_dict SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>

@@ -405,12 +405,12 @@ public class Instructions extends DataEntity<Instructions> {
 
 	public String getIn0006Text() {
 
-		return DictUtils.getDictChname(in0006, "YW_PS_FL_QZ", "");
+		return DictUtils.getDictValue(in0006, "YW_PS_FL_QZ", "");
 	}
 
 	public String getIn0012Text() {
 
-		return DictUtils.getDictChname(in0012, "YW_SF", "");
+		return DictUtils.getDictValue(in0012, "YW_SF", "");
 	}
 
 	public void setIn0012Text(String in0012Text) {
@@ -433,7 +433,7 @@ public class Instructions extends DataEntity<Instructions> {
 
 	public String getIn0007Text() {
 
-		return DictUtils.getDictChname(in0007, "YW_PS_FL_YQ", "");
+		return DictUtils.getDictValue(in0007, "YW_PS_FL_YQ", "");
 	}
 
 	public void setIn0007Text(String in0007Text) {
@@ -452,7 +452,7 @@ public class Instructions extends DataEntity<Instructions> {
 
 	public String getIn0008Text() {
 
-		return DictUtils.getDictChname(in0008, "YW_PS_FL_NR", "");
+		return DictUtils.getDictValue(in0008, "YW_PS_FL_NR", "");
 	}
 
 	public void setIn0008Text(String in0008Text) {

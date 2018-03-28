@@ -364,7 +364,7 @@ public class ImportExcel {
 					ExcelField ef = (ExcelField) os[0];
 					// 码值转换
 					if (StringUtils.isNotBlank(ef.dictType())) {
-						val = DictUtils.getDictEnname(val.toString().trim(), ef.dictType(), Constants.YW_DICT_KONG);
+						val = DictUtils.getDictValue(val.toString().trim(), ef.dictType(), Constants.YW_DICT_KONG);
 					}
 					// 获取对象属性的类型
 					Class<?> valType = Class.class;

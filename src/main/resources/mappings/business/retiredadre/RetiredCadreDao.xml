@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.retiredadre.dao.RetiredCadreDao">
+    
+	<sql id="retiredCadreColumns">
+		a.id AS "id",
+		a.sort AS "sort",
+		a.name AS "name",
+		a.sex AS "sex",
+		a.archives_no AS "archivesNo",
+		a.units_duties AS "unitsDuties",
+		a.birthday AS "birthday",
+		a.education AS "education",
+		a.reference_no AS "referenceNo",
+		a.archives_createtime AS "archivesCreatetime",
+		a.status AS "status",
+		a.died_time AS "diedTime",
+		a.record_office_time AS "recordOfficeTime",
+		a.work_unit AS "workUnit",
+		a.record_office_address AS "recordOfficeAddress",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="retiredCadreJoins">
+	</sql>
+    
+	<select id="get" resultType="RetiredCadre">
+		SELECT 
+			<include refid="retiredCadreColumns"/>
+		FROM retired_cadre a
+		<include refid="retiredCadreJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RetiredCadre">
+		SELECT 
+			<include refid="retiredCadreColumns"/>
+		FROM retired_cadre a
+		<include refid="retiredCadreJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="sort != null and sort != ''">
+				AND a.sort LIKE 
+					<if test="dbName == 'oracle'">'%'||#{sort}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{sort}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{sort},'%')</if>
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="startBir != null and startBir != ''">
+			<![CDATA[
+				AND a.birthday >= #{startBir}
+			]]>	
+			</if>
+			<if test="endBir != null and endBir != ''">
+			<![CDATA[
+				AND a.birthday <= #{endBir}
+			]]>	
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RetiredCadre">
+		SELECT 
+			<include refid="retiredCadreColumns"/>
+		FROM retired_cadre a
+		<include refid="retiredCadreJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO retired_cadre(
+			id,
+			sort,
+			name,
+			sex,
+			archives_no,
+			units_duties,
+			birthday,
+			education,
+			reference_no,
+			archives_createtime,
+			status,
+			died_time,
+			record_office_time,
+			work_unit,
+			record_office_address,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{sort},
+			#{name},
+			#{sex},
+			#{archivesNo},
+			#{unitsDuties},
+			#{birthday},
+			#{education},
+			#{referenceNo},
+			#{archivesCreatetime},
+			#{status},
+			#{diedTime},
+			#{recordOfficeTime},
+			#{workUnit},
+			#{recordOfficeAddress},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE retired_cadre SET 	
+			sort = #{sort},
+			name = #{name},
+			sex = #{sex},
+			archives_no = #{archivesNo},
+			units_duties = #{unitsDuties},
+			birthday = #{birthday},
+			education = #{education},
+			reference_no = #{referenceNo},
+			archives_createtime = #{archivesCreatetime},
+			status = #{status},
+			died_time = #{diedTime},
+			record_office_time = #{recordOfficeTime},
+			work_unit = #{workUnit},
+			record_office_address = #{recordOfficeAddress}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE retired_cadre SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

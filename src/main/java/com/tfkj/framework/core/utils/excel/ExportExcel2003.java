@@ -578,7 +578,7 @@ public class ExportExcel2003 {
 						}
 						// 如果有dictType属性
 						if (StringUtils.isNotBlank(ef.dictType())) {
-							val = DictUtils.getDictChname(val == null ? "" : val.toString(), ef.dictType(), "");
+							val = DictUtils.getDictLabel(val == null ? "" : val.toString(), ef.dictType(), "");
 						}
 					}
 				} catch ( Exception ex ) {
@@ -649,7 +649,7 @@ public class ExportExcel2003 {
 						}
 						// 如果有dictType属性
 						if (StringUtils.isNotBlank(ef.dictType())) {
-							val = DictUtils.getDictChname(val == null ? "" : val.toString(), ef.dictType(), "");
+							val = DictUtils.getDictLabel(val == null ? "" : val.toString(), ef.dictType(), "");
 						}
 					}
 				} catch ( Exception ex ) {

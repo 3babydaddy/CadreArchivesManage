@@ -28,7 +28,7 @@
             <tr>
                 <td><a href="form?id=${role.id}">${role.name}</a></td>
                 <td>${role.office.name}</td>
-                <td>${fns:getDictChname(role.dataType, 'sys_data_scope', '无')}</td>
+                <td>${fns:getDictLabel(role.dataType, 'sys_data_scope', '无')}</td>
                 <shiro:hasPermission name="sys:role:edit"><td>
                     <a href="${ctx}/sys/role/form?id=${role.id}">修改</a>
                     <a href="${ctx}/sys/role/delete?id=${role.id}" onclick="return confirmx('确认要删除该角色吗？', this.href)">删除</a>

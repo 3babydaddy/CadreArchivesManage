@@ -390,7 +390,7 @@ public class SuperiorInspect extends DataEntity<SuperiorInspect> {
 	}
 	@ExcelField(align = 2, type = 0, sort = 1000, title = "上级单位")
 	public String getParentOfficeNamesText() {
-		return DictUtils.getDictChname(this.parentOfficeIds, "YW_SJDW", "");
+		return DictUtils.getDictValue(this.parentOfficeIds, "YW_SJDW", "");
 	}
 
 	@ExcelField(align = 2, type = 0, sort = 2000, title = "督查事项")
@@ -499,7 +499,7 @@ public class SuperiorInspect extends DataEntity<SuperiorInspect> {
 	@ExcelField(align = 2, type = 0, sort = 9000, title = "状态")
 	public String getTaskStateText() {
 
-		return DictUtils.getDictChname(this.taskState, "YW_DCLSQK", "");
+		return DictUtils.getDictValue(this.taskState, "YW_DCLSQK", "");
 	}
 
 	@ExcelField(align = 2, type = 0, sort = 10000, title = "落实时间")

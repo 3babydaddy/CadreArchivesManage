@@ -85,7 +85,7 @@
 		<div class="control-group">
 			<label class="control-label">用户类型:</label>
 			<div class="controls">
-				<label class="lbl">${fns:getDictChname(user.type, 'sys_user_type', '无')}</label>
+				<label class="lbl">${fns:getDictLabel(user.type, 'sys_user_type', '无')}</label>
 			</div>
 		</div>
 		<div class="control-group">

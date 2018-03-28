@@ -4,11 +4,11 @@
 package com.tfkj.framework.system.entity;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAttribute;
 
 import org.hibernate.validator.constraints.Length;
 
 import com.tfkj.framework.core.persistence.DataEntity;
-import com.tfkj.framework.core.utils.excel.annotation.ExcelField;
 
 /**
  * 字典Entity
@@ -17,61 +17,86 @@ import com.tfkj.framework.core.utils.excel.annotation.ExcelField;
  */
 public class Dict extends DataEntity<Dict> {
 
-    private static final long serialVersionUID = 1L;
-    // 数据值
-    private String enname;
-    // 标签名
-    private String chname;
-    // 类型
-    private String typeEnname;
-    // 类型中文
-    private String typeChname;
-    // 排序
-    private Integer sort;
+	private static final long serialVersionUID = 1L;
+	private String value;	// 数据值
+	private String label;	// 标签名
+	private String type;	// 类型
+	private String description;// 描述
+	private Integer sort;	// 排序
+	private String parentId;//父Id
 
-    @Length(min = 1, max = 100)
-    @ExcelField(title = "字典类型", align = 2, sort = 1)
-    public String getTypeEnname() {
-        return typeEnname;
-    }
+	public Dict() {
+		super();
+	}
+	
+	public Dict(String id){
+		super(id);
+	}
+	
+	public Dict(String value, String label){
+		this.value = value;
+		this.label = label;
+	}
+	
+	@XmlAttribute
+	@Length(min=1, max=100)
+	public String getValue() {
+		return value;
+	}
 
-    @ExcelField(title = "名称", align = 2, sort = 2)
-    public String getChname() {
-        return chname;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
+	@XmlAttribute
+	@Length(min=1, max=100)
+	public String getLabel() {
+		return label;
+	}
 
-    @ExcelField(title = "保存值", align = 2, sort = 3)
-    public String getEnname() {
-        return enname;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    @NotNull
-    @ExcelField(title = "排序", align = 2, sort = 4)
-    public Integer getSort() {
-        return sort;
-    }
+	@Length(min=1, max=100)
+	public String getType() {
+		return type;
+	}
 
-    public void setTypeEnname(String typeEnname) {
-        this.typeEnname = typeEnname;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
+	@XmlAttribute
+	@Length(min=0, max=100)
+	public String getDescription() {
+		return description;
+	}
 
-    public String getTypeChname() {
-        return typeChname;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setTypeChname(String typeChname) {
-        this.typeChname = typeChname;
-    }
+	@NotNull
+	public Integer getSort() {
+		return sort;
+	}
 
-    public void setChname(String chname) {
-        this.chname = chname;
-    }
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
 
-    public void setEnname(String enname) {
-        this.enname = enname;
-    }
+	@Length(min=1, max=100)
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+	
+	@Override
+	public String toString() {
+		return label;
+	}
 }
