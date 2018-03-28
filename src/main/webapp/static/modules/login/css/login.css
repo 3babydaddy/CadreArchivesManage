@@ -1,105 +1,147 @@
 /* 公共样式部分 */
-*{
-    margin: 0;
-    padding: 0;
+* {
+	margin: 0;
+	padding: 0;
 }
-ul li{
-    list-style: none;
+
+ul li {
+	list-style: none;
 }
-a{
-    text-decoration: none;
+
+a {
+	text-decoration: none;
 }
 /* 背景颜色高度样式 */
 body {
 	background: white;
 	min-width: 750pt;
-	overflow: auto;/*控制页面是否出滚动条*/
+	overflow: auto; /*控制页面是否出滚动条*/
 }
 /* 背景颜色高度样式 */
-img { border: 0; vertical-align: top; }
-textarea { resize: none; }
-a, button, input, select, textarea { outline: 0; }
-a, button { cursor: pointer; }
-button { border: none; }
-/* 公共样式部分 */
-html{
-    height: 100%;
-    background-color: white;
+img {
+	border: 0;
+	vertical-align: top;
 }
-.main{
+
+textarea {
+	resize: none;
+}
+
+a, button, input, select, textarea {
+	outline: 0;
+}
+
+a, button {
+	cursor: pointer;
+}
+
+button {
+	border: none;
+}
+/* 公共样式部分 */
+html {
+	height: 100%;
+	background-color: white;
+}
+
+.main {
+	height: 100%;
 	width: 100%;
-	height: 650px;
-	height: 700px\9;
 	margin: 0 auto;
 	position: relative;
+	width: 100%;
 }
-.header{
-	padding: 50px 0 0;
-    height: 80px;
+
+.header {
+	width: 100%;
+	height: 20%;
+	display: table;
 }
-.content{
+
+.header>div {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.content {
+	width: 100%;
+	height: 60%;
 	overflow: hidden;
 	background-color: #cc0000;
-	padding-top: 100px;
-	padding-bottom: 100px;
+	display: table;
+	text-align: center;
 }
-.contentInner{
-	overflow: hidden;
-	width: 1120px;
-	margin: 0 auto;
+
+.contentInner {
+	width: 100%;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }
-.conLeft{
+
+.conLeft {
 	float: left;
-    margin-left:160px;
-    width: 450px;
+	margin-left: 160px;
+	width: 450px;
+	margin-left: -405px;
+	padding-left: 50%;
 }
-.conRight{
-    float: left;
-    width: 365px;
-    height: 260px;
-    background: #fff;
+
+.conRight {
+	float: left;
+	width: 365px;
+	height: 260px;
+	background: #fff;
 }
-.content .conRight .conRightTop{
-    width: 365px;
-    height: 60px;
+
+.content .conRight .conRightTop {
+	width: 365px;
+	height: 60px;
 }
-.loginTit{
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 24px;
-    text-align:left;
-    text-indent:10px;
-    border-left:5px solid #cc0000;
-    color: #cc0000;
-    font-family: "Microsoft YaHei";
-    margin-top: 15px;
+
+.loginTit {
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 24px;
+	text-align: left;
+	text-indent: 10px;
+	border-left: 5px solid #cc0000;
+	color: #cc0000;
+	font-family: "Microsoft YaHei";
+	margin-top: 15px;
 }
-hr{
-	width:92%;
-	height:1px;
-	border:none;
+
+hr {
+	width: 92%;
+	height: 1px;
+	border: none;
 	border-top: 1px solid #e9eaea;
 	margin: 10px auto;
 }
-.loginForm .username,.loginForm .psdword{
-    border: none;
-    height: 25px;
-    line-height: 25px;
-    width: 185px;
-    padding: 0;
-    text-indent: 5px;
-    border: 1px solid #dedede;
-    margin-bottom: 26px;
-    vertical-align: middle;
+
+.loginForm .username, .loginForm .psdword {
+	border: none;
+	height: 25px;
+	line-height: 25px;
+	width: 185px;
+	padding: 0;
+	text-indent: 5px;
+	border: 1px solid #dedede;
+	margin-bottom: 26px;
+	vertical-align: middle;
 }
-.loginForm .username:focus,.loginForm .psdword:focus{
+
+.loginForm .username:focus, .loginForm .psdword:focus {
 	outline: none;
 }
-.right-login{
+
+.right-login {
 	padding-left: 16px;
 	margin-top: 10px;
 }
-.right-login label{
+
+.right-login label {
 	display: inline-block;
 	width: 20%;
 	height: 30px;
@@ -107,32 +149,48 @@ hr{
 	margin-bottom: 16px;
 	text-align: center;
 	font-size: 15px;
-	color:#cc0000;
+	color: #cc0000;
 	font-weight: bold;
-	cursor:auto;
+	cursor: auto;
 }
-.groupBtns{
-	line-height:30px;
-	text-align:right;
+
+.groupBtns {
+	line-height: 30px;
+	text-align: right;
 }
-input#loginbtn{
-    background-color:#cc0000;
-    border: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #fff;
-    display:inline-block;
-    width: 86px;
-    height: 28px;
-    margin-right: 22%;
+
+input#loginbtn {
+	background-color: #cc0000;
+	border: none;
+	font-weight: bold;
+	font-size: 1.1rem;
+	color: #fff;
+	display: inline-block;
+	width: 86px;
+	height: 28px;
+	margin-right: 22%;
 }
 /*copyright*/
-.hr-login-bottom{
-    width: 100%;
-    text-align: center;
-
+.hr-login-bottom {
+	height: 20%;
+	width: 100%;
+	text-align: center;
 }
-.hr-login-bottom p{
-    margin-bottom: 5px;
-    font-size: 15px;
+
+.hr-login-bottom p {
+	position: relative;
+	top: 30%;
+	margin-bottom: 5px;
+	font-size: 15px;
+}
+
+.header-text {
+	font-family: 华文行楷;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 72px;
+	color: rgb(255, 0, 0);
+	text-align: center;
+	margin-top: 25px;
+	white-space: nowrap;
 }

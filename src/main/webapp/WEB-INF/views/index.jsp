@@ -169,6 +169,16 @@ ul li {
 		margin-right: 0%;
 	}
 }
+.header-text {
+	font-family: 华文行楷;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 50px;
+	color: white;
+	text-align: center;
+	margin-top: 25px;
+	white-space: nowrap;
+}
 </style>
 
 <script type="text/javascript">
@@ -277,8 +287,8 @@ ul li {
 <body>
 	<div id="main">
 		<div id="header">
-		                 <div style=" display:  inline-block; margin-top:  10px;">
-                              <img alt="" src="${ctxStatic}/modules/login/img/head.png">
+		                 <div style=" display:  inline-block; margin-top:  20px;">
+							<span class="header-text">${fns:getConfig('loginHeaderSystem')}</span>
 		                 </div>
 		    		<div class="head-right">
 						<div style="height: 45px">
