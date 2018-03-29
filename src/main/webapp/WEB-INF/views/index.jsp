@@ -295,7 +295,7 @@ ul li {
 						    <span style="color: white;font-size: 17px;font-family: 华文行楷;">当前用户：</span>
 						    <span style="color: white;font-size: 17px;font-family: 华文行楷;">${fns:getUser().showname}</span>
                             <h2 class="zaixian" id="onlineNumber"></h2>
-							<a href="${ctx}/login" title="主页" class="zhuye"></a>
+							<a href="${ctx}/" title="主页" class="zhuye"></a>
 							<a href="${ctx}/logout" class="loginout" title="登出" ></a>
 						</div>
 						</div>

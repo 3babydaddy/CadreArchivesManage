@@ -3,42 +3,16 @@
  */
 package com.tfkj.framework.system.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.tf.permission.client.entity.User;
-import com.tfkj.business.web.constants.Constants;
-import com.tfkj.framework.core.beanvalidator.BeanValidators;
+import com.tf.permission.client.service.PermissionClientService;
 import com.tfkj.framework.core.config.Global;
-import com.tfkj.framework.core.utils.DateUtils;
 import com.tfkj.framework.core.utils.StringUtils;
-import com.tfkj.framework.core.utils.excel.ExportExcel;
-import com.tfkj.framework.core.utils.excel.ImportExcel;
 import com.tfkj.framework.core.web.BaseController;
-import com.tfkj.framework.core.web.page.PageParam;
-import com.tfkj.framework.core.web.page.PageResult;
-import com.tfkj.framework.system.entity.Office;
-import com.tfkj.framework.system.entity.Role;
-import com.tfkj.framework.system.service.SystemService;
-import com.tfkj.framework.system.service.UserService;
 import com.tfkj.framework.system.utils.UserUtils;
 
 /**
@@ -50,8 +24,10 @@ import com.tfkj.framework.system.utils.UserUtils;
 @Controller
 @RequestMapping(value = "${adminPath}/sys/user")
 public class UserController extends BaseController {
-
 	@Autowired
+	private PermissionClientService permissionClient;
+
+	/*@Autowired
 	private SystemService systemService;
 
 	@Autowired
@@ -67,11 +43,11 @@ public class UserController extends BaseController {
 		}
 	}
 
-	/**
+	*//**
 	 * 跳转到list页
 	 *
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = { "index", "" })
 	public String index() {
@@ -79,30 +55,30 @@ public class UserController extends BaseController {
 		return "system/user/userList";
 	}
 
-	/**
+	*//**
 	 * json格式列表
 	 *
 	 * @param user
 	 * @param request
 	 * @param response
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = { "list" })
 	@ResponseBody
 	public PageResult<User> list(User user, HttpServletRequest request, HttpServletResponse response) {
 
-		/*PageResult<User> pageResult = userService.findPage(user, new PageParam(request));*/
+		PageResult<User> pageResult = userService.findPage(user, new PageParam(request));
 		return new PageResult<User>();
 	}
 
-	/**
+	*//**
 	 * 获取查询条件
 	 *
 	 * @param user
 	 * @param model
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = "form")
 	public String form(User user, Model model) {
@@ -115,7 +91,7 @@ public class UserController extends BaseController {
 		return "system/user/userForm";
 	}
 
-	/**
+	*//**
 	 * 用户添加中的保存
 	 *
 	 * @param user
@@ -123,7 +99,7 @@ public class UserController extends BaseController {
 	 * @param model
 	 * @param redirectAttributes
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value = "save")
 	public String save(User user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
@@ -164,13 +140,13 @@ public class UserController extends BaseController {
 		return "redirect:" + adminPath + "/sys/user";
 	}
 
-	/**
+	*//**
 	 * 删除
 	 *
 	 * @param user
 	 * @param redirectAttributes
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value = "delete")
 	public String delete(User user, RedirectAttributes redirectAttributes) {
@@ -190,7 +166,7 @@ public class UserController extends BaseController {
 		return "redirect:" + adminPath + "/sys/user";
 	}
 
-	/**
+	*//**
 	 * 导出用户数据
 	 *
 	 * @param user
@@ -198,7 +174,7 @@ public class UserController extends BaseController {
 	 * @param response
 	 * @param redirectAttributes
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = "export", method = RequestMethod.POST)
 	public String exportFile(User user, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
@@ -213,13 +189,13 @@ public class UserController extends BaseController {
 		return "redirect:" + adminPath + "/sys/user/list?repage";
 	}
 
-	/**
+	*//**
 	 * 导入用户数据
 	 *
 	 * @param file
 	 * @param redirectAttributes
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value = "import", method = RequestMethod.POST)
 	public String importFile(MultipartFile file, RedirectAttributes redirectAttributes) {
@@ -266,13 +242,13 @@ public class UserController extends BaseController {
 		return "redirect:" + adminPath + "/sys/user/list?repage";
 	}
 
-	/**
+	*//**
 	 * 下载导入用户数据模板
 	 *
 	 * @param response
 	 * @param redirectAttributes
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = "import/template")
 	public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
@@ -289,13 +265,13 @@ public class UserController extends BaseController {
 		return "redirect:" + adminPath + "/sys/user/list?repage";
 	}
 
-	/**
+	*//**
 	 * 验证登录名是否有效
 	 *
 	 * @param oldLoginName
 	 * @param loginName
 	 * @return
-	 */
+	 *//*
 	@ResponseBody
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value = "checkLoginName")
@@ -304,13 +280,13 @@ public class UserController extends BaseController {
 		return userService.checkLoginName(oldLoginName, loginName);
 	}
 
-	/**
+	*//**
 	 * 用户信息显示及保存
 	 *
 	 * @param user
 	 * @param model
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("user")
 	@RequestMapping(value = "info")
 	public String info(User user, HttpServletResponse response, Model model) {
@@ -330,18 +306,18 @@ public class UserController extends BaseController {
 		return "system/user/userInfo";
 	}
 
-	/**
+	*//**
 	 * 返回用户信息
 	 *
 	 * @return
-	 */
+	 *//*
 	@RequiresPermissions("user")
 	@ResponseBody
 	@RequestMapping(value = "infoData")
 	public User infoData() {
 
 		return UserUtils.getUser();
-	}
+	}*/
 
 	/**
 	 * 修改个人用户密码
@@ -351,7 +327,7 @@ public class UserController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequiresPermissions("user")
+	/*@RequiresPermissions("user")*/
 	@RequestMapping(value = "modifyPwd")
 	public String modifyPwd(String oldPassword, String newPassword, Model model) {
 
@@ -361,18 +337,23 @@ public class UserController extends BaseController {
 				model.addAttribute("message", "演示模式，不允许操作！");
 				return "system/user/userModifyPwd";
 			}
-			if (SystemService.validatePassword(oldPassword, user.getPassword())) {
-				systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword);
-				model.addAttribute("message", "修改密码成功");
-			} else {
+			/*if (SystemService.validatePassword(oldPassword, user.getPassword())) {*/
+				int i = permissionClient.modifyUserPassword(user.getUsername(), oldPassword, newPassword);
+				/*systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword);*/
+				if(i != -1){
+					model.addAttribute("message", "修改密码成功");
+				}else{
+					model.addAttribute("message", "修改密码失败，旧密码错误");
+				}
+			/*} else {
 				model.addAttribute("message", "修改密码失败，旧密码错误");
-			}
+			}*/
 		}
 		model.addAttribute("user", user);
 		return "system/user/userModifyPwd";
 	}
 
-	@RequiresPermissions("user")
+	/*@RequiresPermissions("user")
 	@ResponseBody
 	@RequestMapping(value = "treeData")
 	public List<Map<String, Object>> treeData(@RequestParam(required = false) String officeId, HttpServletResponse response) {
@@ -388,5 +369,5 @@ public class UserController extends BaseController {
 			mapList.add(map);
 		}
 		return mapList;
-	}
+	}*/
 }
