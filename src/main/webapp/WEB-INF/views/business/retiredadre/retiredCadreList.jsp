@@ -7,12 +7,6 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
-			$("#reset").click(function(){
-				
-				$("input[type='text']").val("");
-				$("select").val("");
-				
-			});
 			
 		});
 		function page(n,s){
@@ -51,6 +45,19 @@
 		function getRowData(){
 			return $("input[type='checkbox']:checked");
 		}
+		
+		function setNull(){
+			$("input[type='text']").each(function(){
+				$(this).val("");
+			})
+			$("input[type='hidden']").each(function(){
+				$(this).val("");
+			})
+			$("select").val("");
+			//$("select").each(function(){
+			//	$(this).select2("val","");
+			//})
+		}
 	</script>
 	<style type="text/css">
 		.table th, .table td{
@@ -67,7 +74,15 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			
+			<li><label>出生日期：</label>
+				<input name="startBir" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${retiredCadre.startBir}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+					至
+					<input name="endBir" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${retiredCadre.endBir}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+			</li>
 			<li><label>编号：</label>
 				<form:input path="sort" htmlEscape="false" maxlength="11" class="input-medium"/>
 			</li>
@@ -80,17 +95,8 @@
 					<form:options items="${fns:getDictList('retired_cadre_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<li><label>出生日期：</label>
-				<input name="startBir" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${retiredCadre.startBir}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-					至
-					<input name="endBir" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${retiredCadre.endBir}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" id="reset" type="button" value="重置"/></li>
+			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>

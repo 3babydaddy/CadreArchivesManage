@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.consult.dao.TblConsultArchivesDao">
+    
+	<sql id="tblConsultArchivesColumns">
+		a.id AS "id",
+		a.borrow_date AS "borrowDate",
+		a.consult_unit AS "consultUnit",
+		a.reason AS "reason",
+		a.content AS "content",
+		a.borrow_unit_opinion AS "borrowUnitOpinion",
+		a.borrow_approve_time AS "borrowApproveTime",
+		a.municipal_opinion AS "municipalOpinion",
+		a.municipal_approve_time AS "municipalApproveTime",
+		a.approve_attachment AS "approveAttachment",
+		a.operator AS "operator",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="tblConsultArchivesJoins">
+	</sql>
+    
+	<select id="get" resultType="TblConsultArchives">
+		SELECT 
+			<include refid="tblConsultArchivesColumns"/>
+		FROM tbl_consult_archives a
+		<include refid="tblConsultArchivesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TblConsultArchives">
+		SELECT 
+			<include refid="tblConsultArchivesColumns"/>
+		FROM tbl_consult_archives a
+		<include refid="tblConsultArchivesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="startBorrowDate != null and startBorrowDate != ''">
+			<![CDATA[
+				AND a.borrow_date >= #{startBorrowDate}
+			]]>	
+			</if>
+			<if test="endBorrowDate != null and endBorrowDate != ''">
+			<![CDATA[
+				AND a.borrow_date <= #{endBorrowDate}
+			]]>	
+			</if>
+			<if test="consultUnit != null and consultUnit != ''">
+				AND a.consult_unit like concat('%', #{consultUnit}, '%')
+			</if>
+			<if test="tarStr != null and tarStr != ''">
+				AND a.id in (select main_id from tbl_checked_target where main_id = a.id 
+								and del_flag = '0' and name like concat('%', #{tarStr}, '%'))
+			</if>
+			<if test="perStr != null and perStr != ''">
+				AND a.id in (select main_id from tbl_check_person where main_id = a.id 
+								and del_flag = '0' and name like concat('%', #{perStr}, '%'))
+			</if>
+			<if test="operator != null and operator != ''">
+				AND a.operator = #{operator}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TblConsultArchives">
+		SELECT 
+			<include refid="tblConsultArchivesColumns"/>
+		FROM tbl_consult_archives a
+		<include refid="tblConsultArchivesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_consult_archives(
+			id,
+			borrow_date,
+			consult_unit,
+			reason,
+			content,
+			borrow_unit_opinion,
+			borrow_approve_time,
+			municipal_opinion,
+			municipal_approve_time,
+			approve_attachment,
+			operator,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{borrowDate},
+			#{consultUnit},
+			#{reason},
+			#{content},
+			#{borrowUnitOpinion},
+			#{borrowApproveTime},
+			#{municipalOpinion},
+			#{municipalApproveTime},
+			#{approveAttachment},
+			#{operator},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tbl_consult_archives SET 	
+			borrow_date = #{borrowDate},
+			consult_unit = #{consultUnit},
+			reason = #{reason},
+			content = #{content},
+			borrow_unit_opinion = #{borrowUnitOpinion},
+			borrow_approve_time = #{borrowApproveTime},
+			municipal_opinion = #{municipalOpinion},
+			municipal_approve_time = #{municipalApproveTime},
+			approve_attachment = #{approveAttachment},
+			operator = #{operator},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tbl_consult_archives SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

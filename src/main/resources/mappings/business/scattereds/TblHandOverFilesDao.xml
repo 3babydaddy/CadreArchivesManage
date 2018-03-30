@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.scattereds.dao.TblHandOverFilesDao">
+    
+	<sql id="tblHandOverFilesColumns">
+		a.id AS "id",
+		a.main_id AS "mainId",
+		a.name AS "name",
+		a.duty AS "duty",
+		a.files_names AS "filesNames",
+		a.original_no AS "originalNo",
+		a.archives_no AS "archivesNo",
+		a.certificate_no AS "certificateNo",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="tblHandOverFilesJoins">
+		LEFT JOIN tbl_scattered_files b ON b.id = a.main_id
+	</sql>
+    
+	<select id="get" resultType="TblHandOverFiles">
+		SELECT 
+			<include refid="tblHandOverFilesColumns"/>
+		FROM tbl_hand_over_files a
+		<include refid="tblHandOverFilesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TblHandOverFiles">
+		SELECT 
+			<include refid="tblHandOverFilesColumns"/>
+		FROM tbl_hand_over_files a
+		<include refid="tblHandOverFilesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="mainId != null and mainId != ''">
+				AND a.main_id = #{mainId}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name like concat('%', #{name}, '%')
+			</if>
+			<if test="filesNames != null and filesNames != ''">
+				AND a.files_names like concat('%', #{filesNames}, '%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TblHandOverFiles">
+		SELECT 
+			<include refid="tblHandOverFilesColumns"/>
+		FROM tbl_hand_over_files a
+		<include refid="tblHandOverFilesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_hand_over_files(
+			id,
+			main_id,
+			name,
+			duty,
+			files_names,
+			original_no,
+			archives_no,
+			certificate_no,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{mainId},
+			#{name},
+			#{duty},
+			#{filesNames},
+			#{originalNo},
+			#{archivesNo},
+			#{certificateNo},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tbl_hand_over_files SET 	
+			main_id = #{mainId},
+			name = #{name},
+			duty = #{duty},
+			files_names = #{filesNames},
+			original_no = #{originalNo},
+			archives_no = #{archivesNo},
+			certificate_no = #{certificateNo},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tbl_hand_over_files SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE main_id = #{mainId}
+			</otherwise>
+		</choose>
+	</update>
+	
+</mapper>

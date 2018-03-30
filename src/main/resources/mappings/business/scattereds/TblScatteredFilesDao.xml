@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.scattereds.dao.TblScatteredFilesDao">
+    
+	<sql id="tblScatteredFilesColumns">
+		a.id AS "id",
+		a.hand_over_unit AS "handOverUnit",
+		a.hand_over_date AS "handOverDate",
+		a.operator AS "operator",
+		a.recipient AS "recipient",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="tblScatteredFilesJoins">
+	</sql>
+    
+	<select id="get" resultType="TblScatteredFiles">
+		SELECT 
+			<include refid="tblScatteredFilesColumns"/>
+		FROM tbl_scattered_files a
+		<include refid="tblScatteredFilesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TblScatteredFiles">
+		SELECT 
+			<include refid="tblScatteredFilesColumns"/>
+		FROM tbl_scattered_files a
+		<include refid="tblScatteredFilesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="handOverUnit != null and handOverUnit != ''">
+				AND a.hand_over_unit LIKE 
+					<if test="dbName == 'oracle'">'%'||#{handOverUnit}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{handOverUnit}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{handOverUnit},'%')</if>
+			</if>
+			<if test="startHandOverDate != null and startHandOverDate != ''">
+			<![CDATA[
+				AND a.hand_over_date >= #{startHandOverDate}
+			]]>				
+			</if>
+			<if test="endHandOverDate != null and endHandOverDate != ''">
+			<![CDATA[
+				AND a.hand_over_date <= #{endHandOverDate}
+			]]>	
+			</if>
+			<if test="operator != null and operator != ''">
+				AND a.operator LIKE 
+					<if test="dbName == 'oracle'">'%'||#{operator}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{operator}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{operator},'%')</if>
+			</if>
+			<if test="recipient != null and recipient != ''">
+				AND a.recipient LIKE 
+					<if test="dbName == 'oracle'">'%'||#{recipient}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{recipient}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{recipient},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TblScatteredFiles">
+		SELECT 
+			<include refid="tblScatteredFilesColumns"/>
+		FROM tbl_scattered_files a
+		<include refid="tblScatteredFilesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_scattered_files(
+			id,
+			hand_over_unit,
+			hand_over_date,
+			operator,
+			recipient,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{handOverUnit},
+			#{handOverDate},
+			#{operator},
+			#{recipient},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tbl_scattered_files SET 	
+			hand_over_unit = #{handOverUnit},
+			hand_over_date = #{handOverDate},
+			operator = #{operator},
+			recipient = #{recipient},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tbl_scattered_files SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

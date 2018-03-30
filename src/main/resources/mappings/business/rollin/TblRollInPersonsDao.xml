@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.rollin.dao.TblRollInPersonsDao">
+    
+	<sql id="tblRollInPersonsColumns">
+		a.id AS "id",
+		a.main_id AS "mainId",
+		a.name AS "name",
+		a.duty AS "duty",
+		a.in_type AS "inType",
+		a.reason_content AS "reasonContent",
+		a.original_no AS "originalNo",
+		a.vice_no AS "viceNo",
+		a.files_no AS "filesNo",
+		a.certificate_no AS "certificateNo",
+		a.archives_no AS "archivesNo",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="tblRollInPersonsJoins">
+		LEFT JOIN tbl_roll_in b ON b.id = a.main_id
+	</sql>
+    
+	<select id="get" resultType="TblRollInPersons">
+		SELECT 
+			<include refid="tblRollInPersonsColumns"/>
+		FROM tbl_roll_in_persons a
+		<include refid="tblRollInPersonsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TblRollInPersons">
+		SELECT 
+			<include refid="tblRollInPersonsColumns"/>
+		FROM tbl_roll_in_persons a
+		<include refid="tblRollInPersonsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="mainId != null and mainId != ''">
+				AND a.main_id = #{mainId}
+			</if>
+			<if test="startCreateDate != null and startCreateDate != ''">
+			<![CDATA[
+				AND a.create_date >= #{startCreateDate}
+			]]>
+			</if>
+			<if test="endCreateDate != null and endCreateDate != ''">
+			<![CDATA[
+				AND a.create_date <= #{endCreateDate}
+			]]>
+			</if>
+			<if test="name != null and name != ''">
+			<![CDATA[
+				AND a.name like  concat('%', #{name}, '%')
+			]]>
+			</if>
+			<if test="duty != null and duty != ''">
+			<![CDATA[
+				AND a.duty like concat('%', #{duty}, '%')
+			]]>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TblRollInPersons">
+		SELECT 
+			<include refid="tblRollInPersonsColumns"/>
+		FROM tbl_roll_in_persons a
+		<include refid="tblRollInPersonsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_roll_in_persons(
+			id,
+			main_id,
+			name,
+			duty,
+			in_type,
+			reason_content,
+			original_no,
+			vice_no,
+			files_no,
+			certificate_no,
+			archives_no,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{mainId},
+			#{name},
+			#{duty},
+			#{inType},
+			#{reasonContent},
+			#{originalNo},
+			#{viceNo},
+			#{filesNo},
+			#{certificateNo},
+			#{archivesNo},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tbl_roll_in_persons SET 	
+			main_id = #{mainId},
+			name = #{name},
+			duty = #{duty},
+			in_type = #{inType},
+			reason_content = #{reasonContent},
+			original_no = #{originalNo},
+			vice_no = #{viceNo},
+			files_no = #{filesNo},
+			certificate_no = #{certificateNo},
+			archives_no = #{archivesNo},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tbl_roll_in_persons SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE main_id = #{mainId}
+			</otherwise>
+		</choose>
+	</update>
+	
+</mapper>

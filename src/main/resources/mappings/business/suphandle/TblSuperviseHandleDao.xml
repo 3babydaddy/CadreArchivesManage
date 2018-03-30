@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.suphandle.dao.TblSuperviseHandleDao">
+    
+	<sql id="tblSuperviseHandleColumns">
+		a.id AS "id",
+		a.archives_no AS "archivesNo",
+		a.name AS "name",
+		a.sex AS "sex",
+		a.birthday AS "birthday",
+		a.unit_duty AS "unitDuty",
+		a.status AS "status",
+		a.present_duty_time AS "presentDutyTime",
+		a.raised_time AS "raisedTime",
+		a.count_down AS "countDown",
+		a.waring_status AS "waringStatus",
+		a.certificate_no AS "certificateNo",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="tblSuperviseHandleJoins">
+	</sql>
+    
+	<select id="get" resultType="TblSuperviseHandle">
+		SELECT 
+			<include refid="tblSuperviseHandleColumns"/>
+		FROM tbl_supervise_handle a
+		<include refid="tblSuperviseHandleJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TblSuperviseHandle">
+		SELECT 
+			<include refid="tblSuperviseHandleColumns"/>
+		FROM tbl_supervise_handle a
+		<include refid="tblSuperviseHandleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="sex != null and sex != ''">
+				AND a.sex = #{sex}
+			</if>
+			<if test="startBirthday != null and startBirthday != ''">
+			<![CDATA[
+				AND a.birthday >= #{startBirthday}
+			]]>
+			</if>
+			<if test="endBirthday != null and endBirthday != ''">
+			<![CDATA[
+				AND a.birthday <= #{endBirthday}
+			]]>
+			</if>
+			<if test="unitDuty != null and unitDuty != ''">
+				AND a.unit_duty = #{unitDuty}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="startRaisedTime != null and startRaisedTime != ''">
+			<![CDATA[
+				AND a.raised_time >= #{startRaisedTime}
+			]]>
+			</if>
+			<if test="endRaisedTime != null and endRaisedTime != ''">
+			<![CDATA[
+				AND a.raised_time <= #{endRaisedTime}
+			]]>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TblSuperviseHandle">
+		SELECT 
+			<include refid="tblSuperviseHandleColumns"/>
+		FROM tbl_supervise_handle a
+		<include refid="tblSuperviseHandleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_supervise_handle(
+			id,
+			archives_no,
+			name,
+			sex,
+			birthday,
+			unit_duty,
+			status,
+			present_duty_time,
+			raised_time,
+			count_down,
+			waring_status,
+			certificate_no,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{archivesNo},
+			#{name},
+			#{sex},
+			#{birthday},
+			#{unitDuty},
+			#{status},
+			#{presentDutyTime},
+			#{raisedTime},
+			#{countDown},
+			#{waringStatus},
+			#{certificateNo},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tbl_supervise_handle SET 	
+			archives_no = #{archivesNo},
+			name = #{name},
+			sex = #{sex},
+			birthday = #{birthday},
+			unit_duty = #{unitDuty},
+			status = #{status},
+			present_duty_time = #{presentDutyTime},
+			raised_time = #{raisedTime},
+			count_down = #{countDown},
+			waring_status = #{waringStatus},
+			certificate_no = #{certificateNo},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tbl_supervise_handle SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

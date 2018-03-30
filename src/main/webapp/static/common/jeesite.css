@@ -167,7 +167,7 @@ input.btn:hover {*color:#333333}
 	margin-left:13px;
 }
 #contentTable{
-	margin-left:13px;
+	margin-left:0px;
 }
 .table th, .table td {
 	vertical-align: middle;

@@ -31,10 +31,6 @@
 		<li class="active"><a href="${ctx}/retiredadre/retiredCadre/form?id=${retiredCadre.id}">退休干部信息操作<shiro:hasPermission name="retiredadre:retiredCadre:edit">${not empty retiredCadre.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="retiredadre:retiredCadre:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="retiredCadre" action="${ctx}/retiredadre/retiredCadre/save" method="post" class="form-horizontal">
-		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>
-			<input id="btnCancel" class="btn btn-primary" style="margin-left:100px;" type="button" value="返 回" onclick="history.go(-1)"/>
-		</div>
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
@@ -85,6 +81,10 @@
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
+		</div>
+		<div class="form-actions">
+			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>
+			<input id="btnCancel" class="btn btn-primary" style="margin-left:100px;" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
 </body>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.rollout.dao.TblRollOutDao">
+    
+	<sql id="tblRollOutColumns">
+		a.id AS "id",
+		a.roll_out_time AS "rollOutTime",
+		a.operator AS "operator",
+		a.recipient AS "recipient",
+		a.before_unit AS "beforeUnit",
+		a.save_unit AS "saveUnit",
+		a.receive_unit_tel AS "receiveUnitTel",
+		a.is_return AS "isReturn",
+		a.roll_approve_attachment AS "rollApproveAttachment",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.character AS "character",
+		a.number AS "number"
+	</sql>
+	
+	<sql id="tblRollOutJoins">
+	</sql>
+    
+	<select id="get" resultType="TblRollOut">
+		SELECT 
+			<include refid="tblRollOutColumns"/>
+		FROM tbl_roll_out a
+		<include refid="tblRollOutJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TblRollOut">
+		SELECT 
+			<include refid="tblRollOutColumns"/>
+		FROM tbl_roll_out a
+		<include refid="tblRollOutJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="startRollOutTime != null and startRollOutTime != ''">
+			<![CDATA[
+				AND a.roll_out_time >= #{startRollOutTime}
+			]]>				
+			</if>
+			<if test="endRollOutTime != null and endRollOutTime != ''">
+			<![CDATA[
+				AND a.roll_out_time <= #{endRollOutTime}
+			]]>	
+			</if>
+			<if test="recipient != null and recipient != ''">
+				AND a.recipient LIKE 
+					<if test="dbName == 'oracle'">'%'||#{recipient}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{recipient}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{recipient},'%')</if>
+			</if>
+			<if test="saveUnit != null and saveUnit != ''">
+				AND a.save_unit LIKE 
+					<if test="dbName == 'oracle'">'%'||#{saveUnit}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{saveUnit}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{saveUnit},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TblRollOut">
+		SELECT 
+			<include refid="tblRollOutColumns"/>
+		FROM tbl_roll_out a
+		<include refid="tblRollOutJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_roll_out(
+			id,
+			roll_out_time,
+			operator,
+			recipient,
+			before_unit,
+			save_unit,
+			receive_unit_tel,
+			is_return,
+			roll_approve_attachment,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			`character`,
+			number
+		) VALUES (
+			#{id},
+			#{rollOutTime},
+			#{operator},
+			#{recipient},
+			#{beforeUnit},
+			#{saveUnit},
+			#{receiveUnitTel},
+			#{isReturn},
+			#{rollApproveAttachment},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{character},
+			#{number}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tbl_roll_out SET 	
+			roll_out_time = #{rollOutTime},
+			operator = #{operator},
+			recipient = #{recipient},
+			before_unit = #{beforeUnit},
+			save_unit = #{saveUnit},
+			receive_unit_tel = #{receiveUnitTel},
+			is_return = #{isReturn},
+			roll_approve_attachment = #{rollApproveAttachment},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			character = #{character},
+			number = #{number}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tbl_roll_out SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.rollin.dao.TblRollInDao">
+    
+	<sql id="tblRollInColumns">
+		a.id AS "id",
+		a.character AS "character",
+		a.number AS "number",
+		a.roll_in_time AS "rollInTime",
+		a.operator AS "operator",
+		a.recipient AS "recipient",
+		a.before_unit AS "beforeUnit",
+		a.before_unit_tel AS "beforeUnitTel",
+		a.save_unit AS "saveUnit",
+		a.roll_approve_attachment AS "rollApproveAttachment",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="tblRollInJoins">
+	</sql>
+    
+	<select id="get" resultType="TblRollIn">
+		SELECT 
+			<include refid="tblRollInColumns"/>
+		FROM tbl_roll_in a
+		<include refid="tblRollInJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TblRollIn">
+		SELECT 
+			<include refid="tblRollInColumns"/>
+		FROM tbl_roll_in a
+		<include refid="tblRollInJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="startRollInTime != null and startRollInTime != ''">
+			<![CDATA[
+				AND a.roll_in_time >= #{startRollInTime}
+			]]>				
+			</if>
+			<if test="endRollInTime != null and endRollInTime != ''">
+			<![CDATA[
+				AND a.roll_in_time <= #{endRollInTime}
+			]]>				
+			</if>
+			<if test="recipient != null and recipient != ''">
+				AND a.recipient like concat('%', #{recipient}, '%') 
+			</if>
+			<if test="beforeUnit != null and beforeUnit != ''">
+				AND a.before_unit like concat('%', #{beforeUnit}, '%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TblRollIn">
+		SELECT 
+			<include refid="tblRollInColumns"/>
+		FROM tbl_roll_in a
+		<include refid="tblRollInJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_roll_in(
+			id,
+			`character`,
+			number,
+			roll_in_time,
+			operator,
+			recipient,
+			before_unit,
+			before_unit_tel,
+			save_unit,
+			roll_approve_attachment,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{character},
+			#{number},
+			#{rollInTime},
+			#{operator},
+			#{recipient},
+			#{beforeUnit},
+			#{beforeUnitTel},
+			#{saveUnit},
+			#{rollApproveAttachment},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tbl_roll_in SET 	
+			character = #{character},
+			number = #{number},
+			roll_in_time = #{rollInTime},
+			operator = #{operator},
+			recipient = #{recipient},
+			before_unit = #{beforeUnit},
+			before_unit_tel = #{beforeUnitTel},
+			save_unit = #{saveUnit},
+			roll_approve_attachment = #{rollApproveAttachment},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tbl_roll_in SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

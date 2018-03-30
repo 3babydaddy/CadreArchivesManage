@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.attachment.dao.TblCommonAttachmentDao">
+    
+	<sql id="tblCommonAttachmentColumns">
+		a.id AS "id",
+		a.file_name AS "fileName",
+		a.save_filename AS "saveFilename",
+		a.file_path AS "filePath",
+		a.file_size AS "fileSize",
+		a.file_type AS "fileType",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="tblCommonAttachmentJoins">
+	</sql>
+    
+	<select id="get" resultType="TblCommonAttachment">
+		SELECT 
+			<include refid="tblCommonAttachmentColumns"/>
+		FROM tbl_common_attachment a
+		<include refid="tblCommonAttachmentJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TblCommonAttachment">
+		SELECT 
+			<include refid="tblCommonAttachmentColumns"/>
+		FROM tbl_common_attachment a
+		<include refid="tblCommonAttachmentJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TblCommonAttachment">
+		SELECT 
+			<include refid="tblCommonAttachmentColumns"/>
+		FROM tbl_common_attachment a
+		<include refid="tblCommonAttachmentJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_common_attachment(
+			id,
+			file_name,
+			save_filename,
+			file_path,
+			file_size,
+			file_type,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{fileName},
+			#{saveFilename},
+			#{filePath},
+			#{fileSize},
+			#{fileType},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tbl_common_attachment SET 	
+			file_name = #{fileName},
+			save_filename = #{saveFilename},
+			file_path = #{filePath},
+			file_size = #{fileSize},
+			file_type = #{fileType},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tbl_common_attachment SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

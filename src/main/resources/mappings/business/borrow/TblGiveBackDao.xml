@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfkj.business.borrow.dao.TblGiveBackDao">
+    
+	<sql id="tblGiveBackColumns">
+		a.id AS "id",
+		a.main_id AS "mainId",
+		a.return_time AS "returnTime",
+		a.return_person AS "returnPerson",
+		a.photo AS "photo",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="tblGiveBackJoins">
+	</sql>
+    
+	<select id="get" resultType="TblGiveBack">
+		SELECT 
+			<include refid="tblGiveBackColumns"/>
+		FROM tbl_give_back a
+		<include refid="tblGiveBackJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TblGiveBack">
+		SELECT 
+			<include refid="tblGiveBackColumns"/>
+		FROM tbl_give_back a
+		<include refid="tblGiveBackJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TblGiveBack">
+		SELECT 
+			<include refid="tblGiveBackColumns"/>
+		FROM tbl_give_back a
+		<include refid="tblGiveBackJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_give_back(
+			id,
+			main_id,
+			return_time,
+			return_person,
+			photo,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{mainId},
+			#{returnTime},
+			#{returnPerson},
+			#{photo},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tbl_give_back SET 	
+			main_id = #{mainId},
+			return_time = #{returnTime},
+			return_person = #{returnPerson},
+			photo = #{photo},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tbl_give_back SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
