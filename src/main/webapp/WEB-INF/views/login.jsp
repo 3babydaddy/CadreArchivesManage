@@ -23,6 +23,14 @@
 		var loginWrap = $(".loginWrap");
 		loginWrap.width(screenWidth + "px");
 		loginWrap.height(screenHeight + "px");
+		
+		$(".header-div").height($(".header").height() + "px");
+		$(".header-div").css("display", "table-cell");
+		$(".header-div").css("vertical-align", "middle");
+		debugger;
+		$(".hr-login-bottom").find("p").css("position","relative");
+		$(".hr-login-bottom").find("p").css("top","30%");
+		
 
 		$('#username').val("");
 		$('#password').val("");
@@ -46,7 +54,7 @@
 	<div class="loginWrap">
 		<div class="main">
 			<div class="header">
-				<div>
+				<div class="header-div">
 					<span class="header-text">${fns:getConfig('loginHeaderSystem')}</span>
 				</div>
 			</div>
@@ -83,8 +91,8 @@
 			</div>
 			<div class="hr-login-bottom">
 				<!-- copyright版权信息 -->
-				<p>${fns:getConfig('loginFooter_line1')}</p>
-				<p>${fns:getConfig('loginFooter_line3')}</p>
+				<p class="footer-p1">${fns:getConfig('loginFooter_line1')}</p>
+				<p class="footer-p2">${fns:getConfig('loginFooter_line3')}</p>
 			</div>
 		</div>
 	</div>
