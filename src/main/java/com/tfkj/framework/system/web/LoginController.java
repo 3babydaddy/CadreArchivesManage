@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +25,6 @@ import com.tfkj.framework.core.utils.StringUtils;
 import com.tfkj.framework.core.web.BaseController;
 import com.tfkj.framework.system.entity.User;
 import com.tfkj.framework.system.security.FormAuthenticationFilter;
-import com.tfkj.framework.system.security.SystemAuthorizingRealm.Principal;
 import com.tfkj.framework.system.utils.LoginModelUtil;
 import com.tfkj.framework.system.utils.UserUtils;
 
@@ -67,9 +65,10 @@ public class LoginController extends BaseController {
 			CookieUtils.setCookie(response, "LOGINED", "false");
 		}
 		// 如果已经登录，则跳转到管理首页
-		// if (principal != null && !principal.isMobileLogin()) {
-		// return "redirect:" + adminPath;
-		// }
+		Subject subject = UserUtils.getSubject();
+		if (subject != null && subject.isAuthenticated()) {
+			return "redirect:" + adminPath;
+		}
 		return "login";
 	}
 
@@ -224,7 +223,6 @@ public class LoginController extends BaseController {
 	 * @return boolean 返回类型
 	 * @throws
 	 */
-	@SuppressWarnings("unchecked")
 	public static boolean isValidateLoginKey(User user, String loginKey,
 			String randomString) {
 
