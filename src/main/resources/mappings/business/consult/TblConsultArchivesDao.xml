@@ -28,6 +28,7 @@
     
 	<select id="get" resultType="TblConsultArchives">
 		SELECT 
+			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as consultUnitName,
 			<include refid="tblConsultArchivesColumns"/>
 		FROM tbl_consult_archives a
 		<include refid="tblConsultArchivesJoins"/>
@@ -36,6 +37,7 @@
 	
 	<select id="findList" resultType="TblConsultArchives">
 		SELECT 
+			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as consultUnitName,
 			<include refid="tblConsultArchivesColumns"/>
 		FROM tbl_consult_archives a
 		<include refid="tblConsultArchivesJoins"/>
@@ -78,6 +80,7 @@
 	
 	<select id="findAllList" resultType="TblConsultArchives">
 		SELECT 
+			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as consultUnitName,
 			<include refid="tblConsultArchivesColumns"/>
 		FROM tbl_consult_archives a
 		<include refid="tblConsultArchivesJoins"/>

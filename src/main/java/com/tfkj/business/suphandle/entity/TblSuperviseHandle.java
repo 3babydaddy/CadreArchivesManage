@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tfkj.framework.core.persistence.DataEntity;
+import com.tfkj.framework.core.utils.excel.annotation.ExcelField;
 
 
 /**
@@ -54,6 +55,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@Length(min=0, max=64, message="姓名长度必须介于 0 和 64 之间")
+	@ExcelField(title = "姓名", align = 2, sort = 10)
 	public String getName() {
 		return name;
 	}
@@ -63,6 +65,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@Length(min=0, max=2, message="性别长度必须介于 0 和 2 之间")
+	@ExcelField(title = "性别", align = 2, sort = 20, dictType="sex")
 	public String getSex() {
 		return sex;
 	}
@@ -72,6 +75,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title = "出生日期", align = 2, sort = 30)
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -81,6 +85,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@Length(min=0, max=128, message="单位及职务长度必须介于 0 和 128 之间")
+	@ExcelField(title = "单位及职务", align = 2, sort = 40)
 	public String getUnitDuty() {
 		return unitDuty;
 	}
@@ -90,6 +95,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@Length(min=0, max=1, message="业务状态长度必须介于 0 和 1 之间")
+	@ExcelField(align = 2, sort = 60, title = "状态", dictType="supervise_handle_status")
 	public String getStatus() {
 		return status;
 	}
@@ -108,6 +114,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title = "应提档日期", align = 2, sort = 60)
 	public Date getRaisedTime() {
 		return raisedTime;
 	}

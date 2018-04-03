@@ -105,13 +105,15 @@
 		<div class="control-group">
 			<label class="control-label">原存档单位：</label>
 			<div class="controls">
-				<form:input path="beforeUnit" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<sys:treeselect2 id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollIn.beforeUnit}" 
+									labelName="beforeUnitName" labelValue="${tblRollIn.beforeUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">现存档单位：</label>
 			<div class="controls">
-				<form:input path="saveUnit" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<sys:treeselect2 id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollIn.saveUnit}" 
+									labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
@@ -133,8 +135,8 @@
 								<th>副本（卷）</th>
 								<th>档案材料（份）</th>
 								<th>单位及职务</th>
-								<th>转出形式</th>
-								<th>转出事由</th>
+								<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;转出形式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+								<th>&nbsp;&nbsp;转出事由&nbsp;&nbsp;</th>
 								<th>转出原因</th>
 								<th>审批附件</th>
 								<th>备注信息</th>
@@ -182,8 +184,7 @@
 								<input id="tblRollOutPersonsList{{idx}}_reasonContent" name="tblRollOutPersonsList[{{idx}}].reasonContent" type="text" value="{{row.reasonContent}}" maxlength="2000" class="input-small "/>
 							</td>
 							<td>
-								<input id="tblRollOutPersonsList{{idx}}_approveAttachment" name="tblRollOutPersonsList[{{idx}}].approveAttachment" type="hidden" value="{{row.approveAttachment}}" maxlength="64"/>
-								<sys:ckfinder input="tblRollOutPersonsList{{idx}}_approveAttachment" type="files" uploadPath="/rollouts/tblRollOut" selectMultiple="true"/>
+								<sys:upFIle input="tblRollOutPersonsList{{idx}}_approveAttachment"  type="files"  name="tblRollOutPersonsList[{{idx}}].approveAttachment"  value="{{row.approveAttachment}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 							</td>
 							<td>
 								<textarea id="tblRollOutPersonsList{{idx}}_remarks" name="tblRollOutPersonsList[{{idx}}].remarks" rows="2" maxlength="255" class="input-small ">{{row.remarks}}</textarea>

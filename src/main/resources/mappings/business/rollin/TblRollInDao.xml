@@ -26,6 +26,8 @@
     
 	<select id="get" resultType="TblRollIn">
 		SELECT 
+			(select label from sys_dict where id = a.before_unit and DEL_FLAG = '0') as beforeUnitName,
+			(select label from sys_dict where id = a.save_unit and DEL_FLAG = '0') as saveUnitName,
 			<include refid="tblRollInColumns"/>
 		FROM tbl_roll_in a
 		<include refid="tblRollInJoins"/>
@@ -34,6 +36,8 @@
 	
 	<select id="findList" resultType="TblRollIn">
 		SELECT 
+			(select label from sys_dict where id = a.before_unit and DEL_FLAG = '0') as beforeUnitName,
+			(select label from sys_dict where id = a.save_unit and DEL_FLAG = '0') as saveUnitName,
 			<include refid="tblRollInColumns"/>
 		FROM tbl_roll_in a
 		<include refid="tblRollInJoins"/>
@@ -68,6 +72,8 @@
 	
 	<select id="findAllList" resultType="TblRollIn">
 		SELECT 
+			(select label from sys_dict where id = a.before_unit and DEL_FLAG = '0') as beforeUnitName,
+			(select label from sys_dict where id = a.save_unit and DEL_FLAG = '0') as saveUnitName,
 			<include refid="tblRollInColumns"/>
 		FROM tbl_roll_in a
 		<include refid="tblRollInJoins"/>

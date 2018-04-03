@@ -12,8 +12,7 @@ import com.tfkj.business.suphandle.dao.TblSuperviseHandleDao;
 import com.tfkj.business.suphandle.entity.TblSuperviseHandle;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
-
-
+import com.tfkj.framework.core.utils.StringUtils;
 
 /**
  * 督查督办Service
@@ -42,8 +41,15 @@ public class TblSuperviseHandleService extends CrudService<TblSuperviseHandleDao
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(TblSuperviseHandle tblSuperviseHandle) {
-		super.delete(tblSuperviseHandle);
+	public void delete(TblSuperviseHandle tblSuperviseHandle, String idStr) {
+		if(StringUtils.isNotBlank(idStr)){
+			String[] idArray = idStr.split(",");
+			for(int i = 0; i < idArray.length; i++){
+				TblSuperviseHandle info = new TblSuperviseHandle();
+				info.setId(idArray[i]);
+				super.delete(info);
+			}
+		}
 	}
 	
 }

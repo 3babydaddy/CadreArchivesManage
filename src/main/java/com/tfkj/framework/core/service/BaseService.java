@@ -7,10 +7,13 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.tf.permission.client.entity.DepartmentInfo;
 import com.tf.permission.client.entity.User;
+import com.tf.permission.client.service.PermissionClientService;
 import com.tfkj.framework.core.persistence.BaseEntity;
 import com.tfkj.framework.core.utils.StringUtils;
 
@@ -28,6 +31,8 @@ public abstract class BaseService {
 	 */
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Autowired
+	private PermissionClientService permissionClientService;
 	/**
 	 * SERVICE层操作是否成功
 	 */
@@ -158,6 +163,13 @@ public abstract class BaseService {
 		 * sqlString.toString());
 		 */
 
+	}
+	
+	public List<DepartmentInfo> getAllDepts(){
+		
+		List<DepartmentInfo> allDepartments = permissionClientService.findAllDepartments();
+		
+		return allDepartments;
 	}
 
 }

@@ -121,7 +121,7 @@
         ${input}Preview();
     }
     function ${input}Preview(dqInput,dqOl,dqA){
-        var li, urls =dqInput.val().split("|");
+    	var li, urls =dqInput.val().split("|");
         dqOl.children().remove();
         for (var i=0; i<urls.length; i++){
             if (urls[i]!=""){//<c:if test="${type eq 'thumb' || type eq 'images'}">

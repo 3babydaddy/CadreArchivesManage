@@ -26,6 +26,7 @@
     
 	<select id="get" resultType="TblCheckPerson">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblCheckPersonColumns"/>
 		FROM tbl_check_person a
 		<include refid="tblCheckPersonJoins"/>
@@ -34,6 +35,7 @@
 	
 	<select id="findList" resultType="TblCheckPerson">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblCheckPersonColumns"/>
 		FROM tbl_check_person a
 		<include refid="tblCheckPersonJoins"/>
@@ -61,6 +63,7 @@
 	
 	<select id="findAllList" resultType="TblCheckPerson">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblCheckPersonColumns"/>
 		FROM tbl_check_person a
 		<include refid="tblCheckPersonJoins"/>

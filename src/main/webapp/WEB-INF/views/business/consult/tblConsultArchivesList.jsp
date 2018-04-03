@@ -84,7 +84,8 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label>查阅单位：</label>
-				<form:input path="consultUnit" htmlEscape="false" maxlength="255" class="input-medium"/>
+				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}" 
+									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect>
 			</li>
 			<li><label>何人档案：</label>
 				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>
@@ -131,7 +132,7 @@
 					<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${tblConsultArchives.consultUnit}
+					${tblConsultArchives.consultUnitName}
 				</td>
 				<td>
 					${tblConsultArchives.tarStr}

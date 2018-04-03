@@ -67,7 +67,8 @@
 		<div class="control-group">
 			<label class="control-label">移交单位：</label>
 			<div class="controls">
-				<form:input path="handOverUnit" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<sys:treeselect2 url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
+									labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表"></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">

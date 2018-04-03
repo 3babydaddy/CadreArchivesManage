@@ -116,4 +116,33 @@ public class DictController extends BaseController {
 		dict.setType(type);
 		return dictService.findList(dict);
 	}
+	
+	/**
+	 * 获取机构JSON数据。
+	 * @param type	类型（单位列表）
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "treeDataPop")
+	@ResponseBody
+	public List<Map<String, Object>> treeDataPop(@RequestParam(required=false) String extId, @RequestParam(required=false) String type,
+			@RequestParam(required=false) Long grade, @RequestParam(required=false) Boolean isAll, HttpServletResponse response) {
+		List<Map<String, Object>> mapList = Lists.newArrayList();
+		Dict dict = new Dict();
+		dict.setType("unit_list");
+		List<Dict> list = dictService.findList(dict);
+		for (int i=0; i<list.size(); i++){
+			Dict e = list.get(i);
+			Map<String, Object> map = Maps.newHashMap();
+			map.put("id", e.getId());
+			map.put("pId", e.getParentId());
+			map.put("pIds", e.getParentId());
+			map.put("name", e.getLabel());
+			if (e.getId().equals(e.getParentId())){
+				map.put("isParent", true);
+			}
+			mapList.add(map);
+		}
+		return mapList;
+	}
 }

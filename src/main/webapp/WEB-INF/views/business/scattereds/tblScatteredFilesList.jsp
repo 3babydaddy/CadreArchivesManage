@@ -84,7 +84,9 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label>移交单位：</label>
-				<form:input path="handOverUnit" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<sys:treeselect url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
+									labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表"></sys:treeselect>
+			
 			</li>
 			<li><label>经手人：</label>
 				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-medium"/>
@@ -128,7 +130,7 @@
 					<input type="checkbox" value="${tblBorrowArchives.id}" />
 				</td>
 				<td><a href="${ctx}/scattereds/tblScatteredFiles/personlist?mainId=${tblScatteredFiles.id}">
-					${tblScatteredFiles.handOverUnit}</a>
+					${tblScatteredFiles.handOverUnitName}</a>
 				</td>
 				<td>
 					<fmt:formatDate value="${tblScatteredFiles.handOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

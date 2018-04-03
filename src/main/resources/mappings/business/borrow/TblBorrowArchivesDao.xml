@@ -29,6 +29,7 @@
     
 	<select id="get" resultType="TblBorrowArchives">
 		SELECT 
+			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as consultUnitName,
 			<include refid="tblBorrowArchivesColumns"/>
 		FROM tbl_borrow_archives a
 		<include refid="tblBorrowArchivesJoins"/>
@@ -37,6 +38,9 @@
 	
 	<select id="findList" resultType="TblBorrowArchives">
 		SELECT 
+			b.return_person as backOperator,
+			b.return_time as backDate,
+			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as consultUnitName,
 			<include refid="tblBorrowArchivesColumns"/>
 		FROM tbl_borrow_archives a 
 		<include refid="tblBorrowArchivesJoins"/>
@@ -101,6 +105,9 @@
 	
 	<select id="findAllList" resultType="TblBorrowArchives">
 		SELECT 
+			b.return_person as backOperator,
+			b.return_time as backDate,
+			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as consultUnitName,
 			<include refid="tblBorrowArchivesColumns"/>
 		FROM tbl_borrow_archives a
 		<include refid="tblBorrowArchivesJoins"/>

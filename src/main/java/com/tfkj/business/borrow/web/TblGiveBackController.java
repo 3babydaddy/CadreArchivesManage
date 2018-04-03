@@ -3,6 +3,9 @@
  */
 package com.tfkj.business.borrow.web;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tfkj.business.borrow.entity.TblGiveBack;
 import com.tfkj.business.borrow.service.TblGiveBackService;
 import com.tfkj.framework.core.config.Global;
@@ -59,13 +64,14 @@ public class TblGiveBackController extends BaseController {
 	}
 
 	@RequestMapping(value = "save")
+	@ResponseBody
 	public String save(TblGiveBack tblGiveBack, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, tblGiveBack)){
 			return form(tblGiveBack, model);
 		}
 		tblGiveBackService.save(tblGiveBack);
 		addMessage(redirectAttributes, "保存借阅归还成功");
-		return "redirect:"+Global.getAdminPath()+"/borrow/tblGiveBack/?repage";
+		return "";
 	}
 	
 	@RequestMapping(value = "delete")
@@ -75,4 +81,16 @@ public class TblGiveBackController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/borrow/tblGiveBack/?repage";
 	}
 
+	@RequestMapping(value = "getGiveBackInfo")
+	@ResponseBody
+	public String getGiveBackInfo(TblGiveBack tblGiveBack, RedirectAttributes redirectAttributes) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<TblGiveBack> list  = tblGiveBackService.findList(tblGiveBack);
+		if(list.size() > 0){
+			TblGiveBack info = list.get(0);
+			info.setReturnTimeTxt(sdf.format(info.getReturnTime()));
+			return JSONObject.toJSONString(info);
+		}
+		return "";
+	}
 }

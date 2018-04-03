@@ -22,7 +22,9 @@
 					}
 				}
 			});
+			
 		});
+		
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
 				idx: idx, delBtn: true, row: row
@@ -54,6 +56,7 @@
 				$(obj).parent().parent().removeClass("error");
 			}
 		}
+		
 	</script>
 </head>
 <body>
@@ -75,7 +78,8 @@
 		<div class="control-group">
 			<label class="control-label">借阅单位：</label>
 			<div class="controls">
-				<form:input path="consultUnit" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<sys:treeselect2 url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblBorrowArchives.consultUnit}" 
+									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表"></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
@@ -93,8 +97,7 @@
 		<div class="control-group">
 			<label class="control-label">借阅审批附件：</label>
 			<div class="controls">
-				<form:hidden id="approveAttachment" path="approveAttachment" htmlEscape="false" maxlength="64" class="input-xlarge"/>
-				<sys:ckfinder input="approveAttachment" type="files" uploadPath="/consult/tblConsultArchives" selectMultiple="true"/>
+				<sys:upFIle input="approveAttachment"  type="files"  name="approveAttachment"  value="${tblBorrowArchives.approveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -120,7 +123,7 @@
 						<tbody id="tblBorrowTargetList">
 						</tbody>
 						<tfoot>
-							<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblBorrowTargetList', tblBorrowTargetRowIdx, tblBorrowTargetTpl);tblBorrowTargetRowIdx = tblBorrowTargetRowIdx + 1;" class="btn">新增</a></td></tr>
+							<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblBorrowTargetList', tblBorrowTargetRowIdx, tblBorrowTargetTpl);tblBorrowTargetRowIdx = tblBorrowTargetRowIdx + 1;" class="btns">新增</a></td></tr>
 						</tfoot>
 					</table>
 					<script type="text/template" id="tblBorrowTargetTpl">//<!--
@@ -133,7 +136,8 @@
 								<input id="tblBorrowTargetList{{idx}}_name" name="tblBorrowTargetList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
 							<td>
-								<input id="tblBorrowTargetList{{idx}}_unit" name="tblBorrowTargetList[{{idx}}].unit" type="text" value="{{row.unit}}" maxlength="255" class="input-small "/>
+								<sys:treeselect url="/sys/dict/treeDataPop" id="tblBorrowTargetList{{idx}}_unit" name="tblBorrowTargetList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
+									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect>
 							</td>
 							<td>
 								<input id="tblBorrowTargetList{{idx}}_duty" name="tblBorrowTargetList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input-small "/>
@@ -178,7 +182,7 @@
 						<tbody id="tblBorrowPersonList">
 						</tbody>
 						<tfoot>
-							<tr><td colspan="10"><a href="javascript:" onclick="addRow('#tblBorrowPersonList', tblBorrowPersonRowIdx, tblBorrowPersonTpl);tblBorrowPersonRowIdx = tblBorrowPersonRowIdx + 1;" class="btn">新增</a></td></tr>
+							<tr><td colspan="10"><a href="javascript:" onclick="addRow('#tblBorrowPersonList', tblBorrowPersonRowIdx, tblBorrowPersonTpl);tblBorrowPersonRowIdx = tblBorrowPersonRowIdx + 1;" class="btns">新增</a></td></tr>
 						</tfoot>
 					</table>
 					<script type="text/template" id="tblBorrowPersonTpl">//<!--
@@ -191,10 +195,11 @@
 								<input id="tblBorrowPersonList{{idx}}_name" name="tblBorrowPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
 							<td>
-								<input id="tblBorrowPersonList{{idx}}_photo" name="tblBorrowPersonList[{{idx}}].photo" type="text" value="{{row.photo}}" maxlength="64" class="input-small "/>
+								<sys:upFIle input="tblBorrowPersonList{{idx}}_photo"  type="files"  name="tblBorrowPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 							</td>
 							<td>
-								<input id="tblBorrowPersonList{{idx}}_unit" name="tblBorrowPersonList[{{idx}}].unit" type="text" value="{{row.unit}}" maxlength="255" class="input-small "/>
+								<sys:treeselect url="/sys/dict/treeDataPop" id="tblBorrowPersonList{{idx}}_unit" name="tblBorrowPersonList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
+									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect>
 							</td>
 							<td>
 								<input id="tblBorrowPersonList{{idx}}_duty" name="tblBorrowPersonList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input-small "/>

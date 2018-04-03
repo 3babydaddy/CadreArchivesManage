@@ -75,7 +75,7 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>>
      */
     public PageResult<T> findPage(T entity, PageParam pageParam) {
         // 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
-        entity.getSqlMap().put("dsf", dataScopeFilter(entity.getCurrentUser(), "o", "u"));
+        //entity.getSqlMap().put("dsf", dataScopeFilter(entity.getCurrentUser(), "o", "u"));
         PageHelper.offsetPage(pageParam.getOffset(), pageParam.getLimit());
         if (!StringUtils.isBlank(pageParam.getOrderBy())) {
             PageHelper.orderBy(pageParam.getOrderBy());

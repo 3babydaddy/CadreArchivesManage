@@ -34,6 +34,8 @@ public class TblRollIn extends DataEntity<TblRollIn> {
 	
 	private Date startRollInTime;
 	private Date endRollInTime;
+	private String beforeUnitName;
+	private String saveUnitName;
 	
 	public TblRollIn() {
 		super();
@@ -144,5 +146,21 @@ public class TblRollIn extends DataEntity<TblRollIn> {
 
 	public void setEndRollInTime(Date endRollInTime) {
 		this.endRollInTime = endRollInTime;
+	}
+
+	public String getBeforeUnitName() {
+		return beforeUnitName;
+	}
+
+	public void setBeforeUnitName(String beforeUnitName) {
+		this.beforeUnitName = beforeUnitName;
+	}
+
+	public String getSaveUnitName() {
+		return saveUnitName;
+	}
+
+	public void setSaveUnitName(String saveUnitName) {
+		this.saveUnitName = saveUnitName;
 	}
 }

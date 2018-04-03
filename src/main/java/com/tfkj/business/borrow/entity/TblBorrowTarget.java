@@ -24,6 +24,8 @@ public class TblBorrowTarget extends DataEntity<TblBorrowTarget> {
 	private String archivesNo;		// 档案号
 	private String certificateNo;		// 证件号
 	
+	private String unitName;
+	
 	public TblBorrowTarget() {
 		super();
 	}
@@ -93,6 +95,14 @@ public class TblBorrowTarget extends DataEntity<TblBorrowTarget> {
 
 	public void setCertificateNo(String certificateNo) {
 		this.certificateNo = certificateNo;
+	}
+
+	public String getUnitName() {
+		return unitName;
+	}
+
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
 	}
 	
 }

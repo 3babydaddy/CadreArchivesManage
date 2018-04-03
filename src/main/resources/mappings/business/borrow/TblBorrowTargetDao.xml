@@ -25,6 +25,7 @@
     
 	<select id="get" resultType="TblBorrowTarget">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblBorrowTargetColumns"/>
 		FROM tbl_borrow_target a
 		<include refid="tblBorrowTargetJoins"/>
@@ -33,6 +34,7 @@
 	
 	<select id="findList" resultType="TblBorrowTarget">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblBorrowTargetColumns"/>
 		FROM tbl_borrow_target a
 		<include refid="tblBorrowTargetJoins"/>
@@ -60,6 +62,7 @@
 	
 	<select id="findAllList" resultType="TblBorrowTarget">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblBorrowTargetColumns"/>
 		FROM tbl_borrow_target a
 		<include refid="tblBorrowTargetJoins"/>

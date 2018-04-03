@@ -25,6 +25,7 @@
     
 	<select id="get" resultType="TblCheckedTarget">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblCheckedTargetColumns"/>
 		FROM tbl_checked_target a
 		<include refid="tblCheckedTargetJoins"/>
@@ -33,6 +34,7 @@
 	
 	<select id="findList" resultType="TblCheckedTarget">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblCheckedTargetColumns"/>
 		FROM tbl_checked_target a
 		<include refid="tblCheckedTargetJoins"/>
@@ -60,6 +62,7 @@
 	
 	<select id="findAllList" resultType="TblCheckedTarget">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblCheckedTargetColumns"/>
 		FROM tbl_checked_target a
 		<include refid="tblCheckedTargetJoins"/>
