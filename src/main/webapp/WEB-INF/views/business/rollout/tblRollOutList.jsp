@@ -84,7 +84,8 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label style="width:85px;">现存档单位：</label>
-				<form:input path="saveUnit" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<sys:treeselect id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollIn.saveUnit}" 
+									labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect>
 			</li>
 			<li><label>接收人：</label>
 				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-medium"/>
@@ -132,7 +133,7 @@
 					<fmt:formatDate value="${tblRollOut.rollOutTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${tblRollOut.saveUnit}
+					${tblRollOut.saveUnitName}
 				</td>
 				<td>
 					${tblRollOut.recipient}

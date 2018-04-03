@@ -138,7 +138,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 		this.archivesNo = archivesNo;
 	}
 	
-	@Length(min=0, max=64, message="审批附件长度必须介于 0 和 64 之间")
+	@Length(min=0, max=100, message="审批附件长度必须介于 0 和 100之间")
 	public String getApproveAttachment() {
 		return approveAttachment;
 	}

@@ -65,6 +65,10 @@
 			<label class="control-label">退休单位：</label>
 			<div class="controls">
 				<form:input path="workUnit" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				
+				<sys:treeselect2 url="/sys/dict/treeDataPop" id="workUnit" name="workUnit" allowClear="true" value="${retiredCadre.workUnit}" 
+									labelName="workUnitName" labelValue="${retiredCadre.workUnitName}" title="单位列表"></sys:treeselect2>
+			
 			</div>
 		</div>
 		<div class="control-group">

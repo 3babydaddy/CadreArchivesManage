@@ -25,6 +25,8 @@ public class TblGiveBack extends DataEntity<TblGiveBack> {
 	private String photo;		// 归还人照片
 	private String status;		// 归还状态
 	
+	private String returnTimeTxt;
+	
 	public TblGiveBack() {
 		super();
 	}
@@ -60,7 +62,7 @@ public class TblGiveBack extends DataEntity<TblGiveBack> {
 		this.returnPerson = returnPerson;
 	}
 	
-	@Length(min=0, max=64, message="归还人照片长度必须介于 0 和 64 之间")
+	@Length(min=0, max=100, message="归还人照片长度必须介于 0 和 100 之间")
 	public String getPhoto() {
 		return photo;
 	}
@@ -76,6 +78,14 @@ public class TblGiveBack extends DataEntity<TblGiveBack> {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getReturnTimeTxt() {
+		return returnTimeTxt;
+	}
+
+	public void setReturnTimeTxt(String returnTimeTxt) {
+		this.returnTimeTxt = returnTimeTxt;
 	}
 	
 }

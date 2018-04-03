@@ -41,7 +41,10 @@ public class TblBorrowArchives extends DataEntity<TblBorrowArchives> {
 	private String perStr;
 	private Date startBackDate;	//归还开始时间
 	private Date endBackDate;	//归还结束时间
+	private String borrowTelPhone; //借阅联系方式
 	private String backOperator; //归还人
+	private Date backDate;		 //归还日期
+	private String consultUnitName;
 	
 	public TblBorrowArchives() {
 		super();
@@ -123,7 +126,7 @@ public class TblBorrowArchives extends DataEntity<TblBorrowArchives> {
 		this.municipalApproveTime = municipalApproveTime;
 	}
 	
-	@Length(min=0, max=64, message="借阅审批附件长度必须介于 0 和 64 之间")
+	@Length(min=0, max=100, message="借阅审批附件长度必须介于 0 和 100 之间")
 	public String getApproveAttachment() {
 		return approveAttachment;
 	}
@@ -221,4 +224,29 @@ public class TblBorrowArchives extends DataEntity<TblBorrowArchives> {
 		this.backOperator = backOperator;
 	}
 
+	public String getBorrowTelPhone() {
+		return borrowTelPhone;
+	}
+
+	public void setBorrowTelPhone(String borrowTelPhone) {
+		this.borrowTelPhone = borrowTelPhone;
+	}
+
+	public Date getBackDate() {
+		return backDate;
+	}
+
+	public void setBackDate(Date backDate) {
+		this.backDate = backDate;
+	}
+
+	public String getConsultUnitName() {
+		return consultUnitName;
+	}
+
+	public void setConsultUnitName(String consultUnitName) {
+		this.consultUnitName = consultUnitName;
+	}
+
+	
 }

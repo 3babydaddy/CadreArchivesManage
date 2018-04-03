@@ -35,6 +35,8 @@ public class TblRollOut extends DataEntity<TblRollOut> {
 	
 	private Date startRollOutTime;
 	private Date endRollOutTime;
+	private String beforeUnitName;
+	private String saveUnitName;
 	
 	public TblRollOut() {
 		super();
@@ -154,5 +156,21 @@ public class TblRollOut extends DataEntity<TblRollOut> {
 
 	public void setEndRollOutTime(Date endRollOutTime) {
 		this.endRollOutTime = endRollOutTime;
+	}
+
+	public String getBeforeUnitName() {
+		return beforeUnitName;
+	}
+
+	public void setBeforeUnitName(String beforeUnitName) {
+		this.beforeUnitName = beforeUnitName;
+	}
+
+	public String getSaveUnitName() {
+		return saveUnitName;
+	}
+
+	public void setSaveUnitName(String saveUnitName) {
+		this.saveUnitName = saveUnitName;
 	}
 }

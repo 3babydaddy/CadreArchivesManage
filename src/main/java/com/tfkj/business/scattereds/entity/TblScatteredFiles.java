@@ -29,6 +29,7 @@ public class TblScatteredFiles extends DataEntity<TblScatteredFiles> {
 	
 	private Date startHandOverDate;
 	private Date endHandOverDate;
+	private String handOverUnitName;
 	
 	public TblScatteredFiles() {
 		super();
@@ -96,5 +97,13 @@ public class TblScatteredFiles extends DataEntity<TblScatteredFiles> {
 
 	public void setEndHandOverDate(Date endHandOverDate) {
 		this.endHandOverDate = endHandOverDate;
+	}
+
+	public String getHandOverUnitName() {
+		return handOverUnitName;
+	}
+
+	public void setHandOverUnitName(String handOverUnitName) {
+		this.handOverUnitName = handOverUnitName;
 	}
 }

@@ -25,6 +25,8 @@ public class TblBorrowPerson extends DataEntity<TblBorrowPerson> {
 	private String telphone;		// 联系方式
 	private String siginName;		// 签名
 	
+	private String unitName;
+	
 	public TblBorrowPerson() {
 		super();
 	}
@@ -103,6 +105,14 @@ public class TblBorrowPerson extends DataEntity<TblBorrowPerson> {
 
 	public void setSiginName(String siginName) {
 		this.siginName = siginName;
+	}
+
+	public String getUnitName() {
+		return unitName;
+	}
+
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
 	}
 	
 }

@@ -26,6 +26,7 @@
     
 	<select id="get" resultType="TblBorrowPerson">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblBorrowPersonColumns"/>
 		FROM tbl_borrow_person a
 		<include refid="tblBorrowPersonJoins"/>
@@ -34,6 +35,7 @@
 	
 	<select id="findList" resultType="TblBorrowPerson">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblBorrowPersonColumns"/>
 		FROM tbl_borrow_person a
 		<include refid="tblBorrowPersonJoins"/>
@@ -61,6 +63,7 @@
 	
 	<select id="findAllList" resultType="TblBorrowPerson">
 		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
 			<include refid="tblBorrowPersonColumns"/>
 		FROM tbl_borrow_person a
 		<include refid="tblBorrowPersonJoins"/>

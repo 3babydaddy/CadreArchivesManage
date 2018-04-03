@@ -6,6 +6,10 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$("#btnImport").click(function(){
+				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
+					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
+			});
 			
 		});
 		function page(n,s){
@@ -14,6 +18,23 @@
 			$("#searchForm").submit();
         	return false;
         }
+		
+		function delData(){
+			var idStr = "";
+			var rows = getRowData();
+			if(rows.length == 0){
+				alertx("请选择记录");
+				return;
+			}
+			for(var i = 0; i < rows.length; i++){
+				if(idStr == ""){
+					idStr = rows[i].value; 
+				}else{
+					idStr += "," + rows[i].value; 
+				}
+			}
+			window.location.href = "${ctx}/suphandle/tblSuperviseHandle/delete?idStr="+idStr;
+		}
 		
 		function getRowData(){
 			return $("input[type='checkbox']:checked");
@@ -32,6 +53,9 @@
 			//})
 		}
 		
+		function importDate(){
+			 $('#importForm').submit();  
+		}
 	</script>
 	<style type="text/css">
 		.table th, .table td{
@@ -40,9 +64,16 @@
 	</style>
 </head>
 <body>
+	<div id="importBox" class="hide">
+		<form id="importForm" action="${ctx}/suphandle/tblSuperviseHandle/import" method="post" enctype="multipart/form-data"
+			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
+			<input id="uploadFile" name="file" type="file" style="width:330px"/><br/><br/>　　
+			<input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   导    入   "/>&nbsp;&nbsp;
+			<a href="${ctx}/suphandle/tblSuperviseHandle/import/template">下载模板</a>
+		</form>
+	</div>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/suphandle/tblSuperviseHandle/">督查督办列表</a></li>
-		<shiro:hasPermission name="suphandle:tblSuperviseHandle:edit"><li><a href="${ctx}/suphandle/tblSuperviseHandle/form">督查督办添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="#">督查督办列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblSuperviseHandle" action="${ctx}/suphandle/tblSuperviseHandle/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -89,8 +120,8 @@
 	
 	<div id="toolbar">
 	    <ul class="nav nav-pills">
-	        <li><a <a href="#"><i class="icon-plus"></i>&nbsp;导入提拔干部数据</a></li>
-	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;删除</a></li>
+	          <li><a id="btnImport"><i class=" icon-upload"></i>&nbsp;导入提拔干部数据</a></li>
+	         <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	    </ul>
 	</div>
 	
@@ -99,13 +130,12 @@
 		<thead>
 			<tr>
 				<td>选择</td>
-				<th>编号</th>
 				<th>姓名</th>
 				<th>性别</th>
 				<th>出生日期</th>
 				<th>单位及职务</th>
-				<th>业务状态</th>
 				<th>应提交档案时间</th>
+				<th>业务状态</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -113,10 +143,7 @@
 		<c:forEach items="${page.list}" var="tblSuperviseHandle">
 			<tr>
 				<td>
-					<input type="checkbox" value="${tblBorrowArchives.id}" />
-				</td>
-				<td><a href="${ctx}/suphandle/tblSuperviseHandle/form?id=${tblSuperviseHandle.id}"></a>
-					${tblSuperviseHandle.id}
+					<input type="checkbox" value="${tblSuperviseHandle.id}" />
 				</td>
 				<td>
 					${tblSuperviseHandle.name}
@@ -125,16 +152,16 @@
 					${tblSuperviseHandle.sex}
 				</td>
 				<td>
-					<fmt:formatDate value="${tblSuperviseHandle.birthday}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${tblSuperviseHandle.birthday}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					${tblSuperviseHandle.unitDuty}
 				</td>
 				<td>
-					${tblSuperviseHandle.status}
+					<fmt:formatDate value="${tblSuperviseHandle.raisedTime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
-					<fmt:formatDate value="${tblSuperviseHandle.raisedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					${fns:getDictLabel(tblSuperviseHandle.status, 'supervise_handle_status', '')}
 				</td>
 				<td>
     				<a href="#">督办</a>

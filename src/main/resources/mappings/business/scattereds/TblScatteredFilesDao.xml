@@ -21,6 +21,7 @@
     
 	<select id="get" resultType="TblScatteredFiles">
 		SELECT 
+			(select label from sys_dict where id = a.hand_over_unit and DEL_FLAG = '0') as handOverUnitName,
 			<include refid="tblScatteredFilesColumns"/>
 		FROM tbl_scattered_files a
 		<include refid="tblScatteredFilesJoins"/>
@@ -29,6 +30,7 @@
 	
 	<select id="findList" resultType="TblScatteredFiles">
 		SELECT 
+			(select label from sys_dict where id = a.hand_over_unit and DEL_FLAG = '0') as handOverUnitName,
 			<include refid="tblScatteredFilesColumns"/>
 		FROM tbl_scattered_files a
 		<include refid="tblScatteredFilesJoins"/>
@@ -75,6 +77,7 @@
 	
 	<select id="findAllList" resultType="TblScatteredFiles">
 		SELECT 
+			(select label from sys_dict where id = a.hand_over_unit and DEL_FLAG = '0') as handOverUnitName,
 			<include refid="tblScatteredFilesColumns"/>
 		FROM tbl_scattered_files a
 		<include refid="tblScatteredFilesJoins"/>

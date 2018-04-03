@@ -15,6 +15,15 @@
         	return false;
         }
 		
+		function editData(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			window.location.href = "${ctx}/borrow/tblBorrowArchives/form?id="+rows[0].value;
+		}
+		
 		function delData(){
 			var idStr = "";
 			var rows = getRowData();
@@ -32,13 +41,57 @@
 			window.location.href = "${ctx}/borrow/tblBorrowArchives/delete?idStr="+idStr;
 		}
 		
-		function editData(){
+		function giveBack(){
 			var rows = getRowData();
 			if(rows.length != 1){
 				alertx("请选择一条记录");
 				return;
 			}
-			window.location.href = "${ctx}/borrow/tblBorrowArchives/form?id="+rows[0].value;
+			
+			$.ajax({  
+	            url:"${ctx}/borrow/tblGiveBack/getGiveBackInfo",  
+	            type:"post",  
+	            data:{  
+	                mainId : rows[0].value  
+	            },  
+	            dataType:"json",  
+	            success:function(data) {  
+	            	debugger;
+	            	if(data != null){
+	            		$("#returnTime").val(data.returnTimeTxt);
+	            		document.getElementsByName("photo")[0].value=data.photo;
+	            		$("#returnPerson").val(data.returnPerson);
+	            		$("#remarks").val(data.remarks);
+	            		$("#giveBackId").val(data.id);
+	            	}
+	            	$("#mainId").val(rows[0].value);
+	            	$("#giveBackPop").modal("toggle");
+	            }  
+	        });  
+		}
+		
+		function saveGiveBack(){
+			$.ajax({  
+	            url:"${ctx}/borrow/tblGiveBack/save",  
+	            type:"post",  
+	            data:{  
+	            	returnTime:$("#returnTime").val(),
+	            	photo : $("input[name='photo']")[0].value,
+	            	returnPerson:$("#returnPerson").val(),
+	            	remarks:$("#remarks").val(),
+	            	mainId:$("#mainId").val(),
+	            	id : $("#giveBackId").val()
+	            },  
+	            dataType:"json",  
+	            success:function(data) {  
+	            	//alertx("归还信息保存成功");
+	            	window.location.href = "${ctx}/borrow/tblBorrowArchives";
+	            }  
+	        });  
+		}
+		
+		function censorship(){
+			
 		}
 		
 		function getRowData(){
@@ -70,6 +123,7 @@
 		<li class="active"><a href="${ctx}/borrow/tblBorrowArchives/">借阅管理列表</a></li>
 		<shiro:hasPermission name="borrow:tblBorrowArchives:edit"><li><a href="${ctx}/borrow/tblBorrowArchives/form">借阅管理添加</a></li></shiro:hasPermission>
 	</ul>
+	<sys:message content="${message}"/>		
 	<form:form id="searchForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
@@ -84,7 +138,8 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
 			<li><label>借阅单位：</label>
-				<form:input path="consultUnit" htmlEscape="false" maxlength="255" class="input-medium"/>
+				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblBorrowArchives.consultUnit}" 
+									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表"></sys:treeselect>
 			</li>
 			<li><label>何人档案：</label>
 				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>
@@ -118,10 +173,60 @@
 	        <li><a <a href="${ctx}/borrow/tblBorrowArchives/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
-	        <li><a onclick=""><i class="icon-share-alt"></i>&nbsp;归还</a></li>
-	        <li><a onclick=""><i class="icon-share-alt"></i>&nbsp;送审</a></li>
+	        <li><a onclick="giveBack();"><i class="icon-share-alt"></i>&nbsp;归还</a></li>
+	        <li><a onclick="censorship();"><i class="icon-share-alt"></i>&nbsp;送审</a></li>
 	    </ul>
 	</div>
+	
+	<!-- 归还 Modal start -->
+	<div class="modal fade" id="giveBackPop" tabindex="-1" role="dialog" style="display:none;" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h5 class="modal-title" id="myModalLabel">归还信息</h5>
+				</div>
+				<div class="modal-body">
+					<form id="giveBackForm" action="" method="get" class="form-horizontal">
+						<div class="control-group">
+							<label class="control-label">归还时间：</label>
+							<div class="controls">
+								<input id="returnTime" name="returnTime" type="text" readonly="readonly" style="width:258px;" maxlength="20" class="input-medium Wdate "
+									onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">归还人照片：</label>
+							<div class="controls">
+								<sys:upFIle input="photo"  type="files" name="photo" value=""  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">归还人：</label>
+							<div class="controls">
+								<input id="returnPerson" name="returnPerson" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">备注信息：</label>
+							<div class="controls">
+								<textarea id="remarks" name="remarks" htmlEscape="false" rows="2" maxlength="255" style="width:262px;" class="input-xlarge "></textarea>
+							</div>
+						</div>
+						<input type="hidden" id="mainId" name="mainId" />
+						<input type="hidden" id="giveBackId" name="giveBackId" />
+					</form>
+				</div>
+				<div class="modal-footer">
+					<input id="btnSubmit" class="btn btn-primary" style="width:44px;" onclick="saveGiveBack();" value="保 存"/>&nbsp;
+					<button id="closePop" type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+    <!-- 归还信息新增 Modal end -->
 	
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -160,19 +265,19 @@
 					${tblBorrowArchives.perStr}
 				</td>
 				<td>
-					
+					${tblBorrowArchives.borrowTelPhone}
 				</td>
 				<td>
-					<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${tblBorrowArchives.backDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<td>
+					${tblBorrowArchives.backOperator}
 				</td>
 				<td>
 					${tblBorrowArchives.operator}
 				</td>
 				<td>
-					${tblBorrowArchives.operator}
-				</td>
-				<td>
-					${tblBorrowArchives.status}
+					${fns:getDictLabel(tblBorrowArchives.status, 'borrow_status', '')}
 				</td>
 				<td>
 					${tblBorrowArchives.remarks}
@@ -186,5 +291,6 @@
 		</tbody>
 	</table>
 	<div class="pagination">${page}</div>
+	
 </body>
 </html>

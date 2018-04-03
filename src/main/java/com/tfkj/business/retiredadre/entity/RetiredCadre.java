@@ -35,6 +35,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	
 	private Date startBir;
 	private Date endBir;
+	private String workUnitName;
 	
 	public RetiredCadre() {
 		super();
@@ -184,6 +185,14 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 
 	public void setEndBir(Date endBir) {
 		this.endBir = endBir;
+	}
+
+	public String getWorkUnitName() {
+		return workUnitName;
+	}
+
+	public void setWorkUnitName(String workUnitName) {
+		this.workUnitName = workUnitName;
 	}
 	
 }

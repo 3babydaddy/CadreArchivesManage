@@ -27,6 +27,8 @@
     
 	<select id="get" resultType="TblRollOut">
 		SELECT 
+			(select label from sys_dict where id = a.save_unit and DEL_FLAG = '0') as saveUnitName,
+			(select label from sys_dict where id = a.before_unit and DEL_FLAG = '0') as beforeUnitName,
 			<include refid="tblRollOutColumns"/>
 		FROM tbl_roll_out a
 		<include refid="tblRollOutJoins"/>
@@ -35,6 +37,8 @@
 	
 	<select id="findList" resultType="TblRollOut">
 		SELECT 
+			(select label from sys_dict where id = a.save_unit and DEL_FLAG = '0') as saveUnitName,
+			(select label from sys_dict where id = a.before_unit and DEL_FLAG = '0') as beforeUnitName,
 			<include refid="tblRollOutColumns"/>
 		FROM tbl_roll_out a
 		<include refid="tblRollOutJoins"/>
@@ -75,6 +79,8 @@
 	
 	<select id="findAllList" resultType="TblRollOut">
 		SELECT 
+			(select label from sys_dict where id = a.save_unit and DEL_FLAG = '0') as saveUnitName,
+			(select label from sys_dict where id = a.before_unit and DEL_FLAG = '0') as beforeUnitName,
 			<include refid="tblRollOutColumns"/>
 		FROM tbl_roll_out a
 		<include refid="tblRollOutJoins"/>

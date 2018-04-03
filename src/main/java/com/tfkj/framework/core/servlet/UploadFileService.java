@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tfkj.business.attachment.dao.TblCommonAttachmentDao;
+import com.tfkj.business.attachment.entity.TblCommonAttachment;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.utils.FileUtils;
 import com.tfkj.framework.core.utils.IdGen;
@@ -29,8 +32,11 @@ import com.tfkj.framework.core.web.Servlets;
 @Transactional(readOnly = true)
 public class UploadFileService {
 
+	@Autowired
+	private TblCommonAttachmentDao tblCommonAttachmentDao;
+	
 	public Map<String, Object> upPhoto(MultipartFile file, HttpServletRequest request, HttpServletResponse response, String id) {
-
+		TblCommonAttachment attach = new TblCommonAttachment();
 		/* Json json=new Json(); */
 		Map<String, Object> map = new HashMap<String, Object>(16);
 		try {
@@ -77,6 +83,13 @@ public class UploadFileService {
 				String returnPath = Servlets.getRequest().getContextPath() + Global.USERFILES_BASE_COPY_URL + "/" + "image" + "/" + newFileName;
 				map.put("success", true);
 				map.put("returnPath", returnPath);
+				//插入附件信息
+				attach.setFileName(originFileName);
+				attach.setSaveFilename(newFileName);
+				attach.setFilePath(realPath);
+				attach.setFileSize(file.getSize());
+				tblCommonAttachmentDao.insert(attach);
+				
 				return map;
 			} else {
 				map.put("message", "不能识别该文件 或文件已损坏");

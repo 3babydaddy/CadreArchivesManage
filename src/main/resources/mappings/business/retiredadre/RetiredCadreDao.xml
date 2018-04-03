@@ -31,6 +31,7 @@
     
 	<select id="get" resultType="RetiredCadre">
 		SELECT 
+			(select label from sys_dict where id = a.work_unit and DEL_FLAG = '0') as workUnitName,
 			<include refid="retiredCadreColumns"/>
 		FROM retired_cadre a
 		<include refid="retiredCadreJoins"/>
@@ -39,6 +40,7 @@
 	
 	<select id="findList" resultType="RetiredCadre">
 		SELECT 
+			(select label from sys_dict where id = a.work_unit and DEL_FLAG = '0') as workUnitName,
 			<include refid="retiredCadreColumns"/>
 		FROM retired_cadre a
 		<include refid="retiredCadreJoins"/>
@@ -82,6 +84,7 @@
 	
 	<select id="findAllList" resultType="RetiredCadre">
 		SELECT 
+			(select label from sys_dict where id = a.work_unit and DEL_FLAG = '0') as workUnitName,
 			<include refid="retiredCadreColumns"/>
 		FROM retired_cadre a
 		<include refid="retiredCadreJoins"/>

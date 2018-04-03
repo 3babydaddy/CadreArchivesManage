@@ -39,6 +39,7 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 	private Date endBorrowDate;
 	private String tarStr;
 	private String perStr;
+	private String consultUnitName;
 	
 	public TblConsultArchives() {
 		super();
@@ -120,7 +121,7 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 		this.municipalApproveTime = municipalApproveTime;
 	}
 	
-	@Length(min=0, max=64, message="借阅审批附件长度必须介于 0 和 64 之间")
+	@Length(min=0, max=100, message="借阅审批附件长度必须介于 0 和 100 之间")
 	public String getApproveAttachment() {
 		return approveAttachment;
 	}
@@ -192,6 +193,14 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 
 	public void setPerStr(String perStr) {
 		this.perStr = perStr;
+	}
+
+	public String getConsultUnitName() {
+		return consultUnitName;
+	}
+
+	public void setConsultUnitName(String consultUnitName) {
+		this.consultUnitName = consultUnitName;
 	}
 
 }

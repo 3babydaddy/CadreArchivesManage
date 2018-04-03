@@ -3,24 +3,31 @@
  */
 package com.tfkj.business.suphandle.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.common.collect.Lists;
 import com.tfkj.business.suphandle.entity.TblSuperviseHandle;
 import com.tfkj.business.suphandle.service.TblSuperviseHandleService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExportExcel;
+import com.tfkj.framework.core.utils.excel.ImportExcel;
 import com.tfkj.framework.core.web.BaseController;
+
+
 
 
 
@@ -72,10 +79,66 @@ public class TblSuperviseHandleController extends BaseController {
 	}
 	
 	@RequestMapping(value = "delete")
-	public String delete(TblSuperviseHandle tblSuperviseHandle, RedirectAttributes redirectAttributes) {
-		tblSuperviseHandleService.delete(tblSuperviseHandle);
+	public String delete(TblSuperviseHandle tblSuperviseHandle, String idStr, RedirectAttributes redirectAttributes) {
+		tblSuperviseHandleService.delete(tblSuperviseHandle, idStr);
 		addMessage(redirectAttributes, "删除督查督办成功");
 		return "redirect:"+Global.getAdminPath()+"/suphandle/tblSuperviseHandle/?repage";
 	}
 
+	/**
+	 * 导入督查督办数据
+	 * @param file
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "import", method=RequestMethod.POST)
+    public String importFile(MultipartFile file, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:" + adminPath + "/suphandle/tblSuperviseHandle/list?repage";
+		}
+		try {
+			int successNum = 0;
+			int failureNum = 0;
+			StringBuilder failureMsg = new StringBuilder();
+			ImportExcel ei = new ImportExcel(file, 1, 0);
+			
+			List<TblSuperviseHandle> list = ei.getDataList(TblSuperviseHandle.class);
+			for (TblSuperviseHandle info : list){
+				try{
+					tblSuperviseHandleService.save(info);
+					successNum++;
+				}catch (Exception ex) {
+					failureMsg.append("<br/>姓名 "+info.getName()+" 导入失败："+ex.getMessage());
+					failureNum++;
+				}
+			}
+			if (failureNum>0){
+				failureMsg.insert(0, "，失败 "+failureNum+" 条用户，导入信息如下：");
+			}
+			addMessage(redirectAttributes, "已成功导入 "+successNum+" 条用户"+failureMsg);
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
+		}
+		return "redirect:" + adminPath + "/suphandle/tblSuperviseHandle/list?repage";
+    }
+	
+	/**
+	 * 下载导入督查督办数据模板
+	 * @param response
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "import/template")
+    public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "提拔干部数据导入模板.xlsx";
+    		List<TblSuperviseHandle> list = Lists.newArrayList(); list.add(new TblSuperviseHandle());
+    		new ExportExcel("提拔干部数据", TblSuperviseHandle.class, 2).setDataList(list).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
+		}
+		return "redirect:" + adminPath + "/suphandle/tblSuperviseHandle/list?repage";
+    }
 }

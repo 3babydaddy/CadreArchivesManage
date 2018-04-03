@@ -55,6 +55,11 @@
 			}
 		}
 	</script>
+	<style type="text/css">
+		.table th, .table td{
+			text-align : center;
+		}
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
@@ -75,7 +80,8 @@
 		<div class="control-group">
 			<label class="control-label">查阅单位：</label>
 			<div class="controls">
-				<form:input path="consultUnit" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<sys:treeselect2 url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}" 
+									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
@@ -93,8 +99,7 @@
 		<div class="control-group">
 			<label class="control-label">借阅审批附件：</label>
 			<div class="controls">
-				<form:hidden id="approveAttachment" path="approveAttachment" htmlEscape="false" maxlength="64" class="input-xlarge"/>
-				<sys:ckfinder input="approveAttachment" type="files" uploadPath="/consult/tblConsultArchives" selectMultiple="true"/>
+				<sys:upFIle input="approveAttachment"  type="files"  name="approveAttachment"  value="${tblConsultArchives.approveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -133,7 +138,8 @@
 								<input id="tblCheckedTargetList{{idx}}_name" name="tblCheckedTargetList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
 							<td>
-								<input id="tblCheckedTargetList{{idx}}_unit" name="tblCheckedTargetList[{{idx}}].unit" type="text" value="{{row.unit}}" maxlength="255" class="input-small "/>
+								<sys:treeselect url="/sys/dict/treeDataPop" id="tblCheckedTargetList{{idx}}_unit" name="tblCheckedTargetList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
+									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect>
 							</td>
 							<td>
 								<input id="tblCheckedTargetList{{idx}}_duty" name="tblCheckedTargetList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input-small "/>
@@ -144,7 +150,7 @@
 							<td class="text-center" width="10">
 								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblCheckedTargetList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
 							</td>
-						</tr>//-->
+						</tr>
 					</script>
 					<script type="text/javascript">
 						var tblCheckedTargetRowIdx = 0, tblCheckedTargetTpl = $("#tblCheckedTargetTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
@@ -191,10 +197,11 @@
 								<input id="tblCheckPersonList{{idx}}_name" name="tblCheckPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
 							<td>
-								<input id="tblCheckPersonList{{idx}}_photo" name="tblCheckPersonList[{{idx}}].photo" type="text" value="{{row.photo}}" maxlength="64" class="input-small "/>
+								<sys:upFIle input="tblCheckPersonList{{idx}}_photo"  type="files"  name="tblCheckPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 							</td>
 							<td>
-								<input id="tblCheckPersonList{{idx}}_unit" name="tblCheckPersonList[{{idx}}].unit" type="text" value="{{row.unit}}" maxlength="255" class="input-small "/>
+								<sys:treeselect url="/sys/dict/treeDataPop" id="tblCheckPersonList{{idx}}_unit" name="tblCheckPersonList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
+									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect>
 							</td>
 							<td>
 								<input id="tblCheckPersonList{{idx}}_duty" name="tblCheckPersonList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input-small "/>

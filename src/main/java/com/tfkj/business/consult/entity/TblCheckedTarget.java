@@ -23,6 +23,8 @@ public class TblCheckedTarget extends DataEntity<TblCheckedTarget> {
 	private String archivesNo;		// 档案号
 	private String certificateNo;		// 证件号
 	
+	private String unitName;
+	
 	public TblCheckedTarget() {
 		super();
 	}
@@ -92,6 +94,14 @@ public class TblCheckedTarget extends DataEntity<TblCheckedTarget> {
 
 	public void setCertificateNo(String certificateNo) {
 		this.certificateNo = certificateNo;
+	}
+
+	public String getUnitName() {
+		return unitName;
+	}
+
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
 	}
 	
 }
