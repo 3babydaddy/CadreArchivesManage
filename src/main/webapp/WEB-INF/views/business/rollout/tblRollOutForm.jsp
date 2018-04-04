@@ -30,7 +30,7 @@
 			$(list+idx).find("select").each(function(){
 				$(this).val($(this).attr("data-value"));
 			});
-			$(list+idx).find("input[type='checkbox'], input[type='radio']").each(function(){
+			$(list+idx).next().next().find("input[type='checkbox'], input[type='radio']").each(function(){
 				var ss = $(this).attr("data-value").split(',');
 				for (var i=0; i<ss.length; i++){
 					if($(this).val() == ss[i]){
@@ -43,11 +43,18 @@
 			var id = $(prefix+"_id");
 			var delFlag = $(prefix+"_delFlag");
 			if (id.val() == ""){
+				$(obj).parent().parent().next().next().next().next().next().next().next().remove();
+				$(obj).parent().parent().next().next().next().next().next().next().remove();
+				$(obj).parent().parent().next().next().next().next().next().remove();
+				$(obj).parent().parent().next().next().next().next().remove();
+				$(obj).parent().parent().next().next().next().remove();
+				$(obj).parent().parent().next().next().remove();
+				$(obj).parent().parent().next().remove();
 				$(obj).parent().parent().remove();
 			}else if(delFlag.val() == "0"){
 				delFlag.val("1");
 				$(obj).html("&divide;").attr("title", "撤销删除");
-				$(obj).parent().parent().addClass("error");
+				//$(obj).parent().parent().addClass("error");
 			}else if(delFlag.val() == "1"){
 				delFlag.val("0");
 				$(obj).html("&times;").attr("title", "删除");
@@ -70,8 +77,7 @@
 				<div  style="float:left;">
 					<form:input path="character" htmlEscape="false" style="width:105px;" maxlength="11" />字
 				</div>
-				
-				<div  style="float:left;">
+				<div style="float:left;">
 					<form:input path="number" htmlEscape="false" style="width:105px;margin-left:10px;" maxlength="11" />号
 				</div>
 			</div>
@@ -81,7 +87,7 @@
 			<div class="controls">
 				<input name="rollOutTime" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${tblRollOut.rollOutTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -123,89 +129,94 @@
 			</div>
 		</div>
 		
-			<div class="control-group">
-				<label class="control-label">相关信息：</label>
-				<div class="controls">
-					<table id="contentTable" class="table table-striped table-bordered table-condensed">
-						<thead>
-							<tr>
-								<th class="hide"></th>
-								<th>姓名</th>
-								<th>正本（卷）</th>
-								<th>副本（卷）</th>
-								<th>档案材料（份）</th>
-								<th>单位及职务</th>
-								<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;转出形式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-								<th>&nbsp;&nbsp;转出事由&nbsp;&nbsp;</th>
-								<th>转出原因</th>
-								<th>审批附件</th>
-								<th>备注信息</th>
-								<shiro:hasPermission name="rollouts:tblRollOut:edit"><th width="10">&nbsp;</th></shiro:hasPermission>
-							</tr>
-						</thead>
-						<tbody id="tblRollOutPersonsList">
-						</tbody>
-						<tfoot>
-							<tr><td colspan="14"><a href="javascript:" onclick="addRow('#tblRollOutPersonsList', tblRollOutPersonsRowIdx, tblRollOutPersonsTpl);tblRollOutPersonsRowIdx = tblRollOutPersonsRowIdx + 1;" class="btns">新增</a></td></tr>
-						</tfoot>
-					</table>
-					<script type="text/template" id="tblRollOutPersonsTpl">//<!--
+		<div class="control-group">
+			<label class="control-label">相关信息：</label>
+			<div class="controls">
+				<table id="contentTable" style="width:60%;" class="table table-striped table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th class="hide"></th>
+							
+						</tr>
+					</thead>
+					<tbody id="tblRollOutPersonsList">
+					</tbody>
+					<tfoot>
+						<tr><td colspan="14"><a href="javascript:" onclick="addRow('#tblRollOutPersonsList', tblRollOutPersonsRowIdx, tblRollOutPersonsTpl);tblRollOutPersonsRowIdx = tblRollOutPersonsRowIdx + 1;" class="btns">新增</a></td></tr>
+					</tfoot>
+				</table>
+				<script type="text/template" id="tblRollOutPersonsTpl">//<!--
+					<tr>
 						<tr id="tblRollOutPersonsList{{idx}}">
 							<td class="hide">
 								<input id="tblRollOutPersonsList{{idx}}_id" name="tblRollOutPersonsList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
 								<input id="tblRollOutPersonsList{{idx}}_delFlag" name="tblRollOutPersonsList[{{idx}}].delFlag" type="hidden" value="0"/>
 							</td>
-							<td>
+							<td style="text-align:right;width:120px;"><label>姓名：</label></td><td>
 								<input id="tblRollOutPersonsList{{idx}}_name" name="tblRollOutPersonsList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
 							<td>
-								<input id="tblRollOutPersonsList{{idx}}_originalNo" name="tblRollOutPersonsList[{{idx}}].originalNo" type="text" value="{{row.originalNo}}" maxlength="11" class="input-small  digits"/>
+								<input type="button" value="生成审批单" onclick="" class="input-small "/>
 							</td>
-							<td>
-								<input id="tblRollOutPersonsList{{idx}}_viceNo" name="tblRollOutPersonsList[{{idx}}].viceNo" type="text" value="{{row.viceNo}}" maxlength="11" class="input-small  digits"/>
+							<td rowspan="7" class="text-center" width="10">
+								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblRollOutPersonsList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
 							</td>
-							<td>
-								<input id="tblRollOutPersonsList{{idx}}_filesNo" name="tblRollOutPersonsList[{{idx}}].filesNo" type="text" value="{{row.filesNo}}" maxlength="11" class="input-small  digits"/>
+						</tr><tr>
+							<td colspan="3"><label>正本：</label> 
+								<input id="tblRollOutPersonsList{{idx}}_originalNo" style="width:95px;" name="tblRollOutPersonsList[{{idx}}].originalNo" type="text" value="{{row.originalNo}}" maxlength="11" class="input-small  digits"/>
+								<label>卷&nbsp;</label>
+								<label>副本：</label>
+								<input id="tblRollOutPersonsList{{idx}}_viceNo" style="width:95px;" name="tblRollOutPersonsList[{{idx}}].viceNo" type="text" value="{{row.viceNo}}" maxlength="11" class="input-small  digits"/>
+								<label>卷&nbsp;</label>
+								<label>档案材料：</label>
+								<input id="tblRollOutPersonsList{{idx}}_filesNo" style="width:95px;" name="tblRollOutPersonsList[{{idx}}].filesNo" type="text" value="{{row.filesNo}}" maxlength="11" class="input-small  digits"/>
+								<label>卷</label>
 							</td>
-							<td>
-								<input id="tblRollOutPersonsList{{idx}}_duty" name="tblRollOutPersonsList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="200" class="input-small "/>
-							</td>
-							<td>
+						</tr><tr>
+							<td colspan="3"><label style="margin-left:40px;">转出方式:</label>
 								<c:forEach items="${fns:getDictList('roll_out_type')}" var="dict" varStatus="dictStatus">
 									<span><input id="tblRollOutPersonsList{{idx}}_outType${dictStatus.index}" name="tblRollOutPersonsList[{{idx}}].outType" type="radio" value="${dict.value}" data-value="{{row.outType}}"><label for="tblRollOutPersonsList{{idx}}_outType${dictStatus.index}">${dict.label}</label></span>
 								</c:forEach>
-							</td>
-							<td>
+								<label style="margin-left:40px;">转出事由:</label>
 								<c:forEach items="${fns:getDictList('roll_out_reason')}" var="dict" varStatus="dictStatus">
 									<span><input id="tblRollOutPersonsList{{idx}}_reason${dictStatus.index}" name="tblRollOutPersonsList[{{idx}}].reason" type="radio" value="${dict.value}" data-value="{{row.reason}}"><label for="tblRollOutPersonsList{{idx}}_reason${dictStatus.index}">${dict.label}</label></span>
 								</c:forEach>
 							</td>
-							<td>
-								<input id="tblRollOutPersonsList{{idx}}_reasonContent" name="tblRollOutPersonsList[{{idx}}].reasonContent" type="text" value="{{row.reasonContent}}" maxlength="2000" class="input-small "/>
+						</tr><tr>
+							<td style="text-align:right;"><label>工作单位及职务：</label></td>
+							<td colspan="2">
+								<input id="tblRollOutPersonsList{{idx}}_duty" name="tblRollOutPersonsList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="200" class="input-xlarge "/>
 							</td>
-							<td>
+						</tr><tr>
+							<td style="text-align:right;"><label>转出事由：</label></td>
+							<td colspan="2">
+								<input id="tblRollOutPersonsList{{idx}}_reasonContent" name="tblRollOutPersonsList[{{idx}}].reasonContent" type="text" value="{{row.reasonContent}}" maxlength="2000" class="input-xlarge "/>
+							</td>
+						</tr><tr>
+							<td style="text-align:right;"><label>备注：</label></td>
+							<td colspan="2">
+								<textarea id="tblRollOutPersonsList{{idx}}_remarks" name="tblRollOutPersonsList[{{idx}}].remarks" rows="2" maxlength="255" class="input-xlarge ">{{row.remarks}}</textarea>
+							</td>
+						</tr><tr>
+							<td style="text-align:right;"><label>审批附件：</label></td>
+							<td colspan="2">
 								<sys:upFIle input="tblRollOutPersonsList{{idx}}_approveAttachment"  type="files"  name="tblRollOutPersonsList[{{idx}}].approveAttachment"  value="{{row.approveAttachment}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 							</td>
-							<td>
-								<textarea id="tblRollOutPersonsList{{idx}}_remarks" name="tblRollOutPersonsList[{{idx}}].remarks" rows="2" maxlength="255" class="input-small ">{{row.remarks}}</textarea>
-							</td>
-							<td class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblRollOutPersonsList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
-							</td>
-						</tr>//-->
+						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
+					</tr>
 					</script>
-					<script type="text/javascript">
-						var tblRollOutPersonsRowIdx = 0, tblRollOutPersonsTpl = $("#tblRollOutPersonsTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
-						$(document).ready(function() {
-							var data = ${fns:toJson(tblRollOut.tblRollOutPersonsList)};
-							for (var i=0; i<data.length; i++){
-								addRow('#tblRollOutPersonsList', tblRollOutPersonsRowIdx, tblRollOutPersonsTpl, data[i]);
-								tblRollOutPersonsRowIdx = tblRollOutPersonsRowIdx + 1;
-							}
-						});
-					</script>
-				</div>
+				<script type="text/javascript">
+					var tblRollOutPersonsRowIdx = 0, tblRollOutPersonsTpl = $("#tblRollOutPersonsTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
+					$(document).ready(function() {
+						var data = ${fns:toJson(tblRollOut.tblRollOutPersonsList)};
+						for (var i=0; i<data.length; i++){
+							addRow('#tblRollOutPersonsList', tblRollOutPersonsRowIdx, tblRollOutPersonsTpl, data[i]);
+							tblRollOutPersonsRowIdx = tblRollOutPersonsRowIdx + 1;
+						}
+					});
+				</script>
 			</div>
+		</div>
 		<div class="form-actions">
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

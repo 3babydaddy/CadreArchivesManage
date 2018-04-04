@@ -90,4 +90,13 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 		return page;
 	}
 	
+	@Transactional(readOnly = false)
+	public void saveScatteredInfo(TblScatteredFiles tblScatteredFiles) {
+		super.save(tblScatteredFiles);
+		for (TblHandOverFiles tblHandOverFiles : tblScatteredFiles.getTblHandOverFilesList()){
+			tblHandOverFiles.setMainId(tblScatteredFiles.getId());
+			tblHandOverFiles.preInsert();
+			tblHandOverFilesDao.insert(tblHandOverFiles);
+		}
+	}
 }

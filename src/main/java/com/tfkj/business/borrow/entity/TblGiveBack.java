@@ -25,6 +25,7 @@ public class TblGiveBack extends DataEntity<TblGiveBack> {
 	private String photo;		// 归还人照片
 	private String status;		// 归还状态
 	
+	private String operator; //经办人
 	private String returnTimeTxt;
 	
 	public TblGiveBack() {
@@ -86,6 +87,14 @@ public class TblGiveBack extends DataEntity<TblGiveBack> {
 
 	public void setReturnTimeTxt(String returnTimeTxt) {
 		this.returnTimeTxt = returnTimeTxt;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
 	}
 	
 }

@@ -19,9 +19,9 @@
 			$("input[type='text']").each(function(){
 				$(this).val("");
 			})
-			$("input[type='hidden']").each(function(){
-				$(this).val("");
-			})
+			//$("input[type='hidden']").each(function(){
+			//	$(this).val("");
+			//})
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -45,11 +45,11 @@
 			<li><label>创建时间：</label>
 				<input name="startCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollOutPersons.startCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					至
 				<input name="endCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollOutPersons.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
 			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
@@ -57,7 +57,7 @@
 			<li><label style="width:85px;">单位及职务：</label>
 				<form:input path="duty" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
-			<input type="hidden" path="mainId" value="${mainId}">
+			<input type="hidden" name="mainId" value="${mainId}">
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			<li class="clearfix"></li>

@@ -124,7 +124,7 @@ public class TblSuperviseHandleController extends BaseController {
     }
 	
 	/**
-	 * 下载导入督查督办数据模板
+	 * 下载督查督办数据模板
 	 * @param response
 	 * @param redirectAttributes
 	 * @return
@@ -133,7 +133,8 @@ public class TblSuperviseHandleController extends BaseController {
     public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
             String fileName = "提拔干部数据导入模板.xlsx";
-    		List<TblSuperviseHandle> list = Lists.newArrayList(); list.add(new TblSuperviseHandle());
+    		List<TblSuperviseHandle> list = Lists.newArrayList(); 
+    		list.add(new TblSuperviseHandle());
     		new ExportExcel("提拔干部数据", TblSuperviseHandle.class, 2).setDataList(list).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {

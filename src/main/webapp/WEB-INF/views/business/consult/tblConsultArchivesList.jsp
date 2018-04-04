@@ -7,6 +7,20 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
+			//全选或全取消
+			$("#selected").click(function(){
+				var flag = document.getElementById("selected").checked;
+				var $tbr = $('table tbody input');  
+				if(flag){
+					for(var i = 0; i < $tbr.length; i++){
+						$tbr[i].checked = true;
+					}
+				}else{
+					for(var i = 0; i < $tbr.length; i++){
+						$tbr[i].checked = false;
+					}
+				}
+			})
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -42,7 +56,7 @@
 		}
 		
 		function getRowData(){
-			return $("input[type='checkbox']:checked");
+			return $("table tbody input[type='checkbox']:checked");
 		}
 		
 		function setNull(){
@@ -77,11 +91,11 @@
 			<li><label>查阅日期：</label>
 				<input name="startBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblConsultArchives.startBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					至
 				<input name="endBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblConsultArchives.endBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
 			<li><label>查阅单位：</label>
 				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}" 
@@ -111,7 +125,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>选择</th>
+				<th><input id="selected" type="checkbox" /></th> 
 				<th>查阅日期</th>
 				<th>查阅单位</th>
 				<th>何人档案</th>
@@ -126,7 +140,7 @@
 		<c:forEach items="${page.list}" var="tblConsultArchives">
 			<tr>
 				<td>
-					<input type="checkbox" value="${tblConsultArchives.id}" />
+					<input type="checkbox" value="${tblConsultArchives.id}"/>
 				</td>
 				<td><a href="${ctx}/consult/tblConsultArchives/form?id=${tblConsultArchives.id}"></a>
 					<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

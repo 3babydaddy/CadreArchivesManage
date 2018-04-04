@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.retiredadre.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,8 +21,8 @@ import com.tfkj.business.retiredadre.service.RetiredCadreService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.web.BaseController;
-
 
 
 /**
@@ -77,4 +79,23 @@ public class RetiredCadreController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
 	}
 
+	/**
+	 * 下载督查督办数据模板
+	 * @param response
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "exportArchivesInfo")
+    public String importFileTemplate(RetiredCadre retiredCadre, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "退休干部信息.xlsx";
+    		List<RetiredCadre> list = retiredCadreService.findList(retiredCadre); 
+    		list.add(new RetiredCadre());
+    		new ExportExcel("退休干部-转档案数据", RetiredCadre.class, 2).setDataList(list).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
+		}
+		return "redirect:" + adminPath + "/retiredadre/retiredCadre/list?repage";
+    }
 }

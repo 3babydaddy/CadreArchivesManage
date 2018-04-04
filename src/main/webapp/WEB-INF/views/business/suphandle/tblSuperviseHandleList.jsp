@@ -11,6 +11,20 @@
 					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
 			});
 			
+			//全选或全取消
+			$("#selected").click(function(){
+				var flag = document.getElementById("selected").checked;
+				var $tbr = $('table tbody input');  
+				if(flag){
+					for(var i = 0; i < $tbr.length; i++){
+						$tbr[i].checked = true;
+					}
+				}else{
+					for(var i = 0; i < $tbr.length; i++){
+						$tbr[i].checked = false;
+					}
+				}
+			})
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -37,7 +51,7 @@
 		}
 		
 		function getRowData(){
-			return $("input[type='checkbox']:checked");
+			return $("table tbody input[type='checkbox']:checked");
 		}
 		
 		function setNull(){
@@ -51,10 +65,6 @@
 			//$("select").each(function(){
 			//	$(this).select2("val","");
 			//})
-		}
-		
-		function importDate(){
-			 $('#importForm').submit();  
 		}
 	</script>
 	<style type="text/css">
@@ -82,11 +92,11 @@
 			<li><label>出生日期：</label>
 				<input name="startBirthday" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblSuperviseHandle.startBirthday}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					至
 				<input name="endBirthday" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblSuperviseHandle.endBirthday}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
 			<li><label>编号：</label>
 				<form:input path="id" htmlEscape="false" maxlength="64" class="input-medium"/>
@@ -97,11 +107,11 @@
 			<li><label>提档时间：</label>
 				<input name="startRaisedTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblSuperviseHandle.startRaisedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					至
 				<input name="endRaisedTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblSuperviseHandle.endRaisedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
 			<li><label>性别：</label>
 				<form:input path="sex" htmlEscape="false" maxlength="2" class="input-medium"/>
@@ -120,7 +130,7 @@
 	
 	<div id="toolbar">
 	    <ul class="nav nav-pills">
-	          <li><a id="btnImport"><i class=" icon-upload"></i>&nbsp;导入提拔干部数据</a></li>
+	          <li><a id="btnImport"><i class="icon-upload-alt"></i>&nbsp;导入提拔干部数据</a></li>
 	         <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	    </ul>
 	</div>
@@ -129,7 +139,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<td>选择</td>
+				<th><input id="selected" type="checkbox" /></th>
 				<th>姓名</th>
 				<th>性别</th>
 				<th>出生日期</th>

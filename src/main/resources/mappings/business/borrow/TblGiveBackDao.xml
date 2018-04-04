@@ -18,6 +18,7 @@
 	</sql>
 	
 	<sql id="tblGiveBackJoins">
+		 LEFT JOIN tbl_borrow_archives b on b.id = a.main_id and b.del_flag = '0'
 	</sql>
     
 	<select id="get" resultType="TblGiveBack">
@@ -30,11 +31,15 @@
 	
 	<select id="findList" resultType="TblGiveBack">
 		SELECT 
+			b.operator as operator,
 			<include refid="tblGiveBackColumns"/>
 		FROM tbl_give_back a
 		<include refid="tblGiveBackJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="mainId != null and mainId != ''">
+				AND a.main_id = #{mainId}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

@@ -66,6 +66,12 @@
 					<if test="dbName == 'mssql'">'%'+#{saveUnit}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{saveUnit},'%')</if>
 			</if>
+			<if test="character != null and character != ''">
+				AND a.character like concat('%', #{character}, '%')
+			</if>
+			<if test="number != null and number != ''">
+				AND a.number like concat('%', #{number}, '%')
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -115,7 +121,7 @@
 			remarks,
 			del_flag,
 			`character`,
-			number
+			`number`
 		) VALUES (
 			#{id},
 			#{rollOutTime},
@@ -150,8 +156,8 @@
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
-			character = #{character},
-			number = #{number}
+			`character` = #{character},
+			`number` = #{number}
 		WHERE id = #{id}
 	</update>
 	

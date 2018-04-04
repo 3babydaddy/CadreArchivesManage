@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.scattereds.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,15 +13,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.common.collect.Lists;
 import com.tfkj.business.scattereds.entity.TblHandOverFiles;
 import com.tfkj.business.scattereds.entity.TblScatteredFiles;
 import com.tfkj.business.scattereds.service.TblScatteredFilesService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExportExcel;
+import com.tfkj.framework.core.utils.excel.ImportExcel;
 import com.tfkj.framework.core.web.BaseController;
 
 /**
@@ -84,4 +91,57 @@ public class TblScatteredFilesController extends BaseController {
 		return "business/scattereds/tblHandOverFilesList";
 	}
 
+	/**
+	 * 导入人员数据
+	 * @param file
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "import", method=RequestMethod.POST)
+    public String importFile(MultipartFile file, TblScatteredFiles tblScatteredFiles, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:" + adminPath + "/scattereds/tblScatteredFiles/list?repage";
+		}
+		try {
+			
+			StringBuilder failureMsg = new StringBuilder();
+			ImportExcel ei = new ImportExcel(file, 1, 0);
+			
+			List<TblHandOverFiles> list = ei.getDataList(TblHandOverFiles.class);
+			try{
+				if(list.size() > 0){
+					tblScatteredFiles.setTblHandOverFilesList(list);
+					tblScatteredFilesService.saveScatteredInfo(tblScatteredFiles);
+				}
+			}catch (Exception ex) {
+				failureMsg.append("导入失败："+ex.getMessage());
+			}
+			addMessage(redirectAttributes, "已成功导入 ");
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
+		}
+		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
+    }
+	
+	/**
+	 * 下载人员模板
+	 * @param response
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "import/template")
+    public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "零散材料人员数据导入模板.xlsx";
+    		List<TblHandOverFiles> list = Lists.newArrayList(); 
+    		list.add(new TblHandOverFiles());
+    		new ExportExcel("零散材料人员数据", TblHandOverFiles.class, 2).setDataList(list).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
+		}
+		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
+    }
+   
 }

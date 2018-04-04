@@ -6,7 +6,25 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$("#btnImport").click(function(){
+				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
+					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
+			});
 			
+			//全选或全取消
+			$("#selected").click(function(){
+				var flag = document.getElementById("selected").checked;
+				var $tbr = $('table tbody input');  
+				if(flag){
+					for(var i = 0; i < $tbr.length; i++){
+						$tbr[i].checked = true;
+					}
+				}else{
+					for(var i = 0; i < $tbr.length; i++){
+						$tbr[i].checked = false;
+					}
+				}
+			})
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -42,7 +60,7 @@
 		}
 		
 		function getRowData(){
-			return $("input[type='checkbox']:checked");
+			return $("table tbody input[type='checkbox']:checked");
 		}
 		
 		function setNull(){
@@ -66,9 +84,24 @@
 	</style>
 </head>
 <body>
+	<div id="importBox" class="hide">
+		<form id="importForm" action="${ctx}/scattereds/tblScatteredFiles/import" method="post" enctype="multipart/form-data"
+			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
+			<ul class="ul-form">
+				<li><label>接收日期：</label>
+					<input name="handOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+						onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+				</li>
+				<li><label>导入文件：</label>
+					<input name="file" type="file" style="width:180px"/>
+				</li>
+			</ul>
+			<input id="btnImportSubmit" style="margin-top:5px;" class="btn btn-primary" type="submit" value="   保  存   "/>&nbsp;&nbsp;
+			<a href="<c:url value='/static/templet/scatteredFilesModel.xls'/>">下载模板</a>
+		</form>
+	</div>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交人员列表</a></li>
-		<shiro:hasPermission name="scattereds:tblScatteredFiles:edit"><li><a href="${ctx}/scattereds/tblScatteredFiles/form">零散材料移交人员添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="#">零散材料移交人员列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -83,11 +116,7 @@
 					value="<fmt:formatDate value="${tblScatteredFiles.endHandOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
-			<li><label>移交单位：</label>
-				<sys:treeselect url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
-									labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表"></sys:treeselect>
 			
-			</li>
 			<li><label>经手人：</label>
 				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
@@ -105,7 +134,7 @@
 	        <li><a <a href="${ctx}/scattereds/tblScatteredFiles/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	        <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
-	        <li><a onclick=""><i class="icon-share-alt"></i>&nbsp;导入</a></li>
+	        <li><a id="btnImport"><i class="icon-upload-alt"></i>&nbsp;导入</a></li>
 	    </ul>
 	</div>
 	
@@ -113,7 +142,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<td>选择</td>
+				<th><input id="selected" type="checkbox" /></th>
 				<th>移交单位</th>
 				<th>移交日期</th>
 				<th>经办人</th>
