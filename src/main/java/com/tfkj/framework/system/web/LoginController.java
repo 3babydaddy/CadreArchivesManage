@@ -162,7 +162,13 @@ public class LoginController extends BaseController {
 				return "redirect:" + adminPath + "/login";
 			}
 		}
-		return "index";
+		
+		Subject subject = UserUtils.getSubject();
+		if(subject.hasRole("admin")){
+			return "index";
+		}else{
+			return "index-user";
+		}
 	}
 
 	/**
