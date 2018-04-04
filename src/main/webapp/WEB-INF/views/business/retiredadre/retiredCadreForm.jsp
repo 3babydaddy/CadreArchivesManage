@@ -58,17 +58,65 @@
 			<div class="controls">
 				<input name="birthday" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${retiredCadre.birthday}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});" style="width:268px;" />
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" style="width:268px;" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">学历：</label>
+			<div class="controls">
+				<form:select path="education" class="input-xlarge" style="width:284px;">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('education')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">任免文号：</label>
+			<div class="controls">
+				<form:input path="referenceNo" htmlEscape="false" maxlength="64" class="input-xlarge"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">建档时间：</label>
+			<div class="controls">
+				<input name="archivesCreatetime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${retiredCadre.archivesCreatetime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" style="width:268px;" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">转死亡时间：</label>
+			<div class="controls">
+				<input name="diedTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${retiredCadre.diedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" style="width:268px;" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">转档案时间：</label>
+			<div class="controls">
+				<input name="recordOfficeTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${retiredCadre.recordOfficeTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" style="width:268px;" />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">退休单位：</label>
 			<div class="controls">
-				<form:input path="workUnit" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-				
 				<sys:treeselect2 url="/sys/dict/treeDataPop" id="workUnit" name="workUnit" allowClear="true" value="${retiredCadre.workUnit}" 
 									labelName="workUnitName" labelValue="${retiredCadre.workUnitName}" title="单位列表"></sys:treeselect2>
-			
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">档案局地址：</label>
+			<div class="controls">
+				<form:input path="recordOfficeAddress" htmlEscape="false" maxlength="64" class="input-xlarge"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">证件号：</label>
+			<div class="controls">
+				<form:input path="certificateNo" htmlEscape="false" maxlength="64" class="input-xlarge"/>
 			</div>
 		</div>
 		<div class="control-group">

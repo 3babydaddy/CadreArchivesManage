@@ -19,9 +19,9 @@
 			$("input[type='text']").each(function(){
 				$(this).val("");
 			})
-			$("input[type='hidden']").each(function(){
-				$(this).val("");
-			})
+			//$("input[type='hidden']").each(function(){
+			//	$(this).val("");
+			//})
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -48,7 +48,7 @@
 			<li><label>材料名称：</label>
 				<form:input path="filesNames" htmlEscape="false" maxlength="2000" class="input-medium"/>
 			</li>
-			<input type="hidden" path="mainId" value="${mainId}">
+			<input type="hidden" name="mainId" value="${mainId}">
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			<li class="clearfix"></li>
@@ -68,9 +68,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="tblHandOverFiles">
 			<tr>
-				<td><a href="${ctx}/scattereds/tblHandOverFiles/form?id=${tblHandOverFiles.id}">
+				<td><a href="${ctx}/scattereds/tblHandOverFiles/form?id=${tblHandOverFiles.id}"></a>
 					${tblHandOverFiles.name}
-				</a></td>
+				</td>
 				<td>
 					${tblHandOverFiles.duty}
 				</td>

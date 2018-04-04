@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tfkj.framework.core.persistence.DataEntity;
+import com.tfkj.framework.core.utils.excel.annotation.ExcelField;
 
 /**
  * 退休干部管理模块Entity
@@ -19,6 +20,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	
 	private static final long serialVersionUID = 1L;
 	private String sort;		// 排序
+	private String noteNo;     //本号
 	private String name;		// 姓名
 	private String sex;		// 性别
 	private String archivesNo;		// 档案号
@@ -32,6 +34,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	private Date recordOfficeTime;		// 转档案时间
 	private String workUnit;		// 退休工作单位
 	private String recordOfficeAddress;		// 档案局地址
+	private String certificateNo;   //证件号
 	
 	private Date startBir;
 	private Date endBir;
@@ -46,6 +49,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 
 	@Length(min=1, max=11, message="sort长度必须介于 1 和 11 之间")
+	@ExcelField(title = "编号", align = 2, sort = 10)
 	public String getSort() {
 		return sort;
 	}
@@ -54,7 +58,16 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.sort = sort;
 	}
 	
+	public String getNoteNo() {
+		return noteNo;
+	}
+
+	public void setNoteNo(String noteNo) {
+		this.noteNo = noteNo;
+	}
+
 	@Length(min=1, max=64, message="name长度必须介于 1 和 64 之间")
+	@ExcelField(title = "姓名", align = 2, sort = 20)
 	public String getName() {
 		return name;
 	}
@@ -64,6 +77,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@Length(min=0, max=1, message="sex长度必须介于 0 和 1 之间")
+	@ExcelField(title = "性别", align = 2, sort = 30, dictType="sex")
 	public String getSex() {
 		return sex;
 	}
@@ -91,6 +105,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title = "出生日期", align = 2, sort = 40)
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -118,6 +133,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title = "转档案日期", align = 2, sort = 80)
 	public Date getArchivesCreatetime() {
 		return archivesCreatetime;
 	}
@@ -127,6 +143,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@Length(min=0, max=2, message="1-离退2-死亡3-已转档案局长度必须介于 0 和 2 之间")
+	@ExcelField(title = "状态", align = 2, sort = 60, dictType="retired_cadre_status")
 	public String getStatus() {
 		return status;
 	}
@@ -136,6 +153,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title = "转死亡日期", align = 2, sort = 70)
 	public Date getDiedTime() {
 		return diedTime;
 	}
@@ -171,6 +189,14 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.recordOfficeAddress = recordOfficeAddress;
 	}
 
+	public String getCertificateNo() {
+		return certificateNo;
+	}
+
+	public void setCertificateNo(String certificateNo) {
+		this.certificateNo = certificateNo;
+	}
+
 	public Date getStartBir() {
 		return startBir;
 	}
@@ -187,6 +213,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.endBir = endBir;
 	}
 
+	@ExcelField(title = "退休工作单位", align = 2, sort = 50)
 	public String getWorkUnitName() {
 		return workUnitName;
 	}

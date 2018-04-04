@@ -46,6 +46,7 @@ public class TblBorrowArchives extends DataEntity<TblBorrowArchives> {
 	private Date backDate;		 //归还日期
 	private String consultUnitName;
 	
+	
 	public TblBorrowArchives() {
 		super();
 	}

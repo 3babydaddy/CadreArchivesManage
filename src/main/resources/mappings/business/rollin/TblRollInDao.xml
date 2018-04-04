@@ -59,6 +59,12 @@
 			<if test="beforeUnit != null and beforeUnit != ''">
 				AND a.before_unit like concat('%', #{beforeUnit}, '%')
 			</if>
+			<if test="character != null and character != ''">
+				AND a.character like concat('%', #{character}, '%')
+			</if>
+			<if test="number != null and number != ''">
+				AND a.number like concat('%', #{number}, '%')
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -94,7 +100,7 @@
 		INSERT INTO tbl_roll_in(
 			id,
 			`character`,
-			number,
+			`number`,
 			roll_in_time,
 			operator,
 			recipient,
@@ -130,8 +136,8 @@
 	
 	<update id="update">
 		UPDATE tbl_roll_in SET 	
-			character = #{character},
-			number = #{number},
+			`character` = #{character},
+			`number` = #{number},
 			roll_in_time = #{rollInTime},
 			operator = #{operator},
 			recipient = #{recipient},

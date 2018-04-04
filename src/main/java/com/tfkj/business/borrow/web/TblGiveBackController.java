@@ -59,19 +59,21 @@ public class TblGiveBackController extends BaseController {
 
 	@RequestMapping(value = "form")
 	public String form(TblGiveBack tblGiveBack, Model model) {
+		if(tblGiveBack.getId() == null){
+			tblGiveBack = tblGiveBackService.findList(tblGiveBack).get(0);
+		}
 		model.addAttribute("tblGiveBack", tblGiveBack);
 		return "business/borrow/tblGiveBackForm";
 	}
 
 	@RequestMapping(value = "save")
-	@ResponseBody
 	public String save(TblGiveBack tblGiveBack, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, tblGiveBack)){
 			return form(tblGiveBack, model);
 		}
 		tblGiveBackService.save(tblGiveBack);
 		addMessage(redirectAttributes, "保存借阅归还成功");
-		return "";
+		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
 	}
 	
 	@RequestMapping(value = "delete")

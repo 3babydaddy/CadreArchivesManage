@@ -7,6 +7,20 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
+			//全选或全取消
+			$("#selected").click(function(){
+				var flag = document.getElementById("selected").checked;
+				var $tbr = $('table tbody input');  
+				if(flag){
+					for(var i = 0; i < $tbr.length; i++){
+						$tbr[i].checked = true;
+					}
+				}else{
+					for(var i = 0; i < $tbr.length; i++){
+						$tbr[i].checked = false;
+					}
+				}
+			})
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -40,9 +54,18 @@
 			}
 			window.location.href = "${ctx}/rollin/tblRollIn/form?id="+rows[0].value;
 		}
+		//回执
+		function receipt(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			
+		}
 		
 		function getRowData(){
-			return $("input[type='checkbox']:checked");
+			return $("table tbody input[type='checkbox']:checked");
 		}
 		
 		function setNull(){
@@ -77,11 +100,11 @@
 			<li><label>转入时间：</label>
 				<input name="startRollInTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollIn.startRollInTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					至
 				<input name="endRollInTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollIn.endRollInTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
 			<li><label style="width:85px;">原存档单位：</label>
 				<sys:treeselect id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollIn.beforeUnit}" 
@@ -89,6 +112,10 @@
 			</li>
 			<li><label>接收人：</label>
 				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>批次号：</label>
+				<form:input path="character" htmlEscape="false" style="width:82px;" maxlength="11" />字
+				<form:input path="number" htmlEscape="false" style="width:82px;" maxlength="11" />号
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
@@ -101,6 +128,7 @@
 	        <li><a <a href="${ctx}/rollin/tblRollIn/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
+	        <li><a onclick="receipt();"><i class="icon-remove"></i>&nbsp;回执</a></li>
 	    </ul>
 	</div>
 	
@@ -108,7 +136,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>选择</th>
+				<th><input id="selected" type="checkbox" /></th>
 				<th>批次号</th>
 				<th>转入时间</th>
 				<th>原存档单位</th>
