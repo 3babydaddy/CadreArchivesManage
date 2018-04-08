@@ -96,7 +96,7 @@
 					<input name="file" type="file" style="width:180px"/>
 				</li>
 			</ul>
-			<input id="btnImportSubmit" style="margin-top:5px;" class="btn btn-primary" type="submit" value="   保  存   "/>&nbsp;&nbsp;
+			<input id="btnImportSubmit" style="margin-top:5px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
 			<a href="<c:url value='/static/templet/scatteredFilesModel.xls'/>">下载模板</a>
 		</form>
 	</div>
@@ -156,7 +156,7 @@
 		<c:forEach items="${page.list}" var="tblScatteredFiles">
 			<tr>
 				<td>
-					<input type="checkbox" value="${tblBorrowArchives.id}" />
+					<input type="checkbox" value="${tblScatteredFiles.id}" />
 				</td>
 				<td><a href="${ctx}/scattereds/tblScatteredFiles/personlist?mainId=${tblScatteredFiles.id}">
 					${tblScatteredFiles.handOverUnitName}</a>

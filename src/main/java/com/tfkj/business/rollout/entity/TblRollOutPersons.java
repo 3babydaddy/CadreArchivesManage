@@ -24,6 +24,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	private String outType;		// 转出形式
 	private String reason;		// 转出事由
 	private String reasonContent;		// 事由具体内容
+	private String relatedAttachment; //相关附件
 	private Long originalNo;		// 正本（卷）
 	private Long viceNo;		// 副本（卷）
 	private Long filesNo;		// 档案材料（份）
@@ -96,6 +97,14 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 		this.reasonContent = reasonContent;
 	}
 	
+	public String getRelatedAttachment() {
+		return relatedAttachment;
+	}
+
+	public void setRelatedAttachment(String relatedAttachment) {
+		this.relatedAttachment = relatedAttachment;
+	}
+
 	public Long getOriginalNo() {
 		return originalNo;
 	}

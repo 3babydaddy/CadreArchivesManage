@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfkj.business.retiredadre.entity.RetiredCadre;
@@ -22,6 +24,7 @@ import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
 import com.tfkj.framework.core.utils.excel.ExportExcel;
+import com.tfkj.framework.core.utils.excel.ImportExcel;
 import com.tfkj.framework.core.web.BaseController;
 
 
@@ -80,7 +83,7 @@ public class RetiredCadreController extends BaseController {
 	}
 
 	/**
-	 * 下载督查督办数据模板
+	 * 下载转档案局数据
 	 * @param response
 	 * @param redirectAttributes
 	 * @return
@@ -96,6 +99,56 @@ public class RetiredCadreController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
 		}
-		return "redirect:" + adminPath + "/retiredadre/retiredCadre/list?repage";
+		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
     }
+    
+    /**
+	 * 导入离退休干部人员数据
+	 * @param file
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "import", method=RequestMethod.POST)
+    public String importFile(MultipartFile file, RetiredCadre retiredCadre, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
+		}
+		try {
+			StringBuilder failureMsg = new StringBuilder();
+			ImportExcel ei = new ImportExcel(file, 1, 0);
+			
+			List<RetiredCadre> list = ei.getDataList(RetiredCadre.class);
+			try{
+				if(list.size() > 0){
+					for(RetiredCadre info : list){
+						if(StringUtils.isBlank(info.getNoteNo())){
+							//addMessage(redirectAttributes, "本号为必填数据；不能为空 ");
+							continue;
+						}
+						if(StringUtils.isBlank(info.getName())){
+							//addMessage(redirectAttributes, "姓名为必填数据；不能为空");
+							continue;
+						}
+						if(StringUtils.isBlank(info.getArchivesNo())){
+							//addMessage(redirectAttributes, "档案号为必填数据；不能为空");
+							continue;
+						}
+						if(StringUtils.isBlank(info.getUnitsDuties())){
+							//addMessage(redirectAttributes, "工作单位及职务为必填数据；不能为空");
+							continue;
+						}
+						retiredCadreService.save(info);
+					}
+				}
+			}catch (Exception ex) {
+				failureMsg.append("导入失败："+ex.getMessage());
+			}
+			addMessage(redirectAttributes, "已成功导入 ");
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
+		}
+		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
+    }
+   
 }

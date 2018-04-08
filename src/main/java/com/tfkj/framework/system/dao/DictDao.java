@@ -5,6 +5,8 @@ package com.tfkj.framework.system.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 import com.tfkj.framework.system.entity.Dict;
@@ -19,4 +21,6 @@ import com.tfkj.framework.system.entity.Dict;
 public interface DictDao extends CrudDao<Dict> {
 
 	public List<String> findTypeList(Dict dict);
+	
+	public Dict getDictInfoByName(@Param("name") String name);
 }

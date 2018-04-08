@@ -10,6 +10,7 @@
 		a.out_type AS "outType",
 		a.reason AS "reason",
 		a.reason_content AS "reasonContent",
+		a.related_attachment as "relatedAttachment",
 		a.original_no AS "originalNo",
 		a.vice_no AS "viceNo",
 		a.files_no AS "filesNo",

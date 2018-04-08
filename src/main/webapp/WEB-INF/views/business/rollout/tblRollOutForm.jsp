@@ -9,6 +9,7 @@
 			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
+					$("#inputForm")[0].action='${ctx}/rollout/tblRollOut/save';
 					loading('正在提交，请稍等...');
 					form.submit();
 				},
@@ -23,6 +24,12 @@
 				}
 			});
 		});
+		
+		function createAuditBill(num){
+			$("#inputForm")[0].action='${ctx}/order/createAuditBill?num='+num;
+			$("#inputForm")[0].submit();
+		}
+		
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
 				idx: idx, delBtn: true, row: row
@@ -39,10 +46,12 @@
 				}
 			});
 		}
+		
 		function delRow(obj, prefix){
 			var id = $(prefix+"_id");
 			var delFlag = $(prefix+"_delFlag");
 			if (id.val() == ""){
+				$(obj).parent().parent().next().next().next().next().next().next().next().next().remove();
 				$(obj).parent().parent().next().next().next().next().next().next().next().remove();
 				$(obj).parent().parent().next().next().next().next().next().next().remove();
 				$(obj).parent().parent().next().next().next().next().next().remove();
@@ -156,7 +165,7 @@
 								<input id="tblRollOutPersonsList{{idx}}_name" name="tblRollOutPersonsList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
 							<td>
-								<input type="button" value="生成审批单" onclick="" class="input-small "/>
+								<input type="button" value="生成审批单" onclick="createAuditBill('{{idx}}');" class="input-small "/>
 							</td>
 							<td rowspan="7" class="text-center" width="10">
 								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblRollOutPersonsList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
@@ -188,9 +197,14 @@
 								<input id="tblRollOutPersonsList{{idx}}_duty" name="tblRollOutPersonsList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="200" class="input-xlarge "/>
 							</td>
 						</tr><tr>
-							<td style="text-align:right;"><label>转出事由：</label></td>
+							<td style="text-align:right;"><label>转出原因：</label></td>
 							<td colspan="2">
-								<input id="tblRollOutPersonsList{{idx}}_reasonContent" name="tblRollOutPersonsList[{{idx}}].reasonContent" type="text" value="{{row.reasonContent}}" maxlength="2000" class="input-xlarge "/>
+								<textarea id="tblRollOutPersonsList{{idx}}_reasonContent" name="tblRollOutPersonsList{{idx}}_reasonContent" rows="2" maxlength="255" class="input-xlarge ">{{row.reasonContent}}</textarea>
+							</td>
+						</tr><tr>
+							<td style="text-align:right;"><label>相关附件：</label></td>
+							<td colspan="2">
+								<textarea id="tblRollOutPersonsList{{idx}}_relatedAttachment" name="tblRollOutPersonsList{{idx}}_relatedAttachment" rows="2" maxlength="255" class="input-xlarge ">{{row.relatedAttachment}}</textarea>
 							</td>
 						</tr><tr>
 							<td style="text-align:right;"><label>备注：</label></td>
