@@ -31,6 +31,7 @@ public class TblRollInPersons extends DataEntity<TblRollInPersons> {
 	
 	private Date startCreateDate;
 	private Date endCreateDate;
+	private String batchNum; //批次号
 	
 	public TblRollInPersons() {
 		super();
@@ -141,6 +142,14 @@ public class TblRollInPersons extends DataEntity<TblRollInPersons> {
 
 	public void setEndCreateDate(Date endCreateDate) {
 		this.endCreateDate = endCreateDate;
+	}
+
+	public String getBatchNum() {
+		return batchNum;
+	}
+
+	public void setBatchNum(String batchNum) {
+		this.batchNum = batchNum;
 	}
 	
 }

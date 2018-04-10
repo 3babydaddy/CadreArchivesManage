@@ -81,6 +81,7 @@ public class TblRollInController extends BaseController {
 		Page<TblRollInPersons> page = tblRollInService.findPersonPage(new Page<TblRollInPersons>(request, response), per); 
 		model.addAttribute("page", page);
 		model.addAttribute("mainId", per.getMainId());
+		model.addAttribute("batchNum", per.getBatchNum().replace("zi", "字").replace("hao", "号"));
 		return "business/rollin/tblRollInPersonsList";
 	}
 }

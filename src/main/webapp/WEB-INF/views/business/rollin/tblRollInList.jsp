@@ -55,13 +55,13 @@
 			window.location.href = "${ctx}/rollin/tblRollIn/form?id="+rows[0].value;
 		}
 		//回执
-		function receipt(){
+		function receiptBill(){
 			var rows = getRowData();
 			if(rows.length != 1){
 				alertx("请选择一条记录");
 				return;
 			}
-			
+			window.location.href = "${ctx}/order/createReceiptBill?rollInId="+rows[0].value;
 		}
 		
 		function getRowData(){
@@ -128,7 +128,7 @@
 	        <li><a <a href="${ctx}/rollin/tblRollIn/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
-	        <li><a onclick="receipt();"><i class="icon-remove"></i>&nbsp;回执</a></li>
+	        <li><a onclick="receiptBill();"><i class="icon-share-alt"></i>&nbsp;回执</a></li>
 	    </ul>
 	</div>
 	
@@ -152,7 +152,7 @@
 				<td>
 					<input type="checkbox" value="${tblRollIn.id}" />
 				</td>
-				<td><a href="${ctx}/rollin/tblRollIn/personlist?mainId=${tblRollIn.id}">
+				<td><a href="${ctx}/rollin/tblRollIn/personlist?mainId=${tblRollIn.id}&batchNum=${tblRollIn.character}zi${tblRollIn.number}hao">
 					${tblRollIn.character}字${tblRollIn.number}号</a>
 				</td>
 				<td>

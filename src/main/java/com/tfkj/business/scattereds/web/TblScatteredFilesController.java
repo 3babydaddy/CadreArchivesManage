@@ -112,7 +112,7 @@ public class TblScatteredFilesController extends BaseController {
 			ScatteredFileImportUtil util = new ScatteredFileImportUtil();
 			TblScatteredFiles tblScatteredFiles = util.getExcelInfo(originalFilename, file);
 			try{
-				Dict dict = dictDao.getDictInfoByName(tblScatteredFiles.getHandOverUnitName());
+				Dict dict = dictDao.getDictInfoByLabel(tblScatteredFiles.getHandOverUnitName());
 				tblScatteredFiles.setHandOverUnit(dict.getValue());
 				tblScatteredFilesService.saveScatteredInfo(tblScatteredFiles);
 			}catch (Exception ex) {

@@ -55,14 +55,26 @@
 			window.location.href = "${ctx}/rollout/tblRollOut/form?id="+rows[0].value;
 		}
 		
-		//回执
-		function receipt(){
+		//转递单
+		function relayBill(){
 			var rows = getRowData();
 			if(rows.length != 1){
 				alertx("请选择一条记录");
 				return;
 			}
-			
+			window.location.href = "${ctx}/order/createRelayBill?rollOutId="+rows[0].value;
+		}
+		
+		//回执单导入
+		function receiptImport(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			$("#rollOutId").val(rows[0].value);
+			$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
+				bottomText:"导入文件不能超过5M，仅允许导入“doc”格式文件！"});
 		}
 		
 		function getRowData(){
@@ -90,6 +102,21 @@
 	</style>
 </head>
 <body>
+	<div id="importBox" class="hide">
+		<form id="importForm" action="${ctx}/rollout/tblRollOutBack/receiptSave" method="post" 
+			class="form-horizontal" style="align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
+				<div class="control-group">
+					<label class="control-label" style="margin-top:5px;">选择回执单：</label>
+					<div class="controls">
+						<sys:upFIle input="rollApproveAttachment"  type="files"  
+							 name="rollApproveAttachment"  value=""  uploadPath="/file" 
+									selectMultiple="false" maxWidth="100" maxHeight="100" text="上传文件"/>
+					</div>
+				</div>
+			<input type="hidden" id="rollOutId" name="rollOutId" />
+			<input id="btnImportSubmit" style="margin:5px 0 5px 75px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
+		</form>
+	</div>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/rollout/tblRollOut/">转出管理人员列表</a></li>
 		<shiro:hasPermission name="rollouts:tblRollOut:edit"><li><a href="${ctx}/rollout/tblRollOut/form">转出管理人员添加</a></li></shiro:hasPermission>
@@ -129,8 +156,8 @@
 	        <li><a <a href="${ctx}/rollout/tblRollOut/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
-	        <li><a onclick=""><i class="icon-share-alt"></i>&nbsp;转递单</a></li>
-	        <li><a onclick="receipt();"><i class="icon-share-alt"></i>&nbsp;回执</a></li>
+	        <li><a onclick="relayBill()"><i class="icon-share-alt"></i>&nbsp;转递单</a></li>
+	        <li><a onclick="receiptImport();"><i class="icon-upload-alt"></i>&nbsp;回执单导入</a></li>
 	    </ul>
 	</div>
 	
@@ -154,7 +181,7 @@
 				<td>
 					<input type="checkbox" value="${tblRollOut.id}" />
 				</td>
-				<td><a href="${ctx}/rollout/tblRollOut/personlist?mainId=${tblRollOut.id}">
+				<td><a href="${ctx}/rollout/tblRollOut/personlist?mainId=${tblRollOut.id}&batchNum=${tblRollOut.character}zi${tblRollOut.number}hao">
 					${tblRollOut.character}字${tblRollOut.number}号</a></a>
 				</td>
 				<td>

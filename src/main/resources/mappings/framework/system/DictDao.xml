@@ -90,10 +90,10 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	<select id="getDictInfoByName" resultType="Dict">
+	<select id="getDictInfoByLabel" resultType="Dict">
 		SELECT 
 			* 
 		FROM sys_dict 
-		WHERE label = #{name} and del_flag = '0'
+		WHERE label = #{name} and type = 'unit_list' and del_flag = '0'
 	</select>
 </mapper>

@@ -7,6 +7,12 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
+			$('#searchForm').on("focusin", "#batchNum", function() {
+			       $(this).prop('readonly', true);  
+			});
+			$('#searchForm').on("focusout", "#batchNum", function() {
+			   $(this).prop('readonly', false); 
+			});
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -51,6 +57,9 @@
 				<input name="endCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollInPersons.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
+			</li>
+			<li><label>批次号：</label>
+				<input id="batchNum" name="batchNum" htmlEscape="false" maxlength="64" value="${batchNum}" class="input-medium"/>
 			</li>
 			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?mso-application progid="Word.Document"?>
 <pkg:package xmlns:pkg="http://schemas.microsoft.com/office/2006/xmlPackage">
     <pkg:part pkg:name="/_rels/.rels" pkg:contentType="application/vnd.openxmlformats-package.relationships+xml" pkg:padding="512">
@@ -35,6 +35,8 @@
                                 <w:szCs w:val="44" />
                             </w:rPr>
                         </w:pPr>
+                        <w:bookmarkStart w:id="0" w:name="_GoBack" />
+                        <w:bookmarkEnd w:id="0" />
                         <w:r w:rsidRPr="00910929">
                             <w:rPr>
                                 <w:rFonts w:ascii="方正小标宋简体" w:eastAsia="方正小标宋简体" w:hint="eastAsia" />
@@ -98,25 +100,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
-                                    <w:r w:rsidRPr="006365A4">
-                                        <w:rPr>
-                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
-                                            <w:szCs w:val="21" />
-                                            <w:u w:val="single" />
-                                        </w:rPr>
-                                        <w:t xml:space="preserve">
-         
-</w:t>
-                                    </w:r>
                                     <w:r w:rsidR="004B6D21" w:rsidRPr="006365A4">
                                         <w:rPr>
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
- 
-</w:t>
+                                        <w:t xml:space="preserve">     ${(year)!}     </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -131,18 +121,14 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-    
-</w:t>
+                                        <w:t xml:space="preserve">  ${(month)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:hint="eastAsia" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-月 
-</w:t>
+                                        <w:t xml:space="preserve">月 </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -150,16 +136,14 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-    
-</w:t>
+                                        <w:t xml:space="preserve">  ${(day)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:hint="eastAsia" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t>日</w:t>
+                                        <w:t xml:space="preserve">日</w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -167,9 +151,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-        
-</w:t>
+                                        <w:t xml:space="preserve"></w:t>
                                     </w:r>
                                     <w:r w:rsidR="002D2C79" w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -177,9 +159,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-  
-</w:t>
+                                        <w:t xml:space="preserve">   ${(perName)!}   </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -194,9 +174,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-      
-</w:t>
+                                        <w:t xml:space="preserve">  ${(perNum)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -218,28 +196,14 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-        
-</w:t>
-                                    </w:r>
-                                    <w:r w:rsidR="002D2C79" w:rsidRPr="006365A4">
-                                        <w:rPr>
-                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
-                                            <w:szCs w:val="21" />
-                                            <w:u w:val="single" />
-                                        </w:rPr>
-                                        <w:t xml:space="preserve">
-   
-</w:t>
+                                        <w:t xml:space="preserve">  ${(originalNo)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:hint="eastAsia" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
- 卷
-</w:t>
+                                        <w:t xml:space="preserve">卷</w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -248,25 +212,13 @@
                                         </w:rPr>
                                         <w:t>，副本</w:t>
                                     </w:r>
-                                    <w:r w:rsidRPr="006365A4">
-                                        <w:rPr>
-                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
-                                            <w:szCs w:val="21" />
-                                            <w:u w:val="single" />
-                                        </w:rPr>
-                                        <w:t xml:space="preserve">
-         
-</w:t>
-                                    </w:r>
                                     <w:r w:rsidR="002D2C79" w:rsidRPr="006365A4">
                                         <w:rPr>
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-  
-</w:t>
+                                        <w:t xml:space="preserve">  ${(viceNo)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -295,9 +247,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-    
-</w:t>
+                                        <w:t xml:space="preserve">  ${(filesNo)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -326,29 +276,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-            
-</w:t>
-                                    </w:r>
-                                    <w:r w:rsidR="002D2C79" w:rsidRPr="006365A4">
-                                        <w:rPr>
-                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
-                                            <w:szCs w:val="21" />
-                                            <w:u w:val="single" />
-                                        </w:rPr>
-                                        <w:t xml:space="preserve">
-   
-</w:t>
-                                    </w:r>
-                                    <w:r w:rsidRPr="006365A4">
-                                        <w:rPr>
-                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
-                                            <w:szCs w:val="21" />
-                                            <w:u w:val="single" />
-                                        </w:rPr>
-                                        <w:t xml:space="preserve">
- 
-</w:t>
+                                        <w:t xml:space="preserve">  ${(beforeUnitName)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -370,9 +298,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-              
-</w:t>
+                                        <w:t xml:space="preserve">  ${(saveUnitName)!}  </w:t>
                                     </w:r>
                                 </w:p>
                             </w:tc>
@@ -718,8 +644,8 @@
                                 </w:p>
                             </w:tc>
                         </w:tr>
-                        
-						<w:tr w:rsidR="0005478F" w:rsidRPr="006365A4" w:rsidTr="006365A4">
+                <#list perList as per>
+                        <w:tr w:rsidR="0005478F" w:rsidRPr="006365A4" w:rsidTr="006365A4">
                             <w:tc>
                                 <w:tcPr>
                                     <w:tcW w:w="1276" w:type="dxa" />
@@ -734,6 +660,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.name)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -750,6 +683,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.duty)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -766,6 +706,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.reasonContent)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -782,6 +729,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.originalNo)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -798,6 +752,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.viceNo)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -815,10 +776,17 @@
                                             <w:szCs w:val="24" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.filesNo)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                         </w:tr>
-						
+                   </#list>     
                         <w:tr w:rsidR="00653DAE" w:rsidRPr="006365A4" w:rsidTr="006365A4">
                             <w:tc>
                                 <w:tcPr>
@@ -840,9 +808,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-       
-</w:t>
+                                        <w:t xml:space="preserve">   ${(character)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -857,36 +823,28 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-     
-</w:t>
+                                        <w:t xml:space="preserve">   ${(number)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:hint="eastAsia" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-号 
-</w:t>
+                                        <w:t xml:space="preserve">号 </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-                              
-</w:t>
+                                        <w:t xml:space="preserve">                    </w:t>
                                     </w:r>
                                     <w:r w:rsidR="00A8259B" w:rsidRPr="006365A4">
                                         <w:rPr>
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-      
-</w:t>
+                                        <w:t xml:space="preserve">     </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -900,16 +858,14 @@
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:hint="eastAsia" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-      
-</w:t>
+                                        <w:t xml:space="preserve">     </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
                                             <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:hint="eastAsia" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t>月 日</w:t>
+                                        <w:t>月     日</w:t>
                                     </w:r>
                                 </w:p>
                             </w:tc>
@@ -978,9 +934,7 @@
                                 <w:szCs w:val="44" />
                                 <w:u w:val="single" />
                             </w:rPr>
-                            <w:t xml:space="preserve">
-   
-</w:t>
+                            <w:t xml:space="preserve"></w:t>
                         </w:r>
                         <w:r>
                             <w:rPr>
@@ -989,9 +943,7 @@
                                 <w:szCs w:val="44" />
                                 <w:u w:val="single" />
                             </w:rPr>
-                            <w:t xml:space="preserve">
-     
-</w:t>
+                            <w:t xml:space="preserve"></w:t>
                         </w:r>
                         <w:r w:rsidRPr="00D94A97">
                             <w:rPr>
@@ -1000,9 +952,7 @@
                                 <w:szCs w:val="44" />
                                 <w:u w:val="single" />
                             </w:rPr>
-                            <w:t xml:space="preserve">
- 
-</w:t>
+                            <w:t xml:space="preserve">  ${(character)!}  </w:t>
                         </w:r>
                         <w:r>
                             <w:rPr>
@@ -1027,9 +977,7 @@
                                 <w:szCs w:val="44" />
                                 <w:u w:val="single" />
                             </w:rPr>
-                            <w:t xml:space="preserve">
-              
-</w:t>
+                            <w:t xml:space="preserve">  ${(number)!}  </w:t>
                         </w:r>
                         <w:r>
                             <w:rPr>
@@ -1084,9 +1032,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-          
-</w:t>
+                                        <w:t xml:space="preserve"></w:t>
                                     </w:r>
                                     <w:r w:rsidR="00F2107F" w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1094,9 +1040,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-       
-</w:t>
+                                        <w:t xml:space="preserve">  ${(recipient)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidR="00F2107F" w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1131,9 +1075,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-   
-</w:t>
+                                        <w:t xml:space="preserve"></w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1142,9 +1084,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-         
-</w:t>
+                                        <w:t xml:space="preserve">  ${(perName)!}  </w:t>
                                     </w:r>
                                     <w:r w:rsidR="00910929" w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1161,9 +1101,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
- 
-</w:t>
+                                        <w:t xml:space="preserve"></w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1172,9 +1110,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-     
-</w:t>
+                                        <w:t xml:space="preserve"></w:t>
                                     </w:r>
                                     <w:r w:rsidR="00910929" w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1183,9 +1119,7 @@
                                             <w:szCs w:val="21" />
                                             <w:u w:val="single" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-    
-</w:t>
+                                        <w:t xml:space="preserve">  ${perNum}  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1269,8 +1203,7 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                         <w:t xml:space="preserve">
-            发件
-</w:t>
+            发件</w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1309,9 +1242,7 @@
                                             <w:spacing w:val="20" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-   
-</w:t>
+                                        <w:t xml:space="preserve">  </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1319,7 +1250,7 @@
                                             <w:spacing w:val="20" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t>月 日</w:t>
+                                        <w:t>月    日</w:t>
                                     </w:r>
                                     <w:r w:rsidR="000E6B7E" w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -1606,13 +1537,14 @@
                                 </w:p>
                             </w:tc>
                         </w:tr>
-                        <w:tr w:rsidR="00910929" w:rsidRPr="006365A4" w:rsidTr="006365A4">
+            <#list perList as per>
+                        <w:tr w:rsidR="0005478F" w:rsidRPr="006365A4" w:rsidTr="006365A4">
                             <w:tc>
                                 <w:tcPr>
                                     <w:tcW w:w="1276" w:type="dxa" />
                                     <w:shd w:val="clear" w:color="auto" w:fill="auto" />
                                 </w:tcPr>
-                                <w:p w:rsidR="00910929" w:rsidRPr="006365A4" w:rsidRDefault="00910929" w:rsidP="006365A4">
+                                <w:p w:rsidR="0005478F" w:rsidRPr="006365A4" w:rsidRDefault="0005478F" w:rsidP="006365A4">
                                     <w:pPr>
                                         <w:spacing w:beforeLines="30" w:before="93" w:afterLines="30" w:after="93" />
                                         <w:jc w:val="center" />
@@ -1621,6 +1553,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.name)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -1628,7 +1567,7 @@
                                     <w:tcW w:w="2126" w:type="dxa" />
                                     <w:shd w:val="clear" w:color="auto" w:fill="auto" />
                                 </w:tcPr>
-                                <w:p w:rsidR="00910929" w:rsidRPr="006365A4" w:rsidRDefault="00910929" w:rsidP="006365A4">
+                                <w:p w:rsidR="0005478F" w:rsidRPr="006365A4" w:rsidRDefault="0005478F" w:rsidP="006365A4">
                                     <w:pPr>
                                         <w:spacing w:beforeLines="30" w:before="93" w:afterLines="30" w:after="93" />
                                         <w:jc w:val="center" />
@@ -1637,6 +1576,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.duty)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -1644,7 +1590,7 @@
                                     <w:tcW w:w="1701" w:type="dxa" />
                                     <w:shd w:val="clear" w:color="auto" w:fill="auto" />
                                 </w:tcPr>
-                                <w:p w:rsidR="00910929" w:rsidRPr="006365A4" w:rsidRDefault="00910929" w:rsidP="006365A4">
+                                <w:p w:rsidR="0005478F" w:rsidRPr="006365A4" w:rsidRDefault="0005478F" w:rsidP="006365A4">
                                     <w:pPr>
                                         <w:spacing w:beforeLines="30" w:before="93" w:afterLines="30" w:after="93" />
                                         <w:jc w:val="center" />
@@ -1653,6 +1599,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.reasonContent)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -1660,7 +1613,7 @@
                                     <w:tcW w:w="993" w:type="dxa" />
                                     <w:shd w:val="clear" w:color="auto" w:fill="auto" />
                                 </w:tcPr>
-                                <w:p w:rsidR="00910929" w:rsidRPr="006365A4" w:rsidRDefault="00910929" w:rsidP="006365A4">
+                                <w:p w:rsidR="0005478F" w:rsidRPr="006365A4" w:rsidRDefault="0005478F" w:rsidP="006365A4">
                                     <w:pPr>
                                         <w:spacing w:beforeLines="30" w:before="93" w:afterLines="30" w:after="93" />
                                         <w:jc w:val="center" />
@@ -1669,6 +1622,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.originalNo)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -1676,7 +1636,7 @@
                                     <w:tcW w:w="992" w:type="dxa" />
                                     <w:shd w:val="clear" w:color="auto" w:fill="auto" />
                                 </w:tcPr>
-                                <w:p w:rsidR="00910929" w:rsidRPr="006365A4" w:rsidRDefault="00910929" w:rsidP="006365A4">
+                                <w:p w:rsidR="0005478F" w:rsidRPr="006365A4" w:rsidRDefault="0005478F" w:rsidP="006365A4">
                                     <w:pPr>
                                         <w:spacing w:beforeLines="30" w:before="93" w:afterLines="30" w:after="93" />
                                         <w:jc w:val="center" />
@@ -1685,6 +1645,13 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.viceNo)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                             <w:tc>
@@ -1692,7 +1659,7 @@
                                     <w:tcW w:w="1134" w:type="dxa" />
                                     <w:shd w:val="clear" w:color="auto" w:fill="auto" />
                                 </w:tcPr>
-                                <w:p w:rsidR="00910929" w:rsidRPr="006365A4" w:rsidRDefault="00910929" w:rsidP="006365A4">
+                                <w:p w:rsidR="0005478F" w:rsidRPr="006365A4" w:rsidRDefault="0005478F" w:rsidP="006365A4">
                                     <w:pPr>
                                         <w:spacing w:beforeLines="30" w:before="93" w:afterLines="30" w:after="93" />
                                         <w:jc w:val="center" />
@@ -1702,9 +1669,17 @@
                                             <w:szCs w:val="24" />
                                         </w:rPr>
                                     </w:pPr>
+                                    <w:r w:rsidRPr="006365A4">
+                                        <w:rPr>
+                                            <w:rFonts w:ascii="宋体" w:hAnsi="宋体" />
+                                            <w:szCs w:val="24" />
+                                        </w:rPr>
+                                        <w:t>${(per.filesNo)!}</w:t>
+                                    </w:r>
                                 </w:p>
                             </w:tc>
                         </w:tr>
+                   </#list> 
                     </w:tbl>
                     <w:p w:rsidR="002D0D13" w:rsidRPr="00A8259B" w:rsidRDefault="002D0D13" w:rsidP="002D0D13">
                         <w:pPr>
@@ -2290,8 +2265,7 @@
                                             <w:szCs w:val="21" />
                                         </w:rPr>
                                         <w:t xml:space="preserve">
-年 
-</w:t>
+年 </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -2299,9 +2273,7 @@
                                             <w:spacing w:val="20" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t xml:space="preserve">
-   
-</w:t>
+                                        <w:t xml:space="preserve">   </w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -2309,7 +2281,7 @@
                                             <w:spacing w:val="20" />
                                             <w:szCs w:val="21" />
                                         </w:rPr>
-                                        <w:t>月 日</w:t>
+                                        <w:t>月    日</w:t>
                                     </w:r>
                                     <w:r w:rsidR="000E6B7E" w:rsidRPr="006365A4">
                                         <w:rPr>
@@ -2685,6 +2657,7 @@
                     <w:rsid w:val="007328F2" />
                     <w:rsid w:val="00733866" />
                     <w:rsid w:val="007C3733" />
+                    <w:rsid w:val="007E5037" />
                     <w:rsid w:val="007F4AC6" />
                     <w:rsid w:val="008B0F05" />
                     <w:rsid w:val="008B4D3E" />
@@ -2708,7 +2681,6 @@
                     <w:rsid w:val="00D869F1" />
                     <w:rsid w:val="00D94A97" />
                     <w:rsid w:val="00ED27E6" />
-                    <w:rsid w:val="00ED5F51" />
                     <w:rsid w:val="00ED7F63" />
                     <w:rsid w:val="00F2107F" />
                     <w:rsid w:val="00FE0162" />
@@ -2737,7 +2709,7 @@
                 <w:decimalSymbol w:val="." />
                 <w:listSeparator w:val="," />
                 <w15:chartTrackingRefBased />
-                <w15:docId w15:val="{A7081404-34EF-4612-BA22-16F14016601B}" />
+                <w15:docId w15:val="{23FB8472-DBFC-4519-BA58-FDA1B221599F}" />
             </w:settings>
         </pkg:xmlData>
     </pkg:part>
@@ -2795,7 +2767,7 @@
         <pkg:xmlData>
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
                 <Template>Normal.dotm</Template>
-                <TotalTime>2</TotalTime>
+                <TotalTime>0</TotalTime>
                 <Pages>2</Pages>
                 <Words>117</Words>
                 <Characters>668</Characters>
@@ -3280,8 +3252,8 @@
                 <dc:description />
                 <cp:lastModifiedBy>waixie008</cp:lastModifiedBy>
                 <cp:revision>2</cp:revision>
-                <dcterms:created xsi:type="dcterms:W3CDTF">2018-04-08T08:08:00Z</dcterms:created>
-                <dcterms:modified xsi:type="dcterms:W3CDTF">2018-04-08T08:08:00Z</dcterms:modified>
+                <dcterms:created xsi:type="dcterms:W3CDTF">2018-04-09T00:39:00Z</dcterms:created>
+                <dcterms:modified xsi:type="dcterms:W3CDTF">2018-04-09T00:39:00Z</dcterms:modified>
                 <cp:category />
             </cp:coreProperties>
         </pkg:xmlData>

@@ -82,7 +82,9 @@ public class TblRollOutController extends BaseController {
 		Page<TblRollOutPersons> page = tblRollOutService.findPersonPage(new Page<TblRollOutPersons>(request, response), tblRollOutPersons); 
 		model.addAttribute("page", page);
 		model.addAttribute("mainId", tblRollOutPersons.getMainId());
+		model.addAttribute("batchNum", tblRollOutPersons.getBatchNum().replace("zi", "字").replace("hao", "号"));
 		return "business/rollout/tblRollOutPersonsList";
 	}
+	
 	
 }
