@@ -89,6 +89,7 @@ public class UploadFileService {
 				attach.setSaveFilename(newFileName);
 				attach.setFilePath(realPath);
 				attach.setFileSize(file.getSize());
+				attach.setFileType("0");
 				tblCommonAttachmentService.save(attach);
 				
 				return map;
@@ -161,6 +162,7 @@ public class UploadFileService {
 				attach.setSaveFilename(showFileName);
 				attach.setFilePath(realPath);
 				attach.setFileSize(file.getSize());
+				attach.setFileType("1");
 				tblCommonAttachmentService.save(attach);
                 
                 map.put("newTime", newTime);

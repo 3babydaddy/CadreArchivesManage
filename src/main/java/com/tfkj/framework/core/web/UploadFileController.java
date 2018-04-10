@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.xml.sax.SAXException;
@@ -44,10 +43,18 @@ public class UploadFileController extends BaseController {
 	 * @return Json
 	 */
 	@RequestMapping(value = "/upPhoto")
-	public void upPhoto(@RequestParam("fileName") MultipartFile fileName, HttpServletRequest request, HttpServletResponse response, String id) {
+	public void upPhoto(MultipartRequest request, HttpServletRequest hRequest, HttpServletResponse response, String id) throws IOException, ParserConfigurationException, SAXException {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map = fileService.upPhoto(fileName, request, response, id);
+		hRequest.getSession().getServletContext().getRealPath("");
+		// 得到上传的文件
+		Map<String, MultipartFile> fileMap = request.getFileMap();
+		for (String key : fileMap.keySet()) {
+			MultipartFile mFile = fileMap.get(key);
+			mFile.getOriginalFilename();
+			mFile.getContentType();
+			map = fileService.upPhoto(mFile, hRequest, response, id);
+		}
 		String str = JsonMapper.toJsonString(map);
 		renderString(response, str, "text/html");
 	}
