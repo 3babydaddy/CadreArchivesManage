@@ -40,6 +40,11 @@
 					}
 				}
 			});
+			//绘制签名数据填充
+			if(row.siginName != undefined && row.siginName != ""){
+				document.getElementById("tblBorrowPersonList"+idx+"_siginDiv").style.display='';
+	    		document.getElementById("tblBorrowPersonList"+idx+"_siginInput").style.display='none';
+			}
 		}
 		function delRowTar(obj, prefix){
 			var id = $(prefix+"_id");
@@ -79,8 +84,46 @@
 				//$(obj).parent().parent().removeClass("error");
 			}
 		}
+		function siginOption(obj){
+			$.jBox("iframe:${ctx}/consult/tblConsultArchives/drowSigin?siginId="+obj.id, {  
+			    title: "绘制签名",  
+			    width: 900,  
+			    height: 400,
+			    showClose: false,
+			    buttons: { '关闭': true }  
+			});  
+		}
 		
+		function delSigin(obj){
+			var siginId = obj.id;
+			var siginImg = siginId.replace('aline', 'siginImg');
+    		var siginDiv = siginId.replace('aline', 'siginDiv');
+    		var siginName = siginId.replace('aline', 'siginName');
+    		var siginInput = siginId.replace('aline', 'siginInput');
+    		
+    		document.getElementById(siginInput).style.display='';
+    		document.getElementById(siginDiv).style.display='none';
+    		
+    		document.getElementById(siginImg).src='';
+    		document.getElementById(siginName).value='';
+		}
 	</script>
+	<style type="text/css">
+		.td-order-one{
+			margin-left: 10px;
+			margin-right: 10px;
+			float: left;
+			white-space: nowrap;
+		}
+		
+		.td-order-one img{
+			max-width: 120px;
+			max-heigth: 30px;
+			border-radius: 2px;
+			margin-top: -6px;
+			-webkit-border-radius:2px;
+		}
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
@@ -221,7 +264,14 @@
 							</td>
 							<td style="text-align:right;width:120px;"><label>签字：</label></td>
 							<td>
-								<input id="tblBorrowPersonList{{idx}}_siginName" name="tblBorrowPersonList[{{idx}}].siginName" type="text" value="{{row.siginName}}" maxlength="64" class="input-small "/>
+								<div class="td-order-one" id="tblBorrowPersonList{{idx}}_siginDiv" style="display:none;">  
+									<img id="tblBorrowPersonList{{idx}}_siginImg" src="{{row.siginName}}" />
+									<a id="tblBorrowPersonList{{idx}}_aline" onclick="delSigin(this)">&times;</a>
+       							 </div>  
+								
+								<input id="tblBorrowPersonList{{idx}}_siginInput" name="tblBorrowPersonList[{{idx}}].siginInput" type="text"   onclick=siginOption(this);  class="input-small "/>
+								<input id="tblBorrowPersonList{{idx}}_siginName" name="tblBorrowPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input-small "/>
+								
 							</td>
 						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
 					</tr>//-->
