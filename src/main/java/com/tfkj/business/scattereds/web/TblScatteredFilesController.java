@@ -26,8 +26,10 @@ import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
 import com.tfkj.framework.core.utils.excel.ExportExcel;
-import com.tfkj.framework.core.utils.excel.ImportExcel;
+import com.tfkj.framework.core.utils.excel.ScatteredFileImportUtil;
 import com.tfkj.framework.core.web.BaseController;
+import com.tfkj.framework.system.dao.DictDao;
+import com.tfkj.framework.system.entity.Dict;
 
 /**
  * 零散材料移交人员Controller
@@ -40,6 +42,8 @@ public class TblScatteredFilesController extends BaseController {
 
 	@Autowired
 	private TblScatteredFilesService tblScatteredFilesService;
+	@Autowired
+	private DictDao dictDao;
 	
 	@ModelAttribute
 	public TblScatteredFiles get(@RequestParam(required=false) String id) {
@@ -98,24 +102,21 @@ public class TblScatteredFilesController extends BaseController {
 	 * @return
 	 */
     @RequestMapping(value = "import", method=RequestMethod.POST)
-    public String importFile(MultipartFile file, TblScatteredFiles tblScatteredFiles, RedirectAttributes redirectAttributes) {
+    public String importFile(MultipartFile file, TblHandOverFiles tblHandOverFiles, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:" + adminPath + "/scattereds/tblScatteredFiles/list?repage";
 		}
 		try {
-			
-			StringBuilder failureMsg = new StringBuilder();
-			ImportExcel ei = new ImportExcel(file, 1, 0);
-			
-			List<TblHandOverFiles> list = ei.getDataList(TblHandOverFiles.class);
+			String originalFilename = file.getOriginalFilename();
+			ScatteredFileImportUtil util = new ScatteredFileImportUtil();
+			TblScatteredFiles tblScatteredFiles = util.getExcelInfo(originalFilename, file);
 			try{
-				if(list.size() > 0){
-					tblScatteredFiles.setTblHandOverFilesList(list);
-					tblScatteredFilesService.saveScatteredInfo(tblScatteredFiles);
-				}
+				Dict dict = dictDao.getDictInfoByName(tblScatteredFiles.getHandOverUnitName());
+				tblScatteredFiles.setHandOverUnit(dict.getValue());
+				tblScatteredFilesService.saveScatteredInfo(tblScatteredFiles);
 			}catch (Exception ex) {
-				failureMsg.append("导入失败："+ex.getMessage());
+				addMessage(redirectAttributes, "导入失败 ");
 			}
 			addMessage(redirectAttributes, "已成功导入 ");
 		} catch (Exception e) {
@@ -144,4 +145,5 @@ public class TblScatteredFilesController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
     }
    
+    
 }

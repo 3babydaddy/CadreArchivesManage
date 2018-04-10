@@ -94,14 +94,14 @@
 </head>
 <body>
 	<div id="importBox" class="hide">
-		<form id="importForm" action="${ctx}/retiredadre/retiredCadre/" method="post" enctype="multipart/form-data"
+		<form id="importForm" action="${ctx}/retiredadre/retiredCadre/import" method="post" enctype="multipart/form-data"
 			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
 			<ul class="ul-form">
 				<li><label>导入文件：</label>
-					<input name="file" type="file" style="width:2000px"/>
+					<input name="file" type="file" style="width:200px"/>
 				</li>
 			</ul>
-			<input id="btnImportSubmit" style="margin-top:5px;" class="btn btn-primary" type="submit" value="   保  存   "/>&nbsp;&nbsp;
+			<input id="btnImportSubmit" style="margin-top:5px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
 			<a href="<c:url value='/static/templet/retiredCadreModel.xls'/>">下载模板</a>
 		</form>
 	</div>

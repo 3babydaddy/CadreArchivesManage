@@ -60,7 +60,10 @@ public class TblGiveBackController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(TblGiveBack tblGiveBack, Model model) {
 		if(tblGiveBack.getId() == null){
-			tblGiveBack = tblGiveBackService.findList(tblGiveBack).get(0);
+			List<TblGiveBack> tblGiveBackList = tblGiveBackService.findList(tblGiveBack);
+			if(tblGiveBackList.size() > 0){
+				tblGiveBack = tblGiveBackList.get(0);
+			}
 		}
 		model.addAttribute("tblGiveBack", tblGiveBack);
 		return "business/borrow/tblGiveBackForm";

@@ -35,10 +35,12 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	private String workUnit;		// 退休工作单位
 	private String recordOfficeAddress;		// 档案局地址
 	private String certificateNo;   //证件号
+	private String remarks;       //备注
 	
 	private Date startBir;
 	private Date endBir;
 	private String workUnitName;
+	private String xh;
 	
 	public RetiredCadre() {
 		super();
@@ -47,9 +49,16 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	public RetiredCadre(String id){
 		super(id);
 	}
+	@ExcelField(title = "序号", align = 2, sort = 8)
+	public String getXh() {
+		return xh;
+	}
 
-	@Length(min=1, max=11, message="sort长度必须介于 1 和 11 之间")
-	@ExcelField(title = "编号", align = 2, sort = 10)
+	public void setXh(String xh) {
+		this.xh = xh;
+	}
+
+	@Length(min=1, max=11, message="编号长度必须介于 1 和 11 之间")
 	public String getSort() {
 		return sort;
 	}
@@ -58,6 +67,8 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.sort = sort;
 	}
 	
+	@Length(min=0, max=16, message="本号长度必须介于 1 和 11 之间")
+	@ExcelField(title = "本号", align = 2, sort = 9)
 	public String getNoteNo() {
 		return noteNo;
 	}
@@ -66,8 +77,8 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.noteNo = noteNo;
 	}
 
-	@Length(min=1, max=64, message="name长度必须介于 1 和 64 之间")
-	@ExcelField(title = "姓名", align = 2, sort = 20)
+	@Length(min=1, max=64, message="姓名长度必须介于 1 和 64 之间")
+	@ExcelField(title = "姓名", align = 2, sort = 10)
 	public String getName() {
 		return name;
 	}
@@ -76,8 +87,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.name = name;
 	}
 	
-	@Length(min=0, max=1, message="sex长度必须介于 0 和 1 之间")
-	@ExcelField(title = "性别", align = 2, sort = 30, dictType="sex")
+	@Length(min=0, max=1, message="性别长度必须介于 0 和 1 之间")
 	public String getSex() {
 		return sex;
 	}
@@ -86,7 +96,8 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.sex = sex;
 	}
 	
-	@Length(min=1, max=16, message="archives_no长度必须介于 1 和 16 之间")
+	@Length(min=1, max=16, message="档案号长度必须介于 1 和 16 之间")
+	@ExcelField(title = "档号", align = 2, sort = 20)
 	public String getArchivesNo() {
 		return archivesNo;
 	}
@@ -95,7 +106,8 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.archivesNo = archivesNo;
 	}
 	
-	@Length(min=1, max=255, message="units_duties长度必须介于 1 和 255 之间")
+	@Length(min=1, max=255, message="单位及职务长度必须介于 1 和 255 之间")
+	@ExcelField(title = "工作单位及职务", align = 2, sort = 30)
 	public String getUnitsDuties() {
 		return unitsDuties;
 	}
@@ -105,7 +117,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@ExcelField(title = "出生日期", align = 2, sort = 40)
+	@ExcelField(title = "出生日期", align = 2, sort = 50)
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -114,7 +126,8 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.birthday = birthday;
 	}
 	
-	@Length(min=0, max=4, message="education长度必须介于 0 和 4 之间")
+	@Length(min=0, max=4, message="学历长度必须介于 0 和 4 之间")
+	@ExcelField(title = "学历", align = 2, sort = 60, dictType="education")
 	public String getEducation() {
 		return education;
 	}
@@ -123,7 +136,8 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.education = education;
 	}
 	
-	@Length(min=0, max=16, message="reference_no长度必须介于 0 和 16 之间")
+	@Length(min=0, max=16, message="任免文号长度必须介于 0 和 16 之间")
+	@ExcelField(title = "任免文号", align = 2, sort = 70)
 	public String getReferenceNo() {
 		return referenceNo;
 	}
@@ -133,7 +147,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@ExcelField(title = "转档案日期", align = 2, sort = 80)
+	@ExcelField(title = "建档时间", align = 2, sort = 80)
 	public Date getArchivesCreatetime() {
 		return archivesCreatetime;
 	}
@@ -142,8 +156,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.archivesCreatetime = archivesCreatetime;
 	}
 	
-	@Length(min=0, max=2, message="1-离退2-死亡3-已转档案局长度必须介于 0 和 2 之间")
-	@ExcelField(title = "状态", align = 2, sort = 60, dictType="retired_cadre_status")
+	@Length(min=0, max=2, message="状态长度必须介于 0 和 2 之间")
 	public String getStatus() {
 		return status;
 	}
@@ -153,7 +166,6 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@ExcelField(title = "转死亡日期", align = 2, sort = 70)
 	public Date getDiedTime() {
 		return diedTime;
 	}
@@ -171,7 +183,8 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.recordOfficeTime = recordOfficeTime;
 	}
 	
-	@Length(min=0, max=64, message="work_unit长度必须介于 0 和 64 之间")
+	@Length(min=0, max=64, message="退休工作单位长度必须介于 0 和 120 之间")
+	@ExcelField(title = "何时调往何处工作", align = 2, sort = 90)
 	public String getWorkUnit() {
 		return workUnit;
 	}
@@ -180,7 +193,8 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.workUnit = workUnit;
 	}
 	
-	@Length(min=0, max=64, message="record_office_address长度必须介于 0 和 64 之间")
+	@Length(min=0, max=64, message="档案局地址长度必须介于 0 和 120 之间")
+	@ExcelField(title = "档案何时转往何处", align = 2, sort = 100)
 	public String getRecordOfficeAddress() {
 		return recordOfficeAddress;
 	}
@@ -195,6 +209,15 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 
 	public void setCertificateNo(String certificateNo) {
 		this.certificateNo = certificateNo;
+	}
+	
+	@ExcelField(title = "备注", align = 2, sort = 40)
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	public Date getStartBir() {
@@ -213,7 +236,6 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.endBir = endBir;
 	}
 
-	@ExcelField(title = "退休工作单位", align = 2, sort = 50)
 	public String getWorkUnitName() {
 		return workUnitName;
 	}

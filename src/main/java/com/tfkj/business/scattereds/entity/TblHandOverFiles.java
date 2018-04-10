@@ -25,12 +25,22 @@ public class TblHandOverFiles extends DataEntity<TblHandOverFiles> {
 	private String archivesNo;		// 档案号
 	private String certificateNo;		// 证件号
 	
+	private String xh;
+	
 	public TblHandOverFiles() {
 		super();
 	}
 
 	public TblHandOverFiles(String id){
 		super(id);
+	}
+	@ExcelField(title = "序号", align = 2, sort = 9)
+	public String getXh() {
+		return xh;
+	}
+
+	public void setXh(String xh) {
+		this.xh = xh;
 	}
 
 	@Length(min=1, max=64, message="主表编码长度必须介于 1 和 64 之间")
