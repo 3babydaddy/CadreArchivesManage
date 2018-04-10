@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tfkj.business.attachment.dao.TblCommonAttachmentDao;
 import com.tfkj.business.attachment.entity.TblCommonAttachment;
+import com.tfkj.business.attachment.service.TblCommonAttachmentService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.utils.FileUtils;
 import com.tfkj.framework.core.utils.IdGen;
@@ -33,8 +33,9 @@ import com.tfkj.framework.core.web.Servlets;
 public class UploadFileService {
 
 	@Autowired
-	private TblCommonAttachmentDao tblCommonAttachmentDao;
+	private TblCommonAttachmentService tblCommonAttachmentService;
 	
+	@Transactional(readOnly = false)
 	public Map<String, Object> upPhoto(MultipartFile file, HttpServletRequest request, HttpServletResponse response, String id) {
 		TblCommonAttachment attach = new TblCommonAttachment();
 		/* Json json=new Json(); */
@@ -88,7 +89,7 @@ public class UploadFileService {
 				attach.setSaveFilename(newFileName);
 				attach.setFilePath(realPath);
 				attach.setFileSize(file.getSize());
-				tblCommonAttachmentDao.insert(attach);
+				tblCommonAttachmentService.save(attach);
 				
 				return map;
 			} else {
@@ -102,8 +103,9 @@ public class UploadFileService {
 		}
 	}
 
+	@Transactional(readOnly = false)
 	public Map<String, Object> upFile(MultipartFile file, HttpServletRequest request, HttpServletResponse response, String id) {
-
+		TblCommonAttachment attach = new TblCommonAttachment();
 		/* Json json=new Json(); */
 		Map<String, Object> map = new HashMap<String, Object>(16);
 		try {
@@ -153,6 +155,14 @@ public class UploadFileService {
 				Date day=new Date();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 String newTime=df.format(day).toString();
+               
+                //插入附件信息
+				attach.setFileName(originFileName);
+				attach.setSaveFilename(showFileName);
+				attach.setFilePath(realPath);
+				attach.setFileSize(file.getSize());
+				tblCommonAttachmentService.save(attach);
+                
                 map.put("newTime", newTime);
 				map.put("success", true);
 				map.put("returnPath", returnPath);

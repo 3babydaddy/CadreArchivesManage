@@ -22,6 +22,7 @@
 					}
 				}
 			});
+			
 		});
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
@@ -79,8 +80,8 @@
 				//$(obj).parent().parent().removeClass("error");
 			}
 		}
+		
 	</script>
-
 </head>
 <body>
 	<ul class="nav nav-tabs">

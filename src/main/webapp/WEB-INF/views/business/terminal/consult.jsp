@@ -6,9 +6,6 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			 //初始化插件
-	        $("#signature").jSignature();
-			
 			
 			//$("#name").focus();
 			$("#inputForm").validate({
@@ -26,9 +23,7 @@
 					}
 				}
 			});
-			var h = parent.$("iframe").height();
-			$("#photoShowDiv").css("height",h + "px");
-			$(".img-polaroid").css("height",h-10);
+	
 		});
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
@@ -45,6 +40,7 @@
 					}
 				}
 			});
+			
 		}
 		function delRow(obj, prefix){
 			var id = $(prefix+"_id");
@@ -62,46 +58,54 @@
 			}
 		}
 		
+		function siginOption(obj){
+			$.jBox("iframe:${ctx}/consult/tblConsultArchives/drowSigin?siginId="+obj.id, {  
+			    title: "绘制签名",  
+			    width: 900,  
+			    height: 400,
+			    showClose: false,
+			    buttons: { '关闭': true }  
+			});  
+		}
+		
+		function delSigin(obj){
+			var siginId = obj.id;
+			var siginImg = siginId.replace('aline', 'siginImg');
+    		var siginDiv = siginId.replace('aline', 'siginDiv');
+    		var siginName = siginId.replace('aline', 'siginName');
+    		var siginInput = siginId.replace('aline', 'siginInput');
+    		
+    		document.getElementById(siginInput).style.display='';
+    		document.getElementById(siginDiv).style.display='none';
+    		
+    		document.getElementById(siginImg).src='';
+    		document.getElementById(siginName).value='';
+		}
+		
 		/* 返回按钮事件 */
 		function goBack(){
 			this.parent.$(".zhuye")[0].click();
 		}
 		
-		//输出签名图片
-	    function jSignatureTest(){
-	        var $sigdiv = $("#signature");
-//	        $sigdiv.jSignature() // inits the jSignature widget.
-	        // after some doodling...
-//	        $sigdiv.jSignature("reset") // clears the canvas and rerenders the decor on it.
-	        //var datapair = $sigdiv.jSignature("getData", "svgbase64") 
-	        var datapair = $sigdiv.jSignature("getData") 
-	        console.log(datapair);
-	        var i = new Image();
-	        i.src = datapair;
-	        //i.src = "data:" + datapair[0] + "," + datapair[1] 
-	        $(i).appendTo($("#image")) // append the image (SVG) to DOM.
-	        
-	        $.post('${ctx}/terminal/createImg/', {
-	        	imgBase64Str : datapair
-	        },function (result){
-	        	alert("back -->"+ result)
-	        });
-	    }
-		
-	    function reset(){
-	        var $sigdiv = $("#signature");
-	        $sigdiv.jSignature("reset");
-	    }
 	</script>
-	<link href="${ctxStatic}/modules/terminal/terminal-common.css" type="text/css" rel="stylesheet" />
-	<script type="text/javascript" src="${ctxStatic}/jSignature/jSignature.min.js"></script>
+	<style type="text/css">
+		.td-order-one{
+			margin-left: 10px;
+			margin-right: 10px;
+			float: left;
+			white-space: nowrap;
+		}
+		
+		.td-order-one img{
+			max-width: 120px;
+			max-heigth: 30px;
+			border-radius: 2px;
+			margin-top: -6px;
+			-webkit-border-radius:2px;
+		}
+	</style>
 </head>
 <body>
-	<div id="signature" style="height: 100%;"></div>
-	<button type="button" onclick="jSignatureTest()">output signature</button>
-	<button type="button" onclick="reset()">reset</button>
-	<div id="image" style="margin:20px"></div>
-
 	<div class="row-fluid">
 		<div id= "photoShowDiv" class="row-fluid span4">
 			<img src="${ctxStatic}/images/file-demo.png" class="img-polaroid" >
@@ -247,7 +251,14 @@
 								<input id="tblCheckPersonList{{idx}}_telphone" name="tblCheckPersonList[{{idx}}].telphone" type="text" value="{{row.telphone}}" maxlength="32" class="input-small "/>
 							</td>
 							<td>
-								<input id="tblCheckPersonList{{idx}}_siginName" name="tblCheckPersonList[{{idx}}].siginName" type="text" value="{{row.siginName}}" maxlength="64" class="input-small "/>
+
+								<div class="td-order-one" id="tblCheckPersonList{{idx}}_siginDiv" style="display:none;">  
+									<img id="tblCheckPersonList{{idx}}_siginImg" src="{{row.siginName}}" />
+									<a id="tblCheckPersonList{{idx}}_aline" onclick="delSigin(this)">&times;</a>
+       							 </div>  
+								
+								<input id="tblCheckPersonList{{idx}}_siginInput" name="tblCheckPersonList[{{idx}}].siginInput" type="text"   onclick=siginOption(this);  class="input-small "/>
+								<input id="tblCheckPersonList{{idx}}_siginName" name="tblCheckPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input-small "/>
 							</td>
 							<td class="text-center" width="10">
 								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblCheckPersonList{{idx}}')" title="删除">&times;</span>{{/delBtn}}

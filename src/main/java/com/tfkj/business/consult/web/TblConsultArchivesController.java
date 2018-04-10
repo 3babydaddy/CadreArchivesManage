@@ -75,4 +75,10 @@ public class TblConsultArchivesController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/consult/tblConsultArchives/?repage";
 	}
 
+	@RequestMapping(value = "drowSigin")
+	public String drowSigin(String siginId, Model model) {
+		
+		model.addAttribute("siginId", siginId);
+		return "business/consult/tblDrowSigin";
+	}
 }

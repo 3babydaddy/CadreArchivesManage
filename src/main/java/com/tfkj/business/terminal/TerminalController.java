@@ -1,17 +1,27 @@
 package com.tfkj.business.terminal;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tfkj.business.attachment.entity.TblCommonAttachment;
+import com.tfkj.business.attachment.service.TblCommonAttachmentService;
 import com.tfkj.business.consult.entity.TblConsultArchives;
+import com.tfkj.framework.core.config.Global;
+import com.tfkj.framework.core.utils.FileUtils;
+import com.tfkj.framework.core.utils.IdGen;
+import com.tfkj.framework.core.web.Servlets;
 
 /**
  * TerminalController 终端控制器
@@ -24,6 +34,9 @@ import com.tfkj.business.consult.entity.TblConsultArchives;
 @RequestMapping(value = "${adminPath}/terminal/")
 public class TerminalController {
 
+	@Autowired
+	private TblCommonAttachmentService tblCommonAttachmentService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(TerminalController.class);
 
 	/**
@@ -45,9 +58,11 @@ public class TerminalController {
 	 */
 	@RequestMapping("createImg")
 	@ResponseBody
-	public boolean createImg(String imgBase64Str) {
+	public Map<String, Object> createImg(String imgBase64Str) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			logger.info("createImg str --> [{}]", imgBase64Str);
+			TblCommonAttachment attach = new TblCommonAttachment();
 			// 对字节数组字符串进行Base64解码并生成图片
 			// Base64解码
 			String[] split = imgBase64Str.split(",");
@@ -60,14 +75,33 @@ public class TerminalController {
 			// 生成jpeg图片
 			// TODO: 图片生成后上传到指定位置，并保存附件
 			
-			String imgFilePath = "C:\\new.jpg";// 新生成的图片
-			OutputStream out = new FileOutputStream(imgFilePath);
+			// 文件保存目录路径
+			String newFileName = IdGen.uuid() + ".jpg";
+			String realPath = Global.getUserfilesBaseDir() + Global.USERFILES_BASE_COPY_URL + "/" + "image";
+			// 判断文件夹是否存在
+			File inbox = new File(realPath);
+			if (!inbox.exists()) {
+				FileUtils.createDirectory(FileUtils.path(realPath));
+			}
+			
+			OutputStream out = new FileOutputStream(realPath+"/"+newFileName);
 			out.write(b);
 			out.flush();
 			out.close();
-			return true;
+			
+			//插入附件信息
+			attach.setFileName(newFileName);
+			attach.setSaveFilename(newFileName);
+			attach.setFilePath(realPath);
+			attach.setFileSize((long)b.length);
+			tblCommonAttachmentService.save(attach);
+			String returnPath = Servlets.getRequest().getContextPath() + Global.USERFILES_BASE_COPY_URL + "/" + "image" + "/" + newFileName;
+			map.put("result", "true");
+			map.put("path", returnPath);
+			return map;
 		} catch (Exception e) {
-			return false;
+			map.put("result", "false");
+			return map;
 		}
 	}
 
