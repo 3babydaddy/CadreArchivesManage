@@ -6,6 +6,10 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			 //初始化插件
+	        $("#signature").jSignature();
+			
+			
 			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
@@ -22,7 +26,6 @@
 					}
 				}
 			});
-			debugger;
 			var h = parent.$("iframe").height();
 			$("#photoShowDiv").css("height",h + "px");
 			$(".img-polaroid").css("height",h-10);
@@ -63,10 +66,42 @@
 		function goBack(){
 			this.parent.$(".zhuye")[0].click();
 		}
+		
+		//输出签名图片
+	    function jSignatureTest(){
+	        var $sigdiv = $("#signature");
+//	        $sigdiv.jSignature() // inits the jSignature widget.
+	        // after some doodling...
+//	        $sigdiv.jSignature("reset") // clears the canvas and rerenders the decor on it.
+	        //var datapair = $sigdiv.jSignature("getData", "svgbase64") 
+	        var datapair = $sigdiv.jSignature("getData") 
+	        console.log(datapair);
+	        var i = new Image();
+	        i.src = datapair;
+	        //i.src = "data:" + datapair[0] + "," + datapair[1] 
+	        $(i).appendTo($("#image")) // append the image (SVG) to DOM.
+	        
+	        $.post('${ctx}/terminal/createImg/', {
+	        	imgBase64Str : datapair
+	        },function (result){
+	        	alert("back -->"+ result)
+	        });
+	    }
+		
+	    function reset(){
+	        var $sigdiv = $("#signature");
+	        $sigdiv.jSignature("reset");
+	    }
 	</script>
 	<link href="${ctxStatic}/modules/terminal/terminal-common.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="${ctxStatic}/jSignature/jSignature.min.js"></script>
 </head>
 <body>
+	<div id="signature" style="height: 100%;"></div>
+	<button type="button" onclick="jSignatureTest()">output signature</button>
+	<button type="button" onclick="reset()">reset</button>
+	<div id="image" style="margin:20px"></div>
+
 	<div class="row-fluid">
 		<div id= "photoShowDiv" class="row-fluid span4">
 			<img src="${ctxStatic}/images/file-demo.png" class="img-polaroid" >
@@ -80,6 +115,14 @@
 				<sys:message content="${message}"/>		
 				<div class="control-group">
 					<label class="control-label">查阅日期：</label>
+					<div class="controls">
+						<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
+							value="<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+							onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">签名测试：</label>
 					<div class="controls">
 						<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
 							value="<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
