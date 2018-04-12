@@ -93,6 +93,9 @@ public class RetiredCadreController extends BaseController {
 		try {
             String fileName = "退休干部信息.xlsx";
     		List<RetiredCadre> list = retiredCadreService.findList(retiredCadre); 
+    		for(int i = 1; i <= list.size(); i++){
+    			list.get(i).setXh(i+"");
+    		}
     		list.add(new RetiredCadre());
     		new ExportExcel("退休干部-转档案数据", RetiredCadre.class, 2).setDataList(list).write(response, fileName).dispose();
     		return null;

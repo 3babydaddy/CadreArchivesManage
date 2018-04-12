@@ -3,6 +3,7 @@
  */
 package com.tfkj.business.rollout.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,11 +85,41 @@ public class TblRollOutService extends CrudService<TblRollOutDao, TblRollOut> {
 		}
 	}
 	
-	
 	public Page<TblRollOutPersons> findPersonPage(Page<TblRollOutPersons> page, TblRollOutPersons tblRollOutPersons) {
 		tblRollOutPersons.setPage(page);
 		page.setList(tblRollOutPersonsDao.findList(tblRollOutPersons));
 		return page;
 	}
 	
+	public Page<TblRollOutPersons> queryCountPage(Page<TblRollOutPersons> page, TblRollOutPersons tblRollOutPersons) {
+		tblRollOutPersons.setPage(page);
+		List<TblRollOutPersons> perList = tblRollOutPersonsDao.queryCountList(tblRollOutPersons);
+		long filesNum = 0;
+		for(int i = 0; i < perList.size(); i++){
+			perList.get(i).setXh((perList.size()-i)+"");
+			filesNum += (perList.get(i).getFilesNo() == null ? 0 : perList.get(i).getFilesNo());
+		}
+		TblRollOutPersons info = new TblRollOutPersons();
+		info.setXh("总数");
+		info.setFilesNo(filesNum);
+		perList.add(info);
+		Collections.reverse(perList);  
+		page.setList(perList);
+		return page;
+	}
+	
+	public List<TblRollOutPersons> queryCountList(TblRollOutPersons tblRollOutPersons) {
+		List<TblRollOutPersons> perList = tblRollOutPersonsDao.queryCountList(tblRollOutPersons);
+		long filesNum = 0;
+		for(int i = 0; i < perList.size(); i++){
+			perList.get(i).setXh((perList.size()-i)+"");
+			filesNum += (perList.get(i).getFilesNo() == null ? 0 : perList.get(i).getFilesNo());
+		}
+		TblRollOutPersons info = new TblRollOutPersons();
+		info.setXh("总数");
+		info.setFilesNo(filesNum);
+		perList.add(info);
+		Collections.reverse(perList);  
+		return perList;
+	}
 }

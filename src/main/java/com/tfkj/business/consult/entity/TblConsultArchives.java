@@ -40,6 +40,9 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 	private String tarStr;
 	private String perStr;
 	private String consultUnitName;
+	private String consultTarNum; //被查阅人员数量
+	private String consultPerNum; //查阅人员数量
+	private String xh;
 	
 	public TblConsultArchives() {
 		super();
@@ -201,6 +204,30 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 
 	public void setConsultUnitName(String consultUnitName) {
 		this.consultUnitName = consultUnitName;
+	}
+
+	public String getConsultTarNum() {
+		return consultTarNum;
+	}
+
+	public void setConsultTarNum(String consultTarNum) {
+		this.consultTarNum = consultTarNum;
+	}
+
+	public String getConsultPerNum() {
+		return consultPerNum;
+	}
+
+	public void setConsultPerNum(String consultPerNum) {
+		this.consultPerNum = consultPerNum;
+	}
+
+	public String getXh() {
+		return xh;
+	}
+
+	public void setXh(String xh) {
+		this.xh = xh;
 	}
 
 }

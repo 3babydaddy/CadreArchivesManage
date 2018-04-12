@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.borrow.dao;
 
+import java.util.List;
+
 import com.tfkj.business.borrow.entity.TblBorrowArchives;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
@@ -14,5 +16,7 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
  */
 @MyBatisDao
 public interface TblBorrowArchivesDao extends CrudDao<TblBorrowArchives> {
+	
+	List<TblBorrowArchives> queryCountList(TblBorrowArchives tblBorrowArchives);
 	
 }

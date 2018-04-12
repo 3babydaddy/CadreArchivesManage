@@ -78,8 +78,13 @@ public class TblRollOutBackController extends BaseController {
 	
 	@RequestMapping(value = "receiptSave")
 	public String receiptSave(String rollApproveAttachment, String rollOutId, RedirectAttributes redirectAttributes) {
-		
-		addMessage(redirectAttributes, "回执上传成功");
+		try{
+			tblRollOutBackService.receiptSave(rollApproveAttachment, rollOutId);
+			addMessage(redirectAttributes, "回执上传成功");
+		}catch(Exception e){
+			e.printStackTrace();
+			addMessage(redirectAttributes, "回执上传失败");
+		}
 		return "redirect:"+Global.getAdminPath()+"/rollout/tblRollOut/?repage";
 	}
 

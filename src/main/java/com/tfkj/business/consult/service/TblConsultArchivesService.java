@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.consult.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ import com.tfkj.framework.core.utils.StringUtils;
 @Transactional(readOnly = true)
 public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao, TblConsultArchives> {
 
+	@Autowired
+	private TblConsultArchivesDao tblConsultArchivesDao;
 	@Autowired
 	private TblCheckedTargetDao tblCheckedTargetDao;
 	@Autowired
@@ -141,6 +145,57 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 				tblCheckPersonDao.delete(per);
 			}
 		}
+	}
+	
+	public Page<TblConsultArchives> queryCountList(Page<TblConsultArchives> page, TblConsultArchives tblConsultArchives) {
+		tblConsultArchives.setPage(page);
+		List<TblConsultArchives> archList  = tblConsultArchivesDao.queryCountList(tblConsultArchives);
+		//总被查阅人数
+		int tarNum = 0;
+		//总查阅人数
+		int perNum = 0;
+		for(int i = 0; i < archList.size(); i++){
+			//设置序号
+			archList.get(i).setXh((archList.size()-i)+"");
+			//组织查阅对象数据
+			String perStr = "";
+			TblCheckedTarget tar = new TblCheckedTarget();
+			tar.setMainId(archList.get(i).getId());
+			List<TblCheckedTarget> tarList = tblCheckedTargetDao.findList(tar);
+			//如果为空时，手动添加一个，为页面展示的rowspan用
+			if(tarList.size() == 0){
+				tarList.add(new TblCheckedTarget());
+			}
+			archList.get(i).setTblCheckedTargetList(tarList);
+			archList.get(i).setConsultTarNum(tarList.size()+"");
+			tarNum += tarList.size();
+			//组织查阅人数据
+			TblCheckPerson per = new TblCheckPerson();
+			per.setMainId(archList.get(i).getId());
+			List<TblCheckPerson> perList = tblCheckPersonDao.findList(per);
+			for(TblCheckPerson cper : perList){
+				if(perStr == ""){
+					perStr = cper.getName();
+				}else{
+					perStr += "," + cper.getName();
+				}
+			}
+			archList.get(i).setPerStr(perStr);
+			archList.get(i).setConsultPerNum(perList.size()+"");
+			perNum += perList.size();
+		}
+		TblConsultArchives info = new TblConsultArchives();
+		info.setXh("总数");
+		info.setConsultTarNum(tarNum+"");
+		info.setConsultPerNum(perNum+"");
+		//手动添加一个，为页面展示的rowspan用
+		List<TblCheckedTarget> tarTemList = new ArrayList<>();
+		tarTemList.add(new TblCheckedTarget());
+		info.setTblCheckedTargetList(tarTemList);
+		archList.add(info);
+		Collections.reverse(archList);
+		page.setList(archList);
+		return page;
 	}
 	
 }

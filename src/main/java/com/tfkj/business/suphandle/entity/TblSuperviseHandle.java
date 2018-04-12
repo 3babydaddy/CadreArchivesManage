@@ -24,6 +24,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	private String name;		// 姓名
 	private String sex;		// 性别
 	private Date birthday;		// 出生日期
+	private String beforeUnitDuty; //原单位及职务
 	private String unitDuty;		// 单位及职务
 	private String status;		// 业务状态
 	private Date presentDutyTime;		// 拟任现职时间
@@ -36,6 +37,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	private Date endBirthday;
 	private Date startRaisedTime;
 	private Date endRaisedTime;
+	private String xh;
 	
 	public TblSuperviseHandle() {
 		super();
@@ -55,7 +57,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@Length(min=0, max=64, message="姓名长度必须介于 0 和 64 之间")
-	@ExcelField(title = "姓名", align = 2, sort = 10)
+	@ExcelField(title = "姓名", align = 2, sort = 20)
 	public String getName() {
 		return name;
 	}
@@ -65,7 +67,6 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@Length(min=0, max=2, message="性别长度必须介于 0 和 2 之间")
-	@ExcelField(title = "性别", align = 2, sort = 20, dictType="sex")
 	public String getSex() {
 		return sex;
 	}
@@ -84,8 +85,18 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 		this.birthday = birthday;
 	}
 	
+	@Length(min=0, max=128, message="原任职单位及职务长度必须介于 0 和 128 之间")
+	@ExcelField(title = "原任职单位及职务", align = 2, sort = 40)
+	public String getBeforeUnitDuty() {
+		return beforeUnitDuty;
+	}
+
+	public void setBeforeUnitDuty(String beforeUnitDuty) {
+		this.beforeUnitDuty = beforeUnitDuty;
+	}
+
 	@Length(min=0, max=128, message="单位及职务长度必须介于 0 和 128 之间")
-	@ExcelField(title = "单位及职务", align = 2, sort = 40)
+	@ExcelField(title = "现任职单位及职务", align = 2, sort = 60)
 	public String getUnitDuty() {
 		return unitDuty;
 	}
@@ -95,7 +106,6 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@Length(min=0, max=1, message="业务状态长度必须介于 0 和 1 之间")
-	@ExcelField(align = 2, sort = 60, title = "状态", dictType="supervise_handle_status")
 	public String getStatus() {
 		return status;
 	}
@@ -105,6 +115,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title = "任现职时间", align = 2, sort = 50)
 	public Date getPresentDutyTime() {
 		return presentDutyTime;
 	}
@@ -114,7 +125,7 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@ExcelField(title = "应提档日期", align = 2, sort = 60)
+	
 	public Date getRaisedTime() {
 		return raisedTime;
 	}
@@ -179,6 +190,14 @@ public class TblSuperviseHandle extends DataEntity<TblSuperviseHandle> {
 
 	public void setEndRaisedTime(Date endRaisedTime) {
 		this.endRaisedTime = endRaisedTime;
+	}
+	@ExcelField(title = "序号", align = 2, sort = 10)
+	public String getXh() {
+		return xh;
+	}
+
+	public void setXh(String xh) {
+		this.xh = xh;
 	}
 	
 }

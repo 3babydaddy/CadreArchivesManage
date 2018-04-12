@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.borrow.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ import com.tfkj.framework.core.utils.StringUtils;
 @Transactional(readOnly = true)
 public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, TblBorrowArchives> {
 
+	@Autowired
+	private TblBorrowArchivesDao tblBorrowArchivesDao;
 	@Autowired
 	private TblBorrowPersonDao tblBorrowPersonDao;
 	@Autowired
@@ -146,4 +150,54 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 		}
 	}
 	
+	public Page<TblBorrowArchives> queryCountList(Page<TblBorrowArchives> page, TblBorrowArchives tblBorrowArchives) {
+		tblBorrowArchives.setPage(page);
+		List<TblBorrowArchives> archList  = tblBorrowArchivesDao.queryCountList(tblBorrowArchives);
+		//总被查阅人数
+		int tarNum = 0;
+		//总查阅人数
+		int perNum = 0;
+		for(int i = 0; i < archList.size(); i++){
+			//设置序号
+			archList.get(i).setXh((archList.size()-i)+"");
+			//组织查阅对象数据
+			String perStr = "";
+			TblBorrowTarget tar = new TblBorrowTarget();
+			tar.setMainId(archList.get(i).getId());
+			List<TblBorrowTarget> tarList = tblBorrowTargetDao.findList(tar);
+			//如果为空时，手动添加一个，为页面展示的rowspan用
+			if(tarList.size() == 0){
+				tarList.add(new TblBorrowTarget());
+			}
+			archList.get(i).setTblBorrowTargetList(tarList);
+			archList.get(i).setBorrowTarNum(tarList.size()+"");
+			tarNum += tarList.size();
+			//组织查阅人数据
+			TblBorrowPerson per = new TblBorrowPerson();
+			per.setMainId(archList.get(i).getId());
+			List<TblBorrowPerson> perList = tblBorrowPersonDao.findList(per);
+			for(TblBorrowPerson cper : perList){
+				if(perStr == ""){
+					perStr = cper.getName();
+				}else{
+					perStr += "," + cper.getName();
+				}
+			}
+			archList.get(i).setPerStr(perStr);
+			archList.get(i).setBorrowPerNum(perList.size()+"");
+			perNum += perList.size();
+		}
+		TblBorrowArchives info = new TblBorrowArchives();
+		info.setXh("总数");
+		info.setBorrowTarNum(tarNum+"");
+		info.setBorrowPerNum(perNum+"");
+		//手动添加一个，为页面展示的rowspan用
+		List<TblBorrowTarget> tarTemList = new ArrayList<>();
+		tarTemList.add(new TblBorrowTarget());
+		info.setTblBorrowTargetList(tarTemList);
+		archList.add(info);
+		Collections.reverse(archList);
+		page.setList(archList);
+		return page;
+	}
 }

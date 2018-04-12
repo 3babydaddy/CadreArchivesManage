@@ -75,4 +75,11 @@ public class TblBorrowArchivesController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
 	}
 
+	@RequestMapping(value = {"querycountlist"})
+	public String queryCountList(TblBorrowArchives tblBorrowArchives, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<TblBorrowArchives> page = tblBorrowArchivesService.queryCountList(new Page<TblBorrowArchives>(request, response), tblBorrowArchives); 
+		model.addAttribute("page", page);
+		return "business/borrow/tblBorrowCountList";
+	}
+	
 }

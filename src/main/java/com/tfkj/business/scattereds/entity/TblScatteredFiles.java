@@ -30,6 +30,10 @@ public class TblScatteredFiles extends DataEntity<TblScatteredFiles> {
 	private Date startHandOverDate;
 	private Date endHandOverDate;
 	private String handOverUnitName;
+	private String handOverStr;	//移交人
+	private String handOverNum;	//移交人数
+	private String fileNum;	//材料数
+	private String xh;			//序号
 	
 	public TblScatteredFiles() {
 		super();
@@ -105,5 +109,37 @@ public class TblScatteredFiles extends DataEntity<TblScatteredFiles> {
 
 	public void setHandOverUnitName(String handOverUnitName) {
 		this.handOverUnitName = handOverUnitName;
+	}
+
+	public String getHandOverStr() {
+		return handOverStr;
+	}
+
+	public void setHandOverStr(String handOverStr) {
+		this.handOverStr = handOverStr;
+	}
+
+	public String getHandOverNum() {
+		return handOverNum;
+	}
+
+	public void setHandOverNum(String handOverNum) {
+		this.handOverNum = handOverNum;
+	}
+
+	public String getFileNum() {
+		return fileNum;
+	}
+
+	public void setFileNum(String fileNum) {
+		this.fileNum = fileNum;
+	}
+
+	public String getXh() {
+		return xh;
+	}
+
+	public void setXh(String xh) {
+		this.xh = xh;
 	}
 }

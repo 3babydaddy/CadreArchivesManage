@@ -145,5 +145,11 @@ public class TblScatteredFilesController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
     }
    
+    @RequestMapping(value = {"querycountlist"})
+	public String queryCountList(TblScatteredFiles tblScatteredFiles, HttpServletRequest request, HttpServletResponse response, Model model) {
+    	Page<TblScatteredFiles> page = tblScatteredFilesService.findCountPage(new Page<TblScatteredFiles>(request, response), tblScatteredFiles); 
+		model.addAttribute("page", page);
+		return "business/scattereds/tblScatteredFilesCountList";
+	}
     
 }

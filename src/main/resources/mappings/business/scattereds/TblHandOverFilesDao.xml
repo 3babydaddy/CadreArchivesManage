@@ -138,4 +138,18 @@
 		</choose>
 	</update>
 	
+	<select id="queryHandOverList" resultType="TblHandOverFiles">
+		SELECT 
+			a.main_id AS "mainId",
+			a.name AS "name",
+			a.original_no AS "originalNo"
+		FROM tbl_hand_over_files a
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name like concat('%', #{name}, '%')
+			</if>
+		</where>
+		GROUP BY a.name, a.original_no
+	</select>
 </mapper>

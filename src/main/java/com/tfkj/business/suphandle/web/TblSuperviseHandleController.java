@@ -3,10 +3,13 @@
  */
 package com.tfkj.business.suphandle.web;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -98,14 +101,27 @@ public class TblSuperviseHandleController extends BaseController {
 			return "redirect:" + adminPath + "/suphandle/tblSuperviseHandle/list?repage";
 		}
 		try {
+			Calendar calendar = Calendar.getInstance();
 			int successNum = 0;
 			int failureNum = 0;
 			StringBuilder failureMsg = new StringBuilder();
-			ImportExcel ei = new ImportExcel(file, 1, 0);
+			ImportExcel ei = new ImportExcel(file, 2, 0);
 			
 			List<TblSuperviseHandle> list = ei.getDataList(TblSuperviseHandle.class);
 			for (TblSuperviseHandle info : list){
 				try{
+					if(StringUtils.isBlank(info.getName())){
+						//addMessage(redirectAttributes, "名字为必填数据；不能为空");
+						continue;
+					}
+					
+					info.setStatus("1");
+					info.setCountDown((long)90);
+					info.setWaringStatus("G");
+					calendar.setTime(info.getPresentDutyTime());
+					calendar.add(calendar.MONTH, 3); 
+					Date time = calendar.getTime(); 
+					info.setRaisedTime(time);
 					tblSuperviseHandleService.save(info);
 					successNum++;
 				}catch (Exception ex) {
@@ -142,4 +158,12 @@ public class TblSuperviseHandleController extends BaseController {
 		}
 		return "redirect:" + adminPath + "/suphandle/tblSuperviseHandle/list?repage";
     }
+    
+    @RequestMapping(value = "updateStatus")
+	public String updateStatus(TblSuperviseHandle tblSuperviseHandle, RedirectAttributes redirectAttributes) {
+    	tblSuperviseHandle.setStatus("2");
+    	tblSuperviseHandleService.save(tblSuperviseHandle);
+		addMessage(redirectAttributes, "督查督办上交成功");
+		return "redirect:"+Global.getAdminPath()+"/suphandle/tblSuperviseHandle/?repage";
+	}
 }

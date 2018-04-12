@@ -77,9 +77,13 @@
 	<div id="importBox" class="hide">
 		<form id="importForm" action="${ctx}/suphandle/tblSuperviseHandle/import" method="post" enctype="multipart/form-data"
 			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
-			<input id="uploadFile" name="file" type="file" style="width:330px"/><br/><br/>　　
-			<input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   导    入   "/>&nbsp;&nbsp;
-			<a href="${ctx}/suphandle/tblSuperviseHandle/import/template">下载模板</a>
+			<ul class="ul-form">
+				<li><label>导入文件：</label>
+					<input id="uploadFile" name="file" type="file" style="width:210px"/>
+				</li>
+			</ul>
+			<input id="btnImportSubmit" class="btn btn-primary" style="margin-top:5px;width:75px;" type="submit" value="   导    入   "/>&nbsp;&nbsp;
+			<a href="<c:url value='/static/templet/superviseHandleModel.xls'/>">下载模板</a>
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
@@ -98,11 +102,11 @@
 					value="<fmt:formatDate value="${tblSuperviseHandle.endBirthday}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
-			<li><label>编号：</label>
-				<form:input path="id" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
-			<li><label style="width:85px;">姓名：</label>
+			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label style="width:85px;">单位及职务：</label>
+				<form:input path="unitDuty" htmlEscape="false" maxlength="128" class="input-medium"/>
 			</li>
 			<li><label>提档时间：</label>
 				<input name="startRaisedTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
@@ -113,14 +117,11 @@
 					value="<fmt:formatDate value="${tblSuperviseHandle.endRaisedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
-			<li><label>性别：</label>
-				<form:input path="sex" htmlEscape="false" maxlength="2" class="input-medium"/>
-			</li>
-			<li><label style="width:85px;">单位及职务：</label>
-				<form:input path="unitDuty" htmlEscape="false" maxlength="128" class="input-medium"/>
-			</li>
-			<li><label>业务状态：</label>
-				<form:input path="status" htmlEscape="false" maxlength="1" class="input-medium"/>
+			<li><label>状态：</label>
+				<form:select path="status" class="input-medium" style="width:220px;">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('supervise_handle_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
@@ -141,11 +142,11 @@
 			<tr>
 				<th><input id="selected" type="checkbox" /></th>
 				<th>姓名</th>
-				<th>性别</th>
 				<th>出生日期</th>
 				<th>单位及职务</th>
 				<th>应提交档案时间</th>
-				<th>业务状态</th>
+				<th>倒计时(天)</th>
+				<th>状态</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -159,9 +160,6 @@
 					${tblSuperviseHandle.name}
 				</td>
 				<td>
-					${tblSuperviseHandle.sex}
-				</td>
-				<td>
 					<fmt:formatDate value="${tblSuperviseHandle.birthday}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
@@ -171,11 +169,18 @@
 					<fmt:formatDate value="${tblSuperviseHandle.raisedTime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
+					${tblSuperviseHandle.countDown}
+				</td>
+				<td>
 					${fns:getDictLabel(tblSuperviseHandle.status, 'supervise_handle_status', '')}
 				</td>
 				<td>
-    				<a href="#">督办</a>
-					<a href="#" onclick="return confirmx('确认要删除该督查督办吗？', this.href)">上交</a>
+					<c:if test="${tblSuperviseHandle.countDown <= 0}">
+						<a href="#" >督办</a>
+					</c:if>
+					<c:if test="${tblSuperviseHandle.countDown > 0 && tblSuperviseHandle.status eq '1'}">
+						<a href="${ctx}/suphandle/tblSuperviseHandle/updateStatus?id=${tblSuperviseHandle.id}" onclick="return confirmx('该条数据确认要上交吗？', this.href)">上交</a>
+					</c:if>
 				</td>
 			</tr>
 		</c:forEach>

@@ -164,4 +164,44 @@
 		</choose>
 	</update>
 	
+	<select id="queryCountList" resultType="TblRollInPersons">
+		SELECT 
+			(select label from sys_dict where id = b.before_unit and DEL_FLAG = '0') as beforeUnitName,
+			b.recipient as "recipient",
+			b.roll_in_time as "rollInTime",
+			<include refid="tblRollInPersonsColumns"/>
+		FROM tbl_roll_in_persons a
+		<include refid="tblRollInPersonsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="startCreateDate != null and startCreateDate != ''">
+			<![CDATA[
+				AND b.roll_in_time >= #{startCreateDate}
+			]]>
+			</if>
+			<if test="endCreateDate != null and endCreateDate != ''">
+			<![CDATA[
+				AND b.roll_in_time <= #{endCreateDate}
+			]]>
+			</if>
+			<if test="recipient != null and recipient != ''">
+			<![CDATA[
+				AND b.recipient like  concat('%', #{recipient}, '%')
+			]]>
+			</if>
+			<if test="beforeUnit != null and beforeUnit != ''">
+			<![CDATA[
+				AND b.before_unit like concat('%', #{beforeUnit}, '%')
+			]]>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

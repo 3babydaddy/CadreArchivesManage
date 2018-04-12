@@ -65,7 +65,7 @@
 			var sort = $("#sort").val();
 			var name = $("#name").val();
 			var status = $("#status").val();
-			window.location.href = href="${ctx}/retiredadre/retiredCadre/exportArchivesInfo?startBir="+startBir
+			window.location.href = "${ctx}/retiredadre/retiredCadre/exportArchivesInfo?startBir="+startBir
 					+"&endBir="+endBir+"&sort="+sort+"&name="+name+"&status="+status;
 		}
 		

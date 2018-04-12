@@ -164,4 +164,46 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="queryCountList" resultType="TblConsultArchives">
+		SELECT 
+			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as consultUnitName,
+			<include refid="tblConsultArchivesColumns"/>
+		FROM tbl_consult_archives a
+		<include refid="tblConsultArchivesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="startBorrowDate != null and startBorrowDate != ''">
+			<![CDATA[
+				AND a.borrow_date >= #{startBorrowDate}
+			]]>	
+			</if>
+			<if test="endBorrowDate != null and endBorrowDate != ''">
+			<![CDATA[
+				AND a.borrow_date <= #{endBorrowDate}
+			]]>	
+			</if>
+			<if test="consultUnit != null and consultUnit != ''">
+				AND a.consult_unit like concat('%', #{consultUnit}, '%')
+			</if>
+			<if test="tarStr != null and tarStr != ''">
+				AND a.id in (select main_id from tbl_checked_target where main_id = a.id 
+								and del_flag = '0' and name like concat('%', #{tarStr}, '%'))
+			</if>
+			<if test="perStr != null and perStr != ''">
+				AND a.id in (select main_id from tbl_check_person where main_id = a.id 
+								and del_flag = '0' and name like concat('%', #{perStr}, '%'))
+			</if>
+			<if test="operator != null and operator != ''">
+				AND a.operator = #{operator}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

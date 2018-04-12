@@ -140,4 +140,56 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="findCountList" resultType="TblScatteredFiles">
+		SELECT 
+			(select label from sys_dict where id = a.hand_over_unit and DEL_FLAG = '0') as handOverUnitName,
+			<include refid="tblScatteredFilesColumns"/>
+		FROM tbl_scattered_files a
+		<include refid="tblScatteredFilesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="handOverUnit != null and handOverUnit != ''">
+				AND a.hand_over_unit LIKE 
+					<if test="dbName == 'oracle'">'%'||#{handOverUnit}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{handOverUnit}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{handOverUnit},'%')</if>
+			</if>
+			<if test="startHandOverDate != null and startHandOverDate != ''">
+			<![CDATA[
+				AND a.hand_over_date >= #{startHandOverDate}
+			]]>				
+			</if>
+			<if test="endHandOverDate != null and endHandOverDate != ''">
+			<![CDATA[
+				AND a.hand_over_date <= #{endHandOverDate}
+			]]>	
+			</if>
+			<if test="operator != null and operator != ''">
+				AND a.operator LIKE 
+					<if test="dbName == 'oracle'">'%'||#{operator}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{operator}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{operator},'%')</if>
+			</if>
+			<if test="recipient != null and recipient != ''">
+				AND a.recipient LIKE 
+					<if test="dbName == 'oracle'">'%'||#{recipient}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{recipient}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{recipient},'%')</if>
+			</if>
+			<if test="tblHandOverFilesList.size() > 0">
+				and a.id in 
+					<foreach item="item" collection="tblHandOverFilesList" open="(" separator="," close=")">
+			             	#{item.mainId}
+			    	</foreach>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

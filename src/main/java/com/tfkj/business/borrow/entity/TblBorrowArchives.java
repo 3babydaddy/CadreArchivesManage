@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
 import com.tfkj.framework.core.persistence.DataEntity;
+import com.tfkj.framework.core.utils.excel.annotation.ExcelField;
 
 
 /**
@@ -45,6 +46,9 @@ public class TblBorrowArchives extends DataEntity<TblBorrowArchives> {
 	private String backOperator; //归还人
 	private Date backDate;		 //归还日期
 	private String consultUnitName;
+	private String borrowTarNum; //被查阅人员数量
+	private String borrowPerNum; //查阅人员数量
+	private String xh;
 	
 	
 	public TblBorrowArchives() {
@@ -240,13 +244,35 @@ public class TblBorrowArchives extends DataEntity<TblBorrowArchives> {
 	public void setBackDate(Date backDate) {
 		this.backDate = backDate;
 	}
-
 	public String getConsultUnitName() {
 		return consultUnitName;
 	}
 
 	public void setConsultUnitName(String consultUnitName) {
 		this.consultUnitName = consultUnitName;
+	}
+
+	public String getBorrowTarNum() {
+		return borrowTarNum;
+	}
+
+	public void setBorrowTarNum(String borrowTarNum) {
+		this.borrowTarNum = borrowTarNum;
+	}
+
+	public String getBorrowPerNum() {
+		return borrowPerNum;
+	}
+
+	public void setBorrowPerNum(String borrowPerNum) {
+		this.borrowPerNum = borrowPerNum;
+	}
+	public String getXh() {
+		return xh;
+	}
+
+	public void setXh(String xh) {
+		this.xh = xh;
 	}
 
 	

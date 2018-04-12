@@ -246,6 +246,11 @@ public class WordExportController extends BaseController {
         	 dataMap.put("originalNo", originalNo);
         	 dataMap.put("viceNo", viceNo);
         	 dataMap.put("filesNo", filesNo);
+        	 if(perList.size() < 3){
+        		 while(perList.size() < 3){
+        			 perList.add(new TblRollOutPersons());
+        		 }
+        	 }
         	 dataMap.put("perList", perList);
          }
 		 if(tblRollOut.getBeforeUnitName() != null){

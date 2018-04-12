@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.rollin.dao;
 
+import java.util.List;
+
 import com.tfkj.business.rollin.entity.TblRollInPersons;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
@@ -14,5 +16,7 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
  */
 @MyBatisDao
 public interface TblRollInPersonsDao extends CrudDao<TblRollInPersons> {
+	
+	List<TblRollInPersons> queryCountList(TblRollInPersons tblRollInPersons);
 	
 }

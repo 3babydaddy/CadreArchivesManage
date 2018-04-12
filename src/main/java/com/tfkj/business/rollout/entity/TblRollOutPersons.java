@@ -8,6 +8,7 @@ import java.util.Date;
 import org.hibernate.validator.constraints.Length;
 
 import com.tfkj.framework.core.persistence.DataEntity;
+import com.tfkj.framework.core.utils.excel.annotation.ExcelField;
 
 
 /**
@@ -36,6 +37,12 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	private Date endCreateDate;
 	private String batchNum; //批次号
 	
+	private Date rollOutTime;		// 转出时间
+	private String recipient;		// 接收人
+	private String saveUnit;		// 现存档单位
+	private String saveUnitName;		
+	private String xh;		
+	
 	public TblRollOutPersons() {
 		super();
 	}
@@ -54,6 +61,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	}
 	
 	@Length(min=0, max=64, message="姓名长度必须介于 0 和 64 之间")
+	@ExcelField(title = "姓名", align = 2, sort = 30)
 	public String getName() {
 		return name;
 	}
@@ -63,6 +71,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	}
 	
 	@Length(min=0, max=200, message="单位及职务长度必须介于 0 和 200 之间")
+	@ExcelField(title = "单位及职务", align = 2, sort = 40)
 	public String getDuty() {
 		return duty;
 	}
@@ -72,6 +81,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	}
 	
 	@Length(min=0, max=1, message="转出形式长度必须介于 0 和 1 之间")
+	@ExcelField(title = "转出形式", align = 2, sort = 50,dictType="roll_out_type")
 	public String getOutType() {
 		return outType;
 	}
@@ -81,6 +91,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	}
 	
 	@Length(min=0, max=1, message="转出事由长度必须介于 0 和 1 之间")
+	@ExcelField(title = "转出事由", align = 2, sort = 60,dictType="roll_out_reason")
 	public String getReason() {
 		return reason;
 	}
@@ -121,7 +132,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	public void setViceNo(Long viceNo) {
 		this.viceNo = viceNo;
 	}
-	
+	@ExcelField(title = "材料份数", align = 2, sort = 90)
 	public Long getFilesNo() {
 		return filesNo;
 	}
@@ -179,6 +190,46 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 
 	public void setBatchNum(String batchNum) {
 		this.batchNum = batchNum;
+	}
+	@ExcelField(title = "转出日期", align = 2, sort = 20)
+	public Date getRollOutTime() {
+		return rollOutTime;
+	}
+
+	public void setRollOutTime(Date rollOutTime) {
+		this.rollOutTime = rollOutTime;
+	}
+	@ExcelField(title = "接收人", align = 2, sort = 80)
+	public String getRecipient() {
+		return recipient;
+	}
+
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+
+	public String getSaveUnit() {
+		return saveUnit;
+	}
+
+	public void setSaveUnit(String saveUnit) {
+		this.saveUnit = saveUnit;
+	}
+	@ExcelField(title = "接收单位", align = 2, sort = 70)
+	public String getSaveUnitName() {
+		return saveUnitName;
+	}
+
+	public void setSaveUnitName(String saveUnitName) {
+		this.saveUnitName = saveUnitName;
+	}
+	@ExcelField(title = "序号", align = 2, sort = 10)
+	public String getXh() {
+		return xh;
+	}
+
+	public void setXh(String xh) {
+		this.xh = xh;
 	}
 	
 }

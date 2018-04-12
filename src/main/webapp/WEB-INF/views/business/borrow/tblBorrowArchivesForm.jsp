@@ -41,7 +41,7 @@
 				}
 			});
 			//绘制签名数据填充
-			if(row.siginName != undefined && row.siginName != ""){
+			if(row != undefined && row.siginName != undefined && row.siginName != ""){
 				document.getElementById("tblBorrowPersonList"+idx+"_siginDiv").style.display='';
 	    		document.getElementById("tblBorrowPersonList"+idx+"_siginInput").style.display='none';
 			}
@@ -236,7 +236,7 @@
 								<input id="tblBorrowPersonList{{idx}}_name" name="tblBorrowPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
 							<td rowspan="2" colspan="2" style="text-align:center;">
-								<sys:upImg input="tblBorrowPersonList{{idx}}_photo"  type="files"  name="tblBorrowPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+								<sys:upImg input="tblBorrowPersonList{{idx}}_photo"  type="files"  name="tblBorrowPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="头像上传"/>
 							</td>
 							<td rowspan="5" class="text-center" width="10">
 								{{#delBtn}}<span class="close" onclick="delRowPer(this, '#tblBorrowPersonList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
@@ -271,7 +271,6 @@
 								
 								<input id="tblBorrowPersonList{{idx}}_siginInput" name="tblBorrowPersonList[{{idx}}].siginInput" type="text"   onclick=siginOption(this);  class="input-small "/>
 								<input id="tblBorrowPersonList{{idx}}_siginName" name="tblBorrowPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input-small "/>
-								
 							</td>
 						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
 					</tr>//-->

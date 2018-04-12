@@ -42,7 +42,7 @@
 			});
 			
 			//绘制签名数据填充
-			if(row.siginName != undefined && row.siginName != ""){
+			if(row != undefined && row.siginName != undefined && row.siginName != ""){
 				document.getElementById("tblCheckPersonList"+idx+"_siginDiv").style.display='';
 	    		document.getElementById("tblCheckPersonList"+idx+"_siginInput").style.display='none';
 			}
@@ -236,7 +236,7 @@
 								<input id="tblCheckPersonList{{idx}}_name" name="tblCheckPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
 							<td rowspan="2" colspan="2" style="text-align:center;">
-								<sys:upImg input="tblCheckPersonList{{idx}}_photo"  type="files"  name="tblCheckPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+								<sys:upImg input="tblCheckPersonList{{idx}}_photo"  type="files"  name="tblCheckPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="头像上传"/>
 							</td>
 							<td rowspan="5" class="text-center" width="10">
 								{{#delBtn}}<span class="close" onclick="delRowPer(this, '#tblCheckPersonList{{idx}}')" title="删除">&times;</span>{{/delBtn}}

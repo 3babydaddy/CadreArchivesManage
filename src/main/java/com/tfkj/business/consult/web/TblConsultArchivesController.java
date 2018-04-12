@@ -81,4 +81,11 @@ public class TblConsultArchivesController extends BaseController {
 		model.addAttribute("siginId", siginId);
 		return "business/consult/tblDrowSigin";
 	}
+	
+	@RequestMapping(value = {"querycountlist"})
+	public String queryCountList(TblConsultArchives tblConsultArchives, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<TblConsultArchives> page = tblConsultArchivesService.queryCountList(new Page<TblConsultArchives>(request, response), tblConsultArchives); 
+		model.addAttribute("page", page);
+		return "business/consult/tblConsultCountList";
+	}
 }

@@ -7,7 +7,9 @@ import java.util.Date;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tfkj.framework.core.persistence.DataEntity;
+import com.tfkj.framework.core.utils.excel.annotation.ExcelField;
 
 
 /**
@@ -32,6 +34,11 @@ public class TblRollInPersons extends DataEntity<TblRollInPersons> {
 	private Date startCreateDate;
 	private Date endCreateDate;
 	private String batchNum; //批次号
+	private Date rollInTime;		// 转入时间
+	private String beforeUnit;		// 原存档单位
+	private String beforeUnitName;
+	private String recipient;		// 接收人
+	private String xh;
 	
 	public TblRollInPersons() {
 		super();
@@ -51,6 +58,7 @@ public class TblRollInPersons extends DataEntity<TblRollInPersons> {
 	}
 	
 	@Length(min=0, max=64, message="姓名长度必须介于 0 和 64 之间")
+	@ExcelField(title = "姓名", align = 2, sort = 30)
 	public String getName() {
 		return name;
 	}
@@ -60,6 +68,7 @@ public class TblRollInPersons extends DataEntity<TblRollInPersons> {
 	}
 	
 	@Length(min=0, max=200, message="单位及职务长度必须介于 0 和 200 之间")
+	@ExcelField(title = "单位及职务", align = 2, sort = 40)
 	public String getDuty() {
 		return duty;
 	}
@@ -101,7 +110,7 @@ public class TblRollInPersons extends DataEntity<TblRollInPersons> {
 	public void setViceNo(Long viceNo) {
 		this.viceNo = viceNo;
 	}
-	
+	@ExcelField(title = "材料份数", align = 2, sort = 70)
 	public Long getFilesNo() {
 		return filesNo;
 	}
@@ -150,6 +159,50 @@ public class TblRollInPersons extends DataEntity<TblRollInPersons> {
 
 	public void setBatchNum(String batchNum) {
 		this.batchNum = batchNum;
+	}
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title = "转入时间", align = 2, sort = 20)
+	public Date getRollInTime() {
+		return rollInTime;
+	}
+
+	public void setRollInTime(Date rollInTime) {
+		this.rollInTime = rollInTime;
+	}
+
+	public String getBeforeUnit() {
+		return beforeUnit;
+	}
+
+	public void setBeforeUnit(String beforeUnit) {
+		this.beforeUnit = beforeUnit;
+	}
+
+	@ExcelField(title = "原存档单位", align = 2, sort = 50)
+	public String getBeforeUnitName() {
+		return beforeUnitName;
+	}
+
+	public void setBeforeUnitName(String beforeUnitName) {
+		this.beforeUnitName = beforeUnitName;
+	}
+	@ExcelField(title = "接收人", align = 2, sort = 60)
+	public String getRecipient() {
+		return recipient;
+	}
+
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+
+	@ExcelField(title = "序号", align = 2, sort = 10)
+	public String getXh() {
+		return xh;
+	}
+
+	public void setXh(String xh) {
+		this.xh = xh;
 	}
 	
 }

@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.rollin.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +22,7 @@ import com.tfkj.business.rollin.service.TblRollInService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.web.BaseController;
 
 /**
@@ -84,4 +87,31 @@ public class TblRollInController extends BaseController {
 		model.addAttribute("batchNum", per.getBatchNum().replace("zi", "字").replace("hao", "号"));
 		return "business/rollin/tblRollInPersonsList";
 	}
+	
+	@RequestMapping(value = {"querycountlist"})
+	public String queryCountPage(TblRollInPersons tblRollInPersons, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<TblRollInPersons> page = tblRollInService.queryCountPage(new Page<TblRollInPersons>(request, response), tblRollInPersons); 
+		model.addAttribute("page", page);
+		return "business/rollin/tblRollInCountList";
+	}
+	
+	/**
+	 * 转入查询统计数据
+	 * @param response
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "export")
+    public String exportData(TblRollInPersons tblRollInPersons, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "转入数据信息统计.xlsx";
+    		List<TblRollInPersons> list = tblRollInService.queryCountList(tblRollInPersons); 
+    		list.add(new TblRollInPersons());
+    		new ExportExcel("转入管理-数据统计", TblRollInPersons.class, 2).setDataList(list).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出转入管理-数据统计失败！失败信息："+e.getMessage());
+		}
+		return "redirect:"+Global.getAdminPath()+"/rollin/tblRollIn/?repage";
+    }
 }

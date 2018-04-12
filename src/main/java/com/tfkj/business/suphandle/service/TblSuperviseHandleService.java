@@ -51,5 +51,4 @@ public class TblSuperviseHandleService extends CrudService<TblSuperviseHandleDao
 			}
 		}
 	}
-	
 }

@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.rollout.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +22,7 @@ import com.tfkj.business.rollout.service.TblRollOutService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.web.BaseController;
 
 
@@ -86,5 +89,25 @@ public class TblRollOutController extends BaseController {
 		return "business/rollout/tblRollOutPersonsList";
 	}
 	
+	@RequestMapping(value = {"querycountlist"})
+	public String queryCountPage(TblRollOutPersons tblRollOutPersons, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<TblRollOutPersons> page = tblRollOutService.queryCountPage(new Page<TblRollOutPersons>(request, response), tblRollOutPersons); 
+		model.addAttribute("page", page);
+		return "business/rollout/tblRollOutCountList";
+	}
+	
+	@RequestMapping(value = {"export"})
+	public String queryCountList(TblRollOutPersons tblRollOutPersons, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "转出数据信息统计.xlsx";
+    		List<TblRollOutPersons> list = tblRollOutService.queryCountList(tblRollOutPersons); 
+    		list.add(new TblRollOutPersons());
+    		new ExportExcel("转出管理-数据统计", TblRollOutPersons.class, 2).setDataList(list).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出转出管理-数据统计失败！失败信息："+e.getMessage());
+		}
+		return "redirect:"+Global.getAdminPath()+"/rollout/tblRollOut/?repage";
+	}
 	
 }

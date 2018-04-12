@@ -3,15 +3,19 @@
  */
 package com.tfkj.business.rollout.service;
 
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tfkj.business.rollout.dao.TblRollOutBackDao;
+import com.tfkj.business.rollout.entity.TblRollOut;
 import com.tfkj.business.rollout.entity.TblRollOutBack;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
+
 
 
 /**
@@ -23,6 +27,9 @@ import com.tfkj.framework.core.service.CrudService;
 @Transactional(readOnly = true)
 public class TblRollOutBackService extends CrudService<TblRollOutBackDao, TblRollOutBack> {
 
+	@Autowired
+	private TblRollOutService tblRollOutService;
+	
 	public TblRollOutBack get(String id) {
 		return super.get(id);
 	}
@@ -43,6 +50,21 @@ public class TblRollOutBackService extends CrudService<TblRollOutBackDao, TblRol
 	@Transactional(readOnly = false)
 	public void delete(TblRollOutBack tblRollOutBack) {
 		super.delete(tblRollOutBack);
+	}
+	
+	@Transactional(readOnly = false)
+	public void receiptSave(String rollApproveAttachment, String rollOutId)throws Exception{
+		TblRollOutBack tblRollOutBack = new TblRollOutBack();
+		TblRollOut tblRollOut = tblRollOutService.get(rollOutId);
+		
+		tblRollOut.setIsReturn("1");
+		tblRollOutService.save(tblRollOut);
+		
+		tblRollOutBack.setMainId(rollOutId);
+		tblRollOutBack.setRecipient(tblRollOut.getOperator());
+		tblRollOutBack.setReturnTime(new Date());
+		tblRollOutBack.setReturnAttmentId(rollApproveAttachment);
+		super.save(tblRollOutBack);
 	}
 	
 }

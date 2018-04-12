@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.scattereds.dao;
 
+import java.util.List;
+
 import com.tfkj.business.scattereds.entity.TblScatteredFiles;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
@@ -14,5 +16,7 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
  */
 @MyBatisDao
 public interface TblScatteredFilesDao extends CrudDao<TblScatteredFiles> {
+	
+	List<TblScatteredFiles> findCountList(TblScatteredFiles scattered);
 	
 }

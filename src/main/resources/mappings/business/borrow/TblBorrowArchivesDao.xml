@@ -191,4 +191,70 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="queryCountList" resultType="TblBorrowArchives">
+		SELECT 
+			b.return_person as backOperator,
+			b.return_time as backDate,
+			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as consultUnitName,
+			<include refid="tblBorrowArchivesColumns"/>
+		FROM tbl_borrow_archives a 
+		<include refid="tblBorrowArchivesJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="startBorrowDate != null and startBorrowDate != ''">
+			<![CDATA[
+				AND a.borrow_date >= #{startBorrowDate}
+			]]>
+			</if>
+			<if test="endBorrowDate != null and endBorrowDate != ''">
+			<![CDATA[
+				AND a.borrow_date <= #{endBorrowDate}
+			]]>
+			</if>
+			<if test="consultUnit != null and consultUnit != ''">
+				AND a.consult_unit LIKE 
+					<if test="dbName == 'oracle'">'%'||#{consultUnit}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{consultUnit}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{consultUnit},'%')</if>
+			</if>
+			<if test="operator != null and operator != ''">
+				AND a.operator LIKE 
+					<if test="dbName == 'oracle'">'%'||#{operator}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{operator}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{operator},'%')</if>
+			</if>
+			<if test="tarStr != null and tarStr != ''">
+				AND a.id in (select main_id from tbl_borrow_target where main_id = a.id 
+							and del_flag= '0' and name like concat('%', #{tarStr}, '%'))
+			</if>
+			<if test="perStr != null and perStr != ''">
+				AND a.id in (select main_id from tbl_borrow_person where main_id = a.id 
+							and del_flag = '0' and name like concat('%', #{perStr}, '%'))
+			</if>
+			<if test="startBackDate != null and startBackDate != ''">
+			<![CDATA[
+				AND b.return_time >= #{startBackDate}
+			]]>
+			</if>
+			<if test="endBackDate != null and endBackDate != ''">
+			<![CDATA[
+				AND b.return_time <= #{endBackDate}
+			]]>
+			</if>
+			<if test="backOperator != null and backOperator != ''">
+				AND b.return_person LIKE 
+					<if test="dbName == 'oracle'">'%'||#{backOperator}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{backOperator}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{backOperator},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date 
+			</otherwise>
+		</choose>
+	</select>
 </mapper>
