@@ -4,7 +4,8 @@
 <head>
 <title>jQuery-webcam-js</title>
 <meta name="decorator" content="default" />
-<script type="text/javascript" src="${ctxStatic}/jquery-webcam/jquery.webcam.js"></script>
+<script type="text/javascript"
+	src="${ctxStatic}/jquery-webcam/jquery.webcam.js"></script>
 
 <script type="text/javascript">
 	var w = 320, h = 240; //摄像头配置,创建canvas
@@ -16,7 +17,6 @@
 	ctx = canvas.getContext("2d");
 	image = ctx.getImageData(0, 0, w, h);
 	$(document).ready(function() {
-		debugger;
 		$("#webcam").webcam({
 			width : w,
 			height : h,
@@ -43,17 +43,27 @@
 				if (pos >= 4 * w * h) {
 					ctx.putImageData(img, 0, 0); //转换图像数据，渲染canvas
 					pos = 0;
-					Imagedata = canvas.toDataURL().substring(22); //上传给后台的图片数据
+					var i = new Image();
+					i.src = canvas.toDataURL();
+					$("#picView").empty();
+					$(i).appendTo($("#picView"));
+					// TODO: 图片上传
+					/* var imagedata = canvas.toDataURL().substring(22); //上传给后台的图片数据
+					$.post('${ctx}/', {
+			        	imgBase64Str : imagedata
+			        	},function (data){
+			        		
+			        }); */
 				}
 			},
 			onCapture : function() { //捕获图像
 				webcam.save();
 			},
 			debug : function(type, string) { //控制台信息
-				console.log(type + ": " + string);
+				//console.log(type + ": " + string);
 			},
 			onLoad : function() { //flash 加载完毕执行
-				console.log('加载完毕！')
+				//console.log('加载完毕！')
 				var cams = webcam.getCameraList();
 				for ( var i in cams) {
 					$("body").append("<p>" + cams[i] + "</p>");
@@ -62,17 +72,22 @@
 		});
 
 		$(".play").click(function() {
-			debugger;
 			webcam.capture(5); //拍照，参数5是倒计时
+		});
+		$(".play-x").click(function() {
+			webcam.capture(); //拍照，参数5是倒计时
 		});
 	});
 </script>
 
 </head>
 <body>
-	<button class="play">拍照</button>
+	<button class="play">5s拍照</button>
+	<button class="play-x">拍照</button>
 	<div id="status">倒计时</div>
 	<div id="webcam"></div>
+	<div id="picView"
+		style="width: 304px; height: 240px; border: 5px solid #ccc; padding: 4px; background-color: #fff;">
 </body>
 
 </html>
