@@ -104,5 +104,15 @@ public class TerminalController {
 			return map;
 		}
 	}
+	
+	/**
+	 * 查阅档案录入终端界面
+	 * 
+	 * @return 页面资源路径
+	 */
+	@RequestMapping("demo")
+	public String demo(Model model) {
+		return "business/terminal/demo";
+	}
 
 }
