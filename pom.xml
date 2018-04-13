@@ -662,6 +662,23 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.10.v20150310</version>
+
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <httpConnector>
+                        <port>8080</port>
+                    </httpConnector>
+                    <webApp>
+                        <contextPath>/CadreArchivesManage</contextPath>
+                    </webApp>
+                </configuration>
+            </plugin>
+
             <!-- resource插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
