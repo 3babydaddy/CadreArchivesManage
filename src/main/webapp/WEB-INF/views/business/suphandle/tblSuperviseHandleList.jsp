@@ -143,7 +143,8 @@
 				<th><input id="selected" type="checkbox" /></th>
 				<th>姓名</th>
 				<th>出生日期</th>
-				<th>单位及职务</th>
+				<th>现单位及职务</th>
+				<th>原单位及职务</th>
 				<th>应提交档案时间</th>
 				<th>倒计时(天)</th>
 				<th>状态</th>
@@ -164,6 +165,9 @@
 				</td>
 				<td>
 					${tblSuperviseHandle.unitDuty}
+				</td>
+				<td>
+					${tblSuperviseHandle.beforeUnitDuty}
 				</td>
 				<td>
 					<fmt:formatDate value="${tblSuperviseHandle.raisedTime}" pattern="yyyy-MM-dd"/>

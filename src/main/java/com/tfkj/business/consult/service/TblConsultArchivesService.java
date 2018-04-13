@@ -17,6 +17,7 @@ import com.tfkj.business.consult.dao.TblConsultArchivesDao;
 import com.tfkj.business.consult.entity.TblCheckPerson;
 import com.tfkj.business.consult.entity.TblCheckedTarget;
 import com.tfkj.business.consult.entity.TblConsultArchives;
+import com.tfkj.business.consult.entity.TblConsultExport;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
 import com.tfkj.framework.core.utils.StringUtils;
@@ -56,7 +57,9 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 		tblConsultArchives.setPage(page);
 		List<TblConsultArchives> archList  = dao.findList(tblConsultArchives);
 		for(TblConsultArchives info : archList){
+			//被查阅人的名称
 			String tarStr = "";
+			//查阅人的名称
 			String perStr = "";
 			
 			TblCheckedTarget tar = new TblCheckedTarget();
@@ -91,6 +94,7 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 	@Transactional(readOnly = false)
 	public void save(TblConsultArchives tblConsultArchives) {
 		super.save(tblConsultArchives);
+		//新增、更改或者删除被查借阅的数据
 		for (TblCheckedTarget tblCheckedTarget : tblConsultArchives.getTblCheckedTargetList()){
 			if (tblCheckedTarget.getId() == null){
 				continue;
@@ -108,6 +112,7 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 				tblCheckedTargetDao.delete(tblCheckedTarget);
 			}
 		}
+		//新增、更改或者删除查阅人的数据
 		for (TblCheckPerson tblCheckPerson : tblConsultArchives.getTblCheckPersonList()){
 			if (tblCheckPerson.getId() == null){
 				continue;
@@ -147,7 +152,7 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 		}
 	}
 	
-	public Page<TblConsultArchives> queryCountList(Page<TblConsultArchives> page, TblConsultArchives tblConsultArchives) {
+	public Page<TblConsultArchives> queryCountPage(Page<TblConsultArchives> page, TblConsultArchives tblConsultArchives) {
 		tblConsultArchives.setPage(page);
 		List<TblConsultArchives> archList  = tblConsultArchivesDao.queryCountList(tblConsultArchives);
 		//总被查阅人数
@@ -162,13 +167,14 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 			TblCheckedTarget tar = new TblCheckedTarget();
 			tar.setMainId(archList.get(i).getId());
 			List<TblCheckedTarget> tarList = tblCheckedTargetDao.findList(tar);
+			archList.get(i).setConsultTarNum(tarList.size()+"");
+			tarNum += tarList.size();
 			//如果为空时，手动添加一个，为页面展示的rowspan用
 			if(tarList.size() == 0){
 				tarList.add(new TblCheckedTarget());
 			}
 			archList.get(i).setTblCheckedTargetList(tarList);
-			archList.get(i).setConsultTarNum(tarList.size()+"");
-			tarNum += tarList.size();
+			
 			//组织查阅人数据
 			TblCheckPerson per = new TblCheckPerson();
 			per.setMainId(archList.get(i).getId());
@@ -184,6 +190,7 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 			archList.get(i).setConsultPerNum(perList.size()+"");
 			perNum += perList.size();
 		}
+		//第一行数据
 		TblConsultArchives info = new TblConsultArchives();
 		info.setXh("总数");
 		info.setConsultTarNum(tarNum+"");
@@ -193,9 +200,53 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 		tarTemList.add(new TblCheckedTarget());
 		info.setTblCheckedTargetList(tarTemList);
 		archList.add(info);
+		
 		Collections.reverse(archList);
 		page.setList(archList);
 		return page;
+	}
+	
+	public List<TblConsultExport> queryCountList(TblConsultArchives tblConsultArchives) {
+		
+		//总被查阅人数
+		int tarNum = 0;
+		//总查阅人数
+		int perNum = 0;
+		List<TblConsultExport> conExportList  = tblConsultArchivesDao.queryTarCountList(tblConsultArchives);
+		for(int i = 0; i < conExportList.size(); i++){
+			conExportList.get(i).setXh((conExportList.size()-i)+"");
+			if(StringUtils.isNotBlank(conExportList.get(i).getName())){
+				conExportList.get(i).setConsultTarNum("1");
+				tarNum++;
+			}else{
+				conExportList.get(i).setConsultTarNum("0");
+			}
+			//查阅人的名称
+			String perStr = "";
+			List<TblCheckPerson> perList = tblCheckPersonDao.queryPerInfoByTar(conExportList.get(i));
+			for(TblCheckPerson per : perList){
+				if(perStr == ""){
+					perStr = per.getName();
+				}else{
+					perStr += "," + per.getName();
+				}
+			}
+			conExportList.get(i).setConsultPerNum(perList.size()+"");
+			conExportList.get(i).setPerStr(perStr);
+			//避免查阅人数的重复相加
+			if(i == 0 || !(conExportList.get(i-1).getMainId()).equals(conExportList.get(i).getMainId())){
+				perNum += perList.size();
+			}
+		}
+		//第一行数据
+		TblConsultExport info = new TblConsultExport();
+		info.setXh("总数");
+		info.setConsultTarNum(tarNum+"");
+		info.setConsultPerNum(perNum+"");
+		conExportList.add(info);
+		
+		Collections.reverse(conExportList);
+		return conExportList;
 	}
 	
 }

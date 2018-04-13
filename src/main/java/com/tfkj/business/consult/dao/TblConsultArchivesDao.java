@@ -6,6 +6,7 @@ package com.tfkj.business.consult.dao;
 import java.util.List;
 
 import com.tfkj.business.consult.entity.TblConsultArchives;
+import com.tfkj.business.consult.entity.TblConsultExport;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 
@@ -18,5 +19,7 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 public interface TblConsultArchivesDao extends CrudDao<TblConsultArchives> {
 	
 	List<TblConsultArchives> queryCountList(TblConsultArchives tblConsultArchives);
+	
+	List<TblConsultExport> queryTarCountList(TblConsultArchives tblConsultArchives);
 	
 }

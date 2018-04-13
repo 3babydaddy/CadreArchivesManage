@@ -81,7 +81,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	}
 	
 	@Length(min=0, max=1, message="转出形式长度必须介于 0 和 1 之间")
-	@ExcelField(title = "转出形式", align = 2, sort = 50,dictType="roll_out_type")
+	@ExcelField(title = "转出形式", align = 2, sort = 50)
 	public String getOutType() {
 		return outType;
 	}
@@ -91,7 +91,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	}
 	
 	@Length(min=0, max=1, message="转出事由长度必须介于 0 和 1 之间")
-	@ExcelField(title = "转出事由", align = 2, sort = 60,dictType="roll_out_reason")
+	@ExcelField(title = "转出事由", align = 2, sort = 60)
 	public String getReason() {
 		return reason;
 	}

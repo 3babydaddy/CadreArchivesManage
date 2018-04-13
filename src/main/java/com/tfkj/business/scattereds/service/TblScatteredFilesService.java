@@ -88,7 +88,6 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 	}
 	
 	public Page<TblHandOverFiles> findPersonPage(Page<TblHandOverFiles> page, TblHandOverFiles tblHandOverFiles) {
-		
 		tblHandOverFiles.setPage(page);
 		page.setList(tblHandOverFilesDao.findList(tblHandOverFiles));
 		return page;
@@ -105,14 +104,16 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 	}
 	
 	public Page<TblScatteredFiles> findCountPage(Page<TblScatteredFiles> page, TblScatteredFiles tblScatteredFiles) {
-		
+		//如果有移交人的条件
 		TblHandOverFiles handOver = new TblHandOverFiles();
 		if(StringUtils.isNotBlank(tblScatteredFiles.getHandOverStr())){
 			handOver.setName(tblScatteredFiles.getHandOverStr());
 		}
+		//先查询移交人员满足的数据
 		List<TblHandOverFiles> handOverList = tblHandOverFilesDao.queryHandOverList(handOver);
 		tblScatteredFiles.setTblHandOverFilesList(handOverList);
 		tblScatteredFiles.setPage(page);
+		//把满足移交人员数据中的mainId作为条件
 		List<TblScatteredFiles> scatteredList = tblScatteredFilesDao.findCountList(tblScatteredFiles);
 		//移交总人数
 		int handOversNum = 0;
@@ -145,13 +146,35 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 			info.setHandOverNum(handOverNum+"");
 			info.setFileNum(fileNum+"");
 		}
+		//新增合计数据
 		TblScatteredFiles scatteredFiles = new TblScatteredFiles();
 		scatteredFiles.setXh("合计");
 		scatteredFiles.setHandOverNum(handOversNum+"");
 		scatteredFiles.setFileNum(filesNum+"");
 		scatteredList.add(scatteredFiles);
+		
 		Collections.reverse(scatteredList);  
 		page.setList(scatteredList);
 		return page;
+	}
+	
+	public List<TblHandOverFiles> findCountList(TblScatteredFiles tblScatteredFiles) {
+		
+		//如果有移交人的条件
+		TblHandOverFiles handOver = new TblHandOverFiles();
+		if(StringUtils.isNotBlank(tblScatteredFiles.getHandOverStr())){
+			handOver.setName(tblScatteredFiles.getHandOverStr());
+		}
+		//先查询移交人员满足的数据
+		List<TblHandOverFiles> handOverList = tblHandOverFilesDao.queryHandOverList(handOver);
+		tblScatteredFiles.setTblHandOverFilesList(handOverList);
+		//把满足移交人员数据中的mainId作为条件
+		List<TblScatteredFiles> scatteredList = tblScatteredFilesDao.findCountList(tblScatteredFiles);
+		//根据零散材料主表id查询移交人员
+		List<TblHandOverFiles> hoList = tblHandOverFilesDao.getHandOverList(scatteredList);
+		for(int i = 0; i < hoList.size(); i++){
+			hoList.get(i).setXh((i+1)+"");
+		}
+		return hoList;
 	}
 }

@@ -28,6 +28,16 @@
 			//})
 		}
 		
+		//导出数据
+		function exportData(){
+			var startHandOverDate = $("#startHandOverDate").val();
+			var endHandOverDate = $("#endHandOverDate").val();
+			var handOverUnit = $("#handOverUnitId").val();
+			var operator = $("#operator").val();
+			var recipient = $("#recipient").val();
+			window.location.href = "${ctx}/scattereds/tblScatteredFiles/export?startHandOverDate="+startHandOverDate+
+					"&endHandOverDate="+endHandOverDate+"&handOverUnit="+handOverUnit+"&operator="+operator+"&recipient="+recipient;
+		}
 	</script>
 	<style type="text/css">
 		.table th, .table td{
@@ -44,11 +54,11 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>移交时间：</label>
-				<input name="startHandOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+				<input id="startHandOverDate" name="startHandOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblScatteredFiles.startHandOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 					至
-				<input name="endHandOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+				<input id="endHandOverDate" name="endHandOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblScatteredFiles.endHandOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
@@ -64,7 +74,7 @@
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" value="导出"/></li>
+			<li class="btns"><input class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>

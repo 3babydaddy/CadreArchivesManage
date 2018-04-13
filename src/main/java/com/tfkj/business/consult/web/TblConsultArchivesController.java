@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.consult.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfkj.business.consult.entity.TblConsultArchives;
+import com.tfkj.business.consult.entity.TblConsultExport;
 import com.tfkj.business.consult.service.TblConsultArchivesService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.web.BaseController;
 
 /**
@@ -81,11 +85,38 @@ public class TblConsultArchivesController extends BaseController {
 		model.addAttribute("siginId", siginId);
 		return "business/consult/tblDrowSigin";
 	}
-	
+	/**
+	 * 查阅人员查询统计数据列表
+	 * @param tblConsultArchives
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = {"querycountlist"})
-	public String queryCountList(TblConsultArchives tblConsultArchives, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<TblConsultArchives> page = tblConsultArchivesService.queryCountList(new Page<TblConsultArchives>(request, response), tblConsultArchives); 
+	public String queryCountPage(TblConsultArchives tblConsultArchives, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<TblConsultArchives> page = tblConsultArchivesService.queryCountPage(new Page<TblConsultArchives>(request, response), tblConsultArchives); 
 		model.addAttribute("page", page);
 		return "business/consult/tblConsultCountList";
 	}
+	
+	 /**
+	 * 查阅人员查询统计数据导出
+	 * @param response
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "export")
+    public String exportData(TblConsultArchives tblConsultArchives, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "查阅人员数据信息统计.xlsx";
+    		List<TblConsultExport> list = tblConsultArchivesService.queryCountList(tblConsultArchives); 
+    		list.add(new TblConsultExport());
+    		new ExportExcel("查阅管理-数据统计", TblConsultExport.class, 2).setDataList(list).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出查阅管理-数据统计失败！失败信息："+e.getMessage());
+		}
+		return "redirect:"+Global.getAdminPath()+"/consult/tblConsultArchives/querycountlist?repage";
+    }
 }

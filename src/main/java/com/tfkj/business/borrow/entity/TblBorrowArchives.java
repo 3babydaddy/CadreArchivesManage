@@ -11,7 +11,6 @@ import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
 import com.tfkj.framework.core.persistence.DataEntity;
-import com.tfkj.framework.core.utils.excel.annotation.ExcelField;
 
 
 /**

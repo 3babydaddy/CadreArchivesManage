@@ -109,7 +109,7 @@
 						<tbody id="tblHandOverFilesList">
 						</tbody>
 						<tfoot>
-							<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;" class="btns">新增</a></td></tr>
+							<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 						</tfoot>
 					</table>
 					<script type="text/template" id="tblHandOverFilesTpl">//<!--

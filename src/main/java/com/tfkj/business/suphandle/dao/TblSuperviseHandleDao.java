@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.suphandle.dao;
 
+import java.util.List;
+
 import com.tfkj.business.suphandle.entity.TblSuperviseHandle;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
@@ -15,4 +17,6 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 @MyBatisDao
 public interface TblSuperviseHandleDao extends CrudDao<TblSuperviseHandle> {
 	
+	
+	List<TblSuperviseHandle> querySupHandleData();
 }

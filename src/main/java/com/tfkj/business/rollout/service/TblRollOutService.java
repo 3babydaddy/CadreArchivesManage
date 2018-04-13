@@ -17,6 +17,7 @@ import com.tfkj.business.rollout.entity.TblRollOutPersons;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.system.dao.DictDao;
 
 
 /**
@@ -30,6 +31,8 @@ public class TblRollOutService extends CrudService<TblRollOutDao, TblRollOut> {
 
 	@Autowired
 	private TblRollOutPersonsDao tblRollOutPersonsDao;
+	@Autowired
+	private DictDao dictDao;
 	
 	public TblRollOut get(String id) {
 		TblRollOut tblRollOut = super.get(id);
@@ -94,15 +97,18 @@ public class TblRollOutService extends CrudService<TblRollOutDao, TblRollOut> {
 	public Page<TblRollOutPersons> queryCountPage(Page<TblRollOutPersons> page, TblRollOutPersons tblRollOutPersons) {
 		tblRollOutPersons.setPage(page);
 		List<TblRollOutPersons> perList = tblRollOutPersonsDao.queryCountList(tblRollOutPersons);
+		//材料总数
 		long filesNum = 0;
 		for(int i = 0; i < perList.size(); i++){
 			perList.get(i).setXh((perList.size()-i)+"");
 			filesNum += (perList.get(i).getFilesNo() == null ? 0 : perList.get(i).getFilesNo());
 		}
+		//第一行数据
 		TblRollOutPersons info = new TblRollOutPersons();
 		info.setXh("总数");
 		info.setFilesNo(filesNum);
 		perList.add(info);
+		
 		Collections.reverse(perList);  
 		page.setList(perList);
 		return page;
@@ -110,15 +116,20 @@ public class TblRollOutService extends CrudService<TblRollOutDao, TblRollOut> {
 	
 	public List<TblRollOutPersons> queryCountList(TblRollOutPersons tblRollOutPersons) {
 		List<TblRollOutPersons> perList = tblRollOutPersonsDao.queryCountList(tblRollOutPersons);
+		//材料总数
 		long filesNum = 0;
 		for(int i = 0; i < perList.size(); i++){
 			perList.get(i).setXh((perList.size()-i)+"");
 			filesNum += (perList.get(i).getFilesNo() == null ? 0 : perList.get(i).getFilesNo());
+			perList.get(i).setOutType(dictDao.getLabelByValue(perList.get(i).getOutType(), "roll_out_type"));
+			perList.get(i).setReason(dictDao.getLabelByValue(perList.get(i).getReason(), "roll_out_reason"));
 		}
+		//第一行数据
 		TblRollOutPersons info = new TblRollOutPersons();
 		info.setXh("总数");
 		info.setFilesNo(filesNum);
 		perList.add(info);
+		
 		Collections.reverse(perList);  
 		return perList;
 	}

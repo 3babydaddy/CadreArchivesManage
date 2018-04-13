@@ -79,7 +79,14 @@ public class TblRollOutController extends BaseController {
 		addMessage(redirectAttributes, "删除转出管理人员成功");
 		return "redirect:"+Global.getAdminPath()+"/rollout/tblRollOut/?repage";
 	}
-
+	/**
+	 * 一个批次转出的人员列表
+	 * @param tblRollOutPersons
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = {"personlist"})
 	public String personlist(TblRollOutPersons tblRollOutPersons, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<TblRollOutPersons> page = tblRollOutService.findPersonPage(new Page<TblRollOutPersons>(request, response), tblRollOutPersons); 
@@ -88,14 +95,28 @@ public class TblRollOutController extends BaseController {
 		model.addAttribute("batchNum", tblRollOutPersons.getBatchNum().replace("zi", "字").replace("hao", "号"));
 		return "business/rollout/tblRollOutPersonsList";
 	}
-	
+	/**
+	 * 转出管理的查询统计的列表
+	 * @param tblRollOutPersons
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = {"querycountlist"})
 	public String queryCountPage(TblRollOutPersons tblRollOutPersons, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<TblRollOutPersons> page = tblRollOutService.queryCountPage(new Page<TblRollOutPersons>(request, response), tblRollOutPersons); 
 		model.addAttribute("page", page);
 		return "business/rollout/tblRollOutCountList";
 	}
-	
+	/**
+	 * 转出管理的查询统计导出
+	 * @param tblRollOutPersons
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = {"export"})
 	public String queryCountList(TblRollOutPersons tblRollOutPersons, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {

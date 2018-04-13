@@ -15,6 +15,7 @@ import com.tfkj.business.borrow.dao.TblBorrowArchivesDao;
 import com.tfkj.business.borrow.dao.TblBorrowPersonDao;
 import com.tfkj.business.borrow.dao.TblBorrowTargetDao;
 import com.tfkj.business.borrow.entity.TblBorrowArchives;
+import com.tfkj.business.borrow.entity.TblBorrowExport;
 import com.tfkj.business.borrow.entity.TblBorrowPerson;
 import com.tfkj.business.borrow.entity.TblBorrowTarget;
 import com.tfkj.framework.core.persistence.Page;
@@ -60,7 +61,9 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 		List<TblBorrowArchives> archList = dao.findList(tblBorrowArchives);
 		
 		for(TblBorrowArchives info : archList){
+			//被借阅人的名称
 			String tarStr = "";
+			//借阅人的名称
 			String perStr = "";
 			
 			TblBorrowTarget tar = new TblBorrowTarget();
@@ -95,6 +98,7 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 	@Transactional(readOnly = false)
 	public void save(TblBorrowArchives tblBorrowArchives) {
 		super.save(tblBorrowArchives);
+		//新增、更改或者删除被借阅人的数据
 		for (TblBorrowPerson tblBorrowPerson : tblBorrowArchives.getTblBorrowPersonList()){
 			if (tblBorrowPerson.getId() == null){
 				continue;
@@ -112,6 +116,7 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 				tblBorrowPersonDao.delete(tblBorrowPerson);
 			}
 		}
+		//新增、更改或者删除借阅人的数据
 		for (TblBorrowTarget tblBorrowTarget : tblBorrowArchives.getTblBorrowTargetList()){
 			if (tblBorrowTarget.getId() == null){
 				continue;
@@ -150,7 +155,7 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 		}
 	}
 	
-	public Page<TblBorrowArchives> queryCountList(Page<TblBorrowArchives> page, TblBorrowArchives tblBorrowArchives) {
+	public Page<TblBorrowArchives> queryCountPage(Page<TblBorrowArchives> page, TblBorrowArchives tblBorrowArchives) {
 		tblBorrowArchives.setPage(page);
 		List<TblBorrowArchives> archList  = tblBorrowArchivesDao.queryCountList(tblBorrowArchives);
 		//总被查阅人数
@@ -165,13 +170,13 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 			TblBorrowTarget tar = new TblBorrowTarget();
 			tar.setMainId(archList.get(i).getId());
 			List<TblBorrowTarget> tarList = tblBorrowTargetDao.findList(tar);
+			archList.get(i).setBorrowTarNum(tarList.size()+"");
+			tarNum += tarList.size();
 			//如果为空时，手动添加一个，为页面展示的rowspan用
 			if(tarList.size() == 0){
 				tarList.add(new TblBorrowTarget());
 			}
 			archList.get(i).setTblBorrowTargetList(tarList);
-			archList.get(i).setBorrowTarNum(tarList.size()+"");
-			tarNum += tarList.size();
 			//组织查阅人数据
 			TblBorrowPerson per = new TblBorrowPerson();
 			per.setMainId(archList.get(i).getId());
@@ -187,6 +192,7 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 			archList.get(i).setBorrowPerNum(perList.size()+"");
 			perNum += perList.size();
 		}
+		//第一行数据
 		TblBorrowArchives info = new TblBorrowArchives();
 		info.setXh("总数");
 		info.setBorrowTarNum(tarNum+"");
@@ -196,8 +202,51 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 		tarTemList.add(new TblBorrowTarget());
 		info.setTblBorrowTargetList(tarTemList);
 		archList.add(info);
+		
 		Collections.reverse(archList);
 		page.setList(archList);
 		return page;
+	}
+	
+	public List<TblBorrowExport> queryCountList(TblBorrowArchives tblBorrowArchives) {
+		//总被查阅人数
+		int tarNum = 0;
+		//总查阅人数
+		int perNum = 0;
+		List<TblBorrowExport> bExportList = tblBorrowArchivesDao.queryTarCountList(tblBorrowArchives);
+		for(int i = 0; i < bExportList.size(); i++){
+			bExportList.get(i).setXh((bExportList.size()-i)+"");
+			if(StringUtils.isNotBlank(bExportList.get(i).getName())){
+				bExportList.get(i).setBorrowTarNum("1");
+				tarNum++;
+			}else{
+				bExportList.get(i).setBorrowTarNum("0");
+			}
+			//查阅人
+			String perStr = "";
+			List<TblBorrowPerson> perList = tblBorrowPersonDao.queryPerInfoByTar(bExportList.get(i));
+			for(TblBorrowPerson per : perList){
+				if(perStr == ""){
+					perStr = per.getName();
+				}else{
+					perStr += "," + per.getName();
+				}
+			}
+			bExportList.get(i).setBorrowPerNum(perList.size()+"");
+			bExportList.get(i).setPerStr(perStr);
+			//避免借阅人数的重复相加
+			if(i == 0 || !(bExportList.get(i-1).getMainId()).equals(bExportList.get(i).getMainId())){
+				perNum += perList.size();
+			}
+		}
+		//第一行数据
+		TblBorrowExport info = new TblBorrowExport();
+		info.setXh("总数");
+		info.setBorrowTarNum(tarNum+"");
+		info.setBorrowPerNum(perNum+"");
+		bExportList.add(info);
+		
+		Collections.reverse(bExportList);
+		return bExportList;
 	}
 }

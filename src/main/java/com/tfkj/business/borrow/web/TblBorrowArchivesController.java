@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.borrow.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfkj.business.borrow.entity.TblBorrowArchives;
+import com.tfkj.business.borrow.entity.TblBorrowExport;
 import com.tfkj.business.borrow.service.TblBorrowArchivesService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.web.BaseController;
 
 /**
@@ -74,12 +78,38 @@ public class TblBorrowArchivesController extends BaseController {
 		addMessage(redirectAttributes, "删除借阅管理成功");
 		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
 	}
-
+	/**
+	 * 借阅人员查询统计数据列表
+	 * @param tblBorrowArchives
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = {"querycountlist"})
-	public String queryCountList(TblBorrowArchives tblBorrowArchives, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<TblBorrowArchives> page = tblBorrowArchivesService.queryCountList(new Page<TblBorrowArchives>(request, response), tblBorrowArchives); 
+	public String queryCountPage(TblBorrowArchives tblBorrowArchives, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<TblBorrowArchives> page = tblBorrowArchivesService.queryCountPage(new Page<TblBorrowArchives>(request, response), tblBorrowArchives); 
 		model.addAttribute("page", page);
 		return "business/borrow/tblBorrowCountList";
 	}
 	
+	/**
+	 * 借阅人员查询统计数据导出
+	 * @param response
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "export")
+    public String exportData(TblBorrowArchives tblBorrowArchives, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "借阅人员数据信息统计.xlsx";
+    		List<TblBorrowExport> list = tblBorrowArchivesService.queryCountList(tblBorrowArchives); 
+    		list.add(new TblBorrowExport());
+    		new ExportExcel("借阅管理-数据统计", TblBorrowExport.class, 2).setDataList(list).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出借阅管理-数据统计失败！失败信息："+e.getMessage());
+		}
+		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/querycountlist?repage";
+    }
 }
