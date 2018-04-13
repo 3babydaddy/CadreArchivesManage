@@ -5,8 +5,7 @@
 	<title>查阅档案管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
+		$(function(){ 
 			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
@@ -23,7 +22,24 @@
 					}
 				}
 			});
-	
+			/**调整页面自适应*/
+			var h = parent.$("iframe").height();
+			$("#photoShowDiv").css("height",h + "px");
+			
+			$(".img-responsive").click(function(){
+				$.jBox("get:${ctx}/terminal/camera", {  
+				    title: "图像采集",  
+				    width: 400,  
+				    height: 400,
+				    showClose: false,
+				    icon: 'info',
+				    showSpeed:'fast',
+				    buttons: { '关闭': true } /* 窗口的按钮 */
+				    /* loaded: function (h) { 
+				    	h.find("iframe").css("height","90%");
+				    } */
+				});  
+			});
 		});
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
@@ -40,7 +56,6 @@
 					}
 				}
 			});
-			
 		}
 		function delRow(obj, prefix){
 			var id = $(prefix+"_id");
@@ -67,7 +82,6 @@
 			    buttons: { '关闭': true }  
 			});  
 		}
-		
 		function delSigin(obj){
 			var siginId = obj.id;
 			var siginImg = siginId.replace('aline', 'siginImg');
@@ -95,7 +109,6 @@
 			float: left;
 			white-space: nowrap;
 		}
-		
 		.td-order-one img{
 			max-width: 120px;
 			max-heigth: 30px;
@@ -103,12 +116,22 @@
 			margin-top: -6px;
 			-webkit-border-radius:2px;
 		}
+		#photoShowDiv{
+			border: 10px solid #ccc;
+		}
+		
+		#photoShowDiv>span{ 
+			display:inline-block; height:100%; vertical-align:middle;
+		}
+		.img-responsive{
+			vertical-align:middle;
+		}  
 	</style>
 </head>
 <body>
 	<div class="row-fluid">
 		<div id= "photoShowDiv" class="row-fluid span4">
-			<img src="${ctxStatic}/images/file-demo.png" class="img-polaroid" >
+			<img src="${ctxStatic}/images/quesheng.jpg" class="img-responsive" ><span></span>
 		</div>
 		<div class="row-fluid span8">
 			<ul class="nav nav-tabs">
@@ -119,14 +142,6 @@
 				<sys:message content="${message}"/>		
 				<div class="control-group">
 					<label class="control-label">查阅日期：</label>
-					<div class="controls">
-						<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
-							value="<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-							onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label">签名测试：</label>
 					<div class="controls">
 						<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
 							value="<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"

@@ -83,14 +83,17 @@
 #webcam>object {
 	border: 1px solid #ccc;
 }
+iframe {
+	height:90% !important;
+}
 </style>
 
 </head>
 <body>
+	<div id="webcam"></div>
 	<button class="play">5s拍照</button>
 	<button class="play-x">拍照</button>
 	<div id="status">倒计时</div>
-	<div id="webcam"></div>
 	<div id="picView"
 		style="width: 304px; height: 240px; border: 5px solid #ccc; padding: 4px; background-color: #ccc;">
 </body>

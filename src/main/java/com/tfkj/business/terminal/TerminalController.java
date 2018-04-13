@@ -106,13 +106,23 @@ public class TerminalController {
 	}
 	
 	/**
-	 * 查阅档案录入终端界面
+	 * 示例页面
 	 * 
 	 * @return 页面资源路径
 	 */
 	@RequestMapping("demo")
 	public String demo(Model model) {
 		return "business/terminal/demo";
+	}
+	
+	/**
+	 * 拍照页面
+	 * 
+	 * @return 页面资源路径
+	 */
+	@RequestMapping("camera")
+	public String camera(Model model) {
+		return "business/terminal/camera";
 	}
 
 }
