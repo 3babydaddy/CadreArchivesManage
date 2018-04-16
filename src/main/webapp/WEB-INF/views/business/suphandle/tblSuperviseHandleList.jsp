@@ -8,7 +8,7 @@
 		$(document).ready(function() {
 			$("#btnImport").click(function(){
 				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
-					bottomText:"文件不能超过5M,仅允许导入“xls”或“xlsx”格式文件"});
+					bottomText:"仅允许导入“xls”或“xlsx”格式文件且不能超过5M！"});
 			});
 			
 			//全选或全取消

@@ -74,7 +74,7 @@
 			}
 			$("#rollOutId").val(rows[0].value);
 			$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
-				bottomText:"导入文件不能超过5M，仅允许导入“doc”格式文件！"});
+				bottomText:"仅允许导入“xls”或“xlsx”格式文件且不能超过5M！"});
 		}
 		
 		function getRowData(){
@@ -115,7 +115,7 @@
 					</div>
 				</div>
 			<input type="hidden" id="rollOutId" name="rollOutId" />
-			<input id="btnImportSubmit" style="margin:5px 0 5px 180px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
+			<input id="btnImportSubmit" style="margin:0px 0 5px 180px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
