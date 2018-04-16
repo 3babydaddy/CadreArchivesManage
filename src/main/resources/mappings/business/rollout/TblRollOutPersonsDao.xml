@@ -27,6 +27,7 @@
 	
 	<sql id="tblRollOutPersonsJoins">
 		LEFT JOIN tbl_roll_out b ON b.id = a.main_id
+		left join tbl_roll_out_back ob on ob.main_id = b.id
 	</sql>
     
 	<select id="get" resultType="TblRollOutPersons">
@@ -39,6 +40,7 @@
 	
 	<select id="findList" resultType="TblRollOutPersons">
 		SELECT 
+			ob.return_attment_id as "backAttachment",
 			<include refid="tblRollOutPersonsColumns"/>
 		FROM tbl_roll_out_persons a
 		<include refid="tblRollOutPersonsJoins"/>

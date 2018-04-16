@@ -155,6 +155,30 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 		}
 	}
 	
+	@Transactional(readOnly = false)
+	public void censorship(TblBorrowArchives tblBorrowArchives, String idStr) {
+		if(StringUtils.isNotBlank(idStr)){
+			String[] idArray = idStr.split(",");
+			for(int i = 0; i < idArray.length; i++){
+				tblBorrowArchives = super.get(idArray[i]);
+				tblBorrowArchives.setStatus("2");
+				super.save(tblBorrowArchives);
+			}
+		}
+	}
+	
+	@Transactional(readOnly = false)
+	public void auditData(TblBorrowArchives tblBorrowArchives, String idStr, String status) {
+		if(StringUtils.isNotBlank(idStr)){
+			String[] idArray = idStr.split(",");
+			for(int i = 0; i < idArray.length; i++){
+				tblBorrowArchives = super.get(idArray[i]);
+				tblBorrowArchives.setStatus(status);
+				super.save(tblBorrowArchives);
+			}
+		}
+	}
+	
 	public Page<TblBorrowArchives> queryCountPage(Page<TblBorrowArchives> page, TblBorrowArchives tblBorrowArchives) {
 		tblBorrowArchives.setPage(page);
 		List<TblBorrowArchives> archList  = tblBorrowArchivesDao.queryCountList(tblBorrowArchives);

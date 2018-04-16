@@ -8,7 +8,7 @@
 		$(document).ready(function() {
 			$("#btnImport").click(function(){
 				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
-					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
+					bottomText:"文件不能超过5M,仅允许导入“xls”或“xlsx”格式文件"});
 			});
 			
 			//全选或全取消
@@ -58,13 +58,31 @@
 			}
 			window.location.href = "${ctx}/retiredadre/retiredCadre/form?id="+rows[0].value;
 		}
-		
-		function exportArchives(){
+		//转死亡，更改状态
+		function updateDataStatus(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			window.location.href = "${ctx}/retiredadre/retiredCadre/updateStatus?id="+rows[0].value;
+		}
+		//撤销人员信息状态
+		function revokeStatus(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			window.location.href = "${ctx}/retiredadre/retiredCadre/revokeStatus?id="+rows[0].value;
+		}
+		//转档案人员信息导出
+		function exportArchives(status){
 			var startBir = $("#startBir").val();
 			var endBir = $("#endBir").val();
 			var sort = $("#sort").val();
 			var name = $("#name").val();
-			var status = $("#status").val();
+			//var status = $("#status").val();
 			window.location.href = "${ctx}/retiredadre/retiredCadre/exportArchivesInfo?startBir="+startBir
 					+"&endBir="+endBir+"&sort="+sort+"&name="+name+"&status="+status;
 		}
@@ -133,8 +151,10 @@
 					<form:options items="${fns:getDictList('retired_cadre_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			<div style="float:right;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			</div>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>
@@ -144,9 +164,9 @@
 	        <li><a <a href="${ctx}/retiredadre/retiredCadre/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
-	        <li><a onclick=""><i class="icon-share-alt"></i>&nbsp;转死亡</a></li>
-	        <li><a onclick="exportArchives();"><i class=" icon-download-alt"></i>&nbsp;转档案局</a></li>
-	        <li><a onclick=""><i class="icon-remove-circle"></i>&nbsp;撤销</a></li>
+	        <li><a onclick="updateDataStatus();"><i class="icon-ambulance "></i>&nbsp;转死亡</a></li>
+	        <li><a onclick="exportArchives('3');"><i class=" icon-download-alt"></i>&nbsp;转档案局</a></li>
+	        <li><a onclick="revokeStatus();"><i class="icon-reply"></i>&nbsp;撤销</a></li>
 	        <li><a id="btnImport"><i class="icon-upload-alt"></i>&nbsp;导入</a></li>
 	    </ul>
 	</div>

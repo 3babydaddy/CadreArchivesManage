@@ -70,6 +70,7 @@ public class RetiredCadreController extends BaseController {
 		if (!beanValidator(model, retiredCadre)){
 			return form(retiredCadre, model);
 		}
+		retiredCadre.setStatusTem(retiredCadre.getStatus());
 		retiredCadreService.save(retiredCadre);
 		addMessage(redirectAttributes, "保存退休干部信息操作成功");
 		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
@@ -81,7 +82,32 @@ public class RetiredCadreController extends BaseController {
 		addMessage(redirectAttributes, "删除退休干部信息操作成功");
 		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
 	}
-
+	/**
+	 * 转死亡-更改状态
+	 * @param retiredCadre
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "updateStatus")
+	public String updateStatus(RetiredCadre retiredCadre, RedirectAttributes redirectAttributes) {
+		retiredCadre.setStatus("2");
+		retiredCadreService.save(retiredCadre);
+		addMessage(redirectAttributes, "更改退休干部信息操作成功");
+		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
+	}
+	/**
+	 * 撤销人员信息状态，回退到更改前的状态
+	 * @param retiredCadre
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "revokeStatus")
+	public String revokeStatus(RetiredCadre retiredCadre, RedirectAttributes redirectAttributes) {
+		retiredCadre.setStatus(retiredCadre.getStatusTem());
+		retiredCadreService.save(retiredCadre);
+		addMessage(redirectAttributes, "更改退休干部信息操作成功");
+		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
+	}
 	/**
 	 * 下载转档案局数据
 	 * @param response
@@ -91,18 +117,18 @@ public class RetiredCadreController extends BaseController {
     @RequestMapping(value = "exportArchivesInfo")
     public String importFileTemplate(RetiredCadre retiredCadre, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
-            String fileName = "退休干部信息.xlsx";
+			String fileName = "退休、死亡干部信息.xlsx";
     		List<RetiredCadre> list = retiredCadreService.findList(retiredCadre); 
-    		for(int i = 1; i <= list.size(); i++){
-    			list.get(i).setXh(i+"");
+    		for(int i = 0; i < list.size(); i++){
+    			list.get(i).setXh((i+1)+"");
     		}
     		list.add(new RetiredCadre());
-    		new ExportExcel("退休干部-转档案数据", RetiredCadre.class, 2).setDataList(list).write(response, fileName).dispose();
+    		new ExportExcel("退休、死亡干部-转档案人员数据", RetiredCadre.class, 2).setDataList(list).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
 		}
-		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
+		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/list?repage";
     }
     
     /**
@@ -151,7 +177,7 @@ public class RetiredCadreController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
+		return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/list?repage";
     }
    
 }

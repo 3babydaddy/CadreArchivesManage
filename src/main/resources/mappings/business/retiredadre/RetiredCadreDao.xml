@@ -15,6 +15,7 @@
 		a.reference_no AS "referenceNo",
 		a.archives_createtime AS "archivesCreatetime",
 		a.status AS "status",
+		a.status_tem AS "statusTem",
 		a.died_time AS "diedTime",
 		a.record_office_time AS "recordOfficeTime",
 		a.work_unit AS "workUnit",
@@ -35,7 +36,7 @@
 		SELECT 
 			(select label from sys_dict where id = a.work_unit and DEL_FLAG = '0') as workUnitName,
 			<include refid="retiredCadreColumns"/>
-		FROM retired_cadre a
+		FROM tbl_retired_cadre a
 		<include refid="retiredCadreJoins"/>
 		WHERE a.id = #{id}
 	</select>
@@ -44,7 +45,7 @@
 		SELECT 
 			(select label from sys_dict where id = a.work_unit and DEL_FLAG = '0') as workUnitName,
 			<include refid="retiredCadreColumns"/>
-		FROM retired_cadre a
+		FROM tbl_retired_cadre a
 		<include refid="retiredCadreJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
@@ -88,7 +89,7 @@
 		SELECT 
 			(select label from sys_dict where id = a.work_unit and DEL_FLAG = '0') as workUnitName,
 			<include refid="retiredCadreColumns"/>
-		FROM retired_cadre a
+		FROM tbl_retired_cadre a
 		<include refid="retiredCadreJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
@@ -104,7 +105,7 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO retired_cadre(
+		INSERT INTO tbl_retired_cadre(
 			id,
 			sort,
 			note_no,
@@ -117,6 +118,7 @@
 			reference_no,
 			archives_createtime,
 			status,
+			status_tem,
 			died_time,
 			record_office_time,
 			work_unit,
@@ -141,6 +143,7 @@
 			#{referenceNo},
 			#{archivesCreatetime},
 			#{status},
+			#{statusTem},
 			#{diedTime},
 			#{recordOfficeTime},
 			#{workUnit},
@@ -156,7 +159,7 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE retired_cadre SET 	
+		UPDATE tbl_retired_cadre SET 	
 			sort = #{sort},
 			note_no = #{noteNo},
 			name = #{name},
@@ -168,6 +171,7 @@
 			reference_no = #{referenceNo},
 			archives_createtime = #{archivesCreatetime},
 			status = #{status},
+			status_tem = #{statusTem},
 			died_time = #{diedTime},
 			record_office_time = #{recordOfficeTime},
 			work_unit = #{workUnit},
@@ -177,7 +181,7 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE retired_cadre SET 
+		UPDATE tbl_retired_cadre SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>

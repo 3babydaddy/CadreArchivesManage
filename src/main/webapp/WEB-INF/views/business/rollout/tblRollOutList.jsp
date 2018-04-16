@@ -99,6 +99,7 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		
 	</style>
 </head>
 <body>
@@ -106,15 +107,15 @@
 		<form id="importForm" action="${ctx}/rollout/tblRollOutBack/receiptSave" method="post" 
 			class="form-horizontal" style="align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
 				<div class="control-group">
-					<label class="control-label" style="margin-top:5px;">选择回执单：</label>
+					<label class="control-label" style="margin-top:5px;">回执单附件：</label>
 					<div class="controls">
-						<sys:upFIle input="rollApproveAttachment"  type="files"  
+						<sys:upFIle input="rollApproveAttachment"  type="files" 
 							 name="rollApproveAttachment"  value=""  uploadPath="/file" 
 									selectMultiple="false" maxWidth="100" maxHeight="100" text="上传文件"/>
 					</div>
 				</div>
 			<input type="hidden" id="rollOutId" name="rollOutId" />
-			<input id="btnImportSubmit" style="margin:5px 0 5px 75px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
+			<input id="btnImportSubmit" style="margin:5px 0 5px 180px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
@@ -145,8 +146,10 @@
 				<form:input path="character" htmlEscape="false" style="width:82px;" maxlength="11" />字
 				<form:input path="number" htmlEscape="false" style="width:82px;" maxlength="11" />号
 			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			<div style="float:right;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			</div>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>
