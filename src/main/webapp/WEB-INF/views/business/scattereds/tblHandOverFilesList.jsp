@@ -49,8 +49,10 @@
 				<form:input path="filesNames" htmlEscape="false" maxlength="2000" class="input-medium"/>
 			</li>
 			<input type="hidden" name="mainId" value="${mainId}">
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			<div style="float:right;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			</div>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>

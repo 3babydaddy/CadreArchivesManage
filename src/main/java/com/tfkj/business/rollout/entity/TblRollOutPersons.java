@@ -42,6 +42,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	private String saveUnit;		// 现存档单位
 	private String saveUnitName;		
 	private String xh;		
+	private String backAttachment;  //回执附件
 	
 	public TblRollOutPersons() {
 		super();
@@ -230,6 +231,14 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 
 	public void setXh(String xh) {
 		this.xh = xh;
+	}
+
+	public String getBackAttachment() {
+		return backAttachment;
+	}
+
+	public void setBackAttachment(String backAttachment) {
+		this.backAttachment = backAttachment;
 	}
 	
 }

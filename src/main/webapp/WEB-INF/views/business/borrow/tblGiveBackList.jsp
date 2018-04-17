@@ -18,8 +18,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/borrow/tblGiveBack/">借阅归还列表</a></li>
-		<shiro:hasPermission name="borrow:tblGiveBack:edit"><li><a href="${ctx}/borrow/tblGiveBack/form">借阅归还添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="#">借阅归还列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblGiveBack" action="${ctx}/borrow/tblGiveBack/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>

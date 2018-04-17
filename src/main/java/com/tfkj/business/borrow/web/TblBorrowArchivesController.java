@@ -67,15 +67,42 @@ public class TblBorrowArchivesController extends BaseController {
 		if (!beanValidator(model, tblBorrowArchives)){
 			return form(tblBorrowArchives, model);
 		}
+		
 		tblBorrowArchivesService.save(tblBorrowArchives);
-		addMessage(redirectAttributes, "保存借阅管理成功");
+		addMessage(redirectAttributes, "保存借阅记录成功");
 		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
 	}
 	
 	@RequestMapping(value = "delete")
 	public String delete(TblBorrowArchives tblBorrowArchives, String idStr, RedirectAttributes redirectAttributes) {
 		tblBorrowArchivesService.delete(tblBorrowArchives, idStr);
-		addMessage(redirectAttributes, "删除借阅管理成功");
+		addMessage(redirectAttributes, "删除借阅记录成功");
+		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
+	}
+	/**
+	 * 送审，更改借阅数据的状态
+	 * @param tblBorrowArchives
+	 * @param idStr
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "censorship")
+	public String censorship(TblBorrowArchives tblBorrowArchives, String idStr, RedirectAttributes redirectAttributes) {
+		tblBorrowArchivesService.censorship(tblBorrowArchives, idStr);
+		addMessage(redirectAttributes, "送审借阅记录成功");
+		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
+	}
+	/**
+	 * 审核借阅数据
+	 * @param tblBorrowArchives
+	 * @param idStr
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "auditData")
+	public String auditData(TblBorrowArchives tblBorrowArchives, String idStr, String status, RedirectAttributes redirectAttributes) {
+		tblBorrowArchivesService.auditData(tblBorrowArchives, idStr, status);
+		addMessage(redirectAttributes, "审核借阅记录成功");
 		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
 	}
 	/**

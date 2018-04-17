@@ -8,7 +8,7 @@
 		$(document).ready(function() {
 			$("#btnImport").click(function(){
 				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
-					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
+					bottomText:"仅允许导入“xls”或“xlsx”格式文件且不能超过5M！"});
 			});
 			
 			//全选或全取消
@@ -123,8 +123,10 @@
 					<form:options items="${fns:getDictList('supervise_handle_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			<div style="float:right;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			</div>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>

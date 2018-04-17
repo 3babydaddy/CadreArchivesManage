@@ -67,8 +67,10 @@
 				<form:input path="duty" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
 			<input type="hidden" name="mainId" value="${mainId}">
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			<div style="float:right;margin-right:8px;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			</div>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>
@@ -108,7 +110,9 @@
 					${tblRollOutPersons.filesNo}
 				</td>
 				<td>
-					
+					<c:if test="${not empty tblRollOutPersons.backAttachment}">
+						<a href="${tblRollOutPersons.backAttachment}">下载</a>
+					</c:if>
 				</td>
 				<shiro:hasPermission name="rollout:tblRollOutPersons:edit"><td>
     				<a href="${ctx}/rollout/tblRollOutPersons/form?id=${tblRollOutPersons.id}">修改</a>

@@ -70,9 +70,11 @@
 			<li><label>借阅人：</label>
 				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
+			<div style="float:right;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
+			</div>
 		</ul>
 	</form:form>
 	

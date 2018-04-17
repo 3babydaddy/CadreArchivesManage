@@ -6,16 +6,15 @@
 <title>${fns:getConfig('productName')}</title>
 <meta name="decorator" content="blank" />
 <link href="${ctxStatic}/modules/index/index-user.css" type="text/css" rel="stylesheet" />
+
 <script type="text/javascript">
 	$(function(){
-		debugger;
 		var h = $("#header").height();
 		var w = $("#header").width();
 		$("video").css("width",w);
 		$("video").css("height",h);
 	});
 </script>
-
 </head>
 <body>
 	<div id="main">
