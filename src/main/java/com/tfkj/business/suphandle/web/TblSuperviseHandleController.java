@@ -20,19 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.common.collect.Lists;
 import com.tfkj.business.suphandle.entity.TblSuperviseHandle;
 import com.tfkj.business.suphandle.service.TblSuperviseHandleService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
-import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.utils.excel.ImportExcel;
 import com.tfkj.framework.core.web.BaseController;
-
-
-
-
 
 /**
  * 督查督办Controller
@@ -102,6 +96,7 @@ public class TblSuperviseHandleController extends BaseController {
 		}
 		try {
 			Calendar calendar = Calendar.getInstance();
+			long nd = 1000 * 24 * 60 * 60;
 			int successNum = 0;
 			int failureNum = 0;
 			StringBuilder failureMsg = new StringBuilder();
@@ -115,13 +110,12 @@ public class TblSuperviseHandleController extends BaseController {
 						continue;
 					}
 					
-					info.setStatus("1");
-					info.setCountDown((long)90);
-					info.setWaringStatus("G");
 					calendar.setTime(info.getPresentDutyTime());
 					calendar.add(calendar.MONTH, 3); 
-					Date time = calendar.getTime(); 
-					info.setRaisedTime(time);
+					info.setRaisedTime(calendar.getTime());
+					info.setCountDown((info.getRaisedTime().getTime() - (new Date()).getTime())/nd);
+					info.setStatus("1");
+					info.setWaringStatus("G");
 					tblSuperviseHandleService.save(info);
 					successNum++;
 				}catch (Exception ex) {
@@ -139,26 +133,6 @@ public class TblSuperviseHandleController extends BaseController {
 		return "redirect:" + adminPath + "/suphandle/tblSuperviseHandle/list?repage";
     }
 	
-	/**
-	 * 下载督查督办数据模板
-	 * @param response
-	 * @param redirectAttributes
-	 * @return
-	 */
-    @RequestMapping(value = "import/template")
-    public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
-		try {
-            String fileName = "提拔干部数据导入模板.xlsx";
-    		List<TblSuperviseHandle> list = Lists.newArrayList(); 
-    		list.add(new TblSuperviseHandle());
-    		new ExportExcel("提拔干部数据", TblSuperviseHandle.class, 2).setDataList(list).write(response, fileName).dispose();
-    		return null;
-		} catch (Exception e) {
-			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
-		}
-		return "redirect:" + adminPath + "/suphandle/tblSuperviseHandle/list?repage";
-    }
-    
     @RequestMapping(value = "updateStatus")
 	public String updateStatus(TblSuperviseHandle tblSuperviseHandle, RedirectAttributes redirectAttributes) {
     	tblSuperviseHandle.setStatus("2");

@@ -96,5 +96,6 @@
         <property name="filters" value="stat" />
     </bean>
 
-
+	 <!-- 启动定时器 --> 
+    <task:annotation-driven/>
 </beans>

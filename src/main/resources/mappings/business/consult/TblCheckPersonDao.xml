@@ -145,4 +145,20 @@
 		</choose>
 	</update>
 	
+	<select id="queryPerInfoByTar" resultType="TblCheckPerson">
+		SELECT 
+			(select label from sys_dict where id = a.unit and DEL_FLAG = '0') as unitName,
+			<include refid="tblCheckPersonColumns"/>
+		FROM tbl_check_person a
+		<include refid="tblCheckPersonJoins"/>
+		<where>
+			a.del_flag = '0'
+			and a.main_id in (
+				select main_id 
+				from tbl_checked_target 
+				where name = #{export.name} and duty = #{export.duty} 
+				  and unit = #{export.unit} and del_flag = '0' GROUP BY main_id
+			)
+		</where>
+	</select>
 </mapper>

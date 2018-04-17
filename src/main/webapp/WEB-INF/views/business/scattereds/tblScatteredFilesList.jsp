@@ -8,7 +8,7 @@
 		$(document).ready(function() {
 			$("#btnImport").click(function(){
 				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
-					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
+					bottomText:"仅允许导入“xls”或“xlsx”格式文件且不能超过5M！"});
 			});
 			
 			//全选或全取消
@@ -88,16 +88,12 @@
 		<form id="importForm" action="${ctx}/scattereds/tblScatteredFiles/import" method="post" enctype="multipart/form-data"
 			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
 			<ul class="ul-form">
-				<li><label>接收日期：</label>
-					<input name="handOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-						onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-				</li>
 				<li><label>导入文件：</label>
-					<input name="file" type="file" style="width:210px"/>
+					<input name="file" class="change" type="file" style="width:220px"/>
 				</li>
 			</ul>
 			<input id="btnImportSubmit" style="margin-top:5px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
-			<a href="<c:url value='/static/templet/scatteredFilesModel.xls'/>">下载模板</a>
+			<a class="btns" href="<c:url value='/static/templet/scatteredFilesModel.xls'/>">下载模板</a>
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
@@ -129,8 +125,10 @@
 			<li><label>接收人：</label>
 				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			<div style="float:right;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			</div>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>

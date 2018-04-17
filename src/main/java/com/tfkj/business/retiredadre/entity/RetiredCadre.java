@@ -30,6 +30,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	private String referenceNo;		// 任免文号
 	private Date archivesCreatetime;		// 建档时间
 	private String status;		// 状态 1-离退2-死亡3-已转档案局
+	private String statusTem;	//保留更改前的状态
 	private Date diedTime;		// 转死亡时间
 	private Date recordOfficeTime;		// 转档案时间
 	private String workUnit;		// 退休工作单位
@@ -165,6 +166,14 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 		this.status = status;
 	}
 	
+	public String getStatusTem() {
+		return statusTem;
+	}
+
+	public void setStatusTem(String statusTem) {
+		this.statusTem = statusTem;
+	}
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getDiedTime() {
 		return diedTime;

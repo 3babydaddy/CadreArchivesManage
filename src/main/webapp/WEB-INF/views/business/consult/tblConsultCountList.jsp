@@ -28,6 +28,15 @@
 			//})
 		}
 		
+		//导出数据
+		function exportData(){
+			var startBorrowDate = $("#startBorrowDate").val();
+			var endBorrowDate = $("#endBorrowDate").val();
+			var consultUnit = $("#consultUnitId").val();
+			var perStr = $("#perStr").val();
+			window.location.href = "${ctx}/consult/tblConsultArchives/export?startBorrowDate="+startBorrowDate+
+					"&endBorrowDate="+endBorrowDate+"&consultUnit="+consultUnit+"&perStr="+perStr;
+		}
 	</script>
 	<style type="text/css">
 		.table th, .table td{
@@ -44,11 +53,11 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>查阅日期：</label>
-				<input name="startBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+				<input id="startBorrowDate" name="startBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblConsultArchives.startBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					至
-				<input name="endBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+				<input id="endBorrowDate" name="endBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblConsultArchives.endBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
@@ -59,9 +68,11 @@
 			<li><label>查阅人：</label>
 				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button"  value="导出"/></li>
+			<div style="float:right;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
+			</div>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>

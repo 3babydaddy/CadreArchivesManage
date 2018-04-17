@@ -141,7 +141,7 @@
 					<tbody id="tblRollInPersonsList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="12"><a href="javascript:" onclick="addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl);tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;" class="btns">新增</a></td></tr>
+						<tr><td colspan="12"><a href="javascript:" onclick="addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl);tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblRollInPersonsTpl">

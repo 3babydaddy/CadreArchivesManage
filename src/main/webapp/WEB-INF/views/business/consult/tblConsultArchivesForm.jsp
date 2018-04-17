@@ -164,7 +164,7 @@
 					<tbody id="tblCheckedTargetList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblCheckedTargetList', tblCheckedTargetRowIdx, tblCheckedTargetTpl);tblCheckedTargetRowIdx = tblCheckedTargetRowIdx + 1;" class="btns">新增</a></td></tr>
+						<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblCheckedTargetList', tblCheckedTargetRowIdx, tblCheckedTargetTpl);tblCheckedTargetRowIdx = tblCheckedTargetRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblCheckedTargetTpl">//<!--
@@ -221,7 +221,7 @@
 					<tbody id="tblCheckPersonList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="10"><a href="javascript:" onclick="addRow('#tblCheckPersonList', tblCheckPersonRowIdx, tblCheckPersonTpl);tblCheckPersonRowIdx = tblCheckPersonRowIdx + 1;" class="btns">新增</a></td></tr>
+						<tr><td colspan="10"><a href="javascript:" onclick="addRow('#tblCheckPersonList', tblCheckPersonRowIdx, tblCheckPersonTpl);tblCheckPersonRowIdx = tblCheckPersonRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblCheckPersonTpl">//<!--

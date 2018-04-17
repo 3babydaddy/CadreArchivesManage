@@ -78,7 +78,14 @@ public class TblRollInController extends BaseController {
 		addMessage(redirectAttributes, "删除转入管理人员成功");
 		return "redirect:"+Global.getAdminPath()+"/rollin/tblRollIn/?repage";
 	}
-
+	/**
+	 * 一个批次的转入的人员列表
+	 * @param per
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = {"personlist"})
 	public String personlist(TblRollInPersons per, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<TblRollInPersons> page = tblRollInService.findPersonPage(new Page<TblRollInPersons>(request, response), per); 
@@ -87,7 +94,14 @@ public class TblRollInController extends BaseController {
 		model.addAttribute("batchNum", per.getBatchNum().replace("zi", "字").replace("hao", "号"));
 		return "business/rollin/tblRollInPersonsList";
 	}
-	
+	/**
+	 * 转入管理的查询统计列表
+	 * @param tblRollInPersons
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = {"querycountlist"})
 	public String queryCountPage(TblRollInPersons tblRollInPersons, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<TblRollInPersons> page = tblRollInService.queryCountPage(new Page<TblRollInPersons>(request, response), tblRollInPersons); 
@@ -96,7 +110,7 @@ public class TblRollInController extends BaseController {
 	}
 	
 	/**
-	 * 转入查询统计数据
+	 * 转入查询统计数据导出
 	 * @param response
 	 * @param redirectAttributes
 	 * @return

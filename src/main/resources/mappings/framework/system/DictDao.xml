@@ -94,6 +94,12 @@
 		SELECT 
 			* 
 		FROM sys_dict 
-		WHERE label = #{name} and type = 'unit_list' and del_flag = '0'
+		WHERE label = #{label} and type = #{type} and del_flag = '0'
+	</select>
+	<select id="getLabelByValue" resultType="java.lang.String">
+		SELECT 
+			label
+		FROM sys_dict 
+		WHERE value = #{value} and type = #{type} and del_flag = '0'
 	</select>
 </mapper>

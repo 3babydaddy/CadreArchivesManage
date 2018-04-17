@@ -3,6 +3,11 @@
  */
 package com.tfkj.business.borrow.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.tfkj.business.borrow.entity.TblBorrowExport;
 import com.tfkj.business.borrow.entity.TblBorrowPerson;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
@@ -14,5 +19,7 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
  */
 @MyBatisDao
 public interface TblBorrowPersonDao extends CrudDao<TblBorrowPerson> {
+	
+	List<TblBorrowPerson> queryPerInfoByTar(@Param("export") TblBorrowExport TblBorrowExport);
 	
 }

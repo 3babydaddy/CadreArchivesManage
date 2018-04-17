@@ -151,7 +151,7 @@
 					<tbody id="tblRollOutPersonsList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="14"><a href="javascript:" onclick="addRow('#tblRollOutPersonsList', tblRollOutPersonsRowIdx, tblRollOutPersonsTpl);tblRollOutPersonsRowIdx = tblRollOutPersonsRowIdx + 1;" class="btns">新增</a></td></tr>
+						<tr><td colspan="14"><a href="javascript:" onclick="addRow('#tblRollOutPersonsList', tblRollOutPersonsRowIdx, tblRollOutPersonsTpl);tblRollOutPersonsRowIdx = tblRollOutPersonsRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblRollOutPersonsTpl">//<!--
@@ -164,8 +164,8 @@
 							<td style="text-align:right;width:120px;"><label>姓名：</label></td><td>
 								<input id="tblRollOutPersonsList{{idx}}_name" name="tblRollOutPersonsList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
-							<td>
-								<input type="button" value="生成审批单" onclick="createAuditBill('{{idx}}');" class="input-small "/>
+							<td style="text-align:center;">
+								<input type="button" value="生成审批单" onclick="createAuditBill('{{idx}}');" class="btn btn-primary input-small "/>
 							</td>
 							<td rowspan="7" class="text-center" width="10">
 								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblRollOutPersonsList{{idx}}')" title="删除">&times;</span>{{/delBtn}}

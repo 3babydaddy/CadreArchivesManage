@@ -54,12 +54,12 @@ public class TblRollOutBackService extends CrudService<TblRollOutBackDao, TblRol
 	
 	@Transactional(readOnly = false)
 	public void receiptSave(String rollApproveAttachment, String rollOutId)throws Exception{
-		TblRollOutBack tblRollOutBack = new TblRollOutBack();
-		TblRollOut tblRollOut = tblRollOutService.get(rollOutId);
 		
+		TblRollOut tblRollOut = tblRollOutService.get(rollOutId);
 		tblRollOut.setIsReturn("1");
 		tblRollOutService.save(tblRollOut);
 		
+		TblRollOutBack tblRollOutBack = new TblRollOutBack();
 		tblRollOutBack.setMainId(rollOutId);
 		tblRollOutBack.setRecipient(tblRollOut.getOperator());
 		tblRollOutBack.setReturnTime(new Date());

@@ -161,7 +161,7 @@
 					<tbody id="tblBorrowTargetList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblBorrowTargetList', tblBorrowTargetRowIdx, tblBorrowTargetTpl);tblBorrowTargetRowIdx = tblBorrowTargetRowIdx + 1;" class="btns">新增</a></td></tr>
+						<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblBorrowTargetList', tblBorrowTargetRowIdx, tblBorrowTargetTpl);tblBorrowTargetRowIdx = tblBorrowTargetRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblBorrowTargetTpl">//<!--
@@ -221,7 +221,7 @@
 					<tbody id="tblBorrowPersonList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="10"><a href="javascript:" onclick="addRow('#tblBorrowPersonList', tblBorrowPersonRowIdx, tblBorrowPersonTpl);tblBorrowPersonRowIdx = tblBorrowPersonRowIdx + 1;" class="btns">新增</a></td></tr>
+						<tr><td colspan="10"><a href="javascript:" onclick="addRow('#tblBorrowPersonList', tblBorrowPersonRowIdx, tblBorrowPersonTpl);tblBorrowPersonRowIdx = tblBorrowPersonRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblBorrowPersonTpl">//<!--

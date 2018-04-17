@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.common.collect.Lists;
 import com.tfkj.business.scattereds.entity.TblHandOverFiles;
 import com.tfkj.business.scattereds.entity.TblScatteredFiles;
 import com.tfkj.business.scattereds.service.TblScatteredFilesService;
@@ -86,7 +85,14 @@ public class TblScatteredFilesController extends BaseController {
 		addMessage(redirectAttributes, "删除零散材料移交人员成功");
 		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
 	}
-	
+	/**
+	 * 某个零散材料的移交人员列表
+	 * @param tblHandOverFiles
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = {"personlist"})
 	public String personlist(TblHandOverFiles tblHandOverFiles, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<TblHandOverFiles> page = tblScatteredFilesService.findPersonPage(new Page<TblHandOverFiles>(request, response), tblHandOverFiles); 
@@ -96,7 +102,7 @@ public class TblScatteredFilesController extends BaseController {
 	}
 
 	/**
-	 * 导入人员数据
+	 * 导入移交人员数据
 	 * @param file
 	 * @param redirectAttributes
 	 * @return
@@ -112,7 +118,7 @@ public class TblScatteredFilesController extends BaseController {
 			ScatteredFileImportUtil util = new ScatteredFileImportUtil();
 			TblScatteredFiles tblScatteredFiles = util.getExcelInfo(originalFilename, file);
 			try{
-				Dict dict = dictDao.getDictInfoByLabel(tblScatteredFiles.getHandOverUnitName());
+				Dict dict = dictDao.getDictInfoByLabel(tblScatteredFiles.getHandOverUnitName(), "unit_list");
 				tblScatteredFiles.setHandOverUnit(dict.getValue());
 				tblScatteredFilesService.saveScatteredInfo(tblScatteredFiles);
 			}catch (Exception ex) {
@@ -124,32 +130,39 @@ public class TblScatteredFilesController extends BaseController {
 		}
 		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
     }
-	
-	/**
-	 * 下载人员模板
-	 * @param response
-	 * @param redirectAttributes
-	 * @return
-	 */
-    @RequestMapping(value = "import/template")
-    public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
-		try {
-            String fileName = "零散材料人员数据导入模板.xlsx";
-    		List<TblHandOverFiles> list = Lists.newArrayList(); 
-    		list.add(new TblHandOverFiles());
-    		new ExportExcel("零散材料人员数据", TblHandOverFiles.class, 2).setDataList(list).write(response, fileName).dispose();
-    		return null;
-		} catch (Exception e) {
-			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
-		}
-		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
-    }
-   
+    /**
+     * 零散材料移交人员查询统计数据的列表
+     * @param tblScatteredFiles
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
     @RequestMapping(value = {"querycountlist"})
-	public String queryCountList(TblScatteredFiles tblScatteredFiles, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String findCountPage(TblScatteredFiles tblScatteredFiles, HttpServletRequest request, HttpServletResponse response, Model model) {
     	Page<TblScatteredFiles> page = tblScatteredFilesService.findCountPage(new Page<TblScatteredFiles>(request, response), tblScatteredFiles); 
 		model.addAttribute("page", page);
 		return "business/scattereds/tblScatteredFilesCountList";
 	}
+    
+    /**
+	 * 零散材料移交人员查询统计数据导出
+	 * @param response
+	 * @param redirectAttributes
+	 * @return
+	 */
+    @RequestMapping(value = "export")
+    public String exportData(TblScatteredFiles tblScatteredFiles, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "零散材料人员数据信息统计.xlsx";
+    		List<TblHandOverFiles> list = tblScatteredFilesService.findCountList(tblScatteredFiles); 
+    		list.add(new TblHandOverFiles());
+    		new ExportExcel("零散材料管理-数据统计", TblHandOverFiles.class, 2).setDataList(list).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出零散材料管理-数据统计失败！失败信息："+e.getMessage());
+		}
+		return "redirect:"+Global.getAdminPath()+"/scattereds/querycountlist?repage";
+    }
     
 }

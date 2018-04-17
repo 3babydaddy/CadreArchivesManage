@@ -42,6 +42,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	private String saveUnit;		// 现存档单位
 	private String saveUnitName;		
 	private String xh;		
+	private String backAttachment;  //回执附件
 	
 	public TblRollOutPersons() {
 		super();
@@ -81,7 +82,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	}
 	
 	@Length(min=0, max=1, message="转出形式长度必须介于 0 和 1 之间")
-	@ExcelField(title = "转出形式", align = 2, sort = 50,dictType="roll_out_type")
+	@ExcelField(title = "转出形式", align = 2, sort = 50)
 	public String getOutType() {
 		return outType;
 	}
@@ -91,7 +92,7 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 	}
 	
 	@Length(min=0, max=1, message="转出事由长度必须介于 0 和 1 之间")
-	@ExcelField(title = "转出事由", align = 2, sort = 60,dictType="roll_out_reason")
+	@ExcelField(title = "转出事由", align = 2, sort = 60)
 	public String getReason() {
 		return reason;
 	}
@@ -230,6 +231,14 @@ public class TblRollOutPersons extends DataEntity<TblRollOutPersons> {
 
 	public void setXh(String xh) {
 		this.xh = xh;
+	}
+
+	public String getBackAttachment() {
+		return backAttachment;
+	}
+
+	public void setBackAttachment(String backAttachment) {
+		this.backAttachment = backAttachment;
 	}
 	
 }

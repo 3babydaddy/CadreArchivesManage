@@ -35,7 +35,8 @@
 				alertx("请选择一条记录");
 				return;
 			}
-			window.location.href = "${ctx}/borrow/tblBorrowArchives/form?id="+rows[0].value;
+			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			window.location.href = "${ctx}/borrow/tblBorrowArchives/form?id="+mainId;
 		}
 		
 		function delData(){
@@ -46,26 +47,75 @@
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
+				var mainId = rows[i].value.slice(0, rows[0].value.indexOf(','));
 				if(idStr == ""){
-					idStr = rows[i].value; 
+					idStr = mainId; 
 				}else{
-					idStr += "," + rows[i].value; 
+					idStr += "," + mainId; 
 				}
 			}
 			window.location.href = "${ctx}/borrow/tblBorrowArchives/delete?idStr="+idStr;
 		}
-		
+		//归还
 		function giveBack(){
 			var rows = getRowData();
 			if(rows.length != 1){
 				alertx("请选择一条记录");
 				return;
 			}
-			window.location.href = "${ctx}/borrow/tblGiveBack/form?mainId="+rows[0].value;
+			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			window.location.href = "${ctx}/borrow/tblGiveBack/form?mainId="+mainId;
 		}
-		
+		//送审
 		function censorship(){
-			
+			var idStr = "";
+			var rows = getRowData();
+			if(rows.length == 0){
+				alertx("请选择记录");
+				return;
+			}
+			for(var i = 0; i < rows.length; i++){
+				var mainId = rows[i].value.slice(0, rows[0].value.indexOf(','));
+				if(idStr == ""){
+					idStr = mainId; 
+				}else{
+					idStr += "," + mainId; 
+				}
+			}
+			window.location.href = "${ctx}/borrow/tblBorrowArchives/censorship?idStr="+idStr;
+		}
+		//审核借阅数据
+		function auditData(){
+			var idStr = "";
+			var status = "";
+			var rows = getRowData();
+			if(rows.length == 0){
+				alertx("请选择记录");
+				return;
+			}
+			for(var i = 0; i < rows.length; i++){
+				var mainId = rows[i].value.slice(0, rows[0].value.indexOf(','));
+				var status = rows[i].value.slice(rows[0].value.indexOf(',')+1);
+				if(status == '2'){
+					if(idStr == ""){
+						idStr = mainId; 
+					}else{
+						idStr += "," + mainId; 
+					}
+				}else{
+					alertx("请选择审核中的数据！！！");
+					return;
+				}
+			}
+			var flag = confirm('您确认审核通过吗？');
+			if(flag){
+				//审核通过
+				status = "3";
+			}else{
+				//审核不通过
+				status = "1";
+			}
+			window.location.href = "${ctx}/borrow/tblBorrowArchives/auditData?idStr="+idStr+"&status="+status;
 		}
 		
 		function getRowData(){
@@ -94,8 +144,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/borrow/tblBorrowArchives/">借阅管理列表</a></li>
-		<shiro:hasPermission name="borrow:tblBorrowArchives:edit"><li><a href="${ctx}/borrow/tblBorrowArchives/form">借阅管理添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="#">借阅管理列表</a></li>
 	</ul>
 	<sys:message content="${message}"/>		
 	<form:form id="searchForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/" method="post" class="breadcrumb form-search">
@@ -137,8 +186,10 @@
 			<li><label>归还人：</label>
 				<form:input path="backOperator" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			<div style="float:right;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			</div>
 		</ul>
 	</form:form>
 	
@@ -148,7 +199,12 @@
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a onclick="giveBack();"><i class="icon-reply"></i>&nbsp;归还</a></li>
-	        <li><a onclick="censorship();"><i class="icon-share-alt"></i>&nbsp;送审</a></li>
+	        <shiro:hasRole name="user">
+	        	<li><a onclick="censorship();"><i class=" icon-share"></i>&nbsp;送审</a></li>
+	        </shiro:hasRole>
+	        <shiro:hasRole name="admin">
+	        	<li><a onclick="auditData();"><i class=" icon-legal"></i>&nbsp;审核</a></li>
+	        </shiro:hasRole>
 	    </ul>
 	</div>
 	<sys:message content="${message}"/>
@@ -173,7 +229,7 @@
 		<c:forEach items="${page.list}" var="tblBorrowArchives">
 			<tr>
 				<td>
-					<input type="checkbox" value="${tblBorrowArchives.id}" />
+					<input type="checkbox" value="${tblBorrowArchives.id},${tblBorrowArchives.status}" />
 				</td>
 				<td><a href="${ctx}/borrow/tblBorrowArchives/form?id=${tblBorrowArchives.id}"></a>
 					<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

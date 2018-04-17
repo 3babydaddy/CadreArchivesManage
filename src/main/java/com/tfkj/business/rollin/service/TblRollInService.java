@@ -93,15 +93,18 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 	public Page<TblRollInPersons> queryCountPage(Page<TblRollInPersons> page, TblRollInPersons tblRollInPersons) {
 		tblRollInPersons.setPage(page);
 		List<TblRollInPersons> perList = tblRollInPersonsDao.queryCountList(tblRollInPersons);
+		//材料总数
 		long filesNo = 0;
 		for(int i = 0; i < perList.size(); i++){
 			perList.get(i).setXh((perList.size()-i)+"");
 			filesNo += (perList.get(i).getFilesNo() == null ? 0 : perList.get(i).getFilesNo());
 		}
+		//第一行数据
 		TblRollInPersons info = new TblRollInPersons();
 		info.setXh("合计");
 		info.setFilesNo(filesNo);
 		perList.add(info);
+		
 		Collections.reverse(perList);
 		page.setList(perList);
 		return page;
@@ -109,15 +112,18 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 	
 	public List<TblRollInPersons> queryCountList(TblRollInPersons tblRollInPersons) {
 		List<TblRollInPersons> perList = tblRollInPersonsDao.queryCountList(tblRollInPersons);
+		//材料总数
 		long filesNo = 0;
 		for(int i = 0; i < perList.size(); i++){
 			perList.get(i).setXh((perList.size()-i)+"");
 			filesNo += (perList.get(i).getFilesNo() == null ? 0 : perList.get(i).getFilesNo());
 		}
+		//第一行数据
 		TblRollInPersons info = new TblRollInPersons();
 		info.setXh("合计");
 		info.setFilesNo(filesNo);
 		perList.add(info);
+		
 		Collections.reverse(perList);
 		return perList;
 	}
