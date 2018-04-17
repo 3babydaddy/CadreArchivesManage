@@ -272,7 +272,6 @@
 									<img id="tblBorrowPersonList{{idx}}_siginImg" src="{{row.siginName}}" />
 									<a id="tblBorrowPersonList{{idx}}_aline" onclick="delSigin(this)">&times;</a>
        							 </div>  
-								
 								<input id="tblBorrowPersonList{{idx}}_siginInput" name="tblBorrowPersonList[{{idx}}].siginInput" type="text"   onclick=siginOption(this);  class="input-small "/>
 								<input id="tblBorrowPersonList{{idx}}_siginName" name="tblBorrowPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input-small "/>
 							</td>

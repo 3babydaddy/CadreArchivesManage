@@ -123,7 +123,6 @@
 	}
 	
 	function createImage(){
-		
 		$.post("${ctx}/terminal/createImg", { type: "data", imgBase64Str: canvas.toDataURL("image/png") }, function (msg) {  
            //var msgjson = JSON.parse(msg);  
             //flashcam(msgjson.code, msgjson.picUrl);

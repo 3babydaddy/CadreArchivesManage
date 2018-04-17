@@ -67,6 +67,7 @@ public class TblBorrowArchivesController extends BaseController {
 		if (!beanValidator(model, tblBorrowArchives)){
 			return form(tblBorrowArchives, model);
 		}
+		
 		tblBorrowArchivesService.save(tblBorrowArchives);
 		addMessage(redirectAttributes, "保存借阅记录成功");
 		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";

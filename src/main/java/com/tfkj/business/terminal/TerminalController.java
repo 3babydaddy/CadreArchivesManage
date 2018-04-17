@@ -58,6 +58,7 @@ public class TerminalController {
 	 */
 	@RequestMapping("borrowArchives")
 	public String borrowArchives(TblBorrowArchives tblBorrowArchives, Model model) {
+		
 		model.addAttribute("tblBorrowArchives", tblBorrowArchives);
 		return "business/terminal/borrowArchives";
 	}

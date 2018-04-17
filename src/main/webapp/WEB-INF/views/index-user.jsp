@@ -6,6 +6,7 @@
 <title>${fns:getConfig('productName')}</title>
 <meta name="decorator" content="blank" />
 <link href="${ctxStatic}/modules/index/index-user.css" type="text/css" rel="stylesheet" />
+
 <script type="text/javascript">
 	$(function() {
 		$("#mainFrame").hide();
