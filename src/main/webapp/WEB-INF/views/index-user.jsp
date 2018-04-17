@@ -6,13 +6,21 @@
 <title>${fns:getConfig('productName')}</title>
 <meta name="decorator" content="blank" />
 <link href="${ctxStatic}/modules/index/index-user.css" type="text/css" rel="stylesheet" />
-
+<script type="text/javascript">
+	$(function(){
+		debugger;
+		var h = $("#header").height();
+		var w = $("#header").width();
+		$("video").css("width",w);
+		$("video").css("height",h);
+	});
+</script>
 
 </head>
 <body>
 	<div id="main">
 		<div id="header">
-			<video autoplay="autoplay" loop="loop" width= "1440px"; height="611.38px";>
+			<video autoplay="autoplay" loop="loop" style="object-fit: fill;">
 				<source src="${ctxStatic}/mp4/bg.mp4" type="video/mp4" />
 			</video>
 			<img src="${ctxStatic}/mp4/logo.png">

@@ -13,8 +13,10 @@ html{
 
 #header >img{
 	position: absolute;
-	top:0;
-	left:0;
+	top:30%;
+	left:50%;
+	margin-left: -540px;
+	margin-top: -242px;
 }
 
 a {
