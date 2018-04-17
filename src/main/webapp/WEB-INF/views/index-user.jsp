@@ -31,7 +31,7 @@
 						<img class="row-fluid-img" src="${ctxStatic}/mp4/1.png">
 						<img src="${ctxStatic}/mp4/shadow.png">
 					</div>
-					<div class="row-fluid span3" id="" data-url="${ctx}/terminal/consult">
+					<div class="row-fluid span3" id="" data-url="${ctx}/terminal/borrowArchives">
 						<img class="row-fluid-img" src="${ctxStatic}/mp4/2.png">
 						<img src="${ctxStatic}/mp4/shadow.png">
 					</div>
