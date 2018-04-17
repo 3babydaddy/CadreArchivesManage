@@ -88,11 +88,11 @@
 	//手动上传图片
 	function doInput(id){
     	var inputObj = document.createElement('input');
-    	$('#inputDiv').append(inputObj);
+    	$('.file').append(inputObj);
     	inputObj.addEventListener('change',readFile,false);
     	inputObj.type = 'file';
     	inputObj.accept = 'image/*';
-    	inputObj.id = id;
+    	inputObj.id = id;//inputFile
     	inputObj.click();
 	}
 	function readFile(){
@@ -124,8 +124,6 @@
 	
 	function createImage(){
 		$.post("${ctx}/terminal/createImg", { type: "data", imgBase64Str: canvas.toDataURL("image/png") }, function (msg) {  
-           //var msgjson = JSON.parse(msg);  
-            //flashcam(msgjson.code, msgjson.picUrl);
             var picUrl = msg.path;
             alert(picUrl);
         });
@@ -139,6 +137,34 @@
 iframe {
 	height:90% !important;
 }
+
+
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 18px;
+}
+.file input {
+    position: absolute;
+    font-size: 14px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
 </style>
 
 </head>
@@ -150,9 +176,11 @@ iframe {
 	<div class="row-fluid">
 		<!-- <button class="btn btn-info play span3 offset3">上传附件</button> -->
 		<div class="span2 offset3">
-			<button class="btn btn-primary play-x">拍照</button>
+			<button class="btn  btn-success play-x">拍照</button>
 		</div>
-		<div id="inputDiv"class="span2">
+		<div id="inputDiv"class="span4">
+			<a href="javascript:;" class="file">选择文件
+			</a>
 		</div>
 		<div id="status" class="span3 offset1"></div>
 	</div>

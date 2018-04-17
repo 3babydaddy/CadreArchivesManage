@@ -23,10 +23,9 @@
 				}
 			});
 			/**调整页面自适应*/
-			var h = parent.$("iframe").height();
+			var h = $(document.body).height();
 			$("#photoShowDiv").css("height",h + "px");
-			
-			$(".img-responsive").click(function(){
+			$("#photoShowDiv").click(function(){
 				$.jBox("get:${ctx}/terminal/camera", {  
 				    title: "图像采集",  
 				    width: 400,  
@@ -132,7 +131,7 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div id= "photoShowDiv" class="row-fluid span4">
-			<img src="${ctxStatic}/images/quesheng.jpg" class="img-responsive" ><span></span>
+			<img src="${ctxStatic}/images/quesheng.jpg" id="imgId" class="img-responsive" ><span></span>
 		</div>
 		<div class="row-fluid span8">
 			<ul class="nav nav-tabs">
