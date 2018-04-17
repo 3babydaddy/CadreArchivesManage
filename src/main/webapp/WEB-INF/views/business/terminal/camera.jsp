@@ -8,26 +8,28 @@
 	src="${ctxStatic}/jquery-webcam/jquery.webcam.js"></script>
 
 <script type="text/javascript">
-	var w = 320, h = 240; //摄像头配置,创建canvas
+	var w = 400, h = 230; //摄像头配置,创建canvas
 	var pos = 0, ctx = null, saveCB, image = [];
 	var canvas = document.createElement("canvas");
-	$("body").append(canvas);
+	//$("body").append(canvas);
 	canvas.setAttribute('width', w);
 	canvas.setAttribute('height', h);
 	ctx = canvas.getContext("2d");
 	image = ctx.getImageData(0, 0, w, h);
 	$(document).ready(function() {
+		doInput("inputFile");
 		$("#webcam").webcam({
 			width : w,
 			height : h,
 			mode : "callback", //stream,save，回调模式,流模式和保存模式
 			swffile : '${ctxStatic}' + '/jquery-webcam/jscam_canvas_only.swf',
-			onTick : function(remain) {
-				if (0 == remain) {
+			onTick : function() {
+				/* if (0 == remain) {
 					$("#status").text("拍照成功!");
 				} else {
 					$("#status").text("倒计时" + remain + "秒钟...");
-				}
+				} */
+				$("#status").text("拍照成功!");
 			},
 			onSave : function(data) { //保存图像
 				var col = data.split(";");
@@ -43,10 +45,10 @@
 				if (pos >= 4 * w * h) {
 					ctx.putImageData(img, 0, 0); //转换图像数据，渲染canvas
 					pos = 0;
-					var i = new Image();
-					i.src = canvas.toDataURL();
-					$("#picView").empty();
-					$(i).appendTo($("#picView"));
+// 					var i = new Image();
+// 					i.src = canvas.toDataURL();
+// 					$("#picView").empty();
+// 					$(i).appendTo($("#picView"));
 					// TODO: 图片上传
 					/* var imagedata = canvas.toDataURL().substring(22); //上传给后台的图片数据
 					$.post('${ctx}/', {
@@ -54,6 +56,10 @@
 						},function (data){
 							
 					}); */
+					$.post("${ctx}/terminal/createImg", { type: "data", image: canvas.toDataURL("image/png") }, function (msg) {  
+                        var msgjson = JSON.parse(msg);  
+                        flashcam(msgjson.code, msgjson.picUrl);  
+                    });  
 				}
 			},
 			onCapture : function() { //捕获图像
@@ -71,13 +77,61 @@
 			}
 		});
 
-		$(".play").click(function() {
+		/* $(".play").click(function() {
 			webcam.capture(5); //拍照，参数5是倒计时
-		});
+		}); */
 		$(".play-x").click(function() {
-			webcam.capture(); //拍照，参数5是倒计时
+			webcam.capture(); //拍照
 		});
 	});
+	
+	//手动上传图片
+	function doInput(id){
+    	var inputObj = document.createElement('input');
+    	$('#inputDiv').append(inputObj);
+    	inputObj.addEventListener('change',readFile,false);
+    	inputObj.type = 'file';
+    	inputObj.accept = 'image/*';
+    	inputObj.id = id;
+    	inputObj.click();
+	}
+	function readFile(){
+	    var file = this.files[0];//获取input输入的图片
+	    if(!/image\/\w+/.test(file.type)){
+	        alert("请确保文件为图像类型");
+	        return false;
+	    }//判断是否图片，在移动端由于浏览器对调用file类型处理不同，虽然加了accept = 'image/*'，但是还要再次判断
+	    var reader = new FileReader();
+	    reader.readAsDataURL(file);//转化成base64数据类型
+	    reader.onload = function(e){
+	            drawToCanvas(this.result);
+	        }
+	    }
+	
+	function drawToCanvas(imgData){
+	   /*  var cvs = document.querySelector('#cvs');
+	        cvs.width=300;
+	        cvs.height=400;
+	        var ctx = cvs.getContext('2d'); */
+	        var img = new Image;
+	            img.src = imgData;
+	            img.onload = function(){//必须onload之后再画
+	                ctx.drawImage(img,0,0,w,h);
+	                //strDataURI = canvas.toDataURL();//获取canvas base64数据
+	                createImage();
+	            }
+	}
+	
+	function createImage(){
+		
+		$.post("${ctx}/terminal/createImg", { type: "data", imgBase64Str: canvas.toDataURL("image/png") }, function (msg) {  
+           //var msgjson = JSON.parse(msg);  
+            //flashcam(msgjson.code, msgjson.picUrl);
+            var picUrl = msg.path;
+            alert(picUrl);
+        });
+	}
+
 </script>
 <style type="text/css">
 #webcam>object {
@@ -90,12 +144,24 @@ iframe {
 
 </head>
 <body>
-	<div id="webcam"></div>
-	<button class="play">5s拍照</button>
-	<button class="play-x">拍照</button>
-	<div id="status">倒计时</div>
-	<div id="picView"
-		style="width: 304px; height: 240px; border: 5px solid #ccc; padding: 4px; background-color: #ccc;">
+
+	<div class="row-fluid">
+		<div id="webcam"></div>
+	</div>
+	<div class="row-fluid">
+		<!-- <button class="btn btn-info play span3 offset3">上传附件</button> -->
+		<div class="span2 offset3">
+			<button class="btn btn-primary play-x">拍照</button>
+		</div>
+		<div id="inputDiv"class="span2">
+		</div>
+		<div id="status" class="span3 offset1"></div>
+	</div>
+	
+	
+	<!--<div id="picView"
+		style="width: 304px; height: 240px; border: 5px solid #ccc; padding: 4px; background-color: #ccc;"> -->
+
 </body>
 
 </html>

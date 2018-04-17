@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tfkj.business.attachment.entity.TblCommonAttachment;
 import com.tfkj.business.attachment.service.TblCommonAttachmentService;
+import com.tfkj.business.borrow.entity.TblBorrowArchives;
 import com.tfkj.business.consult.entity.TblConsultArchives;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.utils.FileUtils;
@@ -49,7 +51,16 @@ public class TerminalController {
 		model.addAttribute("tblConsultArchives", tblConsultArchives);
 		return "business/terminal/consult";
 	}
-
+	/**
+	 * 借阅档案录入终端界面
+	 * 
+	 * @return 页面资源路径
+	 */
+	@RequestMapping("borrowArchives")
+	public String borrowArchives(TblBorrowArchives tblBorrowArchives, Model model) {
+		model.addAttribute("tblBorrowArchives", tblBorrowArchives);
+		return "business/terminal/borrowArchives";
+	}
 	/**
 	 * 根据传入图片base64 生成图片
 	 * 
@@ -58,7 +69,7 @@ public class TerminalController {
 	 */
 	@RequestMapping("createImg")
 	@ResponseBody
-	public Map<String, Object> createImg(String imgBase64Str) {
+	public Map<String, Object> createImg(@RequestParam("imgBase64Str") String imgBase64Str) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			logger.info("createImg str --> [{}]", imgBase64Str);

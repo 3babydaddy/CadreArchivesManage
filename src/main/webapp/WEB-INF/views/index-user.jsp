@@ -55,7 +55,7 @@
 						<div class="row-fluid span6" id="col-1" data-url="${ctx}/terminal/consult">
 							<span>查阅档案</span>
 						</div>
-						<div class="row-fluid span6" id="col-2" data-url="${ctx}/terminal/consult">
+						<div class="row-fluid span6" id="col-2" data-url="${ctx}/terminal/borrowArchives">
 							<span>借阅档案</span>
 						</div>
 						<div class="row-fluid span6" id="col-3" data-url="${ctx}/terminal/consult">
