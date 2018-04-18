@@ -131,7 +131,7 @@
 <body>
 	<div class="row-fluid">
 		<div id= "photoShowDiv" class="row-fluid span4">
-			<img src="${ctxStatic}/images/quesheng.jpg" class="img-responsive" ><span></span>
+			<img id="photoShow" src="${ctxStatic}/images/quesheng.jpg" class="img-responsive center-block img-rounded" ><span></span>
 		</div>
 		<div class="row-fluid span8">
 			<ul class="nav nav-tabs">

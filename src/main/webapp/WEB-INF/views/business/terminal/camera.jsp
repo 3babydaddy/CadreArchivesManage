@@ -56,9 +56,9 @@
 						},function (data){
 							
 					}); */
-					$.post("${ctx}/terminal/createImg", { type: "data", image: canvas.toDataURL("image/png") }, function (msg) {  
-                        var msgjson = JSON.parse(msg);  
-                        flashcam(msgjson.code, msgjson.picUrl);  
+					$.post("${ctx}/terminal/createImg", {'imgBase64Str' : canvas.toDataURL("image/png")}, function (msg) {  
+                        var picUrl = msg.path;
+                        document.getElementById("photoShow").src = picUrl;
                     });  
 				}
 			},
@@ -109,15 +109,10 @@
 	    }
 	
 	function drawToCanvas(imgData){
-	   /*  var cvs = document.querySelector('#cvs');
-	        cvs.width=300;
-	        cvs.height=400;
-	        var ctx = cvs.getContext('2d'); */
 	        var img = new Image;
 	            img.src = imgData;
 	            img.onload = function(){//必须onload之后再画
 	                ctx.drawImage(img,0,0,w,h);
-	                //strDataURI = canvas.toDataURL();//获取canvas base64数据
 	                createImage();
 	            }
 	}
@@ -125,7 +120,8 @@
 	function createImage(){
 		$.post("${ctx}/terminal/createImg", { type: "data", imgBase64Str: canvas.toDataURL("image/png") }, function (msg) {  
             var picUrl = msg.path;
-            alert(picUrl);
+            //alert(picUrl);
+           document.getElementById("photoShow").src = picUrl;
         });
 	}
 

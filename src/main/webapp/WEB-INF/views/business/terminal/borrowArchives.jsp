@@ -23,7 +23,10 @@
 				}
 			});
 			/**调整页面自适应*/
+			//var h = $(document.body).height();
+			$(document.body).css("height",'100%');
 			var h = $(document.body).height();
+			//var h = parent.$("iframe").height();
 			$("#photoShowDiv").css("height",h + "px");
 			$("#photoShowDiv").click(function(){
 				$.jBox("get:${ctx}/terminal/camera", {  
@@ -125,14 +128,14 @@
 		}
 		.img-responsive{
 			vertical-align:middle;
-		}  
+		} 
 	</style>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid input-lg">
 	<div class="row-fluid">
 		<div id= "photoShowDiv" class="row-fluid span4">
-			<img src="${ctxStatic}/images/quesheng.jpg" id="imgId" class="img-responsive" ><span></span>
+			<img id="photoShow" src="${ctxStatic}/images/quesheng.jpg" class="img-responsive center-block img-rounded" ><span></span>
 		</div>
 		<div class="row-fluid span8">
 			<ul class="nav nav-tabs">
@@ -144,7 +147,7 @@
 				<div class="control-group">
 					<label class="control-label">借阅日期：</label>
 					<div class="controls">
-						<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
+						<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate"
 							value="<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 							onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 					</div>

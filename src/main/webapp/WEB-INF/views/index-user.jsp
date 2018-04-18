@@ -13,9 +13,7 @@
 		$("video").css("width",w);
 		$("video").css("height",h);
 		
-			$("#mainFrame").hide();
 			$("#content").find("div").on("click", function(e) {
-				
 				var url = e.currentTarget.getAttribute("data-url");
 				window.location.href = url;
 // 				$("iframe").attr("src", url);
@@ -36,10 +34,6 @@
 				<source src="${ctxStatic}/mp4/bg.mp4" type="video/mp4" />
 			</video>
 			<img src="${ctxStatic}/mp4/logo.png">
-			<!-- 页面展示区域 -->
-			<div>
-				<iframe id="mainFrame" name="mainFrame" src="" style="overflow: visible;" scrolling="yes" frameborder="no" width="100%" height="650"></iframe>
-			</div>
 		</div>
 		<div id="footer">
 			<div class="container-fluid">
