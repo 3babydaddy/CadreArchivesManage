@@ -66,11 +66,8 @@
 					<if test="dbName == 'mssql'">'%'+#{saveUnit}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{saveUnit},'%')</if>
 			</if>
-			<if test="character != null and character != ''">
-				AND a.character like concat('%', #{character}, '%')
-			</if>
-			<if test="number != null and number != ''">
-				AND a.number like concat('%', #{number}, '%')
+			<if test="batchNum != null and batchNum != ''">
+				AND (concat(a.character, a.number) like concat('%', replace(REPLACE(#{batchNum}, '字', ''), '号', ''), '%'))
 			</if>
 		</where>
 		<choose>

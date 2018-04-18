@@ -14,10 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tfkj.business.borrow.dao.TblBorrowArchivesDao;
 import com.tfkj.business.borrow.dao.TblBorrowPersonDao;
 import com.tfkj.business.borrow.dao.TblBorrowTargetDao;
+import com.tfkj.business.borrow.dao.TblGiveBackDao;
 import com.tfkj.business.borrow.entity.TblBorrowArchives;
 import com.tfkj.business.borrow.entity.TblBorrowExport;
 import com.tfkj.business.borrow.entity.TblBorrowPerson;
 import com.tfkj.business.borrow.entity.TblBorrowTarget;
+import com.tfkj.business.borrow.entity.TblGiveBack;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
 import com.tfkj.framework.core.utils.StringUtils;
@@ -37,6 +39,8 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 	private TblBorrowPersonDao tblBorrowPersonDao;
 	@Autowired
 	private TblBorrowTargetDao tblBorrowTargetDao;
+	@Autowired
+	private TblGiveBackDao tblGiveBackDao;
 	
 	public TblBorrowArchives get(String id) {
 		TblBorrowArchives tblBorrowArchives = super.get(id);
@@ -133,6 +137,17 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 			}else{
 				tblBorrowTargetDao.delete(tblBorrowTarget);
 			}
+		}
+		
+		//新增归还记录
+		TblGiveBack tblGiveBack = new TblGiveBack();
+		tblGiveBack.setMainId(tblBorrowArchives.getId());
+		List<TblGiveBack> giveBackList = tblGiveBackDao.findList(tblGiveBack);
+		if(giveBackList.size() == 0){
+			//tblGiveBack.setMainId(tblBorrowArchives.getId());
+			tblGiveBack.setStatus("1");
+			tblGiveBack.preInsert();
+			tblGiveBackDao.insert(tblGiveBack);
 		}
 	}
 	

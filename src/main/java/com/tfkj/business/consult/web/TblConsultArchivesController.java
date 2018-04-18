@@ -3,7 +3,9 @@
  */
 package com.tfkj.business.consult.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfkj.business.consult.entity.TblConsultArchives;
@@ -78,12 +81,54 @@ public class TblConsultArchivesController extends BaseController {
 		addMessage(redirectAttributes, "删除查阅档案成功");
 		return "redirect:"+Global.getAdminPath()+"/consult/tblConsultArchives/?repage";
 	}
-
+	/**
+	 * 签名功能
+	 * @param siginId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "drowSigin")
 	public String drowSigin(String siginId, Model model) {
 		
 		model.addAttribute("siginId", siginId);
 		return "business/consult/tblDrowSigin";
+	}
+	
+	/**
+	 * 送审，更改借阅数据的状态
+	 * @param tblConsultArchives
+	 * @param idStr
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "censorship")
+	@ResponseBody
+	public Map<String, Object> censorship(TblConsultArchives tblConsultArchives, String idStr, RedirectAttributes redirectAttributes) {
+		Map<String, Object> resultMap = new HashMap<>();
+		try{
+			tblConsultArchivesService.censorship(tblConsultArchives, idStr);
+			resultMap.put("flag", "success");
+			resultMap.put("msg", "送审查阅记录成功");
+		}catch(Exception e){
+			e.printStackTrace();
+			resultMap.put("flag", "fail");
+			resultMap.put("msg", "送审查阅记录失败");
+		}
+		return resultMap;
+	}
+	/**
+	 * 审核借阅数据
+	 * @param tblConsultArchives
+	 * @param idStr
+	 * @param status
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "auditData")
+	public String auditData(TblConsultArchives tblConsultArchives, String idStr, String status, RedirectAttributes redirectAttributes) {
+		tblConsultArchivesService.auditData(tblConsultArchives, idStr, status);
+		addMessage(redirectAttributes, "审核查阅记录成功");
+		return "redirect:"+Global.getAdminPath()+"/consult/tblConsultArchives/?repage";
 	}
 	/**
 	 * 查阅人员查询统计数据列表

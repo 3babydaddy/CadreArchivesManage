@@ -29,9 +29,9 @@
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#">借阅归还<shiro:hasPermission name="borrow:tblGiveBack:edit">${not empty tblGiveBack.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="borrow:tblGiveBack:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
+	<sys:message content="${message}"/>	
 	<form:form id="inputForm" modelAttribute="tblGiveBack" action="${ctx}/borrow/tblGiveBack/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">归还时间：</label>
 			<div class="controls">
@@ -49,7 +49,7 @@
 		<div class="control-group">
 			<label class="control-label">归还人照片：</label>
 			<div class="controls">
-				<sys:upFIle input="photo" type="files" name="photo" value="${tblGiveBack.photo}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				<sys:upImg input="photo" type="files" name="photo" value="${tblGiveBack.photo}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -65,7 +65,6 @@
 			</div>
 		</div>
 		<input type="hidden" id="mainId" name="mainId" value="${tblGiveBack.mainId }" />
-		<input type="hidden" id="id" name="id" value="${tblGiveBack.id }"/>
 		<div class="form-actions">
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

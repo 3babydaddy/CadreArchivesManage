@@ -84,6 +84,30 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 		}
 	}
 	
+	@Transactional(readOnly = false)
+	public void censorship(TblRollIn tblRollIn, String idStr) {
+		if(StringUtils.isNotBlank(idStr)){
+			String[] idArray = idStr.split(",");
+			for(int i = 0; i < idArray.length; i++){
+				tblRollIn = super.get(idArray[i]);
+				tblRollIn.setStatus("2");
+				super.save(tblRollIn);
+			}
+		}
+	}
+	
+	@Transactional(readOnly = false)
+	public void auditData(TblRollIn tblRollIn, String idStr, String status) {
+		if(StringUtils.isNotBlank(idStr)){
+			String[] idArray = idStr.split(",");
+			for(int i = 0; i < idArray.length; i++){
+				tblRollIn = super.get(idArray[i]);
+				tblRollIn.setStatus(status);
+				super.save(tblRollIn);
+			}
+		}
+	}
+	
 	public Page<TblRollInPersons> findPersonPage(Page<TblRollInPersons> page, TblRollInPersons tblRollInPersons) {
 		tblRollInPersons.setPage(page);
 		page.setList(tblRollInPersonsDao.findList(tblRollInPersons));

@@ -299,8 +299,8 @@ public class WordExportController extends BaseController {
         	 dataMap.put("filesNo", filesNo);
          }
 		 
-		 if(tblRollIn.getOperator() != null){
-			 dataMap.put("operator", "尊敬的"+tblRollIn.getOperator());
+		 if(tblRollIn.getRecipient() != null){
+			 dataMap.put("operator", "尊敬的"+tblRollIn.getRecipient());
 		 }
 		 if(tblRollIn.getCharacter() != null){
 			 dataMap.put("character", tblRollIn.getCharacter()+"");

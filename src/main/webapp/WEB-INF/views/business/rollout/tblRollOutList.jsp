@@ -143,8 +143,7 @@
 				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>批次号：</label>
-				<form:input path="character" htmlEscape="false" style="width:82px;" maxlength="11" />字
-				<form:input path="number" htmlEscape="false" style="width:82px;" maxlength="11" />号
+				<form:input path="batchNum" htmlEscape="false" maxlength="64" class="input-medium" />
 			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>

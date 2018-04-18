@@ -3,7 +3,9 @@
  */
 package com.tfkj.business.borrow.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfkj.business.borrow.entity.TblBorrowArchives;
@@ -87,10 +90,19 @@ public class TblBorrowArchivesController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "censorship")
-	public String censorship(TblBorrowArchives tblBorrowArchives, String idStr, RedirectAttributes redirectAttributes) {
-		tblBorrowArchivesService.censorship(tblBorrowArchives, idStr);
-		addMessage(redirectAttributes, "送审借阅记录成功");
-		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
+	@ResponseBody
+	public Map<String, Object> censorship(TblBorrowArchives tblBorrowArchives, String idStr, RedirectAttributes redirectAttributes) {
+		Map<String, Object> resultMap = new HashMap<>();
+		try{
+			tblBorrowArchivesService.censorship(tblBorrowArchives, idStr);
+			resultMap.put("flag", "success");
+			resultMap.put("msg", "送审借阅记录成功");
+		}catch(Exception e){
+			e.printStackTrace();
+			resultMap.put("flag", "fail");
+			resultMap.put("msg", "送审借阅记录失败");
+		}
+		return resultMap;
 	}
 	/**
 	 * 审核借阅数据

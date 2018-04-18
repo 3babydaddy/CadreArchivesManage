@@ -37,6 +37,7 @@ public class TblRollOut extends DataEntity<TblRollOut> {
 	private Date endRollOutTime;
 	private String beforeUnitName;
 	private String saveUnitName;
+	private String batchNum; //批次号
 	
 	public TblRollOut() {
 		super();
@@ -172,5 +173,13 @@ public class TblRollOut extends DataEntity<TblRollOut> {
 
 	public void setSaveUnitName(String saveUnitName) {
 		this.saveUnitName = saveUnitName;
+	}
+
+	public String getBatchNum() {
+		return batchNum;
+	}
+
+	public void setBatchNum(String batchNum) {
+		this.batchNum = batchNum;
 	}
 }

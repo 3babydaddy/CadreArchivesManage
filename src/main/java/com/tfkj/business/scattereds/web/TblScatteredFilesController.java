@@ -3,7 +3,9 @@
  */
 package com.tfkj.business.scattereds.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -85,6 +88,44 @@ public class TblScatteredFilesController extends BaseController {
 		addMessage(redirectAttributes, "删除零散材料移交人员成功");
 		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
 	}
+	
+	/**
+	 * 送审，更改零散材料数据的状态
+	 * @param tblScatteredFiles
+	 * @param idStr
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "censorship")
+	@ResponseBody
+	public Map<String, Object> censorship(TblScatteredFiles tblScatteredFiles, String idStr, RedirectAttributes redirectAttributes) {
+		Map<String, Object> resultMap = new HashMap<>();
+		try{
+			tblScatteredFilesService.censorship(tblScatteredFiles, idStr);
+			resultMap.put("flag", "success");
+			resultMap.put("msg", "送审零散材料记录成功");
+		}catch(Exception e){
+			e.printStackTrace();
+			resultMap.put("flag", "fail");
+			resultMap.put("msg", "送审零散材料记录失败");
+		}
+		return resultMap;
+	}
+	/**
+	 * 审核零散材料数据
+	 * @param tblScatteredFiles
+	 * @param idStr
+	 * @param status
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "auditData")
+	public String auditData(TblScatteredFiles tblScatteredFiles, String idStr, String status, RedirectAttributes redirectAttributes) {
+		tblScatteredFilesService.auditData(tblScatteredFiles, idStr, status);
+		addMessage(redirectAttributes, "审核借阅记录成功");
+		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
+	}
+	
 	/**
 	 * 某个零散材料的移交人员列表
 	 * @param tblHandOverFiles

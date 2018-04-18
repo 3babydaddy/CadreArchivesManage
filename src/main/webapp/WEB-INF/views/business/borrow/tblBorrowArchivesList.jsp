@@ -47,7 +47,7 @@
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
-				var mainId = rows[i].value.slice(0, rows[0].value.indexOf(','));
+				var mainId = rows[i].value.slice(0, rows[i].value.indexOf(','));
 				if(idStr == ""){
 					idStr = mainId; 
 				}else{
@@ -75,14 +75,41 @@
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
-				var mainId = rows[i].value.slice(0, rows[0].value.indexOf(','));
-				if(idStr == ""){
-					idStr = mainId; 
+				var mainId = rows[i].value.slice(0, rows[i].value.indexOf(','));
+				var status = rows[i].value.slice(rows[i].value.indexOf(',')+1);
+				if(status == '1'){
+					if(idStr == ""){
+						idStr = mainId; 
+					}else{
+						idStr += "," + mainId; 
+					}
 				}else{
-					idStr += "," + mainId; 
+					alertx("请选择未审核的数据！！！");
+					return;
 				}
 			}
-			window.location.href = "${ctx}/borrow/tblBorrowArchives/censorship?idStr="+idStr;
+	        
+	        $.ajax({
+                type: "post",
+                url: "${ctx}/borrow/tblBorrowArchives/censorship",
+                data: {'idStr':idStr},
+                //dataType: "json",
+                success: function (data) {
+                    if(data.flag == 'success'){
+                    	alertx(data.msg);
+                    	//提示管理员有新的数据需要审核
+            			<shiro:hasRole name="admin">
+            			 	window.parent.alertTip('借阅管理有新的需要审核的数据', '/borrow/tblBorrowArchives/list');
+            	        </shiro:hasRole>
+                        window.location.reload();
+                    }else{
+                    	alertx(data.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //alertx("error！");
+                }
+            });
 		}
 		//审核借阅数据
 		function auditData(){
@@ -94,8 +121,8 @@
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
-				var mainId = rows[i].value.slice(0, rows[0].value.indexOf(','));
-				var status = rows[i].value.slice(rows[0].value.indexOf(',')+1);
+				var mainId = rows[i].value.slice(0, rows[i].value.indexOf(','));
+				var status = rows[i].value.slice(rows[i].value.indexOf(',')+1);
 				if(status == '2'){
 					if(idStr == ""){
 						idStr = mainId; 
@@ -107,15 +134,24 @@
 					return;
 				}
 			}
-			var flag = confirm('您确认审核通过吗？');
-			if(flag){
-				//审核通过
-				status = "3";
-			}else{
-				//审核不通过
-				status = "1";
-			}
-			window.location.href = "${ctx}/borrow/tblBorrowArchives/auditData?idStr="+idStr+"&status="+status;
+			
+			top.$.jBox.open("<div style='margin: 15px 0 0 48px;'>"+
+					"<span class='jbox-icon jbox-icon-question' style='position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;'></span>"+
+								"<span>是否确定审核通过！！！</span></div>", 
+				"系统提示", 350,  126,
+			    { buttons:{"是":true,"否":false},
+					submit:function(v, h, f){
+						if(v){
+							//审核通过
+							status = "3";
+						}else{
+							//审核不通过
+							status = "1";
+						}
+						window.location.href = "${ctx}/borrow/tblBorrowArchives/auditData?idStr="+idStr+"&status="+status;
+					}
+			    }
+			);
 		}
 		
 		function getRowData(){
@@ -199,9 +235,9 @@
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a onclick="giveBack();"><i class="icon-reply"></i>&nbsp;归还</a></li>
-	        <shiro:hasRole name="user">
+	        <shiro:hasAnyRoles  name="admin,user">
 	        	<li><a onclick="censorship();"><i class=" icon-share"></i>&nbsp;送审</a></li>
-	        </shiro:hasRole>
+	        </shiro:hasAnyRoles >
 	        <shiro:hasRole name="admin">
 	        	<li><a onclick="auditData();"><i class=" icon-legal"></i>&nbsp;审核</a></li>
 	        </shiro:hasRole>
@@ -235,7 +271,7 @@
 					<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${tblBorrowArchives.consultUnit}
+					${fns:getDictLabel(tblBorrowArchives.consultUnit, 'unit_list', '')}
 				</td>
 				<td>
 					${tblBorrowArchives.tarStr}
@@ -256,7 +292,7 @@
 					${tblBorrowArchives.operator}
 				</td>
 				<td>
-					${fns:getDictLabel(tblBorrowArchives.status, 'borrow_status', '')}
+					${fns:getDictLabel(tblBorrowArchives.status, 'audit_status', '')}
 				</td>
 				<td>
 					${tblBorrowArchives.remarks}

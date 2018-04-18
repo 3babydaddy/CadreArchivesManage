@@ -55,20 +55,25 @@
 			}
 		}
 	</script>
+	<style type="text/css">
+		.table th, .table td, .table input{
+			text-align : center;
+		}
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交人员列表</a></li>
 		<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/form?id=${tblScatteredFiles.id}">零散材料移交人员<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblScatteredFiles.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
+	<sys:message content="${message}"/>		
 	<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">移交单位：</label>
 			<div class="controls">
 				<sys:treeselect2 url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
-									labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表"></sys:treeselect2>
+								labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表"></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
@@ -79,23 +84,11 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">经手人：</label>
-			<div class="controls">
-				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">接收人：</label>
-			<div class="controls">
-				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
 		
 			<div class="control-group">
 				<label class="control-label">移交材料：</label>
 				<div class="controls">
-					<table id="contentTable" class="table table-striped table-bordered table-condensed">
+					<table id="contentTable" style="width:70.5%;" class="table table-striped table-bordered table-condensed">
 						<thead>
 							<tr>
 								<th class="hide"></th>
@@ -109,7 +102,7 @@
 						<tbody id="tblHandOverFilesList">
 						</tbody>
 						<tfoot>
-							<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+							<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;" style="width:50px;float:left;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 						</tfoot>
 					</table>
 					<script type="text/template" id="tblHandOverFilesTpl">//<!--
@@ -147,6 +140,21 @@
 					</script>
 				</div>
 			</div>
+		
+		<div class="control-group">
+			<label class="control-label">经手人：</label>
+			<div class="controls">
+				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+				<label class="control-label">接收人：</label>
+				<div class="controls">
+					<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				</div>
+			</div>
+		</div>
+		
 		<div class="form-actions">
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

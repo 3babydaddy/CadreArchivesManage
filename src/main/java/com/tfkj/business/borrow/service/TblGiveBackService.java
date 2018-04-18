@@ -43,6 +43,7 @@ public class TblGiveBackService extends CrudService<TblGiveBackDao, TblGiveBack>
 	
 	@Transactional(readOnly = false)
 	public void save(TblGiveBack tblGiveBack) {
+		tblGiveBack.setStatus("2");
 		super.save(tblGiveBack);
 		if(StringUtils.isNotBlank(tblGiveBack.getMainId())){
 			TblBorrowArchives tblBorrowArchives = tblBorrowArchivesDao.get(tblGiveBack.getMainId());
