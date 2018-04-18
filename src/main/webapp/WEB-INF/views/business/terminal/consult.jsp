@@ -23,14 +23,15 @@
 				}
 			});
 			/**调整页面自适应*/
-			var h = parent.$("iframe").height();
+			//var h = parent.$("iframe").height();
+			//$("#photoShowDiv").css("height",h + "px");
+			var h = $(document.body).height();
 			$("#photoShowDiv").css("height",h + "px");
-			
-			$(".img-responsive").click(function(){
+			$("#photoShowDiv").click(function(){
 				$.jBox("get:${ctx}/terminal/camera", {  
 				    title: "图像采集",  
 				    width: 400,  
-				    height: 400,
+				    height: 380,
 				    showClose: false,
 				    icon: 'info',
 				    showSpeed:'fast',

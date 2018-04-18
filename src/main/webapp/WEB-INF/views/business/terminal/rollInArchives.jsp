@@ -27,7 +27,7 @@
 			//$("#photoShowDiv").css("height",h + "px");
 			var h = $(document.body).height();
 			$("#photoShowDiv").css("height",h + "px");
-			$(".img-responsive").click(function(){
+			$("#photoShowDiv").click(function(){
 				$.jBox("get:${ctx}/terminal/camera", {  
 				    title: "图像采集",  
 				    width: 400,  
