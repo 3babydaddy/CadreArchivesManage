@@ -135,7 +135,7 @@
 		</div>
 		<div class="row-fluid span8">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/form?id=${tblConsultArchives.id}">查阅档案<shiro:hasPermission name="consult:tblConsultArchives:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="consult:tblConsultArchives:edit">查看</shiro:lacksPermission></a></li>
+				<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/form?id=${tblConsultArchives.id}">零散材料<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
 			</ul><br/>
 			<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

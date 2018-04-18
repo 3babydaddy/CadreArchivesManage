@@ -174,7 +174,6 @@ iframe {
 		<div id="webcam"></div>
 	</div>
 	<div class="row-fluid">
-		<!-- <button class="btn btn-info play span3 offset3">上传附件</button> -->
 		<div class="span2 offset4">
 			<button class="btn btn-lg btn-success play-x">拍照</button>
 		</div>

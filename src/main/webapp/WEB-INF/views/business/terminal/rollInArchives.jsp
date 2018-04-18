@@ -137,7 +137,7 @@
 		</div>
 		<div class="row-fluid span8">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="${ctx}/rollin/tblRollIn/form?id=${tblRollIn.id}">查阅档案<shiro:hasPermission name="rollin:tblRollIn:edit">${not empty tblRollIn.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollin:tblRollIn:edit">查看</shiro:lacksPermission></a></li>
+				<li class="active"><a href="${ctx}/rollin/tblRollIn/form?id=${tblRollIn.id}">转入档案<shiro:hasPermission name="rollin:tblRollIn:edit">${not empty tblRollIn.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollin:tblRollIn:edit">查看</shiro:lacksPermission></a></li>
 			</ul><br/>
 			<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/save" method="post" class="form-horizontal">
 				<form:hidden path="id"/>
