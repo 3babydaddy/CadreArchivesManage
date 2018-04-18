@@ -27,7 +27,7 @@
 		$(".header-div").height($(".header").height() + "px");
 		$(".header-div").css("display", "table-cell");
 		$(".header-div").css("vertical-align", "middle");
-		debugger;
+		//debugger;
 		$(".hr-login-bottom").find("p").css("position","relative");
 		$(".hr-login-bottom").find("p").css("top","30%");
 		

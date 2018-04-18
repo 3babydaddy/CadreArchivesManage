@@ -152,6 +152,30 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 		}
 	}
 	
+	@Transactional(readOnly = false)
+	public void censorship(TblConsultArchives tblConsultArchives, String idStr) {
+		if(StringUtils.isNotBlank(idStr)){
+			String[] idArray = idStr.split(",");
+			for(int i = 0; i < idArray.length; i++){
+				tblConsultArchives = super.get(idArray[i]);
+				tblConsultArchives.setStatus("2");
+				super.save(tblConsultArchives);
+			}
+		}
+	}
+	
+	@Transactional(readOnly = false)
+	public void auditData(TblConsultArchives tblConsultArchives, String idStr, String status) {
+		if(StringUtils.isNotBlank(idStr)){
+			String[] idArray = idStr.split(",");
+			for(int i = 0; i < idArray.length; i++){
+				tblConsultArchives = super.get(idArray[i]);
+				tblConsultArchives.setStatus(status);
+				super.save(tblConsultArchives);
+			}
+		}
+	}
+	
 	public Page<TblConsultArchives> queryCountPage(Page<TblConsultArchives> page, TblConsultArchives tblConsultArchives) {
 		tblConsultArchives.setPage(page);
 		List<TblConsultArchives> archList  = tblConsultArchivesDao.queryCountList(tblConsultArchives);

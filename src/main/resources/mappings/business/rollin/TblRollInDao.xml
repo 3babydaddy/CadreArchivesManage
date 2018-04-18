@@ -13,6 +13,7 @@
 		a.before_unit_tel AS "beforeUnitTel",
 		a.save_unit AS "saveUnit",
 		a.roll_approve_attachment AS "rollApproveAttachment",
+		a.status AS "status",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -59,11 +60,8 @@
 			<if test="beforeUnit != null and beforeUnit != ''">
 				AND a.before_unit like concat('%', #{beforeUnit}, '%')
 			</if>
-			<if test="character != null and character != ''">
-				AND a.character like concat('%', #{character}, '%')
-			</if>
-			<if test="number != null and number != ''">
-				AND a.number like concat('%', #{number}, '%')
+			<if test="batchNum != null and batchNum != ''">
+				AND (concat(a.character, a.number) like concat('%', replace(REPLACE(#{batchNum}, '字', ''), '号', ''), '%'))
 			</if>
 		</where>
 		<choose>
@@ -145,6 +143,7 @@
 			before_unit_tel = #{beforeUnitTel},
 			save_unit = #{saveUnit},
 			roll_approve_attachment = #{rollApproveAttachment},
+			status = #{status},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}

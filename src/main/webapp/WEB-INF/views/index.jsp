@@ -179,8 +179,12 @@ ul li {
 	margin-top: 25px;
 	white-space: nowrap;
 }
+	
 </style>
-
+<link href="${ctxStatic}/messenger/messenger.css" type="text/css" rel="stylesheet" />
+<link href="${ctxStatic}/messenger/messenger-theme-future.css" type="text/css" rel="stylesheet" />
+<script src="${ctxStatic}/messenger/messenger.js" type="text/javascript"></script>
+<script src="${ctxStatic}/messenger/messenger-theme-future.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function() {
 		//ajax缓存清除
@@ -282,7 +286,33 @@ ul li {
 	        });
 		})
 	});
+	
+	function alertTip(msg, URL){
+		//debugger;
+		setTimeout(function(){
+			Messenger().post({
+			  message:'<a href="${ctx}'+URL+'" msgTitle="'+msg+'" target="mainFrame" >'+msg+'</a>',
+			  type: 'error',
+			  showCloseButton: true,
+			  hideAfter:true
+			})
+		},1000);
+	}
 </script>
+<style type="text/css">
+	ul.messenger-theme-future .messenger-message a{color:#000000 !important}
+	ul.messenger-theme-future .messenger-message{text-shadow:0px 0px !important}
+	ul.messenger.messenger-fixed.messenger-on-bottom{
+		bottom: 39px !important;
+	}
+	ul.messenger.messenger-fixed.messenger-on-top.messenger-on-right, 
+	ul.messenger.messenger-fixed.messenger-on-bottom.messenger-on-right{
+		right: 1px !important;
+	}
+	ul.messenger-theme-future{
+		background: #81cbf2;
+	}
+</style>
 </head>
 <body>
 	<div id="main">
@@ -321,6 +351,7 @@ ul li {
 
 
 		</div>
+
 		<div class="container-fluid">
 			<div id="content" class="row-fluid">
 				<div id="left"></div>

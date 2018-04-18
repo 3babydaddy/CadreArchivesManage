@@ -30,12 +30,14 @@ public class TblRollIn extends DataEntity<TblRollIn> {
 	private String beforeUnitTel;		// 原存档单位电话
 	private String saveUnit;		// 现存档单位
 	private String rollApproveAttachment;		// 转递单附件
+	private String status;		// 业务状态
 	private List<TblRollInPersons> tblRollInPersonsList = Lists.newArrayList();		// 子表列表
 	
 	private Date startRollInTime;
 	private Date endRollInTime;
 	private String beforeUnitName;
 	private String saveUnitName;
+	private String batchNum; //批次号
 	
 	public TblRollIn() {
 		super();
@@ -124,6 +126,14 @@ public class TblRollIn extends DataEntity<TblRollIn> {
 		this.rollApproveAttachment = rollApproveAttachment;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public List<TblRollInPersons> getTblRollInPersonsList() {
 		return tblRollInPersonsList;
 	}
@@ -162,5 +172,13 @@ public class TblRollIn extends DataEntity<TblRollIn> {
 
 	public void setSaveUnitName(String saveUnitName) {
 		this.saveUnitName = saveUnitName;
+	}
+
+	public String getBatchNum() {
+		return batchNum;
+	}
+
+	public void setBatchNum(String batchNum) {
+		this.batchNum = batchNum;
 	}
 }

@@ -87,6 +87,30 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 		}
 	}
 	
+	@Transactional(readOnly = false)
+	public void censorship(TblScatteredFiles tblScatteredFiles, String idStr) {
+		if(StringUtils.isNotBlank(idStr)){
+			String[] idArray = idStr.split(",");
+			for(int i = 0; i < idArray.length; i++){
+				tblScatteredFiles = super.get(idArray[i]);
+				tblScatteredFiles.setStatus("2");
+				super.save(tblScatteredFiles);
+			}
+		}
+	}
+	
+	@Transactional(readOnly = false)
+	public void auditData(TblScatteredFiles tblScatteredFiles, String idStr, String status) {
+		if(StringUtils.isNotBlank(idStr)){
+			String[] idArray = idStr.split(",");
+			for(int i = 0; i < idArray.length; i++){
+				tblScatteredFiles = super.get(idArray[i]);
+				tblScatteredFiles.setStatus(status);
+				super.save(tblScatteredFiles);
+			}
+		}
+	}
+	
 	public Page<TblHandOverFiles> findPersonPage(Page<TblHandOverFiles> page, TblHandOverFiles tblHandOverFiles) {
 		tblHandOverFiles.setPage(page);
 		page.setList(tblHandOverFilesDao.findList(tblHandOverFiles));

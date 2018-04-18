@@ -37,10 +37,11 @@
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
+				var mainId = rows[i].value.slice(0, rows[i].value.indexOf(','));
 				if(idStr == ""){
-					idStr = rows[i].value; 
+					idStr = mainId; 
 				}else{
-					idStr += "," + rows[i].value; 
+					idStr += "," + mainId; 
 				}
 			}
 			window.location.href = "${ctx}/rollin/tblRollIn/delete?idStr="+idStr;
@@ -52,7 +53,8 @@
 				alertx("请选择一条记录");
 				return;
 			}
-			window.location.href = "${ctx}/rollin/tblRollIn/form?id="+rows[0].value;
+			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			window.location.href = "${ctx}/rollin/tblRollIn/form?id="+mainId;
 		}
 		//回执
 		function receiptBill(){
@@ -61,7 +63,97 @@
 				alertx("请选择一条记录");
 				return;
 			}
-			window.location.href = "${ctx}/order/createReceiptBill?rollInId="+rows[0].value;
+			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			window.location.href = "${ctx}/order/createReceiptBill?rollInId="+mainId;
+		}
+		
+		//送审
+		function censorship(){
+			var idStr = "";
+			var rows = getRowData();
+			if(rows.length == 0){
+				alertx("请选择记录");
+				return;
+			}
+			for(var i = 0; i < rows.length; i++){
+				var mainId = rows[i].value.slice(0, rows[i].value.indexOf(','));
+				var status = rows[i].value.slice(rows[i].value.indexOf(',')+1);
+				if(status == '1'){
+					if(idStr == ""){
+						idStr = mainId; 
+					}else{
+						idStr += "," + mainId; 
+					}
+				}else{
+					alertx('请选择未审核的数据！！！');
+					return;
+				}
+			}
+	        
+	        $.ajax({
+                type: "post",
+                url: "${ctx}/rollin/tblRollIn/censorship",
+                data: {'idStr':idStr},
+                //dataType: "json",
+                success: function (data) {
+                    if(data.flag == 'success'){
+                    	alertx(data.msg);
+                    	//提示管理员有新的数据需要审核
+            			<shiro:hasRole name="admin">
+            			 	window.parent.alertTip('转入管理有新的需要审核的数据', '/rollin/tblRollIn/list');
+            	        </shiro:hasRole>
+                        window.location.reload();
+                    }else{
+                    	alertx(data.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //alertx("error！");
+                }
+            });
+		}
+		
+		//审核借阅数据
+		function auditData(){
+			var idStr = "";
+			var status = "";
+			var rows = getRowData();
+			if(rows.length == 0){
+				alertx("请选择记录");
+				return;
+			}
+			for(var i = 0; i < rows.length; i++){
+				var mainId = rows[i].value.slice(0, rows[i].value.indexOf(','));
+				var status = rows[i].value.slice(rows[i].value.indexOf(',')+1);
+				if(status == '2'){
+					if(idStr == ""){
+						idStr = mainId; 
+					}else{
+						idStr += "," + mainId; 
+					}
+				}else{
+					alertx('请选择审核中的数据！！！');
+					return;
+				}
+			}
+			
+			top.$.jBox.open("<div style='margin: 15px 0 0 48px;'>"+
+					"<span class='jbox-icon jbox-icon-question' style='position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;'></span>"+
+								"<span>是否确定审核通过！！！</span></div>", 
+				"系统提示", 350,  126,
+			    { buttons:{"是":true,"否":false},
+					submit:function(v, h, f){
+						if(v){
+							//审核通过
+							status = "3";
+						}else{
+							//审核不通过
+							status = "1";
+						}
+						window.location.href = "${ctx}/rollin/tblRollIn/auditData?idStr="+idStr+"&status="+status;
+					}
+			    }
+			);
 		}
 		
 		function getRowData(){
@@ -114,8 +206,7 @@
 				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>批次号：</label>
-				<form:input path="character" htmlEscape="false" style="width:82px;" maxlength="11" />字
-				<form:input path="number" htmlEscape="false" style="width:82px;" maxlength="11" />号
+				<form:input path="batchNum" htmlEscape="false" maxlength="64" class="input-medium" />
 			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -128,9 +219,15 @@
 	<div id="toolbar">
 	    <ul class="nav nav-pills">
 	        <li><a <a href="${ctx}/rollin/tblRollIn/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
-	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
+	        <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a onclick="receiptBill();"><i class="icon-share-alt"></i>&nbsp;回执</a></li>
+	        <shiro:hasAnyRoles  name="admin,user">
+	        	<li><a onclick="censorship();"><i class=" icon-share"></i>&nbsp;送审</a></li>
+	        </shiro:hasAnyRoles >
+	        <shiro:hasRole name="admin">
+	        	<li><a onclick="auditData();"><i class=" icon-legal"></i>&nbsp;审核</a></li>
+	        </shiro:hasRole>
 	    </ul>
 	</div>
 	
@@ -145,6 +242,7 @@
 				<th>接收人</th>
 				<th>录入时间</th>
 				<th>录入者</th>
+				<th>状态</th>
 				<shiro:hasPermission name="rollins:tblRollIn:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -152,7 +250,7 @@
 		<c:forEach items="${page.list}" var="tblRollIn">
 			<tr>
 				<td>
-					<input type="checkbox" value="${tblRollIn.id}" />
+					<input type="checkbox" value="${tblRollIn.id},${tblRollIn.status}" />
 				</td>
 				<td><a href="${ctx}/rollin/tblRollIn/personlist?mainId=${tblRollIn.id}&batchNum=${tblRollIn.character}zi${tblRollIn.number}hao">
 					${tblRollIn.character}字${tblRollIn.number}号</a>
@@ -171,6 +269,9 @@
 				</td>
 				<td>
 					${tblRollIn.createBy.id}
+				</td>
+				<td>
+					${fns:getDictLabel(tblRollIn.status, 'audit_status', '')}
 				</td>
 				<shiro:hasPermission name="rollins:tblRollIn:edit"><td>
     				<a href="${ctx}/rollin/tblRollIn/form?id=${tblRollIn.id}">修改</a>

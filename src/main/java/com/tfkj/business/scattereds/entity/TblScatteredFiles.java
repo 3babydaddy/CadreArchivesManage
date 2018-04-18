@@ -25,6 +25,7 @@ public class TblScatteredFiles extends DataEntity<TblScatteredFiles> {
 	private Date handOverDate;		// 移交时间
 	private String operator;		// 经手人
 	private String recipient;		// 接收人
+	private String status;		// 业务状态
 	private List<TblHandOverFiles> tblHandOverFilesList = Lists.newArrayList();		// 子表列表
 	
 	private Date startHandOverDate;
@@ -79,6 +80,14 @@ public class TblScatteredFiles extends DataEntity<TblScatteredFiles> {
 		this.recipient = recipient;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public List<TblHandOverFiles> getTblHandOverFilesList() {
 		return tblHandOverFilesList;
 	}

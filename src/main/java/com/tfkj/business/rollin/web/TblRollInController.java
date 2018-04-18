@@ -3,7 +3,9 @@
  */
 package com.tfkj.business.rollin.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfkj.business.rollin.entity.TblRollIn;
@@ -78,6 +81,44 @@ public class TblRollInController extends BaseController {
 		addMessage(redirectAttributes, "删除转入管理人员成功");
 		return "redirect:"+Global.getAdminPath()+"/rollin/tblRollIn/?repage";
 	}
+	
+	/**
+	 * 送审，更改转入数据的状态
+	 * @param tblRollIn
+	 * @param idStr
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "censorship")
+	@ResponseBody
+	public Map<String, Object> censorship(TblRollIn tblRollIn, String idStr, RedirectAttributes redirectAttributes) {
+		Map<String, Object> resultMap = new HashMap<>();
+		try{
+			tblRollInService.censorship(tblRollIn, idStr);
+			resultMap.put("flag", "success");
+			resultMap.put("msg", "送审转入记录成功");
+		}catch(Exception e){
+			e.printStackTrace();
+			resultMap.put("flag", "fail");
+			resultMap.put("msg", "送审转入记录失败");
+		}
+		return resultMap;
+	}
+	/**
+	 * 审核转入数据
+	 * @param tblRollIn
+	 * @param idStr
+	 * @param status
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "auditData")
+	public String auditData(TblRollIn tblRollIn, String idStr, String status, RedirectAttributes redirectAttributes) {
+		tblRollInService.auditData(tblRollIn, idStr, status);
+		addMessage(redirectAttributes, "审核转入记录成功");
+		return "redirect:"+Global.getAdminPath()+"/rollin/tblRollIn/?repage";
+	}
+	
 	/**
 	 * 一个批次的转入的人员列表
 	 * @param per

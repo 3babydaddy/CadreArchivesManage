@@ -8,6 +8,7 @@
 		a.hand_over_date AS "handOverDate",
 		a.operator AS "operator",
 		a.recipient AS "recipient",
+		a.status AS "status",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -128,6 +129,7 @@
 			hand_over_date = #{handOverDate},
 			operator = #{operator},
 			recipient = #{recipient},
+			status = #{status},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}
