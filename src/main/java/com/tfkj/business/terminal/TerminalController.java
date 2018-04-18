@@ -20,6 +20,8 @@ import com.tfkj.business.attachment.entity.TblCommonAttachment;
 import com.tfkj.business.attachment.service.TblCommonAttachmentService;
 import com.tfkj.business.borrow.entity.TblBorrowArchives;
 import com.tfkj.business.consult.entity.TblConsultArchives;
+import com.tfkj.business.rollin.entity.TblRollIn;
+import com.tfkj.business.scattereds.entity.TblScatteredFiles;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.utils.FileUtils;
 import com.tfkj.framework.core.utils.IdGen;
@@ -61,6 +63,28 @@ public class TerminalController {
 		
 		model.addAttribute("tblBorrowArchives", tblBorrowArchives);
 		return "business/terminal/borrowArchives";
+	}
+	/**
+	 * 转入档案录入终端界面
+	 * 
+	 * @return 页面资源路径
+	 */
+	@RequestMapping("rollInArchives")
+	public String rollInArchives(TblRollIn tblRollIn, Model model) {
+		
+		model.addAttribute("tblRollIn", tblRollIn);
+		return "business/terminal/rollInArchives";
+	}
+	/**
+	 * 零散材料录入终端界面
+	 * 
+	 * @return 页面资源路径
+	 */
+	@RequestMapping("scatteredFiles")
+	public String scatteredFiles(TblScatteredFiles tblScatteredFiles, Model model) {
+		
+		model.addAttribute("tblScatteredFiles", tblScatteredFiles);
+		return "business/terminal/scatteredFiles";
 	}
 	/**
 	 * 根据传入图片base64 生成图片

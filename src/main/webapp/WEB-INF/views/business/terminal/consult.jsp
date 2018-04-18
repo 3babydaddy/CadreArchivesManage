@@ -98,7 +98,8 @@
 		
 		/* 返回按钮事件 */
 		function goBack(){
-			this.parent.$(".zhuye")[0].click();
+			//this.parent.$(".zhuye")[0].click();
+			window.history.back();
 		}
 		
 	</script>

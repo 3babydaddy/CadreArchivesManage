@@ -29,7 +29,7 @@
 				$.jBox("get:${ctx}/terminal/camera", {  
 				    title: "图像采集",  
 				    width: 400,  
-				    height: 350,
+				    height: 380,
 				    showClose: false,
 				    icon: 'info',
 				    showSpeed:'fast',
@@ -97,7 +97,8 @@
 		
 		/* 返回按钮事件 */
 		function goBack(){
-			this.parent.$(".zhuye")[0].click();
+			//this.parent.$(".zhuye")[0].click();
+			window.history.back();
 		}
 		
 	</script>

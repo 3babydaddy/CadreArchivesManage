@@ -175,8 +175,8 @@ iframe {
 	</div>
 	<div class="row-fluid">
 		<!-- <button class="btn btn-info play span3 offset3">上传附件</button> -->
-		<div class="span2 offset3">
-			<button class="btn  btn-success play-x">拍照</button>
+		<div class="span2 offset4">
+			<button class="btn btn-lg btn-success play-x">拍照</button>
 		</div>
 		<div id="inputDiv"class="span4">
 			<a href="javascript:;" class="file">选择文件
