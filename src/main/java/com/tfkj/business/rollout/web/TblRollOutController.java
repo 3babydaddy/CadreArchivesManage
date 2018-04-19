@@ -3,7 +3,9 @@
  */
 package com.tfkj.business.rollout.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,14 +16,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfkj.business.rollout.entity.TblRollOut;
 import com.tfkj.business.rollout.entity.TblRollOutPersons;
+import com.tfkj.business.rollout.entity.TblRollOutPersonsExport;
 import com.tfkj.business.rollout.service.TblRollOutService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExcelUtils;
 import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.web.BaseController;
 
@@ -118,17 +123,43 @@ public class TblRollOutController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = {"export"})
-	public String queryCountList(TblRollOutPersons tblRollOutPersons, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
-		try {
-            String fileName = "转出数据信息统计.xlsx";
-    		List<TblRollOutPersons> list = tblRollOutService.queryCountList(tblRollOutPersons); 
-    		list.add(new TblRollOutPersons());
-    		new ExportExcel("转出管理-数据统计", TblRollOutPersons.class, 2).setDataList(list).write(response, fileName).dispose();
-    		return null;
+	@ResponseBody
+	public Map<String, Object> queryCountList(TblRollOutPersons tblRollOutPersons, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		
+		Map<String, Object> resultMap = new HashMap<>();
+    	try {
+    		String fileName = "consultArchives.xlsx";
+    		ExportExcel export = new ExportExcel();
+    		String realPath = export.createFilePath(fileName);
+    		
+    		List<TblRollOutPersonsExport> list = tblRollOutService.queryCountList(tblRollOutPersons);  
+			ExcelUtils<TblRollOutPersonsExport> excelUtils = new ExcelUtils<TblRollOutPersonsExport>(TblRollOutPersonsExport.class);
+			excelUtils.writeToFile(list, realPath);
+			resultMap.put("flag", "success");
+			resultMap.put("filePath", realPath);
 		} catch (Exception e) {
-			addMessage(redirectAttributes, "导出转出管理-数据统计失败！失败信息："+e.getMessage());
+			addMessage(redirectAttributes, "导出查阅管理-数据统计失败！失败信息："+e.getMessage());
+			resultMap.put("flag", "fail");
 		}
-		return "redirect:"+Global.getAdminPath()+"/rollout/tblRollOut/?repage";
+    	return resultMap;
 	}
+	
+	
+	 /**
+		 * 转出人员查询统计数据导出
+		 * @param response
+		 * @param redirectAttributes
+		 * @return
+		 */
+	   @RequestMapping(value = "doDown")
+	   public void doDown(String filePath, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		   try{
+				filePath = java.net.URLDecoder.decode(filePath,"UTF-8");
+				ExportExcel export = new ExportExcel();
+				export.doDown(filePath, "转出人员数据信息统计.xlsx", request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+	   }
 	
 }

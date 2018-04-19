@@ -66,9 +66,11 @@
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
 			window.location.href = "${ctx}/borrow/tblGiveBack/form?mainId="+mainId;
 		}
-		//送审
-		function censorship(){
+		
+		//审核借阅数据
+		function auditData(){
 			var idStr = "";
+			var status = "";
 			var rows = getRowData();
 			if(rows.length == 0){
 				alertx("请选择记录");
@@ -88,67 +90,17 @@
 					return;
 				}
 			}
-	        
-	        $.ajax({
-                type: "post",
-                url: "${ctx}/borrow/tblBorrowArchives/censorship",
-                data: {'idStr':idStr},
-                //dataType: "json",
-                success: function (data) {
-                    if(data.flag == 'success'){
-                    	alertx(data.msg);
-                    	//提示管理员有新的数据需要审核
-            			<shiro:hasRole name="admin">
-            			 	window.parent.alertTip('借阅管理有新的需要审核的数据', '/borrow/tblBorrowArchives/list');
-            	        </shiro:hasRole>
-                        window.location.reload();
-                    }else{
-                    	alertx(data.msg);
-                    }
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    //alertx("error！");
-                }
-            });
-		}
-		//审核借阅数据
-		function auditData(){
-			var idStr = "";
-			var status = "";
-			var rows = getRowData();
-			if(rows.length == 0){
-				alertx("请选择记录");
-				return;
-			}
-			for(var i = 0; i < rows.length; i++){
-				var mainId = rows[i].value.slice(0, rows[i].value.indexOf(','));
-				var status = rows[i].value.slice(rows[i].value.indexOf(',')+1);
-				if(status == '2'){
-					if(idStr == ""){
-						idStr = mainId; 
-					}else{
-						idStr += "," + mainId; 
-					}
-				}else{
-					alertx("请选择审核中的数据！！！");
-					return;
-				}
-			}
 			
-			top.$.jBox.open("<div style='margin: 15px 0 0 48px;'>"+
+			top.$.jBox.open("<div style='margin: 12px 0 0 48px;'>"+
 					"<span class='jbox-icon jbox-icon-question' style='position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;'></span>"+
-								"<span>是否确定审核通过！！！</span></div>", 
-				"系统提示", 350,  126,
-			    { buttons:{"是":true,"否":false},
+								"<span>请确定是否审核通过！！！</span></div>", "提示", 350,  126,
+			    { buttons:{"确定":true,"取消":false},
 					submit:function(v, h, f){
 						if(v){
 							//审核通过
 							status = "3";
-						}else{
-							//审核不通过
-							status = "1";
+							window.location.href = "${ctx}/borrow/tblBorrowArchives/auditData?idStr="+idStr+"&status="+status;
 						}
-						window.location.href = "${ctx}/borrow/tblBorrowArchives/auditData?idStr="+idStr+"&status="+status;
 					}
 			    }
 			);
@@ -182,7 +134,6 @@
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#">借阅管理列表</a></li>
 	</ul>
-	<sys:message content="${message}"/>		
 	<form:form id="searchForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
@@ -235,9 +186,9 @@
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a onclick="giveBack();"><i class="icon-reply"></i>&nbsp;归还</a></li>
-	        <shiro:hasAnyRoles  name="admin,user">
+	        <%-- <shiro:hasAnyRoles  name="admin,user">
 	        	<li><a onclick="censorship();"><i class=" icon-share"></i>&nbsp;送审</a></li>
-	        </shiro:hasAnyRoles >
+	        </shiro:hasAnyRoles > --%>
 	        <shiro:hasRole name="admin">
 	        	<li><a onclick="auditData();"><i class=" icon-legal"></i>&nbsp;审核</a></li>
 	        </shiro:hasRole>

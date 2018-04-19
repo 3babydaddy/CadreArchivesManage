@@ -22,4 +22,5 @@ public interface TblBorrowPersonDao extends CrudDao<TblBorrowPerson> {
 	
 	List<TblBorrowPerson> queryPerInfoByTar(@Param("export") TblBorrowExport TblBorrowExport);
 	
+	int querySum();
 }

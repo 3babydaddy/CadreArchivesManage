@@ -30,12 +30,26 @@
 		
 		//导出数据
 		function exportData(){
+			$("#btnExport").attr("disabled", true);
 			var startBorrowDate = $("#startBorrowDate").val();
 			var endBorrowDate = $("#endBorrowDate").val();
 			var consultUnit = $("#consultUnitId").val();
 			var perStr = $("#perStr").val();
-			window.location.href = "${ctx}/consult/tblConsultArchives/export?startBorrowDate="+startBorrowDate+
-					"&endBorrowDate="+endBorrowDate+"&consultUnit="+consultUnit+"&perStr="+perStr;
+			
+			$.ajax({
+				type:'post',
+				url:'${ctx}/consult/tblConsultArchives/export',
+				data:{'startBorrowDate':startBorrowDate, 'endBorrowDate':endBorrowDate, 'consultUnit':consultUnit, 'perStr':perStr},
+				//dataType:'json',
+				success:function(result){
+					if(result.flag == 'success'){
+						$("#btnExport").attr("disabled", false);
+						window.location.href = "${ctx}/consult/tblConsultArchives/doDown?filePath="+encodeURIComponent(result.filePath);
+					}else{
+						alertx('导出失败');
+					}
+				}
+			});
 		}
 	</script>
 	<style type="text/css">
@@ -66,12 +80,12 @@
 									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect>
 			</li>
 			<li><label>查阅人：</label>
-				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:input path="perStr" htmlEscape="false" maxlength="64" style="width:190px;" class="input-medium"/>
 			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
-				<li class="btns"><input class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
+				<li class="btns"><input id="btnExport" class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
 			</div>
 			<li class="clearfix"></li>
 		</ul>

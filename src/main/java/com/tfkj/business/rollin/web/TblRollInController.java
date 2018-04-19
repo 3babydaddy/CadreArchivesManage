@@ -21,10 +21,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfkj.business.rollin.entity.TblRollIn;
 import com.tfkj.business.rollin.entity.TblRollInPersons;
+import com.tfkj.business.rollin.entity.TblRollInPersonsExport;
 import com.tfkj.business.rollin.service.TblRollInService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExcelUtils;
 import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.web.BaseController;
 
@@ -157,16 +159,42 @@ public class TblRollInController extends BaseController {
 	 * @return
 	 */
     @RequestMapping(value = "export")
-    public String exportData(TblRollInPersons tblRollInPersons, HttpServletResponse response, RedirectAttributes redirectAttributes) {
-		try {
-            String fileName = "转入数据信息统计.xlsx";
-    		List<TblRollInPersons> list = tblRollInService.queryCountList(tblRollInPersons); 
-    		list.add(new TblRollInPersons());
-    		new ExportExcel("转入管理-数据统计", TblRollInPersons.class, 2).setDataList(list).write(response, fileName).dispose();
-    		return null;
+    @ResponseBody
+    public Map<String, Object> exportData(TblRollInPersons tblRollInPersons, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		
+		Map<String, Object> resultMap = new HashMap<>();
+    	try {
+    		String fileName = "borrowArchives.xlsx";
+    		ExportExcel export = new ExportExcel();
+    		String realPath = export.createFilePath(fileName);
+    		
+    		List<TblRollInPersonsExport> list = tblRollInService.queryCountList(tblRollInPersons); 
+			ExcelUtils<TblRollInPersonsExport> excelUtils = new ExcelUtils<TblRollInPersonsExport>(TblRollInPersonsExport.class);
+			excelUtils.writeToFile(list, realPath);
+			resultMap.put("flag", "success");
+			resultMap.put("filePath", realPath);
 		} catch (Exception e) {
-			addMessage(redirectAttributes, "导出转入管理-数据统计失败！失败信息："+e.getMessage());
+			addMessage(redirectAttributes, "导出借阅管理-数据统计失败！失败信息："+e.getMessage());
+			resultMap.put("flag", "fail");
 		}
-		return "redirect:"+Global.getAdminPath()+"/rollin/tblRollIn/?repage";
+    	return resultMap;
     }
+    
+    
+    /**
+   	 * 转入人员查询统计数据导出
+   	 * @param response
+   	 * @param redirectAttributes
+   	 * @return
+   	 */
+      @RequestMapping(value = "doDown")
+      public void doDown(String filePath, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+   	   try{
+   			filePath = java.net.URLDecoder.decode(filePath,"UTF-8");
+   			ExportExcel export = new ExportExcel();
+   			export.doDown(filePath, "转入人员数据信息统计.xlsx", request, response);
+   		}catch(Exception e){
+   			e.printStackTrace();
+   		}
+      }
 }

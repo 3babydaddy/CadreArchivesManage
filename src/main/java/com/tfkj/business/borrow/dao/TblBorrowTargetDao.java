@@ -15,4 +15,6 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 @MyBatisDao
 public interface TblBorrowTargetDao extends CrudDao<TblBorrowTarget> {
 	
+	int querySum();
+	
 }

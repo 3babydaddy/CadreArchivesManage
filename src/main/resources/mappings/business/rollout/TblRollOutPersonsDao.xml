@@ -175,7 +175,7 @@
 		</choose>
 	</update>
 	
-	<select id="queryCountList" resultType="TblRollOutPersons">
+	<select id="queryCountPage" resultType="TblRollOutPersons">
 		SELECT 
 			(select label from sys_dict where id = b.save_unit and DEL_FLAG = '0') as saveUnitName,
 			b.recipient as "recipient",
@@ -214,5 +214,54 @@
 				ORDER BY a.update_date ASC
 			</otherwise>
 		</choose>
+	</select>
+	<select id="queryCountList" resultType="TblRollOutPersonsExport">
+		SELECT 
+			(select label from sys_dict where id = b.save_unit and DEL_FLAG = '0') as saveUnitName,
+			b.recipient as "recipient",
+			b.roll_out_time as "rollOutTime",
+			a.name AS "name",
+			a.duty AS "duty",
+			a.out_type AS "outType",
+			a.reason AS "reason",
+			a.files_no AS "filesNo"
+		FROM tbl_roll_out_persons a
+		<include refid="tblRollOutPersonsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="startCreateDate != null and startCreateDate != ''">
+			<![CDATA[
+				AND b.roll_out_time >= #{startCreateDate}
+			]]>
+			</if>
+			<if test="endCreateDate != null and endCreateDate != ''">
+			<![CDATA[
+				AND b.roll_out_time <= #{endCreateDate}
+			]]>
+			</if>
+			<if test="recipient != null and recipient != ''">
+			<![CDATA[
+				AND b.recipient like concat('%', #{recipient}, '%')
+			]]>
+			</if>
+			<if test="saveUnit != null and saveUnit != ''">
+			<![CDATA[
+				AND b.save_unit = #{saveUnit}
+			]]>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	<select id="querySum" resultType="java.lang.Integer">
+		select sum(files_no) from 
+			tbl_roll_out_persons
+		where main_id in (select id from tbl_roll_out where del_flag = '0') and del_flag = '0'
 	</select>
 </mapper>

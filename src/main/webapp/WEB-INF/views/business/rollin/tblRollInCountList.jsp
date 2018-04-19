@@ -29,12 +29,26 @@
 		}
 		//导出数据
 		function exportData(){
+			$("#btnExport").attr("disabled", true);
 			var startCreateDate = $("#startCreateDate").val();
 			var endCreateDate = $("#endCreateDate").val();
 			var beforeUnit = $("#beforeUnitId").val();
 			var recipient = $("#recipient").val();
-			window.location.href = "${ctx}/rollin/tblRollIn/export?startCreateDate="+startCreateDate+"&endCreateDate="+endCreateDate+
-														"&beforeUnit="+beforeUnit+"&recipient="+recipient;
+		
+			$.ajax({
+				type:'post',
+				url:'${ctx}/rollin/tblRollIn/export',
+				data:{'startCreateDate':startCreateDate, 'endCreateDate':endCreateDate, 'beforeUnit':beforeUnit, 'recipient':recipient},
+				//dataType:'json',
+				success:function(result){
+					if(result.flag == 'success'){
+						$("#btnExport").attr("disabled", false);
+						window.location.href = "${ctx}/rollin/tblRollIn/doDown?filePath="+encodeURIComponent(result.filePath);
+					}else{
+						alertx('导出失败');
+					}
+				}
+			});
 		}
 	</script>
 	<style type="text/css">
@@ -70,7 +84,7 @@
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
-				<li class="btns"><input class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
+				<li class="btns"><input id="btnExport" class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
 			</div>
 			<li class="clearfix"></li>
 		</ul>

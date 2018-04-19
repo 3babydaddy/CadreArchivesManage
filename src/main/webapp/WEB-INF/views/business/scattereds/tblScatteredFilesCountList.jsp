@@ -30,13 +30,27 @@
 		
 		//导出数据
 		function exportData(){
+			$("#btnExport").attr("disabled", true);
 			var startHandOverDate = $("#startHandOverDate").val();
 			var endHandOverDate = $("#endHandOverDate").val();
 			var handOverUnit = $("#handOverUnitId").val();
 			var operator = $("#operator").val();
 			var recipient = $("#recipient").val();
-			window.location.href = "${ctx}/scattereds/tblScatteredFiles/export?startHandOverDate="+startHandOverDate+
-					"&endHandOverDate="+endHandOverDate+"&handOverUnit="+handOverUnit+"&operator="+operator+"&recipient="+recipient;
+			
+			$.ajax({
+				type:'post',
+				url:'${ctx}/scattereds/tblScatteredFiles/export',
+				data:{'startHandOverDate':startHandOverDate, 'endHandOverDate':endHandOverDate, 'handOverUnit':handOverUnit, 'operator':operator, 'recipient':recipient},
+				//dataType:'json',
+				success:function(result){
+					if(result.flag == 'success'){
+						$("#btnExport").attr("disabled", false);
+						window.location.href = "${ctx}/scattereds/tblScatteredFiles/doDown?filePath="+encodeURIComponent(result.filePath);
+					}else{
+						alertx('导出失败');
+					}
+				}
+			});
 		}
 	</script>
 	<style type="text/css">

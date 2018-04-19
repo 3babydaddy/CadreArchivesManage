@@ -15,4 +15,6 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 @MyBatisDao
 public interface TblCheckedTargetDao extends CrudDao<TblCheckedTarget> {
 	
+	int querySum();
+	
 }
