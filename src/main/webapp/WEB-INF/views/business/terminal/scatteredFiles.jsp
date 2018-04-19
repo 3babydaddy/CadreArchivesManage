@@ -23,8 +23,8 @@
 				}
 			});
 			/**调整页面自适应*/
-			var h = $(document.body).height();
-			$("#photoShowDiv").css("height",h + "px");
+			//var h = $(document.body).height();
+			//$("#photoShowDiv").css("height",h + "px");
 			$("#photoShowDiv").click(function(){
 				$.jBox("get:${ctx}/terminal/camera", {  
 				    title: "图像采集",  
@@ -125,18 +125,47 @@
 		}
 		.img-responsive{
 			vertical-align:middle;
-		}  
+		} 
+		
+		body {
+			font-family: "微软雅黑";
+			font-size:120%;
+			width: 100%;
+			height: 100%;
+		}
+		
+		.container-fluid{
+			height: 100%
+		}
+		html,#rowFluid1,#formInfo,#photoShowDiv,#inputForm,#photoShow{
+			height: 100%
+		}
+		#rowFluid3{
+			height: 80%;
+			position:relative
+		}
+		#ulDiv{
+			height: 9%;
+		}
+		.control-group{
+			height:15%;
+			
+		}
 	</style>
 </head>
 <body>
-	<div class="row-fluid">
-		<div id= "photoShowDiv" class="row-fluid span4">
+<div class="container-fluid">
+	<div class="row-fluid" id ="rowFluid1">
+		<div id= "photoShowDiv" class="span4">
 			<img id="photoShow" src="${ctxStatic}/images/quesheng.jpg" class="img-responsive center-block img-rounded" ><span></span>
 		</div>
-		<div class="row-fluid span8">
-			<ul class="nav nav-tabs">
-				<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/form?id=${tblConsultArchives.id}">零散材料<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
-			</ul><br/>
+		<div id = "formInfo" class="span8">
+			<div class="row-fluid" id="ulDiv">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/form?id=${tblConsultArchives.id}">零散材料<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
+				</ul>
+			</div>
+		<div class="row-fluid" id="rowFluid3">
 			<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
@@ -229,6 +258,8 @@
 		</div>
 	</form:form>
 		</div>
+		</div>
+	</div>
 	</div>
 </body>
 </html>
