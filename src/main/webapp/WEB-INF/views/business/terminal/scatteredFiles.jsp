@@ -151,6 +151,14 @@
 			height:15%;
 			
 		}
+		#scatteredId{
+			height:auto;
+			margin-bottom: 3%;
+		}
+		#scatteredA{
+			width:8%;
+			height:15%
+		}
 	</style>
 </head>
 <body>
@@ -197,7 +205,7 @@
 			</div>
 		</div>
 		
-			<div class="control-group">
+			<div class="control-group" id="scatteredId">
 				<label class="control-label">移交材料：</label>
 				<div class="controls">
 					<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -214,7 +222,7 @@
 						<tbody id="tblHandOverFilesList">
 						</tbody>
 						<tfoot>
-							<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+							<tr><td colspan="9"><a id = "scatteredA" href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;"  class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 						</tfoot>
 					</table>
 					<script type="text/template" id="tblHandOverFilesTpl">//<!--

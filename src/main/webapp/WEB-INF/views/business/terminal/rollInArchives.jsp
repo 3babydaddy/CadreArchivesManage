@@ -150,6 +150,10 @@
 		.control-group{
 			height:8%;
 		}
+		#aboutInfo{
+			height:auto;
+			margin-bottom: 3%;
+		}
 	</style>
 </head>
 <body>
@@ -229,7 +233,7 @@
 			</div>
 		</div>
 		
-		<div class="control-group">
+		<div class="control-group" id="aboutInfo">
 			<label class="control-label">相关信息：</label>
 			<div class="controls">
 				<table id="contentTable"  style="width:60%;" class="table table-striped table-bordered table-condensed">
@@ -242,7 +246,7 @@
 					<tbody id="tblRollInPersonsList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="12"><a href="javascript:" onclick="addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl);tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+						<tr><td colspan="12"><a href="javascript:" onclick="addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl);tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;" style="width:10%;height:20%" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblRollInPersonsTpl">

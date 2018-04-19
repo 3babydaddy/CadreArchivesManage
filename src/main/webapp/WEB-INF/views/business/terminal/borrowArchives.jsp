@@ -149,7 +149,15 @@
 		}
 		.control-group{
 			height:13%;
-			
+		}
+		#borrowP{
+			height:auto;
+			margin-top: 0%;
+		}
+		#borrowPer{
+			height:auto;
+			margin-top:3%;
+			margin-bottom: 3%;
 		}
 	</style>
 </head>
@@ -185,7 +193,7 @@
 											labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表"></sys:treeselect2>
 					</div>
 				</div>
-				<div class="control-group">
+				<div class="control-group" id="borrowP">
 						<label class="control-label">借阅对象：</label>
 						<div class="controls">
 							<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -244,7 +252,7 @@
 							</script>
 						</div>
 					</div>
-					<div class="control-group">
+					<div class="control-group" id="borrowPer">
 						<label class="control-label">借阅人员：</label>
 						<div class="controls">
 							<table id="contentTable" class="table table-striped table-bordered table-condensed">

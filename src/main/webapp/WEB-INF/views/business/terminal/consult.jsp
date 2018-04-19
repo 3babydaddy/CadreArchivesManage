@@ -150,6 +150,15 @@
 		.control-group{
 			height:13%;
 		}
+		#checkId{
+		margin-top: 0%;
+		height:auto;
+		}
+		#checkP{
+		margin-top: 3%;
+		height:auto;
+		margin-bottom:3%
+		}
 	</style>
 </head>
 <body>
@@ -182,7 +191,7 @@
 											labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect2>
 					</div>
 				</div>
-				<div class="control-group">
+				<div class="control-group" id="checkId">
 						<label class="control-label">查档对象：</label>
 						<div class="controls">
 							<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -241,7 +250,7 @@
 							</script>
 						</div>
 					</div>
-					<div class="control-group">
+					<div class="control-group" id="checkP">
 						<label class="control-label">查档人员：</label>
 						<div class="controls">
 							<table id="contentTable" class="table table-striped table-bordered table-condensed">
