@@ -67,13 +67,16 @@
 			<if test="operator != null and operator != ''">
 				AND a.operator = #{operator}
 			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.status, a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -208,8 +211,6 @@
 		SELECT 
 			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as "consultUnitName",
 			a.borrow_date as "borrowDate",
-			a.consult_unit as "consultUnit",
-			a.id as "mainId",
 			t.name as "name",
 			t.unit as "unit",
 			(select label from sys_dict where id = t.unit and DEL_FLAG = '0') as "unitName",

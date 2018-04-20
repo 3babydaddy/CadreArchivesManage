@@ -3,12 +3,16 @@
  */
 package com.tfkj.framework.core.utils.excel;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -16,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +40,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
+import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.utils.Encodes;
+import com.tfkj.framework.core.utils.IdGen;
 import com.tfkj.framework.core.utils.Reflections;
 import com.tfkj.framework.core.utils.excel.annotation.ExcelField;
 import com.tfkj.framework.system.utils.DictUtils;
@@ -79,6 +86,10 @@ public class ExportExcel {
 	 * @param title 表格标题，传“空值”，表示无标题
 	 * @param cls 实体对象，通过annotation.ExportField获取标题
 	 */
+	public ExportExcel(){
+		super();
+	}
+	
 	public ExportExcel(String title, Class<?> cls){
 		this(title, cls, 1);
 	}
@@ -446,6 +457,81 @@ public class ExportExcel {
 	public ExportExcel dispose(){
 		wb.dispose();
 		return this;
+	}
+	
+	
+	public String createFilePath(String fileName){
+		// 文件保存目录路径
+		String str = IdGen.uuid() + "";
+		String realPath = Global.getUserfilesBaseDir() + Global.USERFILES_BASE_COPY_URL + "/" + "file"+"/"+str+"/"+fileName;
+		// 判断文件夹是否存在
+		File file = new File(realPath);
+		File rootFile = file.getParentFile();//得到父文件夹
+		if(!file.exists()){
+			try {
+				rootFile.mkdirs();
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return realPath;
+	}
+	
+	/**
+	 * 防止前端多次点击导出按钮，新增此方法
+	 * @param filePath
+	 * @param fileName
+	 * @param response
+	 */
+	public void doDown(String filePath, String fileName, HttpServletRequest request, HttpServletResponse response)throws Exception{
+		File file = new File(filePath);
+        if (file.exists()) {
+        	if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {  
+        	    fileName = URLEncoder.encode(fileName, "UTF-8");  
+        	} else {  
+        		fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");  
+        	}
+    		response.reset();
+            response.setContentType("application/force-download");// 设置强制下载不打开
+            response.addHeader("Content-Disposition",
+                    "attachment;fileName="+fileName);// 设置文件名
+            byte[] buffer = new byte[1024];
+            FileInputStream fis = null;
+            BufferedInputStream bis = null;
+            try {
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+                OutputStream os = response.getOutputStream();
+                int i = bis.read(buffer);
+                while (i != -1) {
+                    os.write(buffer, 0, i);
+                    i = bis.read(buffer);
+                }
+                os.flush();
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            } finally {
+                if (bis != null) {
+                    try {
+                        bis.close();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                file.delete();
+			}
+		}
 	}
 	
 //	/**

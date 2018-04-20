@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tfkj.business.scattereds.dao.TblHandOverFilesDao;
 import com.tfkj.business.scattereds.dao.TblScatteredFilesDao;
 import com.tfkj.business.scattereds.entity.TblHandOverFiles;
+import com.tfkj.business.scattereds.entity.TblHandOverFilesExport;
 import com.tfkj.business.scattereds.entity.TblScatteredFiles;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
@@ -139,13 +140,9 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 		tblScatteredFiles.setPage(page);
 		//把满足移交人员数据中的mainId作为条件
 		List<TblScatteredFiles> scatteredList = tblScatteredFilesDao.findCountList(tblScatteredFiles);
-		//移交总人数
-		int handOversNum = 0;
-		//移交总材料数
-		long filesNum = 0;
 		for(int j = 0; j < scatteredList.size(); j++){
 			TblScatteredFiles info = scatteredList.get(j);
-			info.setXh((scatteredList.size()-j)+"");
+			info.setXh((page.getPageNo()-1)*30+(scatteredList.size()-j)+"");
 			//移交人员字符串
 			String handOverStr = "";
 			//移交人数
@@ -164,17 +161,23 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 					handOverNum++;
 				}
 			}
-			handOversNum += handOverNum;
-			filesNum += fileNum;
 			info.setHandOverStr(handOverStr);
 			info.setHandOverNum(handOverNum+"");
 			info.setFileNum(fileNum+"");
 		}
+		String[] numArray = tblHandOverFilesDao.querySum().split(",");
+		//移交总人数
+		String handOversNum = numArray[0];
+		//移交总材料数
+		String filesNum = "0";
+		if((!"0".equals(handOversNum)) && (numArray.length > 1)){
+			filesNum = numArray[1];
+		}
 		//新增合计数据
 		TblScatteredFiles scatteredFiles = new TblScatteredFiles();
 		scatteredFiles.setXh("合计");
-		scatteredFiles.setHandOverNum(handOversNum+"");
-		scatteredFiles.setFileNum(filesNum+"");
+		scatteredFiles.setHandOverNum(handOversNum);
+		scatteredFiles.setFileNum(filesNum);
 		scatteredList.add(scatteredFiles);
 		
 		Collections.reverse(scatteredList);  
@@ -182,7 +185,7 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 		return page;
 	}
 	
-	public List<TblHandOverFiles> findCountList(TblScatteredFiles tblScatteredFiles) {
+	public List<TblHandOverFilesExport> findCountList(TblScatteredFiles tblScatteredFiles) {
 		
 		//如果有移交人的条件
 		TblHandOverFiles handOver = new TblHandOverFiles();
@@ -195,7 +198,7 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 		//把满足移交人员数据中的mainId作为条件
 		List<TblScatteredFiles> scatteredList = tblScatteredFilesDao.findCountList(tblScatteredFiles);
 		//根据零散材料主表id查询移交人员
-		List<TblHandOverFiles> hoList = tblHandOverFilesDao.getHandOverList(scatteredList);
+		List<TblHandOverFilesExport> hoList = tblHandOverFilesDao.getHandOverList(scatteredList);
 		for(int i = 0; i < hoList.size(); i++){
 			hoList.get(i).setXh((i+1)+"");
 		}

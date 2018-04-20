@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.tfkj.business.scattereds.entity.TblHandOverFiles;
+import com.tfkj.business.scattereds.entity.TblHandOverFilesExport;
 import com.tfkj.business.scattereds.entity.TblScatteredFiles;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
@@ -22,6 +23,8 @@ public interface TblHandOverFilesDao extends CrudDao<TblHandOverFiles> {
 	
 	List<TblHandOverFiles> queryHandOverList(TblHandOverFiles handOver);
 	
-	List<TblHandOverFiles> getHandOverList(@Param("scatteredList") List<TblScatteredFiles> scatteredList);
+	List<TblHandOverFilesExport> getHandOverList(@Param("scatteredList") List<TblScatteredFiles> scatteredList);
+	
+	String querySum();
 	
 }

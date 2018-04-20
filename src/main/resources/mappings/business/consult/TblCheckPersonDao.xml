@@ -161,4 +161,9 @@
 			)
 		</where>
 	</select>
+	<select id="querySum" resultType="java.lang.Integer">
+		select count(*) from 
+			tbl_check_person
+		where main_id in (select id from tbl_consult_archives where del_flag = '0') and del_flag = '0'
+	</select>
 </mapper>

@@ -25,6 +25,7 @@ import com.tfkj.business.consult.service.TblConsultArchivesService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExcelUtils;
 import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.web.BaseController;
 
@@ -152,16 +153,42 @@ public class TblConsultArchivesController extends BaseController {
 	 * @return
 	 */
     @RequestMapping(value = "export")
-    public String exportData(TblConsultArchives tblConsultArchives, HttpServletResponse response, RedirectAttributes redirectAttributes) {
-		try {
-            String fileName = "查阅人员数据信息统计.xlsx";
+    @ResponseBody
+    public Map<String, Object> exportData(TblConsultArchives tblConsultArchives, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		Map<String, Object> resultMap = new HashMap<>();
+    	try {
+    		String fileName = "consultArchives.xlsx";
+    		ExportExcel export = new ExportExcel();
+    		String realPath = export.createFilePath(fileName);
+    		
     		List<TblConsultExport> list = tblConsultArchivesService.queryCountList(tblConsultArchives); 
-    		list.add(new TblConsultExport());
-    		new ExportExcel("查阅管理-数据统计", TblConsultExport.class, 2).setDataList(list).write(response, fileName).dispose();
-    		return null;
+			ExcelUtils<TblConsultExport> excelUtils = new ExcelUtils<TblConsultExport>(TblConsultExport.class);
+			excelUtils.writeToFile(list, realPath);
+			resultMap.put("flag", "success");
+			resultMap.put("filePath", realPath);
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出查阅管理-数据统计失败！失败信息："+e.getMessage());
+			resultMap.put("flag", "fail");
 		}
-		return "redirect:"+Global.getAdminPath()+"/consult/tblConsultArchives/querycountlist?repage";
+    	return resultMap;
     }
+    
+	 /**
+	 * 查阅人员查询统计数据导出
+	 * @param response
+	 * @param redirectAttributes
+	 * @return
+	 */
+   @RequestMapping(value = "doDown")
+   public void doDown(String filePath, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	   try{
+			filePath = java.net.URLDecoder.decode(filePath,"UTF-8");
+			ExportExcel export = new ExportExcel();
+			export.doDown(filePath, "查阅人员数据信息统计.xlsx", request, response);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+   }
+		
+   
 }

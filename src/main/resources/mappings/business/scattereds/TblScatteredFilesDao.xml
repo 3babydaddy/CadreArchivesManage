@@ -65,13 +65,18 @@
 					<if test="dbName == 'mssql'">'%'+#{recipient}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{recipient},'%')</if>
 			</if>
+			<if test="status != null and status != ''">
+			<![CDATA[
+				AND a.status = #{status}
+			]]>	
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.status, a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>

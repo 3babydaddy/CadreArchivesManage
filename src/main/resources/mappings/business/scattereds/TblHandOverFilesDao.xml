@@ -153,9 +153,11 @@
 		GROUP BY a.name, a.original_no
 	</select>
 	
-	<select id="getHandOverList" resultType="TblHandOverFiles">
+	<select id="getHandOverList" resultType="TblHandOverFilesExport">
 		SELECT 
-			<include refid="tblHandOverFilesColumns"/>
+			a.name AS "name",
+			a.duty AS "duty",
+			a.original_no AS "originalNo"
 		FROM tbl_hand_over_files a
 		<where>
 			a.del_flag = '0'
@@ -167,5 +169,10 @@
 			</if>
 		</where>
 		ORDER BY a.create_date desc
+	</select>
+	<select id="querySum" resultType="java.lang.String">
+		select CONCAT(count(*), ',', sum(original_no)) from 
+			tbl_hand_over_files
+		where main_id in (select id from tbl_scattered_files where del_flag = '0') and del_flag = '0'
 	</select>
 </mapper>

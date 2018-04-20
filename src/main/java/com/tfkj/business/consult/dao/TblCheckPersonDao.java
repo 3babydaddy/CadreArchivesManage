@@ -21,5 +21,6 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 public interface TblCheckPersonDao extends CrudDao<TblCheckPerson> {
 	
 	List<TblCheckPerson> queryPerInfoByTar(@Param("export") TblConsultExport tblConsultExport);
-	
+
+	int querySum();
 }

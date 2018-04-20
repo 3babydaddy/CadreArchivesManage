@@ -6,6 +6,7 @@ package com.tfkj.business.rollin.dao;
 import java.util.List;
 
 import com.tfkj.business.rollin.entity.TblRollInPersons;
+import com.tfkj.business.rollin.entity.TblRollInPersonsExport;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 
@@ -17,6 +18,9 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 @MyBatisDao
 public interface TblRollInPersonsDao extends CrudDao<TblRollInPersons> {
 	
-	List<TblRollInPersons> queryCountList(TblRollInPersons tblRollInPersons);
+	List<TblRollInPersons> queryCountPage(TblRollInPersons tblRollInPersons);
 	
+	List<TblRollInPersonsExport> queryCountList(TblRollInPersons tblRollInPersons);
+	
+	int querySum();
 }

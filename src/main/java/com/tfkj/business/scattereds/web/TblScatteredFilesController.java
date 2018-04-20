@@ -1,6 +1,3 @@
-/**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- */
 package com.tfkj.business.scattereds.web;
 
 import java.util.HashMap;
@@ -22,11 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfkj.business.scattereds.entity.TblHandOverFiles;
+import com.tfkj.business.scattereds.entity.TblHandOverFilesExport;
 import com.tfkj.business.scattereds.entity.TblScatteredFiles;
 import com.tfkj.business.scattereds.service.TblScatteredFilesService;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.core.utils.excel.ExcelUtils;
 import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.utils.excel.ScatteredFileImportUtil;
 import com.tfkj.framework.core.web.BaseController;
@@ -193,17 +192,42 @@ public class TblScatteredFilesController extends BaseController {
 	 * @return
 	 */
     @RequestMapping(value = "export")
-    public String exportData(TblScatteredFiles tblScatteredFiles, HttpServletResponse response, RedirectAttributes redirectAttributes) {
-		try {
-            String fileName = "零散材料人员数据信息统计.xlsx";
-    		List<TblHandOverFiles> list = tblScatteredFilesService.findCountList(tblScatteredFiles); 
-    		list.add(new TblHandOverFiles());
-    		new ExportExcel("零散材料管理-数据统计", TblHandOverFiles.class, 2).setDataList(list).write(response, fileName).dispose();
-    		return null;
+    @ResponseBody
+    public Map<String, Object> exportData(TblScatteredFiles tblScatteredFiles, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		
+		Map<String, Object> resultMap = new HashMap<>();
+    	try {
+    		String fileName = "consultArchives.xlsx";
+    		ExportExcel export = new ExportExcel();
+    		String realPath = export.createFilePath(fileName);
+    		
+    		List<TblHandOverFilesExport> list = tblScatteredFilesService.findCountList(tblScatteredFiles);  
+			ExcelUtils<TblHandOverFilesExport> excelUtils = new ExcelUtils<TblHandOverFilesExport>(TblHandOverFilesExport.class);
+			excelUtils.writeToFile(list, realPath);
+			resultMap.put("flag", "success");
+			resultMap.put("filePath", realPath);
 		} catch (Exception e) {
-			addMessage(redirectAttributes, "导出零散材料管理-数据统计失败！失败信息："+e.getMessage());
+			addMessage(redirectAttributes, "导出查阅管理-数据统计失败！失败信息："+e.getMessage());
+			resultMap.put("flag", "fail");
 		}
-		return "redirect:"+Global.getAdminPath()+"/scattereds/querycountlist?repage";
+    	return resultMap;
     }
     
+    /**
+   	 * 移交人员查询统计数据导出
+   	 * @param response
+   	 * @param redirectAttributes
+   	 * @return
+   	 */
+      @RequestMapping(value = "doDown")
+      public void doDown(String filePath, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+   	   try{
+   			filePath = java.net.URLDecoder.decode(filePath,"UTF-8");
+   			ExportExcel export = new ExportExcel();
+   			export.doDown(filePath, "移交人员数据信息统计.xlsx", request, response);
+   		}catch(Exception e){
+   			e.printStackTrace();
+   		}
+      }
+>>>>>>> 36b84bc6a08a00472c6a7d7239a946109eb329ee
 }

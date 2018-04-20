@@ -71,6 +71,12 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		.circle {
+			height: 22px;
+			width: 46px;
+			text-align: center;
+			border-radius: 20%;
+		}
 	</style>
 </head>
 <body>
@@ -182,10 +188,12 @@
 				</td>
 				<td>
 					<c:if test="${tblSuperviseHandle.countDown <= 0}">
-						<a href="#" >督办</a>
+						<label class="circle" style="background: red;"><a href="#" style="color:white;">督办</a></label>
 					</c:if>
 					<c:if test="${tblSuperviseHandle.countDown > 0 && tblSuperviseHandle.status eq '1'}">
-						<a href="${ctx}/suphandle/tblSuperviseHandle/updateStatus?id=${tblSuperviseHandle.id}" onclick="return confirmx('该条数据确认要上交吗？', this.href)">上交</a>
+						<label class="circle" style="background: green;">
+							<a href="${ctx}/suphandle/tblSuperviseHandle/updateStatus?id=${tblSuperviseHandle.id}" onclick="return confirmx('该条数据确认要上交吗？', this.href)" style="color:white;">上交</a>
+						</label>
 					</c:if>
 				</td>
 			</tr>
