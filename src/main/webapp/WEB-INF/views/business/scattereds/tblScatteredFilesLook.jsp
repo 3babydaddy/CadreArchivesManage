@@ -6,22 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//$("#name").focus();
-			$("#inputForm").validate({
-				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
+			
 		});
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
@@ -64,7 +49,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交人员列表</a></li>
-		<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/form?id=${tblScatteredFiles.id}">零散材料移交人员编辑<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblScatteredFiles.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/look?id=${tblScatteredFiles.id}">零散材料移交人员查看<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblScatteredFiles.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<sys:message content="${message}"/>		
 	<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">
@@ -72,16 +57,14 @@
 		<div class="control-group">
 			<label class="control-label">移交单位：</label>
 			<div class="controls">
-				<sys:treeselect2 url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
-								labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表"></sys:treeselect2>
+				<form:input path="handOverUnitName" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>				
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">移交时间：</label>
 			<div class="controls">
 				<input name="handOverDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${tblScatteredFiles.handOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
+					value="<fmt:formatDate value="${tblScatteredFiles.handOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" />
 			</div>
 		</div>
 		
@@ -102,7 +85,7 @@
 						<tbody id="tblHandOverFilesList">
 						</tbody>
 						<tfoot>
-							<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;" style="width:50px;float:left;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+							<tr><td colspan="9"></td></tr>
 						</tfoot>
 					</table>
 					<script type="text/template" id="tblHandOverFilesTpl">//<!--
@@ -123,9 +106,6 @@
 							<td>
 								<input id="tblHandOverFilesList{{idx}}_originalNo" name="tblHandOverFilesList[{{idx}}].originalNo" type="text" value="{{row.originalNo}}" maxlength="11" class="input-small  digits"/>
 							</td>
-							<td class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblHandOverFilesList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
-							</td>
 						</tr>//-->
 					</script>
 					<script type="text/javascript">
@@ -144,19 +124,18 @@
 		<div class="control-group">
 			<label class="control-label">经手人：</label>
 			<div class="controls">
-				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="operator" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 				<label class="control-label">接收人：</label>
 				<div class="controls">
-					<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+					<form:input path="recipient" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
 		</div>
 		
 		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn btn-primary" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

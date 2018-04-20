@@ -56,6 +56,17 @@
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
 			window.location.href = "${ctx}/rollin/tblRollIn/form?id="+mainId;
 		}
+		
+		function lookData(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			window.location.href = "${ctx}/rollin/tblRollIn/look?id="+mainId;
+		}
+		
 		//回执
 		function receiptBill(){
 			var rows = getRowData();
@@ -104,6 +115,10 @@
 					}
 			    }
 			);
+		}
+		
+		function clickLookData(id){
+			window.location.href = "${ctx}/rollin/tblRollIn/look?id="+id;
 		}
 		
 		function getRowData(){
@@ -170,6 +185,7 @@
 	    <ul class="nav nav-pills">
 	        <li><a <a href="${ctx}/rollin/tblRollIn/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	        <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
+	        <li><a onclick="lookData();"><i class="icon-eye-open"></i>&nbsp;查看</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a onclick="receiptBill();"><i class="icon-share-alt"></i>&nbsp;回执</a></li>
 	        <%-- <shiro:hasAnyRoles  name="admin,user">
@@ -198,7 +214,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="tblRollIn">
-			<tr>
+			<tr ondblclick="clickLookData('${tblRollIn.id}');">
 				<td>
 					<input type="checkbox" value="${tblRollIn.id},${tblRollIn.status}" />
 				</td>

@@ -6,22 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//$("#name").focus();
-			$("#inputForm").validate({
-				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
+			
 		});
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
@@ -39,32 +24,12 @@
 				}
 			});
 		}
-		function delRow(obj, prefix){
-			var id = $(prefix+"_id");
-			var delFlag = $(prefix+"_delFlag");
-			if (id.val() == ""){
-				$(obj).parent().parent().next().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().remove();
-				$(obj).parent().parent().next().next().remove();
-				$(obj).parent().parent().next().remove();
-				$(obj).parent().parent().remove();
-			}else if(delFlag.val() == "0"){
-				delFlag.val("1");
-				$(obj).html("&divide;").attr("title", "撤销删除");
-				//$(obj).parent().parent().addClass("error");
-			}else if(delFlag.val() == "1"){
-				delFlag.val("0");
-				$(obj).html("&times;").attr("title", "删除");
-				$(obj).parent().parent().removeClass("error");
-			}
-		}
 	</script>
 </head>
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/rollin/tblRollIn/">转入管理人员列表</a></li>
-		<li class="active"><a href="${ctx}/rollin/tblRollIn/form?id=${tblRollIn.id}">转入管理人员编辑<shiro:hasPermission name="rollins:tblRollIn:edit">${not empty tblRollIn.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollins:tblRollIn:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/rollin/tblRollIn/look?id=${tblRollIn.id}">转入管理人员查看<shiro:hasPermission name="rollins:tblRollIn:edit">${not empty tblRollIn.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollins:tblRollIn:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -73,11 +38,11 @@
 			<label class="control-label">批次：</label>
 			<div class="controls">
 				<div  style="float:left;">
-					<form:input path="character" htmlEscape="false" style="width:105px;" maxlength="11" />字
+					<form:input path="character" htmlEscape="false" readonly="true" style="width:105px;" maxlength="11" />字
 				</div>
 				
 				<div  style="float:left;">
-					<form:input path="number" htmlEscape="false" style="width:105px;margin-left:10px;" maxlength="11" />号
+					<form:input path="number" htmlEscape="false" readonly="true" style="width:105px;margin-left:10px;" maxlength="11" />号
 				</div>
 			</div>
 		</div>
@@ -85,46 +50,45 @@
 			<label class="control-label">转入时间：</label>
 			<div class="controls">
 				<input name="rollInTime" type="text" readonly="readonly" maxlength="20" style="width:268px;" class="input-medium Wdate "
-					value="<fmt:formatDate value="${tblRollIn.rollInTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
+					value="<fmt:formatDate value="${tblRollIn.rollInTime}" pattern="yyyy-MM-dd HH:mm:ss"/>" />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">经办人：</label>
 			<div class="controls">
-				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="operator" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">接收人：</label>
 			<div class="controls">
-				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="recipient" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">原存档单位：</label>
 			<div class="controls">
-				<sys:treeselect2 id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollIn.beforeUnit}" 
-									labelName="beforeUnitName" labelValue="${tblRollIn.beforeUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect2>
+				<form:input path="beforeUnitName" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">原存档单位电话：</label>
 			<div class="controls">
-				<form:input path="beforeUnitTel" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+				<form:input path="beforeUnitTel" htmlEscape="false" readonly="true" maxlength="11" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">现存档单位：</label>
 			<div class="controls">
-				<sys:treeselect2 id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollIn.saveUnit}" 
-									labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect2>
+				<form:input path="saveUnitName"  htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">转递单附件：</label>
 			<div class="controls">
-				<sys:upFIle input="rollApproveAttachment"  type="files"  name="rollApproveAttachment"  value="${tblRollIn.rollApproveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				<c:if test="${not empty tblRollIn.rollApproveAttachment}">
+					<sys:upFIle input="rollApproveAttachment"  type="files"  name="rollApproveAttachment"  value="${tblRollIn.rollApproveAttachment}"  uploadPath="/file" readonly="true" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				</c:if>
 			</div>
 		</div>
 		
@@ -141,7 +105,7 @@
 					<tbody id="tblRollInPersonsList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="12"><a href="javascript:" onclick="addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl);tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+						<tr><td colspan="12"></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblRollInPersonsTpl">
@@ -154,9 +118,6 @@
 							<td style="text-align:right;width:120px;"><label>姓名：</label></td>
 							<td>
 								<input id="tblRollInPersonsList{{idx}}_name" name="tblRollInPersonsList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
-							</td>
-							<td rowspan="6" class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblRollInPersonsList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
 							</td>
 						</tr><tr>
 							<td colspan="2"><label>正本：</label> 	
@@ -200,7 +161,6 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn btn-primary" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

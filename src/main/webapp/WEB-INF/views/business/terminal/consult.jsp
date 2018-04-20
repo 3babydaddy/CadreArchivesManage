@@ -9,8 +9,8 @@
 			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
+					//loading('正在提交，请稍等...');
+					//form.submit();
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
@@ -101,6 +101,31 @@
 		function goBack(){
 			window.location.href = "${ctx}";
 		}
+		var addConsult  =  function() {
+	            $.ajax({
+	                type: "POST",//方法类型
+	                dataType: "json",//预期服务器返回的数据类型
+	                url: "${ctx}/consult/tblConsultArchives/saveTerminal",//url
+	                data: $('#inputForm').serialize(),
+	                success: function (result) {
+	                    //alert(result);
+	                    debugger;
+	                    
+	                    if(result){
+	                    	var submit = function (v, h, f) {
+	                    	    if (v == 'ok')
+	                    	    	window.location.href="${ctx}";
+	                    	    return true; //close
+	                    	};
+	                    	$.jBox.confirm("确定吗？", "提示", submit);
+	                    	
+	                    };
+	                },
+	                error : function() {
+	                    alert("异常！");
+	                }
+	            });
+	        }
 		
 	</script>
 	<style type="text/css">
@@ -175,7 +200,7 @@
 				</ul>
 			</div>
 			<div class="row-fluid" id="rowFluid3">
-			<form:form id="inputForm" modelAttribute="tblConsultArchives" action="${ctx}/consult/tblConsultArchives/save" method="post" class="form-horizontal">
+			<form:form id="inputForm" modelAttribute="tblConsultArchives" action="${ctx}/consult/tblConsultArchives/saveTerminal" method="post" class="form-horizontal">
 				<form:hidden path="id"/>
 				<div style="display:none;">
 					<sys:message content="${message}" />
@@ -359,7 +384,7 @@
 				</div> --%>
 					
 				<div class="form-actions">
-					<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
+					<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存" onclick="addConsult()"/>&nbsp;
 					<input id="btnCancel" class="btn" type="button" value="返 回" onclick="goBack()"/>
 				</div>
 			</form:form>

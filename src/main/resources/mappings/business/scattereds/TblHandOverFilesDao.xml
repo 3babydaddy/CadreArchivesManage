@@ -155,6 +155,7 @@
 	
 	<select id="getHandOverList" resultType="TblHandOverFilesExport">
 		SELECT 
+			a.main_id as "mainId",
 			a.name AS "name",
 			a.duty AS "duty",
 			a.original_no AS "originalNo"

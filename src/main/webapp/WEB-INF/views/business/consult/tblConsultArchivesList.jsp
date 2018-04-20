@@ -57,6 +57,16 @@
 			window.location.href = "${ctx}/consult/tblConsultArchives/form?id="+mainId;
 		}
 		
+		function lookData(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			window.location.href = "${ctx}/consult/tblConsultArchives/look?id="+mainId;
+		}
+		
 		/* //送审
 		function censorship(){
 			var idStr = "";
@@ -141,6 +151,10 @@
 			);
 		}
 		
+		function clickLookData(id){
+			window.location.href = "${ctx}/consult/tblConsultArchives/look?id="+id;
+		}
+		
 		function getRowData(){
 			return $("table tbody input[type='checkbox']:checked");
 		}
@@ -163,6 +177,9 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		.color-update{
+			background-color: skyblue;
+		}
 	</style>
 </head>
 <body>
@@ -172,7 +189,7 @@
 	<form:form id="searchForm" modelAttribute="tblConsultArchives" action="${ctx}/consult/tblConsultArchives/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form">
+		<ul class="ul-form" style="width:1192px;">
 			<li><label>查阅日期：</label>
 				<input name="startBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblConsultArchives.startBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -187,7 +204,7 @@
 									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect>
 			</li>
 			<li><label>何人档案：</label>
-				<form:input path="tarStr" htmlEscape="false" maxlength="64" style="width:190px;" class="input-medium"/>
+				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>查阅人：</label>
 				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>
@@ -204,6 +221,7 @@
 	    <ul class="nav nav-pills">
 	        <li><a <a href="${ctx}/consult/tblConsultArchives/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	        <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
+	        <li><a onclick="lookData();"><i class="icon-eye-open"></i>&nbsp;查看</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <%-- <shiro:hasAnyRoles  name="admin,user">
 	        	<li><a onclick="censorship();"><i class=" icon-share"></i>&nbsp;送审</a></li>
@@ -232,7 +250,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="tblConsultArchives">
-			<tr>
+			<tr ondblclick="clickLookData('${tblConsultArchives.id}');">
 				<td>
 					<input type="checkbox" value="${tblConsultArchives.id},${tblConsultArchives.status}"/>
 				</td>

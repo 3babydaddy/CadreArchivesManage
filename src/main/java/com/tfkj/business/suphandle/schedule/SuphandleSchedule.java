@@ -32,8 +32,9 @@ public class SuphandleSchedule {
 		for(TblSuperviseHandle info : superList){
 			long num = (info.getRaisedTime().getTime() - (new Date()).getTime())/nd;
 			if(num < 0){
-				info.setCountDown((long)0);
+				//info.setCountDown((long)0);
 				info.setWaringStatus("R");
+				info.setStatus("3");
 			}else if(num >= 0){
 				info.setCountDown(num);
 			}

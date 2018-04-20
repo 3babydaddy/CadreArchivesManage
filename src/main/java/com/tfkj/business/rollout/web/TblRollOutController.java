@@ -67,6 +67,12 @@ public class TblRollOutController extends BaseController {
 		model.addAttribute("tblRollOut", tblRollOut);
 		return "business/rollout/tblRollOutForm";
 	}
+	
+	@RequestMapping(value = "look")
+	public String look(TblRollOut tblRollOut, Model model) {
+		model.addAttribute("tblRollOut", tblRollOut);
+		return "business/rollout/tblRollOutLook";
+	}
 
 	@RequestMapping(value = "save")
 	public String save(TblRollOut tblRollOut, Model model, RedirectAttributes redirectAttributes) {

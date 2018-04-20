@@ -211,6 +211,7 @@
 		SELECT 
 			(select label from sys_dict where id = a.consult_unit and DEL_FLAG = '0') as "consultUnitName",
 			a.borrow_date as "borrowDate",
+			a.id as "mainId",
 			t.name as "name",
 			t.unit as "unit",
 			(select label from sys_dict where id = t.unit and DEL_FLAG = '0') as "unitName",

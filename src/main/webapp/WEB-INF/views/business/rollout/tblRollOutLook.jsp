@@ -6,23 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//$("#name").focus();
-			$("#inputForm").validate({
-				submitHandler: function(form){
-					$("#inputForm")[0].action='${ctx}/rollout/tblRollOut/save';
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
+			
 		});
 		//生成审批单
 		function createAuditBill(num){
@@ -47,35 +31,12 @@
 			});
 		}
 		
-		function delRow(obj, prefix){
-			var id = $(prefix+"_id");
-			var delFlag = $(prefix+"_delFlag");
-			if (id.val() == ""){
-				$(obj).parent().parent().next().next().next().next().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().remove();
-				$(obj).parent().parent().next().next().remove();
-				$(obj).parent().parent().next().remove();
-				$(obj).parent().parent().remove();
-			}else if(delFlag.val() == "0"){
-				delFlag.val("1");
-				$(obj).html("&divide;").attr("title", "撤销删除");
-				//$(obj).parent().parent().addClass("error");
-			}else if(delFlag.val() == "1"){
-				delFlag.val("0");
-				$(obj).html("&times;").attr("title", "删除");
-				$(obj).parent().parent().removeClass("error");
-			}
-		}
 	</script>
 </head>
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/rollout/tblRollOut/">转出管理人员列表</a></li>
-		<li class="active"><a href="${ctx}/rollout/tblRollOut/form?id=${tblRollOut.id}">转出管理人员编辑<shiro:hasPermission name="rollouts:tblRollOut:edit">${not empty tblRollOut.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollouts:tblRollOut:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/rollout/tblRollOut/look?id=${tblRollOut.id}">转出管理人员查看<shiro:hasPermission name="rollouts:tblRollOut:edit">${not empty tblRollOut.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollouts:tblRollOut:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblRollOut" action="${ctx}/rollout/tblRollOut/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -84,10 +45,10 @@
 			<label class="control-label">批次：</label>
 			<div class="controls">
 				<div  style="float:left;">
-					<form:input path="character" htmlEscape="false" style="width:105px;" maxlength="11" />字
+					<form:input path="character" htmlEscape="false" readonly="true" style="width:105px;" maxlength="11" />字
 				</div>
 				<div style="float:left;">
-					<form:input path="number" htmlEscape="false" style="width:105px;margin-left:10px;" maxlength="11" />号
+					<form:input path="number" htmlEscape="false" readonly="true" style="width:105px;margin-left:10px;" maxlength="11" />号
 				</div>
 			</div>
 		</div>
@@ -95,46 +56,43 @@
 			<label class="control-label">转出时间：</label>
 			<div class="controls">
 				<input name="rollOutTime" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${tblRollOut.rollOutTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
+					value="<fmt:formatDate value="${tblRollOut.rollOutTime}" pattern="yyyy-MM-dd HH:mm:ss"/>" />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">转出回执：</label>
 			<div class="controls">
-				<form:radiobuttons path="isReturn" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
+				<form:radiobuttons path="isReturn" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" disabled="true" class=""/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">经办人：</label>
 			<div class="controls">
-				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="operator" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">接收人：</label>
 			<div class="controls">
-				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="recipient" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">原存档单位：</label>
 			<div class="controls">
-				<sys:treeselect2 id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollOut.beforeUnit}" 
-									labelName="beforeUnitName" labelValue="${tblRollOut.beforeUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect2>
+				<form:input path="beforeUnitName" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">现存档单位：</label>
 			<div class="controls">
-				<sys:treeselect2 id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollOut.saveUnit}" 
-									labelName="saveUnitName" labelValue="${tblRollOut.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect2>
+				<form:input path="saveUnitName" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">接收单位电话：</label>
 			<div class="controls">
-				<form:input path="receiveUnitTel" htmlEscape="false" maxlength="32" class="input-xlarge "/>
+				<form:input path="receiveUnitTel" htmlEscape="false" readonly="true" maxlength="32" class="input-xlarge "/>
 			</div>
 		</div>
 		
@@ -151,7 +109,7 @@
 					<tbody id="tblRollOutPersonsList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="14"><a href="javascript:" onclick="addRow('#tblRollOutPersonsList', tblRollOutPersonsRowIdx, tblRollOutPersonsTpl);tblRollOutPersonsRowIdx = tblRollOutPersonsRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+						<tr><td colspan="14"></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblRollOutPersonsTpl">//<!--
@@ -214,7 +172,7 @@
 						</tr><tr>
 							<td style="text-align:right;"><label>审批附件：</label></td>
 							<td colspan="2">
-								<sys:upFIle input="tblRollOutPersonsList{{idx}}_approveAttachment"  type="files"  name="tblRollOutPersonsList[{{idx}}].approveAttachment"  value="{{row.approveAttachment}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+								<sys:upFIle input="tblRollOutPersonsList{{idx}}_approveAttachment"  type="files" readonly="true" name="tblRollOutPersonsList[{{idx}}].approveAttachment"  value="{{row.approveAttachment}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 							</td>
 						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
 					</tr>
@@ -232,7 +190,6 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn btn-primary" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

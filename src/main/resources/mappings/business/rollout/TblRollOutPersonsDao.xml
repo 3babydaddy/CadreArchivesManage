@@ -220,6 +220,7 @@
 			(select label from sys_dict where id = b.save_unit and DEL_FLAG = '0') as saveUnitName,
 			b.recipient as "recipient",
 			b.roll_out_time as "rollOutTime",
+			b.id as "mainId",
 			a.name AS "name",
 			a.duty AS "duty",
 			a.out_type AS "outType",

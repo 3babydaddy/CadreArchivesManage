@@ -40,6 +40,7 @@ public class TblBorrowExport extends DataEntity<TblBorrowArchives> {
 	private String borrowPerNum; //查阅人员数量
 	
 	private String unit;
+	private String mainId;
 	
 	public TblBorrowExport() {
 		super();
@@ -91,6 +92,14 @@ public class TblBorrowExport extends DataEntity<TblBorrowArchives> {
 
 	public void setBorrowPerNum(String borrowPerNum) {
 		this.borrowPerNum = borrowPerNum;
+	}
+
+	public String getMainId() {
+		return mainId;
+	}
+
+	public void setMainId(String mainId) {
+		this.mainId = mainId;
 	}
 
 	

@@ -83,6 +83,13 @@ public class TblBorrowArchivesController extends BaseController {
 		addMessage(redirectAttributes, "删除借阅记录成功");
 		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
 	}
+	
+	@RequestMapping(value = "look")
+	public String look(TblBorrowArchives tblBorrowArchives, Model model) {
+		model.addAttribute("tblBorrowArchives", tblBorrowArchives);
+		return "business/borrow/tblBorrowArchivesLook";
+	}
+	
 	/**
 	 * 送审，更改借阅数据的状态
 	 * @param tblBorrowArchives

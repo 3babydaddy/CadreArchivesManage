@@ -6,23 +6,9 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//$("#name").focus();
-			$("#inputForm").validate({
-				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
+			
 		});
+		
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
 				idx: idx, delBtn: true, row: row
@@ -46,69 +32,6 @@
 	    		document.getElementById("tblCheckPersonList"+idx+"_siginInput").style.display='none';
 			}
 		}
-		function delRowTar(obj, prefix){
-			var id = $(prefix+"_id");
-			var delFlag = $(prefix+"_delFlag");
-			if (id.val() == ""){
-				$(obj).parent().parent().next().next().next().remove();
-				$(obj).parent().parent().next().next().remove();
-				$(obj).parent().parent().next().next().remove();
-				$(obj).parent().parent().next().remove();
-				$(obj).parent().parent().remove();
-			}else if(delFlag.val() == "0"){
-				delFlag.val("1");
-				$(obj).html("&divide;").attr("title", "撤销删除");
-				//$(obj).parent().parent().addClass("error");
-			}else if(delFlag.val() == "1"){
-				delFlag.val("0");
-				$(obj).html("&times;").attr("title", "删除");
-				$(obj).parent().parent().removeClass("error");
-			}
-		}
-		function delRowPer(obj, prefix){
-			var id = $(prefix+"_id");
-			var delFlag = $(prefix+"_delFlag");
-			if (id.val() == ""){
-				$(obj).parent().parent().next().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().remove();
-				$(obj).parent().parent().next().next().remove();
-				$(obj).parent().parent().next().remove();
-				$(obj).parent().parent().remove();
-			}else if(delFlag.val() == "0"){
-				delFlag.val("1");
-				$(obj).html("&divide;").attr("title", "撤销删除");
-				//$(obj).parent().parent().addClass("error");
-			}else if(delFlag.val() == "1"){
-				delFlag.val("0");
-				$(obj).html("&times;").attr("title", "删除");
-				//$(obj).parent().parent().removeClass("error");
-			}
-		}
-		
-		function siginOption(obj){
-			$.jBox("iframe:${ctx}/consult/tblConsultArchives/drowSigin?siginId="+obj.id, {  
-			    title: "绘制签名",  
-			    width: 900,  
-			    height: 400,
-			    showClose: false,
-			    buttons: { '关闭': true }  
-			});  
-		}
-		
-		function delSigin(obj){
-			var siginId = obj.id;
-			var siginImg = siginId.replace('aline', 'siginImg');
-    		var siginDiv = siginId.replace('aline', 'siginDiv');
-    		var siginName = siginId.replace('aline', 'siginName');
-    		var siginInput = siginId.replace('aline', 'siginInput');
-    		
-    		document.getElementById(siginInput).style.display='';
-    		document.getElementById(siginDiv).style.display='none';
-    		
-    		document.getElementById(siginImg).src='';
-    		document.getElementById(siginName).value='';
-		}
 	</script>
 	<style type="text/css">
 		.td-order-one{
@@ -130,7 +53,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/consult/tblConsultArchives/">查阅档案列表</a></li>
-		<li class="active"><a href="${ctx}/consult/tblConsultArchives/form?id=${tblConsultArchives.id}">查阅档案编辑<shiro:hasPermission name="consult:tblConsultArchives:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="consult:tblConsultArchives:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/consult/tblConsultArchives/look?id=${tblConsultArchives.id}">查阅档案查看<shiro:hasPermission name="consult:tblConsultArchives:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="consult:tblConsultArchives:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblConsultArchives" action="${ctx}/consult/tblConsultArchives/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -139,15 +62,13 @@
 			<label class="control-label">查阅日期：</label>
 			<div class="controls">
 				<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
+					value="<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">查阅单位：</label>
 			<div class="controls">
-				<sys:treeselect2 url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}"  
-									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect2>
+				<form:input path="consultUnitName" htmlEscape="false" value="${tblConsultArchives.consultUnitName}" maxlength="64" readonly="true" class="input-xlarge"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -163,7 +84,7 @@
 					<tbody id="tblCheckedTargetList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblCheckedTargetList', tblCheckedTargetRowIdx, tblCheckedTargetTpl);tblCheckedTargetRowIdx = tblCheckedTargetRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+						<tr><td colspan="9"></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblCheckedTargetTpl">//<!--
@@ -179,9 +100,6 @@
 							<td style="text-align:right;width:120px;"><label>政治面貌：</label></td><td>
 								<input id="tblCheckedTargetList{{idx}}_politicalStatus" name="tblCheckedTargetList[{{idx}}].politicalStatus" type="text" value="{{row.politicalStatus}}" maxlength="32" class="input-small "/>
 							</td>
-							<td rowspan="3" class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRowTar(this, '#tblCheckedTargetList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
-							</td>
 						</tr><tr>
 							<td style="text-align:right;"><label>职务：</label></td>
 							<td colspan="3">
@@ -190,8 +108,7 @@
 						</tr><tr>
 							<td style="text-align:right;"><label>单位：</label></td>
 							<td colspan="3">
-								<sys:treeselect2 url="/sys/dict/treeDataPop" id="tblCheckedTargetList{{idx}}_unit" name="tblCheckedTargetList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
-									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect2>
+								<input id="tblCheckedTargetList{{idx}}_unitName" name="tblCheckedTargetList[{{idx}}].unitName" type="text" value="{{row.unitName}}" maxlength="32" class="input-xlarge "/>
 							</td>
 						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
 					</tr>//-->
@@ -220,7 +137,7 @@
 					<tbody id="tblCheckPersonList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="10"><a href="javascript:" onclick="addRow('#tblCheckPersonList', tblCheckPersonRowIdx, tblCheckPersonTpl);tblCheckPersonRowIdx = tblCheckPersonRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+						<tr><td colspan="10"></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblCheckPersonTpl">//<!--
@@ -235,10 +152,7 @@
 								<input id="tblCheckPersonList{{idx}}_name" name="tblCheckPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
 							<td rowspan="2" colspan="2" style="text-align:center;">
-								<sys:upImg input="tblCheckPersonList{{idx}}_photo"  type="files"  name="tblCheckPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="头像上传"/>
-							</td>
-							<td rowspan="5" class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRowPer(this, '#tblCheckPersonList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
+								<sys:upImg input="tblCheckPersonList{{idx}}_photo"  type="files" readonly="true" name="tblCheckPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="头像上传"/>
 							</td>
 						</tr><tr>
 							<td style="text-align:right;width:120px;"><label>政治面貌：</label></td>
@@ -253,8 +167,7 @@
 						</tr><tr>
 							<td style="text-align:right;width:120px;"><label>单位：</label></td>
 							<td colspan="3">
-								<sys:treeselect2 url="/sys/dict/treeDataPop" id="tblCheckPersonList{{idx}}_unit" name="tblCheckPersonList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
-									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect2>
+								<input id="tblCheckPersonList{{idx}}_unitName" name="tblCheckPersonList[{{idx}}].unitName" type="text" value="{{row.unitName}}" maxlength="11" class="input-xlarge "/>
 							</td>
 						</tr><tr>
 							<td style="text-align:right;width:120px;"><label>联系电话：</label></td>
@@ -265,10 +178,9 @@
 							<td>
 								<div class="td-order-one" id="tblCheckPersonList{{idx}}_siginDiv" style="display:none;">  
 									<img id="tblCheckPersonList{{idx}}_siginImg" src="{{row.siginName}}" />
-									<a id="tblCheckPersonList{{idx}}_aline" onclick="delSigin(this)">&times;</a>
        							 </div>  
 								
-								<input id="tblCheckPersonList{{idx}}_siginInput" name="tblCheckPersonList[{{idx}}].siginInput" type="text"   onclick=siginOption(this);  class="input-small "/>
+								<input id="tblCheckPersonList{{idx}}_siginInput" name="tblCheckPersonList[{{idx}}].siginInput" type="text"  class="input-small "/>
 								<input id="tblCheckPersonList{{idx}}_siginName" name="tblCheckPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input-small "/>
 							</td>
 						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
@@ -289,29 +201,30 @@
 		<div class="control-group">
 			<label class="control-label">查档事由：</label>
 			<div class="controls">
-				<form:textarea path="reason" htmlEscape="false" rows="4" maxlength="2000" class="input-xlarge "/>
+				<form:textarea path="reason" readonly="true" htmlEscape="false" rows="4" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">查档内容：</label>
 			<div class="controls">
-				<form:textarea path="content" htmlEscape="false" rows="4" maxlength="2000" class="input-xlarge "/>
+				<form:textarea path="content" readonly="true" htmlEscape="false" rows="4" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">借阅审批附件：</label>
 			<div class="controls">
-				<sys:upImg input="approveAttachment"  type="files"  name="approveAttachment"  value="${tblConsultArchives.approveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传快照"/>
+				<c:if test="${not empty tblConsultArchives.approveAttachment}">
+					<sys:upImg input="approveAttachment"  type="files" readonly="true" name="approveAttachment"  value="${tblConsultArchives.approveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传快照"/>
+				</c:if>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xlarge "/>
+				<form:textarea path="remarks" htmlEscape="false" readonly="true" rows="4" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn btn-primary" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

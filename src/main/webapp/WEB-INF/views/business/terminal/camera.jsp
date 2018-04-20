@@ -6,7 +6,11 @@
 <meta name="decorator" content="default" />
 <script type="text/javascript"
 	src="${ctxStatic}/jquery-webcam/jquery.webcam.js"></script>
-
+<style type="text/css">
+	a,th,label,#btnCancel,#btnSubmit{
+			font-size : 150%;
+		}
+</style>
 <script type="text/javascript">
 	var w = 400, h = 230; //摄像头配置,创建canvas
 	var pos = 0, ctx = null, saveCB, image = [];

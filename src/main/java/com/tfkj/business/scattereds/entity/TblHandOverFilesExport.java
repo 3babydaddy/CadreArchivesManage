@@ -25,6 +25,8 @@ public class TblHandOverFilesExport extends DataEntity<TblHandOverFiles> {
 	@Excel(name = "材料份数")
 	private Long originalNo;		// 正本（卷）
 	
+	private String mainId;
+	
 	public TblHandOverFilesExport() {
 		super();
 	}
@@ -35,6 +37,14 @@ public class TblHandOverFilesExport extends DataEntity<TblHandOverFiles> {
 
 	public void setXh(String xh) {
 		this.xh = xh;
+	}
+
+	public String getMainId() {
+		return mainId;
+	}
+
+	public void setMainId(String mainId) {
+		this.mainId = mainId;
 	}
 
 	

@@ -58,6 +58,20 @@
 			}
 			window.location.href = "${ctx}/retiredadre/retiredCadre/form?id="+rows[0].value;
 		}
+		
+		function lookData(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			window.location.href = "${ctx}/retiredadre/retiredCadre/look?id="+rows[0].value;
+		}
+		
+		function clickLookData(id){
+			window.location.href = "${ctx}/retiredadre/retiredCadre/look?id="+id;
+		}
+		
 		//转死亡，更改状态
 		function updateDataStatus(){
 			var rows = getRowData();
@@ -163,6 +177,7 @@
 	    <ul class="nav nav-pills">
 	        <li><a <a href="${ctx}/retiredadre/retiredCadre/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
+	         <li><a onclick="lookData();"><i class="icon-eye-open"></i>&nbsp;查看</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a onclick="updateDataStatus();"><i class="icon-ambulance "></i>&nbsp;转死亡</a></li>
 	        <li><a onclick="exportArchives('3');"><i class=" icon-download-alt"></i>&nbsp;转档案局</a></li>
@@ -189,7 +204,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="retiredCadre">
-			<tr>
+			<tr ondblclick="clickLookData('${retiredCadre.id}');">
 				<td>
 					<input type="checkbox" value="${retiredCadre.id}" />
 				</td>

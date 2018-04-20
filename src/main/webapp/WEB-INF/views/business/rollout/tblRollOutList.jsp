@@ -55,6 +55,19 @@
 			window.location.href = "${ctx}/rollout/tblRollOut/form?id="+rows[0].value;
 		}
 		
+		function lookData(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			window.location.href = "${ctx}/rollout/tblRollOut/look?id="+rows[0].value;
+		}
+		
+		function clickLookData(id){
+			window.location.href = "${ctx}/rollout/tblRollOut/look?id="+id;
+		}
+		
 		//转递单
 		function relayBill(){
 			var rows = getRowData();
@@ -157,6 +170,7 @@
 	    <ul class="nav nav-pills">
 	        <li><a <a href="${ctx}/rollout/tblRollOut/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
+	         <li><a onclick="lookData();"><i class="icon-eye-open"></i>&nbsp;查看</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a onclick="relayBill()"><i class="icon-share-alt"></i>&nbsp;转递单</a></li>
 	        <li><a onclick="receiptImport();"><i class="icon-upload-alt"></i>&nbsp;回执单导入</a></li>
@@ -179,7 +193,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="tblRollOut">
-			<tr>
+			<tr ondblclick="clickLookData('${tblRollOut.id}');">
 				<td>
 					<input type="checkbox" value="${tblRollOut.id}" />
 				</td>
