@@ -1,6 +1,3 @@
-/**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- */
 package com.tfkj.business.consult.web;
 
 import java.util.HashMap;
@@ -82,6 +79,13 @@ public class TblConsultArchivesController extends BaseController {
 		addMessage(redirectAttributes, "删除查阅档案成功");
 		return "redirect:"+Global.getAdminPath()+"/consult/tblConsultArchives/?repage";
 	}
+	
+	@RequestMapping(value = "look")
+	public String look(TblConsultArchives tblConsultArchives, Model model) {
+		model.addAttribute("tblConsultArchives", tblConsultArchives);
+		return "business/consult/tblConsultArchivesLook";
+	}
+	
 	/**
 	 * 签名功能
 	 * @param siginId
