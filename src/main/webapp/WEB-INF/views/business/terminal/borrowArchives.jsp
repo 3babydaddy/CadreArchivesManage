@@ -134,8 +134,8 @@
 			width: 100%;
 			height: 100%;
 		}
-		.container-fluid{
-			height: 100%
+		#content{
+			height: 100%;
 		}
 		html,#rowFluid1,#formInfo,#photoShowDiv,#inputForm,#photoShow{
 			height: 100%
@@ -159,10 +159,13 @@
 			margin-top:3%;
 			margin-bottom: 3%;
 		}
+		a,th,label,#btnCancel,#btnSubmit{
+			font-size : 150%;
+		}
 	</style>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" id="content">
 	<div class="row-fluid" id ="rowFluid1">
 		<div id= "photoShowDiv" class="span4">
 			<img id="photoShow" src="${ctxStatic}/images/quesheng.jpg" class="img-responsive center-block img-rounded" ><span></span>

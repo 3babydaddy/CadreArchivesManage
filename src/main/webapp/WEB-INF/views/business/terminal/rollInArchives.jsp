@@ -154,6 +154,9 @@
 			height:auto;
 			margin-bottom: 3%;
 		}
+		a,th,label,#btnCancel,#btnSubmit{
+			font-size : 150%;
+		}
 	</style>
 </head>
 <body>
@@ -215,7 +218,7 @@
 				</div>
 				
 				<div class="control-group">
-					<label class="control-label">原存档单位电话：</label>
+					<label class="control-label" style="width : 180px">原存档单位电话：</label>
 					<div class="controls">
 						<form:input path="beforeUnitTel" htmlEscape="false" maxlength="11" class="input-xlarge "/>
 					</div>
@@ -249,7 +252,7 @@
 					<tbody id="tblRollInPersonsList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="12"><a href="javascript:" onclick="addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl);tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;" style="width:10%;height:20%" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+						<tr><td colspan="12"><a href="javascript:" onclick="addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl);tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;" style="font-size : 150%" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblRollInPersonsTpl">

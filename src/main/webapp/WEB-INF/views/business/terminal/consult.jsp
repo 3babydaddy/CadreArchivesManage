@@ -158,6 +158,9 @@
 		height:auto;
 		margin-bottom:3%
 		}
+		a,th,label,#btnCancel,#btnSubmit{
+			font-size : 150%;
+		}
 	</style>
 </head>
 <body>

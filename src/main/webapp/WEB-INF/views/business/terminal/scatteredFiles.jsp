@@ -154,9 +154,9 @@
 			height:auto;
 			margin-bottom: 3%;
 		}
-		#scatteredA{
-			width:8%;
-			height:15%
+		
+		a,th,label,#btnCancel,#btnSubmit{
+			font-size : 150%;
 		}
 	</style>
 </head>
@@ -223,7 +223,7 @@
 						<tbody id="tblHandOverFilesList">
 						</tbody>
 						<tfoot>
-							<tr><td colspan="9"><a id = "scatteredA" href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;"  class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+							<tr><td colspan="9"><a  href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;"  style="font-size : 150%;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
 						</tfoot>
 					</table>
 					<script type="text/template" id="tblHandOverFilesTpl">//<!--
