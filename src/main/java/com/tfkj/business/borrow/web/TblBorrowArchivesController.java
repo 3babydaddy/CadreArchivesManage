@@ -74,7 +74,7 @@ public class TblBorrowArchivesController extends BaseController {
 		
 		tblBorrowArchivesService.save(tblBorrowArchives);
 		addMessage(redirectAttributes, "保存借阅记录成功");
-		return "redirect:"+Global.getAdminPath()+"/borrow/tblBorrowArchives/?repage";
+		return "redirect:"+Global.getAdminPath()+"/terminal/borrowArchives";
 	}
 	
 	@RequestMapping(value = "delete")
