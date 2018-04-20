@@ -229,5 +229,4 @@ public class TblScatteredFilesController extends BaseController {
    			e.printStackTrace();
    		}
       }
->>>>>>> 36b84bc6a08a00472c6a7d7239a946109eb329ee
 }
