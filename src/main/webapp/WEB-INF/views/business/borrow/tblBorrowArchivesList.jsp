@@ -39,6 +39,16 @@
 			window.location.href = "${ctx}/borrow/tblBorrowArchives/form?id="+mainId;
 		}
 		
+		function lookData(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			window.location.href = "${ctx}/borrow/tblBorrowArchives/look?id="+mainId;
+		}
+		
 		function delData(){
 			var idStr = "";
 			var rows = getRowData();
@@ -106,6 +116,10 @@
 			);
 		}
 		
+		function clickLookData(id){
+			window.location.href = "${ctx}/borrow/tblBorrowArchives/look?id="+id;
+		}
+		
 		function getRowData(){
 			return $("table tbody input[type='checkbox']:checked");
 		}
@@ -137,7 +151,7 @@
 	<form:form id="searchForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form">
+		<ul class="ul-form" style="width:1192px;">
 			<li><label>借阅日期：</label>
 				<input name="startBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblBorrowArchives.startBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -184,6 +198,7 @@
 	    <ul class="nav nav-pills">
 	        <li><a <a href="${ctx}/borrow/tblBorrowArchives/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	         <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
+	         <li><a onclick="lookData();"><i class="icon-eye-open"></i>&nbsp;查看</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a onclick="giveBack();"><i class="icon-reply"></i>&nbsp;归还</a></li>
 	        <%-- <shiro:hasAnyRoles  name="admin,user">
@@ -214,7 +229,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="tblBorrowArchives">
-			<tr>
+			<tr ondblclick="clickLookData('${tblBorrowArchives.id}');">
 				<td>
 					<input type="checkbox" value="${tblBorrowArchives.id},${tblBorrowArchives.status}" />
 				</td>

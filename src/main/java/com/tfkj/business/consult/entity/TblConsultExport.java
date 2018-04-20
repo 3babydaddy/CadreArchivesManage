@@ -38,6 +38,7 @@ public class TblConsultExport extends DataEntity<TblConsultArchives> {
 	private String consultPerNum; //查阅人员数量
 	
 	private String unit;
+	private String mainId;
 	
 	public String getXh() {
 		return xh;
@@ -74,6 +75,12 @@ public class TblConsultExport extends DataEntity<TblConsultArchives> {
 	}
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+	public String getMainId() {
+		return mainId;
+	}
+	public void setMainId(String mainId) {
+		this.mainId = mainId;
 	}
 	
 }

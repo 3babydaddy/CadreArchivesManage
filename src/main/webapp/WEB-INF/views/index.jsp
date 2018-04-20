@@ -285,29 +285,48 @@ ul li {
 	
 	//提示管理员有新的数据需要审核
     <shiro:hasRole name="admin">
-    	//setInterval(function(){
-    	setTimeout(function(){
-			$.jBox.closeMessager();
-			$.ajax({
-	            type: "post",
-	            url: "${ctx}/sys/noticeToDo/queryNoticeData",
-	            //data: {},
-	            //dataType: "json",
-	            success: function (data) {
-	            	for(var i = 0; i < data.length; i++){
-	            		$.jBox.messager('<div style="margin: 18px 0 0 48px;"><span class="jbox-icon jbox-icon-info" style="position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;"></span>'
-            					+'<a href="${ctx}/'+data[i].url+'" target="mainFrame" >'+data[i].msg+'</a></div>', '提示', 0, { height: 110});
-	            		
-	            		var height = 110 * (data.length-i-1);
-	            		$(".jbox-container")[i].style.marginBottom = height+"px";
-	            	}
-	            	num = data.length
-	            },
-	            error: function (XMLHttpRequest, textStatus, errorThrown) {
-	                //alertx("error！");
-	            }
-	        });
-		}, 3000);
+    	setInterval(function(){
+    	//setTimeout(function(){
+    		//$.jBox.closeMessager();
+			//系统提供的不好用
+    		var len = $(".jbox-close").length;
+			for(var s = 0; s < len; s++){
+				$(".jbox-close")[s].click();
+			}
+			//防止弹窗没有完全关闭，就执行下面的js
+			setTimeout(function(){
+				$.ajax({
+		            type: "post",
+		            url: "${ctx}/sys/noticeToDo/queryNoticeData",
+		            //data: {},
+		            //dataType: "json",
+		            success: function (data) {
+		            	for(var i = 0; i < data.length; i++){
+		            		$.jBox.messager('<div style="margin: 18px 0 0 48px;"><span class="jbox-icon jbox-icon-info" style="position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;"></span>'
+	            					+'<a href="${ctx}/'+data[i].url+'" target="mainFrame" >'+data[i].msg+'</a></div>', '提示', 0, 
+	            					{ height: 110,
+	            					  closed: function () { //手动关闭回调函数
+	            						  var tem = $(".jbox-close").length;
+            							  for(var i = 0; i < tem; i++){
+            			            		  var height = 110 * (tem-i-1);
+            			            		  $(".jbox-container")[i].style.marginBottom = height+"px";
+            			            	  }
+	            					  }
+	           					});
+		            	}
+		            	//手动计算弹窗的位置
+		            	var num = data.length
+		            	for(var j = 0; j < num; j++){
+		            		var height = 110 * (num-j-1);
+		            		$(".jbox-container")[j].style.marginBottom = height+"px";
+		            	}
+		            },
+		            error: function (XMLHttpRequest, textStatus, errorThrown) {
+		                //alertx("error！");
+		            }
+		        });
+			}, 1000);
+		}, 19000);
 	</shiro:hasRole>
 </script>
 
@@ -315,39 +334,37 @@ ul li {
 <body>
 	<div id="main">
 		<div id="header">
-		                 <div style=" display:  inline-block; margin-top:  20px;">
-							<span class="header-text">${fns:getConfig('loginHeaderSystem')}</span>
-		                 </div>
-		    		<div class="head-right">
-						<div style="height: 45px">
-						    <span style="color: white;font-size: 17px;font-family: 华文行楷;">当前用户：</span>
-						    <span style="color: white;font-size: 17px;font-family: 华文行楷;">${fns:getUser().showname}</span>
-                            <h2 class="zaixian" id="onlineNumber"></h2>
-							<a href="${ctx}/" title="主页" class="zhuye"></a>
-							<a href="${ctx}/logout" class="loginout" title="登出" ></a>
-						</div>
-						</div>
-						<div id="title">
-							<div id="dropdown">
-								
-								<ul id="menu" class="nav" style="*white-space: nowrap; float: none;">
-									<c:set var="firstMenu" value="true" />
-									<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
-										<c:if test="${menu.showFlag eq '1'}">
-											<li class="menu ${not empty firstMenu && firstMenu ? ' active' : ''}">
-													<a id="parentMenu" class="menu" href="javascript:" data-href="${ctx}/sys/menu/tree?parentId=${menu.id}&number=${fns:getCurrentTimeMillis()}" data-id="${menu.id}"><span>${menu.name}</span></a>
-											</li>
-											<c:if test="${firstMenu}">
-												<c:set var="firstMenuId" value="${menu.id}" />
-											</c:if>
-											<c:set var="firstMenu" value="false" />
-										</c:if>
-									</c:forEach>
-								</ul>
-							</div>
-						</div>
-
-
+            <div style=" display:  inline-block; margin-top:  20px;">
+				<span class="header-text">${fns:getConfig('loginHeaderSystem')}</span>
+            </div>
+    		<div class="head-right">
+				<div style="height: 45px">
+				    <span style="color: white;font-size: 17px;font-family: 华文行楷;">当前用户：</span>
+				    <span style="color: white;font-size: 17px;font-family: 华文行楷;">${fns:getUser().showname}</span>
+                          <h2 class="zaixian" id="onlineNumber"></h2>
+					<a href="${ctx}/" title="主页" class="zhuye"></a>
+					<a href="${ctx}/logout" class="loginout" title="登出" ></a>
+				</div>
+			</div>
+			<div id="title">
+				<div id="dropdown">
+					
+					<ul id="menu" class="nav" style="*white-space: nowrap; float: none;">
+						<c:set var="firstMenu" value="true" />
+						<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
+							<c:if test="${menu.showFlag eq '1'}">
+								<li class="menu ${not empty firstMenu && firstMenu ? ' active' : ''}">
+										<a id="parentMenu" class="menu" href="javascript:" data-href="${ctx}/sys/menu/tree?parentId=${menu.id}&number=${fns:getCurrentTimeMillis()}" data-id="${menu.id}"><span>${menu.name}</span></a>
+								</li>
+								<c:if test="${firstMenu}">
+									<c:set var="firstMenuId" value="${menu.id}" />
+								</c:if>
+								<c:set var="firstMenu" value="false" />
+							</c:if>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
 		</div>
 
 		<div class="container-fluid">

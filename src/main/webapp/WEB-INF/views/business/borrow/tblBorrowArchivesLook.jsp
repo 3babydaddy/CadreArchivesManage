@@ -6,22 +6,6 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//$("#name").focus();
-			$("#inputForm").validate({
-				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
 			
 		});
 		
@@ -46,67 +30,6 @@
 	    		document.getElementById("tblBorrowPersonList"+idx+"_siginInput").style.display='none';
 			}
 		}
-		function delRowTar(obj, prefix){
-			var id = $(prefix+"_id");
-			var delFlag = $(prefix+"_delFlag");
-			if (id.val() == ""){
-				$(obj).parent().parent().next().next().next().remove();
-				$(obj).parent().parent().next().next().remove();
-				$(obj).parent().parent().next().remove();
-				$(obj).parent().parent().remove();
-			}else if(delFlag.val() == "0"){
-				delFlag.val("1");
-				$(obj).html("&divide;").attr("title", "撤销删除");
-				//$(obj).parent().parent().addClass("error");
-			}else if(delFlag.val() == "1"){
-				delFlag.val("0");
-				$(obj).html("&times;").attr("title", "删除");
-				$(obj).parent().parent().removeClass("error");
-			}
-		}
-		function delRowPer(obj, prefix){
-			var id = $(prefix+"_id");
-			var delFlag = $(prefix+"_delFlag");
-			if (id.val() == ""){
-				$(obj).parent().parent().next().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().next().remove();
-				$(obj).parent().parent().next().next().next().remove();
-				$(obj).parent().parent().next().next().remove();
-				$(obj).parent().parent().next().remove();
-				$(obj).parent().parent().remove();
-			}else if(delFlag.val() == "0"){
-				delFlag.val("1");
-				$(obj).html("&divide;").attr("title", "撤销删除");
-				//$(obj).parent().parent().addClass("error");
-			}else if(delFlag.val() == "1"){
-				delFlag.val("0");
-				$(obj).html("&times;").attr("title", "删除");
-				//$(obj).parent().parent().removeClass("error");
-			}
-		}
-		function siginOption(obj){
-			$.jBox("iframe:${ctx}/consult/tblConsultArchives/drowSigin?siginId="+obj.id, {  
-			    title: "绘制签名",  
-			    width: 900,  
-			    height: 400,
-			    showClose: false,
-			    buttons: { '关闭': true }  
-			});  
-		}
-		
-		function delSigin(obj){
-			var siginId = obj.id;
-			var siginImg = siginId.replace('aline', 'siginImg');
-    		var siginDiv = siginId.replace('aline', 'siginDiv');
-    		var siginName = siginId.replace('aline', 'siginName');
-    		var siginInput = siginId.replace('aline', 'siginInput');
-    		
-    		document.getElementById(siginInput).style.display='';
-    		document.getElementById(siginDiv).style.display='none';
-    		
-    		document.getElementById(siginImg).src='';
-    		document.getElementById(siginName).value='';
-		}
 	</script>
 	<style type="text/css">
 		.td-order-one{
@@ -128,7 +51,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/borrow/tblBorrowArchives/">借阅管理列表</a></li>
-		<li class="active"><a href="${ctx}/borrow/tblBorrowArchives/form?id=${tblBorrowArchives.id}">借阅管理编辑<shiro:hasPermission name="borrow:tblBorrowArchives:edit">${not empty tblBorrowArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="borrow:tblBorrowArchives:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/borrow/tblBorrowArchives/look?id=${tblBorrowArchives.id}">借阅管理查看<shiro:hasPermission name="borrow:tblBorrowArchives:edit">${not empty tblBorrowArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="borrow:tblBorrowArchives:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -137,15 +60,13 @@
 			<label class="control-label">借阅日期：</label>
 			<div class="controls">
 				<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
+					value="<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">借阅单位：</label>
 			<div class="controls">
-				<sys:treeselect2 url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblBorrowArchives.consultUnit}" 
-									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表"></sys:treeselect2>
+				<form:input path="consultUnitName" htmlEscape="false" value="${tblBorrowArchives.consultUnitName}"  maxlength="64" readonly="true" class="input-xlarge"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -161,7 +82,7 @@
 					<tbody id="tblBorrowTargetList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="9"><a href="javascript:" onclick="addRow('#tblBorrowTargetList', tblBorrowTargetRowIdx, tblBorrowTargetTpl);tblBorrowTargetRowIdx = tblBorrowTargetRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+						<tr><td colspan="9"></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblBorrowTargetTpl">//<!--
@@ -179,9 +100,6 @@
 							<td>
 								<input id="tblBorrowTargetList{{idx}}_politicalStatus" name="tblBorrowTargetList[{{idx}}].politicalStatus" type="text" value="{{row.politicalStatus}}" maxlength="32" class="input-small "/>
 							</td>
-							<td rowspan="3" class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRowTar(this, '#tblBorrowTargetList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
-							</td>
 						</tr><tr>
 							<td style="text-align:right;"><label>职务：</label></td>
 							<td colspan="3">
@@ -190,8 +108,7 @@
 						</tr><tr>
 							<td style="text-align:right;"><label>单位：</label></td>
 							<td colspan="3">
-								<sys:treeselect2 url="/sys/dict/treeDataPop" id="tblBorrowTargetList{{idx}}_unit" name="tblBorrowTargetList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
-									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect2>
+								<input id="tblBorrowTargetList{{idx}}_unitName" name="tblBorrowTargetList[{{idx}}].unitName" type="text" value="{{row.unitName}}" maxlength="32" class="input-xlarge "/>
 							</td>
 						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
 					</tr>//-->
@@ -221,7 +138,7 @@
 					<tbody id="tblBorrowPersonList">
 					</tbody>
 					<tfoot>
-						<tr><td colspan="10"><a href="javascript:" onclick="addRow('#tblBorrowPersonList', tblBorrowPersonRowIdx, tblBorrowPersonTpl);tblBorrowPersonRowIdx = tblBorrowPersonRowIdx + 1;" style="width:50px;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
+						<tr><td colspan="10"></td></tr>
 					</tfoot>
 				</table>
 				<script type="text/template" id="tblBorrowPersonTpl">//<!--
@@ -238,9 +155,6 @@
 							<td rowspan="2" colspan="2" style="text-align:center;">
 								<sys:upImg input="tblBorrowPersonList{{idx}}_photo"  type="files"  name="tblBorrowPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="头像上传"/>
 							</td>
-							<td rowspan="5" class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRowPer(this, '#tblBorrowPersonList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
-							</td>
 						</tr><tr>
 							<td style="text-align:right;width:120px;"><label>政治面貌：</label></td>
 							<td>
@@ -254,8 +168,7 @@
 						</tr><tr>
 							<td style="text-align:right;width:120px;"><label>单位：</label></td>
 							<td colspan="3">
-								<sys:treeselect2 url="/sys/dict/treeDataPop" id="tblBorrowPersonList{{idx}}_unit" name="tblBorrowPersonList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
-									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect2>
+								<input id="tblBorrowPersonList{{idx}}_unitName" name="tblBorrowPersonList[{{idx}}].unitName" type="text" value="{{row.unitName}}" maxlength="32" class="input-xlarge "/>
 							</td>
 						</tr><tr>
 							<td style="text-align:right;width:120px;"><label>联系电话：</label></td>
@@ -269,7 +182,7 @@
 									<a id="tblBorrowPersonList{{idx}}_aline" onclick="delSigin(this)">&times;</a>
        							 </div>  
 								
-								<input id="tblBorrowPersonList{{idx}}_siginInput" name="tblBorrowPersonList[{{idx}}].siginInput" type="text"   onclick=siginOption(this);  class="input-small "/>
+								<input id="tblBorrowPersonList{{idx}}_siginInput" name="tblBorrowPersonList[{{idx}}].siginInput" type="text"   class="input-small "/>
 								<input id="tblBorrowPersonList{{idx}}_siginName" name="tblBorrowPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input-small "/>
 							</td>
 						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
@@ -290,29 +203,30 @@
 		<div class="control-group">
 			<label class="control-label">借阅事由：</label>
 			<div class="controls">
-				<form:textarea path="reason" htmlEscape="false" rows="4" maxlength="2000" class="input-xlarge "/>
+				<form:textarea path="reason" htmlEscape="false" rows="4" maxlength="2000" readonly="true" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">查档内容：</label>
 			<div class="controls">
-				<form:textarea path="content" htmlEscape="false" rows="4" maxlength="2000" class="input-xlarge "/>
+				<form:textarea path="content" htmlEscape="false" rows="4" maxlength="2000"  readonly="true" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">借阅审批附件：</label>
 			<div class="controls">
-				<sys:upImg input="approveAttachment"  type="files"  name="approveAttachment"  value="${tblBorrowArchives.approveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				<c:if test="${not empty tblBorrowArchives.approveAttachment}">
+					<sys:upImg input="approveAttachment" type="files" name="approveAttachment" value="${tblBorrowArchives.approveAttachment}" readonly="true" uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				</c:if>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xlarge "/>
+				<form:textarea path="remarks" htmlEscape="false" rows="4" readonly="true" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
 			<input id="btnCancel" class="btn btn-primary" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

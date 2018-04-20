@@ -65,6 +65,12 @@ public class RetiredCadreController extends BaseController {
 		return "business/retiredadre/retiredCadreForm";
 	}
 
+	@RequestMapping(value = "look")
+	public String look(RetiredCadre retiredCadre, Model model) {
+		model.addAttribute("retiredCadre", retiredCadre);
+		return "business/retiredadre/retiredCadreLook";
+	}
+	
 	@RequestMapping(value = "save")
 	public String save(RetiredCadre retiredCadre, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, retiredCadre)){

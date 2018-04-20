@@ -84,6 +84,12 @@ public class TblRollInController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/rollin/tblRollIn/?repage";
 	}
 	
+	@RequestMapping(value = "look")
+	public String look(TblRollIn tblRollIn, Model model) {
+		model.addAttribute("tblRollIn", tblRollIn);
+		return "business/rollin/tblRollInLook";
+	}
+	
 	/**
 	 * 送审，更改转入数据的状态
 	 * @param tblRollIn

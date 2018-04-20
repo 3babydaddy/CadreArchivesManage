@@ -33,6 +33,8 @@ public class TblRollInPersonsExport extends DataEntity<TblRollInPersons> {
 	@Excel(name = "档案材料（份）")
 	private Long filesNo;		// 档案材料（份）
 	
+	private String mainId;
+	
 	public TblRollInPersonsExport() {
 		super();
 	}
@@ -59,6 +61,14 @@ public class TblRollInPersonsExport extends DataEntity<TblRollInPersons> {
 
 	public void setBeforeUnit(String beforeUnit) {
 		this.beforeUnit = beforeUnit;
+	}
+
+	public String getMainId() {
+		return mainId;
+	}
+
+	public void setMainId(String mainId) {
+		this.mainId = mainId;
 	}
 
 	

@@ -61,6 +61,20 @@
 			window.location.href = "${ctx}/scattereds/tblScatteredFiles/form?id="+mainId;
 		}
 		
+		function lookData(){
+			var rows = getRowData();
+			if(rows.length != 1){
+				alertx("请选择一条记录");
+				return;
+			}
+			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			window.location.href = "${ctx}/scattereds/tblScatteredFiles/look?id="+mainId;
+		}
+		
+		function clickLookData(id){
+			window.location.href = "${ctx}/scattereds/tblScatteredFiles/look?id="+id;
+		}
+		
 		//审核借阅数据
 		function auditData(){
 			var idStr = "";
@@ -179,6 +193,7 @@
 	    <ul class="nav nav-pills">
 	        <li><a <a href="${ctx}/scattereds/tblScatteredFiles/form"><i class="icon-plus"></i>&nbsp;新增</a></li>
 	        <li><a onclick="editData();"><i class="icon-edit"></i>&nbsp;编辑</a></li>
+	        <li><a onclick="lookData();"><i class="icon-eye-open"></i>&nbsp;查看</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a id="btnImport"><i class="icon-upload-alt"></i>&nbsp;导入</a></li>
 	       <%--  <shiro:hasAnyRoles  name="admin,user">
@@ -206,7 +221,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="tblScatteredFiles">
-			<tr>
+			<tr ondblclick="clickLookData('${tblScatteredFiles.id}');">
 				<td>
 					<input type="checkbox" value="${tblScatteredFiles.id},${tblScatteredFiles.status}" />
 				</td>

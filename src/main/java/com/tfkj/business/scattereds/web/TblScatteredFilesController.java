@@ -88,6 +88,12 @@ public class TblScatteredFilesController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
 	}
 	
+	@RequestMapping(value = "look")
+	public String look(TblScatteredFiles tblScatteredFiles, Model model) {
+		model.addAttribute("tblScatteredFiles", tblScatteredFiles);
+		return "business/scattereds/tblScatteredFilesLook";
+	}
+	
 	/**
 	 * 送审，更改零散材料数据的状态
 	 * @param tblScatteredFiles
