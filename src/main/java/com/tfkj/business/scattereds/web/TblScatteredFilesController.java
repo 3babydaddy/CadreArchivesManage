@@ -79,7 +79,7 @@ public class TblScatteredFilesController extends BaseController {
 		}
 		tblScatteredFilesService.save(tblScatteredFiles);
 		addMessage(redirectAttributes, "保存零散材料移交人员成功");
-		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
+		return "redirect:"+Global.getAdminPath()+"/terminal/scatteredFiles";
 	}
 	
 	@RequestMapping(value = "delete")
