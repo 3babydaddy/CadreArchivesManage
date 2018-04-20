@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tfkj.business.borrow.entity.TblBorrowArchives;
 import com.tfkj.business.borrow.entity.TblBorrowExport;
 import com.tfkj.business.borrow.service.TblBorrowArchivesService;
+import com.tfkj.business.consult.entity.TblConsultArchives;
 import com.tfkj.framework.core.config.Global;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
@@ -77,6 +78,17 @@ public class TblBorrowArchivesController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/terminal/borrowArchives";
 	}
 	
+	@RequestMapping(value = "saveTerminal")
+	@ResponseBody
+	public boolean saveTerminal(TblBorrowArchives tblBorrowArchives, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, tblBorrowArchives)){
+			return false;
+		}
+		
+		tblBorrowArchivesService.save(tblBorrowArchives);
+		addMessage(redirectAttributes, "保存借阅记录成功");
+		return true;
+	}
 	@RequestMapping(value = "delete")
 	public String delete(TblBorrowArchives tblBorrowArchives, String idStr, RedirectAttributes redirectAttributes) {
 		tblBorrowArchivesService.delete(tblBorrowArchives, idStr);

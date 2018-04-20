@@ -109,7 +109,7 @@
 	                data: $('#inputForm').serialize(),
 	                success: function (result) {
 	                    //alert(result);
-	                    debugger;
+	                    //debugger;
 	                    
 	                    if(result){
 	                    	var submit = function (v, h, f) {

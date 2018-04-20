@@ -81,6 +81,17 @@ public class TblScatteredFilesController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/terminal/scatteredFiles";
 	}
 	
+	@RequestMapping(value = "saveTerminal")
+	@ResponseBody
+	public boolean saveTerminal(TblScatteredFiles tblScatteredFiles, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, tblScatteredFiles)){
+			return false;
+		}
+		tblScatteredFilesService.save(tblScatteredFiles);
+		addMessage(redirectAttributes, "保存零散材料移交人员成功");
+		return true;
+	}
+	
 	@RequestMapping(value = "delete")
 	public String delete(TblScatteredFiles tblScatteredFiles, String idStr, RedirectAttributes redirectAttributes) {
 		tblScatteredFilesService.delete(tblScatteredFiles, idStr);

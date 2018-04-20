@@ -77,6 +77,17 @@ public class TblRollInController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/terminal/rollInArchives";
 	}
 	
+	
+	@RequestMapping(value = "saveTerminal")
+	@ResponseBody
+	public boolean saveTerminal(TblRollIn tblRollIn, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, tblRollIn)){
+			return false;
+		}
+		tblRollInService.save(tblRollIn);
+		addMessage(redirectAttributes, "保存转入管理人员成功");
+		return true;
+	}
 	@RequestMapping(value = "delete")
 	public String delete(TblRollIn tblRollIn, String idStr, RedirectAttributes redirectAttributes) {
 		tblRollInService.delete(tblRollIn, idStr);
