@@ -86,6 +86,12 @@ public class TerminalController {
 		model.addAttribute("tblScatteredFiles", tblScatteredFiles);
 		return "business/terminal/scatteredFiles";
 	}
+	
+	@RequestMapping("success")
+	public String success(Model model) {
+		
+		return "business/terminal/success";
+	}
 	/**
 	 * 根据传入图片base64 生成图片
 	 * 

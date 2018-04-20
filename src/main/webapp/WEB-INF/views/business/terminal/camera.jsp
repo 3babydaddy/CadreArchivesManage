@@ -122,6 +122,7 @@
             var picUrl = msg.path;
             //alert(picUrl);
            document.getElementById("photoShow").src = picUrl;
+           document.getElementById("approveAttachmentId").value = picUrl;
         });
 	}
 

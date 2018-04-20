@@ -100,7 +100,7 @@
 		/* 返回按钮事件 */
 		function goBack(){
 			//this.parent.$(".zhuye")[0].click();
-			window.history.back();
+			window.location.href = "${ctx}";
 		}
 		
 	</script>
@@ -171,7 +171,9 @@
 			<div class="row-fluid" id="rowFluid3">
 			<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/save" method="post" class="form-horizontal">
 				<form:hidden path="id"/>
-				<sys:message content="${message}"/>	
+				<div style="display:none;">
+					<sys:message content="${message}" />
+				</div>		
 				<div class="control-group">
 					<label class="control-label">批次：</label>
 					<div class="controls">
@@ -226,12 +228,13 @@
 											labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表"></sys:treeselect2>
 					</div>
 				</div>
-				<div class="control-group">
+				<input type="hidden" id = "approveAttachmentId" name = "rollApproveAttachment"/>
+				<%-- <div class="control-group">
 			<label class="control-label">借阅审批附件：</label>
 			<div class="controls">
 				<sys:upFIle input="rollApproveAttachment"  type="files"  name="rollApproveAttachment"  value="${tblRollIn.rollApproveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 			</div>
-		</div>
+		</div> --%>
 		
 		<div class="control-group" id="aboutInfo">
 			<label class="control-label">相关信息：</label>

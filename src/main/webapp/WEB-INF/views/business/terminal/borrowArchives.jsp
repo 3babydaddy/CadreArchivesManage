@@ -23,6 +23,7 @@
 					}
 				}
 			});
+			
 			/**调整页面自适应*/
 			//var h = $(document.body).height();
 			//var h = parent.$("iframe").height();
@@ -100,7 +101,7 @@
 		/* 返回按钮事件 */
 		function goBack(){
 			//this.parent.$(".zhuye")[0].click();
-			window.history.back();
+			window.location.href = "${ctx}";
 		}
 		
 	</script>
@@ -130,7 +131,6 @@
 		} 
 		body {
 			font-family: "微软雅黑";
-			font-size:120%;
 			width: 100%;
 			height: 100%;
 		}
@@ -177,7 +177,9 @@
 			<div class="row-fluid" id="rowFluid3">
 			<form:form id="inputForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/save" method="post" class="form-horizontal">
 				<form:hidden path="id"/>
-				<sys:message content="${message}"/>		
+				<div style="display:none;">
+					<sys:message content="${message}" />
+				</div>		
 				<div class="control-group">
 					<label class="control-label">借阅日期：</label>
 					<div class="controls">
@@ -341,6 +343,7 @@
 						<form:textarea path="content" htmlEscape="false" rows="4" maxlength="2000" class="input-xlarge "/>
 					</div>
 				</div>
+				<input type="hidden" name="approveAttachment" id="approveAttachmentId"/>
 				<%-- <div class="control-group">
 					<label class="control-label">借阅审批附件：</label>
 					<div class="controls">

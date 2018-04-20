@@ -97,8 +97,7 @@
 		
 		/* 返回按钮事件 */
 		function goBack(){
-			//this.parent.$(".zhuye")[0].click();
-			window.history.back();
+			window.location.href = "${ctx}";
 		}
 		
 	</script>
@@ -164,10 +163,10 @@
 <body>
 <div class="container-fluid">
 	<div class="row-fluid" id ="rowFluid1">
-		<div id= "photoShowDiv" class="span4">
+		<%-- <div id= "photoShowDiv" class="span4">
 			<img id="photoShow" src="${ctxStatic}/images/quesheng.jpg" class="img-responsive center-block img-rounded" ><span></span>
-		</div>
-		<div id = "formInfo" class="span8">
+		</div> --%>
+		<div id = "formInfo" class="span12">
 			<div class="row-fluid" id="ulDiv">
 				<ul class="nav nav-tabs">
 					<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/form?id=${tblConsultArchives.id}">零散材料<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
@@ -176,7 +175,9 @@
 		<div class="row-fluid" id="rowFluid3">
 			<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<sys:message content="${message}"/>		
+		<div style="display:none;">
+			<sys:message content="${message}" />
+		</div>			
 		<div class="control-group">
 			<label class="control-label">移交单位：</label>
 			<div class="controls">
@@ -262,7 +263,7 @@
 			</div>
 		<div class="form-actions">
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
-			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
+			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="goBack()"/>
 		</div>
 	</form:form>
 		</div>
