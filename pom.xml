@@ -567,7 +567,6 @@
 			<version>${logback.version}</version>
 		</dependency>
        	<!-- permission client  end-->
-       	
        	<dependency>
         　　<groupId>jdk.tools</groupId>
         　　<artifactId>jdk.tools</artifactId>
@@ -575,7 +574,6 @@
         　　<scope>system</scope>
         　　<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
         </dependency>
-
     </dependencies>
     <build>
         <!-- <outputDirectory>${project.basedir}/target/classes/</outputDirectory> -->
