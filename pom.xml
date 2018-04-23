@@ -582,6 +582,7 @@
                     <!-- <compilerArguments>
 						<extdirs>src\main\webapp\WEB-INF\lib</extdirs>指定外部lib
 					</compilerArguments> -->
+					<systemPath>${java.home}/../lib/tools.jar</systemPath>
                 </configuration>
             </plugin>
 
