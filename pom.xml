@@ -587,8 +587,10 @@
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
 					<executable>C:\Program Files\Java\jdk1.8.0_40\bin\javac</executable>
-					<!-- <compilerArguments> <extdirs>src\main\webapp\WEB-INF\lib</extdirs>指定外部lib 
-						</compilerArguments> -->
+					<!-- 指定外部lib -->
+					<compilerArguments>
+						<extdirs>src\main\webapp\WEB-INF\lib</extdirs>
+					</compilerArguments>
 				</configuration>
 			</plugin>
 
