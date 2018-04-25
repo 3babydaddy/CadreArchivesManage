@@ -665,7 +665,7 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>${tomcat.version}</version>
 				<configuration>
-					<url>http://192.168.71.167:8030/manager/text</url>
+					<url>http://192.168.71.161:8080/manager/text</url>
 					<server>tomcat</server>
 					<path>/${project.artifactId}</path>
 					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
