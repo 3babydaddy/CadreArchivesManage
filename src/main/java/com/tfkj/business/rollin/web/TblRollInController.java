@@ -74,7 +74,7 @@ public class TblRollInController extends BaseController {
 		}
 		tblRollInService.save(tblRollIn);
 		addMessage(redirectAttributes, "保存转入管理人员成功");
-		return "redirect:"+Global.getAdminPath()+"/terminal/rollInArchives";
+		return "redirect:"+Global.getAdminPath()+"/rollin/tblRollIn/?repage";
 	}
 	
 	

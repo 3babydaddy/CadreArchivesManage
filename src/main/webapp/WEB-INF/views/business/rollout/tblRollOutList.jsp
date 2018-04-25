@@ -33,7 +33,7 @@
 			var idStr = "";
 			var rows = getRowData();
 			if(rows.length == 0){
-				alertx("请选择记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
@@ -43,13 +43,14 @@
 					idStr += "," + rows[i].value; 
 				}
 			}
-			window.location.href = "${ctx}/rollout/tblRollOut/delete?idStr="+idStr;
+			var url = "${ctx}/rollout/tblRollOut/delete?idStr="+idStr;
+			confirmx('确定要删除选择的数据！！！', url);
 		}
 		
 		function editData(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			window.location.href = "${ctx}/rollout/tblRollOut/form?id="+rows[0].value;
@@ -58,21 +59,17 @@
 		function lookData(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			window.location.href = "${ctx}/rollout/tblRollOut/look?id="+rows[0].value;
-		}
-		
-		function clickLookData(id){
-			window.location.href = "${ctx}/rollout/tblRollOut/look?id="+id;
 		}
 		
 		//转递单
 		function relayBill(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			window.location.href = "${ctx}/order/createRelayBill?rollOutId="+rows[0].value;
@@ -82,7 +79,7 @@
 		function receiptImport(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			$("#rollOutId").val(rows[0].value);
@@ -97,10 +94,10 @@
 		function setNull(){
 			$("input[type='text']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("input[type='hidden']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -112,7 +109,9 @@
 		.table th, .table td{
 			text-align : center;
 		}
-		
+		.ul-form li label{
+			width: 115px !important;
+		}
 	</style>
 </head>
 <body>
@@ -132,23 +131,24 @@
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/rollout/tblRollOut/">转出管理人员列表</a></li>
+		<li class="active"><a href="#">转出管理人员列表</a></li>
 		<shiro:hasPermission name="rollouts:tblRollOut:edit"><li><a href="${ctx}/rollout/tblRollOut/form">转出管理人员添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblRollOut" action="${ctx}/rollout/tblRollOut/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>转出时间：</label>
+			<li><label>转出开始时间：</label>
 				<input name="startRollOutTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollOut.startRollOutTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-					至
+			</li>
+			<li><label>转出截止时间：</label>
 				<input name="endRollOutTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollOut.endRollOutTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
-			<li><label style="width:85px;">现存档单位：</label>
+			<li><label>现存档单位：</label>
 				<sys:treeselect id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollOut.saveUnit}" 
 									labelName="saveUnitName" labelValue="${tblRollOut.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect>
 			</li>
@@ -193,7 +193,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="tblRollOut">
-			<tr ondblclick="clickLookData('${tblRollOut.id}');">
+			<tr jumpURL="${ctx}/rollout/tblRollOut/look?id=${tblRollOut.id}" onmouseover="$(this).addClass('row-color');" onmouseout="$(this).removeClass('row-color');">
 				<td>
 					<input type="checkbox" value="${tblRollOut.id}" />
 				</td>

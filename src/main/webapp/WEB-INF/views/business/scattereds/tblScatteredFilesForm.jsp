@@ -64,7 +64,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交人员列表</a></li>
-		<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/form?id=${tblScatteredFiles.id}">零散材料移交人员编辑<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblScatteredFiles.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">零散材料移交人员编辑<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblScatteredFiles.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<sys:message content="${message}"/>		
 	<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">

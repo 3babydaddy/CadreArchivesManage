@@ -18,10 +18,10 @@
 		function setNull(){
 			$("input[type='text']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("input[type='hidden']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -57,6 +57,12 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		.ul-form li label{
+			width: 102px !important;
+		}
+		.ul-form li.btns{
+			padding-left: 0px !important;
+		}
 	</style>
 </head>
 <body>
@@ -67,16 +73,17 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>移交时间：</label>
+			<li><label>移交开始时间：</label>
 				<input id="startHandOverDate" name="startHandOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblScatteredFiles.startHandOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-					至
+			</li>
+			<li><label>移交截止时间：</label>
 				<input id="endHandOverDate" name="endHandOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblScatteredFiles.endHandOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
-			<li><label style="width:85px;">移交单位：</label>
+			<li><label>移交单位：</label>
 				<sys:treeselect id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
 									labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect>
 			</li>

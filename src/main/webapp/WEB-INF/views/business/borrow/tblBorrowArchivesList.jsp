@@ -32,7 +32,7 @@
 		function editData(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
@@ -42,7 +42,7 @@
 		function lookData(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
@@ -53,7 +53,7 @@
 			var idStr = "";
 			var rows = getRowData();
 			if(rows.length == 0){
-				alertx("请选择记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
@@ -64,13 +64,15 @@
 					idStr += "," + mainId; 
 				}
 			}
-			window.location.href = "${ctx}/borrow/tblBorrowArchives/delete?idStr="+idStr;
+			
+			var url = "${ctx}/borrow/tblBorrowArchives/delete?idStr="+idStr;
+			confirmx('确定要删除选择的数据！！！', url);
 		}
 		//归还
 		function giveBack(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
@@ -83,7 +85,7 @@
 			var status = "";
 			var rows = getRowData();
 			if(rows.length == 0){
-				alertx("请选择记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
@@ -101,23 +103,8 @@
 				}
 			}
 			
-			top.$.jBox.open("<div style='margin: 12px 0 0 48px;'>"+
-					"<span class='jbox-icon jbox-icon-question' style='position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;'></span>"+
-								"<span>请确定是否审核通过！！！</span></div>", "提示", 350,  126,
-			    { buttons:{"确定":true,"取消":false},
-					submit:function(v, h, f){
-						if(v){
-							//审核通过
-							status = "3";
-							window.location.href = "${ctx}/borrow/tblBorrowArchives/auditData?idStr="+idStr+"&status="+status;
-						}
-					}
-			    }
-			);
-		}
-		
-		function clickLookData(id){
-			window.location.href = "${ctx}/borrow/tblBorrowArchives/look?id="+id;
+			var url = "${ctx}/borrow/tblBorrowArchives/auditData?idStr="+idStr+"&status=3";
+			confirmx('请确定是否审核通过！！！', url);
 		}
 		
 		function getRowData(){
@@ -127,10 +114,10 @@
 		function setNull(){
 			$("input[type='text']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("input[type='hidden']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -142,6 +129,9 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		.ul-form li label{
+			width: 115px !important;
+		}
 	</style>
 </head>
 <body>
@@ -151,12 +141,13 @@
 	<form:form id="searchForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form" style="width:1192px;">
-			<li><label>借阅日期：</label>
+		<ul class="ul-form">
+			<li><label>借阅开始日期：</label>
 				<input name="startBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblBorrowArchives.startBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-					至
+			</li>
+			<li><label>借阅截止日期：</label>
 				<input name="endBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblBorrowArchives.endBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
@@ -168,11 +159,12 @@
 			<li><label>何人档案：</label>
 				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>归还日期：</label>
+			<li><label>归还开始日期：</label>
 				<input name="startBackDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblBorrowArchives.startBackDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-					至
+			</li>
+			<li><label>归还截止日期：</label>
 				<input name="endBackDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblBorrowArchives.endBackDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
@@ -186,6 +178,12 @@
 			</li>
 			<li><label>归还人：</label>
 				<form:input path="backOperator" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>状态：</label>
+				<form:select path="status" class="input-medium" style="width:220px;">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('audit_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -201,9 +199,6 @@
 	         <li><a onclick="lookData();"><i class="icon-eye-open"></i>&nbsp;查看</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a onclick="giveBack();"><i class="icon-reply"></i>&nbsp;归还</a></li>
-	        <%-- <shiro:hasAnyRoles  name="admin,user">
-	        	<li><a onclick="censorship();"><i class=" icon-share"></i>&nbsp;送审</a></li>
-	        </shiro:hasAnyRoles > --%>
 	        <shiro:hasRole name="admin">
 	        	<li><a onclick="auditData();"><i class=" icon-legal"></i>&nbsp;审核</a></li>
 	        </shiro:hasRole>
@@ -229,11 +224,11 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="tblBorrowArchives">
-			<tr ondblclick="clickLookData('${tblBorrowArchives.id}');">
+			<tr jumpURL="${ctx}/borrow/tblBorrowArchives/look?id=${tblBorrowArchives.id}" onmouseover="$(this).addClass('row-color');" onmouseout="$(this).removeClass('row-color');">
 				<td>
 					<input type="checkbox" value="${tblBorrowArchives.id},${tblBorrowArchives.status}" />
 				</td>
-				<td><a href="${ctx}/borrow/tblBorrowArchives/form?id=${tblBorrowArchives.id}"></a>
+				<td>
 					<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>

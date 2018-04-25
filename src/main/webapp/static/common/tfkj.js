@@ -14,7 +14,7 @@
         clickToSelect : true,
 //        singleSelect: true,
         pageSize : 10,
-        pageNumber : 1,
+        pageNumber : 1
         /*showExport: true,                     //是否显示导出
         exportDataType: "all",              //basic', 'all', 'selected'.
 */    }

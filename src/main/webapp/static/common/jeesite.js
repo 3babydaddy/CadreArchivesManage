@@ -16,6 +16,39 @@ $(document).ready(function() {
 	}catch(e){
 		// blank
 	}
+	
+	//点击列表的一行
+	var TimeFn = null;
+	$("td").click(function(){
+		var $td = $(this)[0];
+		// 取消上次延时未执行的方法
+	    clearTimeout(TimeFn);
+	    //执行延时
+	    TimeFn = setTimeout(function(){
+			//判断是否点击的是checkbox
+	    	if($td.children.length == 0){
+	    		var $children = $td.parentElement.children[0].children[0];
+	    		if($children != undefined && $children.type == 'checkbox'){
+	    			var flag =  $children.checked;
+	    			$children.checked = !flag;
+	    		}
+			}
+	    },300);
+	})
+	//双击列表的一行
+	$("td").dblclick(function(){
+		var $td = $(this)[0];
+		// 取消上次延时未执行的方法
+	    clearTimeout(TimeFn);
+	    //双击事件的执行代码
+	    //判断是否点击的是checkbox
+	    if($td.children.length == 0){
+	    	var jumpURL = $td.parentElement.getAttribute('jumpURL');
+	    	if(jumpURL != null){
+	    		window.location.href = jumpURL;
+	    	}
+		}
+	})
 });
 // 序列化json
 (function($){

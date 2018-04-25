@@ -691,3 +691,7 @@ span.page-list>span.btn-group{
 .search-button > .btn-primary{
     line-height: 16px;
 }
+.row-color > td{
+	background-color: skyblue !important;
+	cursor:pointer;
+}

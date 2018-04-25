@@ -19,10 +19,10 @@
 		function setNull(){
 			$("input[type='text']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("input[type='hidden']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -57,6 +57,12 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		.ul-form li label{
+			width: 102px !important;
+		}
+		.ul-form li.btns{
+			padding-left: 0px !important;
+		}
 	</style>
 </head>
 <body>
@@ -67,12 +73,13 @@
 	<form:form id="searchForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/querycountlist" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form" style="width:1192px;">
-			<li><label>借阅日期：</label>
+		<ul class="ul-form">
+			<li><label>借阅开始日期：</label>
 				<input id="startBorrowDate" name="startBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblBorrowArchives.startBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-					至
+			</li>
+			<li><label>借阅截止日期：</label>
 				<input id="endBorrowDate" name="endBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblBorrowArchives.endBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>

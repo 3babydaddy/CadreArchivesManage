@@ -23,8 +23,10 @@
 		
 		function setNull(){
 			$("input[type='text']").each(function(){
-				$(this).val("");
-			})
+				if($(this)[0].name != 'batchNum'){
+					$(this).val("");
+				}
+			});
 			//$("input[type='hidden']").each(function(){
 			//	$(this).val("");
 			//})
@@ -38,21 +40,26 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		.ul-form li label{
+			width: 115px !important;
+		}
 	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
+		<li><a href="${ctx}/rollout/tblRollOut/">转出管理信息列表</a></li>
 		<li class="active"><a href="#">转出管理人员列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblRollOutPersons" action="${ctx}/rollout/tblRollOut/personlist" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label style="width:85px;">创建时间：</label>
+			<li><label style="width:85px;">创建开始时间：</label>
 				<input name="startCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollOutPersons.startCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-					至
+			</li>
+			<li><label style="width:85px;">创建截止时间：</label>
 				<input name="endCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollOutPersons.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
@@ -63,7 +70,7 @@
 			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label style="width:85px;">单位及职务：</label>
+			<li><label>单位及职务：</label>
 				<form:input path="duty" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
 			<input type="hidden" name="mainId" value="${mainId}">

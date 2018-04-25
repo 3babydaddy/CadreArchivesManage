@@ -37,7 +37,7 @@
 			var idStr = "";
 			var rows = getRowData();
 			if(rows.length == 0){
-				alertx("请选择记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
@@ -47,13 +47,14 @@
 					idStr += "," + rows[i].value; 
 				}
 			}
-			window.location.href = "${ctx}/retiredadre/retiredCadre/delete?idStr="+idStr;
+			var url = "${ctx}/retiredadre/retiredCadre/delete?idStr="+idStr;
+			confirmx('确定要删除选择的数据！！！', url);
 		}
 		
 		function editData(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			window.location.href = "${ctx}/retiredadre/retiredCadre/form?id="+rows[0].value;
@@ -62,21 +63,17 @@
 		function lookData(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			window.location.href = "${ctx}/retiredadre/retiredCadre/look?id="+rows[0].value;
-		}
-		
-		function clickLookData(id){
-			window.location.href = "${ctx}/retiredadre/retiredCadre/look?id="+id;
 		}
 		
 		//转死亡，更改状态
 		function updateDataStatus(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			window.location.href = "${ctx}/retiredadre/retiredCadre/updateStatus?id="+rows[0].value;
@@ -85,7 +82,7 @@
 		function revokeStatus(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			window.location.href = "${ctx}/retiredadre/retiredCadre/revokeStatus?id="+rows[0].value;
@@ -108,10 +105,10 @@
 		function setNull(){
 			$("input[type='text']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("input[type='hidden']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -121,6 +118,9 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
+		}
+		.ul-form li label{
+			width: 115px !important;
 		}
 	</style>
 </head>
@@ -144,19 +144,20 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>出生日期：</label>
+			<li><label>出生开始日期：</label>
 				<input id="startBir" name="startBir" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${retiredCadre.startBir}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
-					至
-					<input id="endBir" name="endBir" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+			</li>
+			<li><label>出生截止日期：</label>
+				<input id="endBir" name="endBir" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${retiredCadre.endBir}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
 			</li>
-			<li><label style="width:75px;">编号：</label>
+			<li><label>编号：</label>
 				<form:input path="sort" htmlEscape="false" maxlength="11" class="input-medium"/>
 			</li>
-			<li><label style="width:75px;">姓名：</label>
+			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>状态：</label>
@@ -204,11 +205,11 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="retiredCadre">
-			<tr ondblclick="clickLookData('${retiredCadre.id}');">
+			<tr jumpURL="${ctx}/retiredadre/retiredCadre/look?id=${retiredCadre.id}" onmouseover="$(this).addClass('row-color');" onmouseout="$(this).removeClass('row-color');">
 				<td>
 					<input type="checkbox" value="${retiredCadre.id}" />
 				</td>
-				<td><a href="${ctx}/retiredadre/retiredCadre/form?id=${retiredCadre.id}"></a>
+				<td>
 					${retiredCadre.sort}
 				</td>
 				<td>

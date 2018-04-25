@@ -37,7 +37,7 @@
 			var idStr = "";
 			var rows = getRowData();
 			if(rows.length == 0){
-				alertx("请选择记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
@@ -48,13 +48,14 @@
 					idStr += "," + mainId; 
 				}
 			}
-			window.location.href = "${ctx}/scattereds/tblScatteredFiles/delete?idStr="+idStr;
+			var url = "${ctx}/scattereds/tblScatteredFiles/delete?idStr="+idStr;
+			confirmx('确定要删除选择的数据！！！', url);
 		}
 		
 		function editData(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
@@ -64,15 +65,11 @@
 		function lookData(){
 			var rows = getRowData();
 			if(rows.length != 1){
-				alertx("请选择一条记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
 			window.location.href = "${ctx}/scattereds/tblScatteredFiles/look?id="+mainId;
-		}
-		
-		function clickLookData(id){
-			window.location.href = "${ctx}/scattereds/tblScatteredFiles/look?id="+id;
 		}
 		
 		//审核借阅数据
@@ -81,7 +78,7 @@
 			var status = "";
 			var rows = getRowData();
 			if(rows.length == 0){
-				alertx("请选择记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
@@ -99,19 +96,8 @@
 				}
 			}
 		
-			top.$.jBox.open("<div style='margin: 12px 0 0 48px;'>"+
-					"<span class='jbox-icon jbox-icon-question' style='position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;'></span>"+
-								"<span>请确定是否审核通过！！！</span></div>", "提示", 350,  126,
-			    { buttons:{"确定":true,"取消":false},
-					submit:function(v, h, f){
-						if(v){
-							//审核通过
-							status = "3";
-							window.location.href = "${ctx}/scattereds/tblScatteredFiles/auditData?idStr="+idStr+"&status="+status;
-						}
-					}
-			    }
-			);
+			var url = "${ctx}/scattereds/tblScatteredFiles/auditData?idStr="+idStr+"&status=3";
+			confirmx('请确定是否审核通过！！！', url);
 		}
 		
 		function getRowData(){
@@ -121,10 +107,10 @@
 		function setNull(){
 			$("input[type='text']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("input[type='hidden']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -135,6 +121,9 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
+		}
+		.ul-form li label{
+			width: 115px !important;
 		}
 	</style>
 </head>
@@ -158,11 +147,12 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>移交时间：</label>
+			<li><label>移交开始时间：</label>
 				<input name="startHandOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblScatteredFiles.startHandOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-					至
+			</li>
+			<li><label>移交截止时间：</label>
 				<input name="endHandOverDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblScatteredFiles.endHandOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
@@ -177,9 +167,14 @@
 			<li><label>经手人：</label>
 				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><div style="width:243px;"></div></li>
 			<li><label>接收人：</label>
 				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>状态：</label>
+				<form:select path="status" class="input-medium" style="width:220px;">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('audit_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -196,9 +191,6 @@
 	        <li><a onclick="lookData();"><i class="icon-eye-open"></i>&nbsp;查看</a></li>
 	        <li><a onclick="delData();"><i class="icon-remove"></i>&nbsp;删除</a></li>
 	        <li><a id="btnImport"><i class="icon-upload-alt"></i>&nbsp;导入</a></li>
-	       <%--  <shiro:hasAnyRoles  name="admin,user">
-	        	<li><a onclick="censorship();"><i class=" icon-share"></i>&nbsp;送审</a></li>
-	        </shiro:hasAnyRoles > --%>
 	        <shiro:hasRole name="admin">
 	        	<li><a onclick="auditData();"><i class=" icon-legal"></i>&nbsp;审核</a></li>
 	        </shiro:hasRole>
@@ -221,7 +213,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="tblScatteredFiles">
-			<tr ondblclick="clickLookData('${tblScatteredFiles.id}');">
+			<tr jumpURL="${ctx}/scattereds/tblScatteredFiles/look?id=${tblScatteredFiles.id}" onmouseover="$(this).addClass('row-color');" onmouseout="$(this).removeClass('row-color');">
 				<td>
 					<input type="checkbox" value="${tblScatteredFiles.id},${tblScatteredFiles.status}" />
 				</td>

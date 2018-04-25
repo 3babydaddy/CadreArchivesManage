@@ -18,10 +18,10 @@
 		function setNull(){
 			$("input[type='text']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("input[type='hidden']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -55,6 +55,12 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		.ul-form li label{
+			width: 102px !important;
+		}
+		.ul-form li.btns{
+			padding-left: 0px !important;
+		}
 	</style>
 </head>
 <body>
@@ -65,16 +71,17 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>转入时间：</label>
+			<li><label>转入开始时间：</label>
 				<input id="startCreateDate" name="startCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollInPersons.startCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-					至
+			</li>
+			<li><label>转入截止时间：</label>
 				<input id="endCreateDate" name="endCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblRollInPersons.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
-			<li><label style="width:85px;">原存档单位：</label>
+			<li><label>原存档单位：</label>
 				<sys:treeselect id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollInPersons.beforeUnit}" 
 									labelName="beforeUnitName" labelValue="${tblRollInPersons.beforeUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect>
 			</li>

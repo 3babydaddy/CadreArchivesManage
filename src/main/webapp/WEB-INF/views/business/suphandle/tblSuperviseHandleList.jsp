@@ -37,7 +37,7 @@
 			var idStr = "";
 			var rows = getRowData();
 			if(rows.length == 0){
-				alertx("请选择记录");
+				alertx("请选择一条数据");
 				return;
 			}
 			for(var i = 0; i < rows.length; i++){
@@ -47,7 +47,8 @@
 					idStr += "," + rows[i].value; 
 				}
 			}
-			window.location.href = "${ctx}/suphandle/tblSuperviseHandle/delete?idStr="+idStr;
+			var url = "${ctx}/suphandle/tblSuperviseHandle/delete?idStr="+idStr;
+			confirmx('确定要删除选择的数据！！！', url);
 		}
 		
 		function getRowData(){
@@ -57,10 +58,10 @@
 		function setNull(){
 			$("input[type='text']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("input[type='hidden']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -76,6 +77,9 @@
 			width: 46px;
 			text-align: center;
 			border-radius: 20%;
+		}
+		.ul-form li label{
+			width: 115px !important;
 		}
 	</style>
 </head>
@@ -99,11 +103,12 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>出生日期：</label>
+			<li><label>出生开始日期：</label>
 				<input name="startBirthday" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblSuperviseHandle.startBirthday}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-					至
+			</li>
+			<li><label>出生截止日期：</label>
 				<input name="endBirthday" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblSuperviseHandle.endBirthday}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
@@ -111,14 +116,15 @@
 			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label style="width:85px;">单位及职务：</label>
+			<li><label>单位及职务：</label>
 				<form:input path="unitDuty" htmlEscape="false" maxlength="128" class="input-medium"/>
 			</li>
-			<li><label>提档时间：</label>
+			<li><label>提档开始时间：</label>
 				<input name="startRaisedTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblSuperviseHandle.startRaisedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-					至
+			</li>
+			<li><label>提档截止时间：</label>
 				<input name="endRaisedTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblSuperviseHandle.endRaisedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
@@ -161,7 +167,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="tblSuperviseHandle">
-			<tr>
+			<tr onmouseover="$(this).addClass('row-color');" onmouseout="$(this).removeClass('row-color');">
 				<td>
 					<input type="checkbox" value="${tblSuperviseHandle.id}" />
 				</td>

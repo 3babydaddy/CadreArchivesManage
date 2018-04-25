@@ -32,10 +32,14 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		.ul-form li label{
+			width: 115px !important;
+		}
 	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
+		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交信息列表</a></li>
 		<li class="active"><a href="#">零散材料移交人员列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblHandOverFiles" action="${ctx}/scattereds/tblScatteredFiles/personlist" method="post" class="breadcrumb form-search">
@@ -53,7 +57,6 @@
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			</div>
-			<li class="clearfix"></li>
 		</ul>
 	</form:form>
 	<sys:message content="${message}"/>

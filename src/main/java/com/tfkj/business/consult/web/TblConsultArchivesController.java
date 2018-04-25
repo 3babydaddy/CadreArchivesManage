@@ -70,7 +70,7 @@ public class TblConsultArchivesController extends BaseController {
 		}
 		tblConsultArchivesService.save(tblConsultArchives);
 		addMessage(redirectAttributes, "保存查阅档案成功");
-		return "redirect:"+Global.getAdminPath()+"/terminal/consult";
+		return "redirect:"+Global.getAdminPath()+"/consult/tblConsultArchives/?repage";
 	}
 	
 	@RequestMapping(value = "saveTerminal")

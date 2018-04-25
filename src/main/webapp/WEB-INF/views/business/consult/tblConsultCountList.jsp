@@ -18,10 +18,10 @@
 		function setNull(){
 			$("input[type='text']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("input[type='hidden']").each(function(){
 				$(this).val("");
-			})
+			});
 			$("select").val("");
 			//$("select").each(function(){
 			//	$(this).select2("val","");
@@ -56,6 +56,12 @@
 		.table th, .table td{
 			text-align : center;
 		}
+		.ul-form li label{
+			width: 102px !important;
+		}
+		.ul-form li.btns{
+			padding-left: 0px !important;
+		}
 	</style>
 </head>
 <body>
@@ -66,11 +72,12 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>查阅日期：</label>
+			<li><label>查阅开始日期：</label>
 				<input id="startBorrowDate" name="startBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblConsultArchives.startBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-					至
+			</li>
+			<li><label>查阅截止日期：</label>
 				<input id="endBorrowDate" name="endBorrowDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblConsultArchives.endBorrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
@@ -80,14 +87,13 @@
 									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect>
 			</li>
 			<li><label>查阅人：</label>
-				<form:input path="perStr" htmlEscape="false" maxlength="64" style="width:190px;" class="input-medium"/>
+				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 				<li class="btns"><input id="btnExport" class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
 			</div>
-			<li class="clearfix"></li>
 		</ul>
 	</form:form>
 	
