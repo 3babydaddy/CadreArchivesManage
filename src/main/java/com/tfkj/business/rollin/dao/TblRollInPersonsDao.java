@@ -5,6 +5,7 @@ package com.tfkj.business.rollin.dao;
 
 import java.util.List;
 
+
 import com.tfkj.business.rollin.entity.TblRollInPersons;
 import com.tfkj.business.rollin.entity.TblRollInPersonsExport;
 import com.tfkj.framework.core.persistence.CrudDao;
@@ -22,5 +23,5 @@ public interface TblRollInPersonsDao extends CrudDao<TblRollInPersons> {
 	
 	List<TblRollInPersonsExport> queryCountList(TblRollInPersons tblRollInPersons);
 	
-	int querySum();
+	int querySum(TblRollInPersons tblRollInPersons);
 }

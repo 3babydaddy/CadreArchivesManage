@@ -56,11 +56,25 @@
 		.table th, .table td{
 			text-align : center;
 		}
-		.ul-form li label{
-			width: 102px !important;
-		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
+		}
+		.ul-form li label{
+			width: 161px !important;
+		}
+		body {
+			font-family: "微软雅黑";
+			font-size:120%;
+		}
+		#btnCancel,#btnSubmit,#btnExport{
+			font-size : 150%;
+			white-space:nowrap;
+			overflow:hidden;
+		}
+		a,th,td,label,select{
+			font-size : 120%;
+			white-space:nowrap;
+			overflow:hidden;
 		}
 	</style>
 </head>
@@ -92,7 +106,7 @@
 			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 				<li class="btns"><input id="btnExport" class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
 			</div>
 			<li class="clearfix"></li>

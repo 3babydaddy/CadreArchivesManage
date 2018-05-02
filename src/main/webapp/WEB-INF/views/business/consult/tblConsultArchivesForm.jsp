@@ -59,10 +59,12 @@
 				delFlag.val("1");
 				$(obj).html("&divide;").attr("title", "撤销删除");
 				//$(obj).parent().parent().addClass("error");
+				$(obj).parent()[0].bgColor='#fadfdd';
 			}else if(delFlag.val() == "1"){
 				delFlag.val("0");
 				$(obj).html("&times;").attr("title", "删除");
-				$(obj).parent().parent().removeClass("error");
+				//$(obj).parent().parent().removeClass("error");
+				$(obj).parent()[0].bgColor='';
 			}
 		}
 		function delRowPer(obj, prefix){
@@ -79,10 +81,12 @@
 				delFlag.val("1");
 				$(obj).html("&divide;").attr("title", "撤销删除");
 				//$(obj).parent().parent().addClass("error");
+				$(obj).parent()[0].bgColor='#fadfdd';
 			}else if(delFlag.val() == "1"){
 				delFlag.val("0");
 				$(obj).html("&times;").attr("title", "删除");
 				//$(obj).parent().parent().removeClass("error");
+				$(obj).removeClass("error");
 			}
 		}
 		

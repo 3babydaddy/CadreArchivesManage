@@ -55,11 +55,25 @@
 		.table th, .table td{
 			text-align : center;
 		}
-		.ul-form li label{
-			width: 102px !important;
-		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
+		}
+		.ul-form li label{
+			width: 161px !important;
+		}
+		body {
+			font-family: "微软雅黑";
+			font-size:120%;
+		}
+		#btnCancel,#btnSubmit,#btnExport{
+			font-size : 150%;
+			white-space:nowrap;
+			overflow:hidden;
+		}
+		a,th,td,label,select{
+			font-size : 120%;
+			white-space:nowrap;
+			overflow:hidden;
 		}
 	</style>
 </head>
@@ -88,9 +102,15 @@
 			<li><label>接收人：</label>
 				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
+			<li><label>状态：</label>
+				<form:select path="status" class="input-medium" style="width:220px;">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('audit_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 				<li class="btns"><input id="btnExport" class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
 			</div>
 			<li class="clearfix"></li>
@@ -107,6 +127,7 @@
 				<th>原存档单位</th>
 				<th>接收人</th>
 				<th>材料份数</th>
+				<th>状态</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -132,6 +153,9 @@
 				</td>
 				<td>
 					${tblRollInPersons.filesNo}
+				</td>
+				<td>
+					${fns:getDictLabel(tblRollInPersons.status, 'audit_status', '')}
 				</td>
 			</tr>
 		</c:forEach>

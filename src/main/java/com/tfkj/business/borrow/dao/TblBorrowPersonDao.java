@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.tfkj.business.borrow.entity.TblBorrowArchives;
 import com.tfkj.business.borrow.entity.TblBorrowExport;
 import com.tfkj.business.borrow.entity.TblBorrowPerson;
 import com.tfkj.framework.core.persistence.CrudDao;
@@ -22,5 +23,5 @@ public interface TblBorrowPersonDao extends CrudDao<TblBorrowPerson> {
 	
 	List<TblBorrowPerson> queryPerInfoByTar(@Param("export") TblBorrowExport TblBorrowExport);
 	
-	int querySum();
+	int querySum(@Param("borrow") TblBorrowArchives tblBorrowArchives);
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.tfkj.business.consult.entity.TblCheckPerson;
+import com.tfkj.business.consult.entity.TblConsultArchives;
 import com.tfkj.business.consult.entity.TblConsultExport;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
@@ -22,5 +23,5 @@ public interface TblCheckPersonDao extends CrudDao<TblCheckPerson> {
 	
 	List<TblCheckPerson> queryPerInfoByTar(@Param("export") TblConsultExport tblConsultExport);
 
-	int querySum();
+	int querySum(@Param("consult") TblConsultArchives tblConsultArchives);
 }

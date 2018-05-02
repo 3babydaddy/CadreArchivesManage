@@ -18,6 +18,7 @@ import com.tfkj.business.rollin.entity.TblRollInPersonsExport;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.system.dao.DictDao;
 
 /**
  * 转入管理人员Service
@@ -30,6 +31,8 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 
 	@Autowired
 	private TblRollInPersonsDao tblRollInPersonsDao;
+	@Autowired
+	private DictDao dictDao;
 	
 	public TblRollIn get(String id) {
 		TblRollIn tblRollIn = super.get(id);
@@ -122,7 +125,7 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 			perList.get(i).setXh((page.getPageNo()-1)*30+(perList.size()-i)+"");
 		}
 		//材料总数
-		int filesNo = tblRollInPersonsDao.querySum();
+		int filesNo = tblRollInPersonsDao.querySum(tblRollInPersons);
 		//第一行数据
 		TblRollInPersons info = new TblRollInPersons();
 		info.setXh("合计");
@@ -136,16 +139,16 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 	
 	public List<TblRollInPersonsExport> queryCountList(TblRollInPersons tblRollInPersons) {
 		List<TblRollInPersonsExport> perList = tblRollInPersonsDao.queryCountList(tblRollInPersons);
-		//材料总数
-		long filesNo = 0;
 		for(int i = 0; i < perList.size(); i++){
 			perList.get(i).setXh((perList.size()-i)+"");
-			filesNo += (perList.get(i).getFilesNo() == null ? 0 : perList.get(i).getFilesNo());
+			perList.get(i).setStatus(dictDao.getLabelByValue(perList.get(i).getStatus(), "audit_status"));
 		}
+		//材料总数
+		int filesNo = tblRollInPersonsDao.querySum(tblRollInPersons);
 		//第一行数据
 		TblRollInPersonsExport info = new TblRollInPersonsExport();
 		info.setXh("合计");
-		info.setFilesNo(filesNo);
+		info.setFilesNo((long)filesNo);
 		perList.add(info);
 		
 		Collections.reverse(perList);

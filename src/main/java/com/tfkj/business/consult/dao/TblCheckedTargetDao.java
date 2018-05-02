@@ -3,7 +3,10 @@
  */
 package com.tfkj.business.consult.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.tfkj.business.consult.entity.TblCheckedTarget;
+import com.tfkj.business.consult.entity.TblConsultArchives;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 
@@ -15,6 +18,6 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 @MyBatisDao
 public interface TblCheckedTargetDao extends CrudDao<TblCheckedTarget> {
 	
-	int querySum();
+	int querySum(@Param("consult") TblConsultArchives tblConsultArchives);
 	
 }

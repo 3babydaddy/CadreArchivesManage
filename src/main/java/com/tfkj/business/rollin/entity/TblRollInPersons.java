@@ -38,6 +38,7 @@ public class TblRollInPersons extends DataEntity<TblRollInPersons> {
 	private String beforeUnit;		// 原存档单位
 	private String beforeUnitName;
 	private String recipient;		// 接收人
+	private String status;
 	private String xh;
 	
 	public TblRollInPersons() {
@@ -194,6 +195,14 @@ public class TblRollInPersons extends DataEntity<TblRollInPersons> {
 
 	public void setRecipient(String recipient) {
 		this.recipient = recipient;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@ExcelField(title = "序号", align = 2, sort = 10)

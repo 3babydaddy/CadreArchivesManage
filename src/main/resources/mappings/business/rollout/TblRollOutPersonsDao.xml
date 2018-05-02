@@ -263,6 +263,29 @@
 	<select id="querySum" resultType="java.lang.Integer">
 		select sum(files_no) from 
 			tbl_roll_out_persons
-		where main_id in (select id from tbl_roll_out where del_flag = '0') and del_flag = '0'
+		where del_flag = '0' 
+		  and main_id in (select b.id from tbl_roll_out b
+		  					where b.del_flag = '0'
+		  					<if test="startCreateDate != null and startCreateDate != ''">
+							<![CDATA[
+								AND b.roll_out_time >= #{startCreateDate}
+							]]>
+							</if>
+							<if test="endCreateDate != null and endCreateDate != ''">
+							<![CDATA[
+								AND b.roll_out_time <= #{endCreateDate}
+							]]>
+							</if>
+							<if test="recipient != null and recipient != ''">
+							<![CDATA[
+								AND b.recipient like concat('%', #{recipient}, '%')
+							]]>
+							</if>
+							<if test="saveUnit != null and saveUnit != ''">
+							<![CDATA[
+								AND b.save_unit = #{saveUnit}
+							]]>
+							</if>
+		  				) 
 	</select>
 </mapper>

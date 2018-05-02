@@ -3,6 +3,11 @@
  */
 package com.tfkj.framework.system.web;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +69,7 @@ public class NoticeToDoController extends BaseController {
 			map1.put("url", "/consult/tblConsultArchives/list");
 			map1.put("msg", "查阅管理有待审核的数据,请尽快处理");
 			mapList.add(map1);
+			playSound();
 		}
 		//借阅数据
 		TblBorrowArchives tblBorrowArchives = new TblBorrowArchives();
@@ -75,6 +81,7 @@ public class NoticeToDoController extends BaseController {
 			map2.put("url", "/borrow/tblBorrowArchives/list");
 			map2.put("msg", "借阅管理有待审核的数据,请尽快处理");
 			mapList.add(map2);
+			playSound();
 		}
 		//转入数据
 		TblRollIn tblRollIn = new TblRollIn();
@@ -86,6 +93,7 @@ public class NoticeToDoController extends BaseController {
 			map3.put("url", "/rollin/tblRollIn/list");
 			map3.put("msg", "转入管理有待审核的数据,请尽快处理");
 			mapList.add(map3);
+			playSound();
 		}
 		//零散材料数据
 		TblScatteredFiles tblScatteredFiles = new TblScatteredFiles();
@@ -97,8 +105,24 @@ public class NoticeToDoController extends BaseController {
 			map4.put("url", "/scattereds/tblScatteredFiles/list");
 			map4.put("msg", "零散材料管理有待审核的数据,请尽快处理");
 			mapList.add(map4);
+			playSound();
 		}
 		
 		return mapList;
 	}
+	
+	private void playSound(){
+		try {
+			File f = new File(this.getClass().getResource("/templet/msgsound.wav").getPath());
+			@SuppressWarnings("deprecation")
+			URL cb = f.toURL();
+			AudioClip aau = Applet.newAudioClip(cb);
+			//aau.loop();//循环播放
+			aau.play(); //单曲 播放
+			//aau.stop(); //停止播放
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

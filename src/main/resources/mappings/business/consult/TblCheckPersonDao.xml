@@ -164,6 +164,36 @@
 	<select id="querySum" resultType="java.lang.Integer">
 		select count(*) from 
 			tbl_check_person
-		where main_id in (select id from tbl_consult_archives where del_flag = '0') and del_flag = '0'
+		where del_flag = '0' 
+		  and main_id in (select a.id from tbl_consult_archives a where 
+							del_flag = '0'
+							<if test="consult.startBorrowDate != null and consult.startBorrowDate != ''">
+							<![CDATA[
+								AND a.borrow_date >= #{consult.startBorrowDate}
+							]]>	
+							</if>
+							<if test="consult.endBorrowDate != null and consult.endBorrowDate != ''">
+							<![CDATA[
+								AND a.borrow_date <= #{consult.endBorrowDate}
+							]]>	
+							</if>
+							<if test="consult.consultUnit != null and consult.consultUnit != ''">
+								AND a.consult_unit like concat('%', #{consult.consultUnit}, '%')
+							</if>
+							<if test="consult.tarStr != null and consult.tarStr != ''">
+								AND a.id in (select main_id from tbl_checked_target where main_id = a.id 
+												and del_flag = '0' and name like concat('%', #{consult.tarStr}, '%'))
+							</if>
+							<if test="consult.perStr != null and consult.perStr != ''">
+								AND a.id in (select main_id from tbl_check_person where main_id = a.id 
+												and del_flag = '0' and name like concat('%', #{consult.perStr}, '%'))
+							</if>
+							<if test="consult.operator != null and consult.operator != ''">
+								AND a.operator = #{consult.operator}
+							</if>
+							<if test="consult.status != null and consult.status != ''">
+								AND a.status = #{consult.status}
+							</if>
+						) 
 	</select>
 </mapper>

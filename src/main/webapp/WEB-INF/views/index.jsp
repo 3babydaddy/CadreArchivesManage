@@ -285,8 +285,8 @@ ul li {
 	
 	//提示管理员有新的数据需要审核
     <shiro:hasRole name="admin">
-    	//setInterval(function(){
-    	setTimeout(function(){
+    	setInterval(function(){
+    	//setTimeout(function(){
     		//$.jBox.closeMessager();
 			//系统提供的不好用
     		var len = $(".jbox-close").length;
@@ -303,7 +303,7 @@ ul li {
 		            success: function (data) {
 		            	for(var i = 0; i < data.length; i++){
 		            		$.jBox.messager('<div style="margin: 18px 0 0 48px;"><span class="jbox-icon jbox-icon-info" style="position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;"></span>'
-	            					+'<a href="${ctx}/'+data[i].url+'" target="mainFrame" >'+data[i].msg+'</a></div>', '提示', 0, 
+	            					+'<a href="${ctx}/'+data[i].url+'" target="mainFrame" ><font style="font-size:120%;">'+data[i].msg+'</font></a></div>', '提示', 0, 
 	            					{ height: 110,
 	            					  closed: function () { //手动关闭回调函数
 	            						  var tem = $(".jbox-close").length;

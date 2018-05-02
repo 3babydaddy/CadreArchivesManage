@@ -189,6 +189,11 @@
 			             	#{item.mainId}
 			    	</foreach>
 			</if>
+			<if test="status != null and status != ''">
+			<![CDATA[
+				AND a.status = #{status}
+			]]>	
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

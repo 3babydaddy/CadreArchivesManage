@@ -23,6 +23,7 @@ import com.tfkj.business.borrow.entity.TblGiveBack;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.system.dao.DictDao;
 
 /**
  * 借阅管理Service
@@ -41,6 +42,8 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 	private TblBorrowTargetDao tblBorrowTargetDao;
 	@Autowired
 	private TblGiveBackDao tblGiveBackDao;
+	@Autowired
+	private DictDao dictDao;
 	
 	public TblBorrowArchives get(String id) {
 		TblBorrowArchives tblBorrowArchives = super.get(id);
@@ -228,14 +231,14 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 			archList.get(i).setBorrowPerNum(perList.size()+"");
 		}
 		//总被查阅人数
-		int tarNum = tblBorrowTargetDao.querySum();
+		int tarNum = tblBorrowTargetDao.querySum(tblBorrowArchives);
 		//总查阅人数
-		int perNum = tblBorrowPersonDao.querySum();
+		int perNum = tblBorrowPersonDao.querySum(tblBorrowArchives);
 		//第一行数据
 		TblBorrowArchives info = new TblBorrowArchives();
 		info.setXh("合计");
-		info.setBorrowTarNum(tarNum+"");
-		info.setBorrowPerNum(perNum+"");
+		info.setBorrowTarNum(String.valueOf(tarNum));
+		info.setBorrowPerNum(String.valueOf(perNum));
 		//手动添加一个，为页面展示的rowspan用
 		List<TblBorrowTarget> tarTemList = new ArrayList<>();
 		tarTemList.add(new TblBorrowTarget());
@@ -267,18 +270,19 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 					perStr += "," + per.getName();
 				}
 			}
+			bExportList.get(i).setStatus(dictDao.getLabelByValue(bExportList.get(i).getStatus(), "audit_status"));
 			bExportList.get(i).setBorrowPerNum(perList.size()+"");
 			bExportList.get(i).setPerStr(perStr);
 		}
 		//总被查阅人数
-		int tarNum = tblBorrowTargetDao.querySum();
+		int tarNum = tblBorrowTargetDao.querySum(tblBorrowArchives);
 		//总查阅人数
-		int perNum = tblBorrowPersonDao.querySum();
+		int perNum = tblBorrowPersonDao.querySum(tblBorrowArchives);
 		//第一行数据
 		TblBorrowExport info = new TblBorrowExport();
 		info.setXh("合计");
-		info.setBorrowTarNum(tarNum+"");
-		info.setBorrowPerNum(perNum+"");
+		info.setBorrowTarNum(String.valueOf(tarNum));
+		info.setBorrowPerNum(String.valueOf(perNum));
 		bExportList.add(info);
 		
 		Collections.reverse(bExportList);

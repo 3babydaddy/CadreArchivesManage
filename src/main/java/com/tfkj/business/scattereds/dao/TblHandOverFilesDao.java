@@ -25,6 +25,6 @@ public interface TblHandOverFilesDao extends CrudDao<TblHandOverFiles> {
 	
 	List<TblHandOverFilesExport> getHandOverList(@Param("scatteredList") List<TblScatteredFiles> scatteredList);
 	
-	String querySum();
+	List<TblHandOverFiles> querySum(@Param("scattered") TblScatteredFiles scattered);
 	
 }

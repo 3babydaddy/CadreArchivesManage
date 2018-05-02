@@ -39,6 +39,7 @@ public class TblConsultExport extends DataEntity<TblConsultArchives> {
 	
 	private String unit;
 	private String mainId;
+	private String status;
 	
 	public String getXh() {
 		return xh;
@@ -81,6 +82,12 @@ public class TblConsultExport extends DataEntity<TblConsultArchives> {
 	}
 	public void setMainId(String mainId) {
 		this.mainId = mainId;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

@@ -130,7 +130,21 @@
 			text-align : center;
 		}
 		.ul-form li label{
-			width: 115px !important;
+			width: 161px !important;
+		}
+		body {
+			font-family: "微软雅黑";
+			font-size:120%;
+		}
+		#btnCancel,#btnSubmit{
+			font-size : 150%;
+			white-space:nowrap;
+			overflow:hidden;
+		}
+		a,th,td,label,select{
+			font-size : 120%;
+			white-space:nowrap;
+			overflow:hidden;
 		}
 	</style>
 </head>
@@ -156,9 +170,6 @@
 				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblBorrowArchives.consultUnit}" 
 									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表"></sys:treeselect>
 			</li>
-			<li><label>何人档案：</label>
-				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
 			<li><label>归还开始日期：</label>
 				<input name="startBackDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblBorrowArchives.startBackDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -168,6 +179,9 @@
 				<input name="endBackDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblBorrowArchives.endBackDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
+			</li>
+			<li><label>何人档案：</label>
+				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>经办人：</label>
 				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-medium"/>
@@ -187,7 +201,7 @@
 			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			</div>
 		</ul>
 	</form:form>

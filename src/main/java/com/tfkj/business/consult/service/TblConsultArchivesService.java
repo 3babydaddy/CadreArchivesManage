@@ -21,6 +21,7 @@ import com.tfkj.business.consult.entity.TblConsultExport;
 import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.system.dao.DictDao;
 
 /**
  * 查阅档案Service
@@ -37,6 +38,8 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 	private TblCheckedTargetDao tblCheckedTargetDao;
 	@Autowired
 	private TblCheckPersonDao tblCheckPersonDao;
+	@Autowired
+	private DictDao dictDao;
 	
 	public TblConsultArchives get(String id) {
 		TblConsultArchives tblConsultArchives = super.get(id);
@@ -210,14 +213,14 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 			archList.get(i).setConsultPerNum(perList.size()+"");
 		}
 		//总被查阅人数
-		int tarNum = tblCheckedTargetDao.querySum();
+		int tarNum = tblCheckedTargetDao.querySum(tblConsultArchives);
 		//总查阅人数
-		int perNum = tblCheckPersonDao.querySum();
+		int perNum = tblCheckPersonDao.querySum(tblConsultArchives);
 		//第一行数据
 		TblConsultArchives info = new TblConsultArchives();
 		info.setXh("合计");
-		info.setConsultTarNum(tarNum+"");
-		info.setConsultPerNum(perNum+"");
+		info.setConsultTarNum(String.valueOf(tarNum));
+		info.setConsultPerNum(String.valueOf(perNum));
 		//手动添加一个，为页面展示的rowspan用
 		List<TblCheckedTarget> tarTemList = new ArrayList<>();
 		tarTemList.add(new TblCheckedTarget());
@@ -249,18 +252,19 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 					perStr += "," + per.getName();
 				}
 			}
+			conExportList.get(i).setStatus(dictDao.getLabelByValue(conExportList.get(i).getStatus(), "audit_status"));
 			conExportList.get(i).setConsultPerNum(perList.size()+"");
 			conExportList.get(i).setPerStr(perStr);
 		}
 		//总被查阅人数
-		int tarNum = tblCheckedTargetDao.querySum();
+		int tarNum = tblCheckedTargetDao.querySum(tblConsultArchives);
 		//总查阅人数
-		int perNum = tblCheckPersonDao.querySum();
+		int perNum = tblCheckPersonDao.querySum(tblConsultArchives);
 		//第一行数据
 		TblConsultExport info = new TblConsultExport();
 		info.setXh("合计");
-		info.setConsultTarNum(tarNum+"");
-		info.setConsultPerNum(perNum+"");
+		info.setConsultTarNum(String.valueOf(tarNum));
+		info.setConsultPerNum(String.valueOf(perNum));
 		conExportList.add(info);
 		
 		Collections.reverse(conExportList);

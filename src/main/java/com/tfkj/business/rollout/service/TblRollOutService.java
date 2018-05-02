@@ -102,7 +102,7 @@ public class TblRollOutService extends CrudService<TblRollOutDao, TblRollOut> {
 			perList.get(i).setXh((page.getPageNo()-1)*30+(perList.size()-i)+"");
 		}
 		//材料总数
-		int filesNum = tblRollOutPersonsDao.querySum();
+		int filesNum = tblRollOutPersonsDao.querySum(tblRollOutPersons);
 		//第一行数据
 		TblRollOutPersons info = new TblRollOutPersons();
 		info.setXh("合计");
@@ -116,18 +116,17 @@ public class TblRollOutService extends CrudService<TblRollOutDao, TblRollOut> {
 	
 	public List<TblRollOutPersonsExport> queryCountList(TblRollOutPersons tblRollOutPersons) {
 		List<TblRollOutPersonsExport> perList = tblRollOutPersonsDao.queryCountList(tblRollOutPersons);
-		//材料总数
-		long filesNum = 0;
 		for(int i = 0; i < perList.size(); i++){
 			perList.get(i).setXh((perList.size()-i)+"");
-			filesNum += (perList.get(i).getFilesNo() == null ? 0 : perList.get(i).getFilesNo());
 			perList.get(i).setOutType(dictDao.getLabelByValue(perList.get(i).getOutType(), "roll_out_type"));
 			perList.get(i).setReason(dictDao.getLabelByValue(perList.get(i).getReason(), "roll_out_reason"));
 		}
+		//材料总数
+		int filesNum = tblRollOutPersonsDao.querySum(tblRollOutPersons);
 		//第一行数据
 		TblRollOutPersonsExport info = new TblRollOutPersonsExport();
 		info.setXh("合计");
-		info.setFilesNo(filesNum);
+		info.setFilesNo((long)filesNum);
 		perList.add(info);
 		
 		Collections.reverse(perList);  

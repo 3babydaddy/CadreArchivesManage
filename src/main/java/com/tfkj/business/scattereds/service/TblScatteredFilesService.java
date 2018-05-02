@@ -165,19 +165,19 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 			info.setHandOverNum(handOverNum+"");
 			info.setFileNum(fileNum+"");
 		}
-		String[] numArray = tblHandOverFilesDao.querySum().split(",");
+		List<TblHandOverFiles> list= tblHandOverFilesDao.querySum(tblScatteredFiles);
 		//移交总人数
-		String handOversNum = numArray[0];
+		int handOversNum = list.size();
 		//移交总材料数
-		String filesNum = "0";
-		if((!"0".equals(handOversNum)) && (numArray.length > 1)){
-			filesNum = numArray[1];
+		long filesNum = 0;
+		for(TblHandOverFiles info : list){
+			filesNum += info.getOriginalNo();
 		}
 		//新增合计数据
 		TblScatteredFiles scatteredFiles = new TblScatteredFiles();
 		scatteredFiles.setXh("合计");
-		scatteredFiles.setHandOverNum(handOversNum);
-		scatteredFiles.setFileNum(filesNum);
+		scatteredFiles.setHandOverNum(String.valueOf(handOversNum));
+		scatteredFiles.setFileNum(String.valueOf(filesNum));
 		scatteredList.add(scatteredFiles);
 		
 		Collections.reverse(scatteredList);  

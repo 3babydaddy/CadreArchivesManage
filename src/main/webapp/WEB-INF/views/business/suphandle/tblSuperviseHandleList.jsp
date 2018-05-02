@@ -79,7 +79,21 @@
 			border-radius: 20%;
 		}
 		.ul-form li label{
-			width: 115px !important;
+			width: 161px !important;
+		}
+		body {
+			font-family: "微软雅黑";
+			font-size:120%;
+		}
+		#btnCancel,#btnSubmit{
+			font-size : 150%;
+			white-space:nowrap;
+			overflow:hidden;
+		}
+		a,th,td,label,select{
+			font-size : 120%;
+			white-space:nowrap;
+			overflow:hidden;
 		}
 	</style>
 </head>
@@ -116,9 +130,6 @@
 			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>单位及职务：</label>
-				<form:input path="unitDuty" htmlEscape="false" maxlength="128" class="input-medium"/>
-			</li>
 			<li><label>提档开始时间：</label>
 				<input name="startRaisedTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${tblSuperviseHandle.startRaisedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -129,6 +140,9 @@
 					value="<fmt:formatDate value="${tblSuperviseHandle.endRaisedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
+			<li><label>单位及职务：</label>
+				<form:input path="unitDuty" htmlEscape="false" maxlength="128" class="input-medium"/>
+			</li>
 			<li><label>状态：</label>
 				<form:select path="status" class="input-medium" style="width:220px;">
 					<form:option value="" label=""/>
@@ -137,7 +151,7 @@
 			</li>
 			<div style="float:right;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-				<li class="btns"><input class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			</div>
 			<li class="clearfix"></li>
 		</ul>

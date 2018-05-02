@@ -3,6 +3,9 @@
  */
 package com.tfkj.business.borrow.dao;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.tfkj.business.borrow.entity.TblBorrowArchives;
 import com.tfkj.business.borrow.entity.TblBorrowTarget;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
@@ -15,6 +18,6 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 @MyBatisDao
 public interface TblBorrowTargetDao extends CrudDao<TblBorrowTarget> {
 	
-	int querySum();
+	int querySum(@Param("borrow") TblBorrowArchives tblBorrowArchives);
 	
 }

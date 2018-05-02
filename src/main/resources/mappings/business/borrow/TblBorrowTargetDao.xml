@@ -143,6 +143,60 @@
 	<select id="querySum" resultType="java.lang.Integer">
 		select count(*) from 
 			tbl_borrow_target
-		where main_id in (select id from tbl_borrow_archives where del_flag = '0') and del_flag = '0'
+		where del_flag = '0' 
+		  and main_id in (select a.id from tbl_borrow_archives a
+							where del_flag = '0'
+							<if test="borrow.startBorrowDate != null and borrow.startBorrowDate != ''">
+							<![CDATA[
+								AND a.borrow_date >= #{borrow.startBorrowDate}
+							]]>
+							</if>
+							<if test="borrow.endBorrowDate != null and borrow.endBorrowDate != ''">
+							<![CDATA[
+								AND a.borrow_date <= #{borrow.endBorrowDate}
+							]]>
+							</if>
+							<if test="borrow.consultUnit != null and borrow.consultUnit != ''">
+								AND a.consult_unit LIKE 
+									<if test="dbName == 'oracle'">'%'||#{borrow.consultUnit}||'%'</if>
+									<if test="dbName == 'mssql'">'%'+#{borrow.consultUnit}+'%'</if>
+									<if test="dbName == 'mysql'">concat('%',#{borrow.consultUnit},'%')</if>
+							</if>
+							<if test="borrow.operator != null and borrow.operator != ''">
+								AND a.operator LIKE 
+									<if test="dbName == 'oracle'">'%'||#{borrow.operator}||'%'</if>
+									<if test="dbName == 'mssql'">'%'+#{borrow.operator}+'%'</if>
+									<if test="dbName == 'mysql'">concat('%',#{borrow.operator},'%')</if>
+							</if>
+							<if test="borrow.tarStr != null and borrow.tarStr != ''">
+								AND a.id in (select main_id from tbl_borrow_target where main_id = a.id 
+											and del_flag= '0' and name like concat('%', #{borrow.tarStr}, '%'))
+							</if>
+							<if test="borrow.perStr != null and borrow.perStr != ''">
+								AND a.id in (select main_id from tbl_borrow_person where main_id = a.id 
+											and del_flag = '0' and name like concat('%', #{borrow.perStr}, '%'))
+							</if>
+							<if test="borrow.startBackDate != null and borrow.startBackDate != ''">
+							<![CDATA[
+								AND b.return_time >= #{borrow.startBackDate}
+							]]>
+							</if>
+							<if test="borrow.endBackDate != null and borrow.endBackDate != ''">
+							<![CDATA[
+								AND b.return_time <= #{borrow.endBackDate}
+							]]>
+							</if>
+							<if test="borrow.backOperator != null and borrow.backOperator != ''">
+								AND b.return_person LIKE 
+									<if test="dbName == 'oracle'">'%'||#{borrow.backOperator}||'%'</if>
+									<if test="dbName == 'mssql'">'%'+#{borrow.backOperator}+'%'</if>
+									<if test="dbName == 'mysql'">concat('%',#{borrow.backOperator},'%')</if>
+							</if>
+							<if test="borrow.status != null and borrow.status != ''">
+							<![CDATA[
+								AND a.status = #{borrow.status}
+							]]>
+							</if>
+						) 
 	</select>
 </mapper>

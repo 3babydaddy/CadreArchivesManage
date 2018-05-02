@@ -250,6 +250,11 @@
 					<if test="dbName == 'mssql'">'%'+#{backOperator}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{backOperator},'%')</if>
 			</if>
+			<if test="status != null and status != ''">
+			<![CDATA[
+				AND a.status = #{status}
+			]]>
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -267,6 +272,7 @@
 			a.borrow_date as "borrowDate",
 			a.consult_unit as "consultUnit",
 			a.id as "mainId",
+			a.status as "status",
 			t.name as "name",
 			t.unit as "unit",
 			(select label from sys_dict where id = t.unit and DEL_FLAG = '0') as "unitName",
@@ -305,6 +311,11 @@
 			<if test="perStr != null and perStr != ''">
 				AND a.id in (select main_id from tbl_borrow_person where main_id = a.id 
 							and del_flag = '0' and name like concat('%', #{perStr}, '%'))
+			</if>
+			<if test="status != null and status != ''">
+			<![CDATA[
+				AND a.status <= #{status}
+			]]>
 			</if>
 		</where>
 			ORDER BY a.update_date 
