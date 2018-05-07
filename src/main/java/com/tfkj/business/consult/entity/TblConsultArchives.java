@@ -124,7 +124,7 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 		this.municipalApproveTime = municipalApproveTime;
 	}
 	
-	@Length(min=0, max=100, message="借阅审批附件长度必须介于 0 和 100 之间")
+	@Length(min=0, max=1000, message="借阅审批附件长度必须介于 0 和 100 之间")
 	public String getApproveAttachment() {
 		return approveAttachment;
 	}

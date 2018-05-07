@@ -50,7 +50,6 @@
 			var id = $(prefix+"_id");
 			var delFlag = $(prefix+"_delFlag");
 			if (id.val() == ""){
-				$(obj).parent().parent().next().next().next().remove();
 				$(obj).parent().parent().next().next().remove();
 				$(obj).parent().parent().next().remove();
 				$(obj).parent().parent().remove();
@@ -302,7 +301,7 @@
 		<div class="control-group">
 			<label class="control-label">借阅审批附件：</label>
 			<div class="controls">
-				<sys:upImg input="approveAttachment"  type="files"  name="approveAttachment"  value="${tblBorrowArchives.approveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				<sys:upImgMul input="approveAttachment"  type="files"  name="approveAttachment"  value="${tblBorrowArchives.approveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 			</div>
 		</div>
 		<div class="control-group">

@@ -4,6 +4,7 @@
 <head>
 	<title>查阅档案管理</title>
 	<meta name="decorator" content="default"/>
+	<link href="${ctxStatic}/common/index.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript">
 		$(function(){ 
 			//$("#name").focus();
@@ -21,23 +22,6 @@
 						error.insertAfter(element);
 					}
 				}
-			});
-			/**调整页面自适应*/
-			//var h = $(document.body).height();
-			//$("#photoShowDiv").css("height",h + "px");
-			$("#photoShowDiv").click(function(){
-				$.jBox("get:${ctx}/terminal/camera", {  
-				    title: "图像采集",  
-				    width: 400,  
-				    height: 380,
-				    showClose: false,
-				    icon: 'info',
-				    showSpeed:'fast',
-				    buttons: { '关闭': true } /* 窗口的按钮 */
-				    /* loaded: function (h) { 
-				    	h.find("iframe").css("height","90%");
-				    } */
-				});  
 			});
 		});
 		function addRow(list, idx, tpl, row){
@@ -95,12 +79,7 @@
     		document.getElementById(siginName).value='';
 		}
 		
-		/* 返回按钮事件 */
-		function goBack(){
-			window.location.href = "${ctx}";
-		}
-		
-		var add  =  function() {
+		var addScattered  =  function() {
             $.ajax({
                 type: "POST",//方法类型
                 dataType: "json",//预期服务器返回的数据类型
@@ -140,13 +119,7 @@
 			margin-top: -6px;
 			-webkit-border-radius:2px;
 		}
-		#photoShowDiv{
-			border: 10px solid #ccc;
-		}
 		
-		#photoShowDiv>span{ 
-			display:inline-block; height:100%; vertical-align:middle;
-		}
 		.img-responsive{
 			vertical-align:middle;
 		} 
@@ -157,143 +130,129 @@
 			width: 100%;
 			height: 100%;
 		}
-		
-		.container-fluid{
+		html,#rowFluid1,#formInfo,#inputForm{
 			height: 100%
 		}
-		html,#rowFluid1,#formInfo,#photoShowDiv,#inputForm,#photoShow{
-			height: 100%
+		.overflow{
+			height: 622px;
 		}
-		#rowFluid3{
-			height: 80%;
-			position:relative
 		}
 		#ulDiv{
 			height: 9%;
 		}
-		.control-group{
-			height:15%;
-			
-		}
-		#scatteredId{
-			height:auto;
-			margin-bottom: 3%;
-		}
-		
-		a,th,label,#btnCancel,#btnSubmit{
+		a,th,label{
 			font-size : 150%;
+		}
+		.table th, .table td, .table input{
+			text-align : center;
+		}
+		.table input{
+			height: 10% !important;
+			width: 90% !important;
 		}
 	</style>
 </head>
 <body>
-<div class="container-fluid">
-	<div class="row-fluid" id ="rowFluid1">
-		<%-- <div id= "photoShowDiv" class="span4">
-			<img id="photoShow" src="${ctxStatic}/images/quesheng.jpg" class="img-responsive center-block img-rounded" ><span></span>
-		</div> --%>
-		<div id = "formInfo" class="span12">
-			<div class="row-fluid" id="ulDiv">
-				<ul class="nav nav-tabs">
-					<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/form?id=${tblConsultArchives.id}">零散材料<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
-				</ul>
+	<div class="header">
+		<a href="${ctx}"><img src="${ctxStatic}/images/terminal/goback.png"></a>
+		<img src="${ctxStatic}/images/terminal/top3.png">
+	</div>
+	<div class="content">
+		<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/saveTerminal" method="post" class="form-horizontal">
+			<form:hidden path="id"/>
+			<div style="display:none;">
+				<sys:message content="${message}" />
 			</div>
-		<div class="row-fluid" id="rowFluid3">
-			<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/saveTerminal" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
-		<div style="display:none;">
-			<sys:message content="${message}" />
-		</div>			
-		<div class="control-group">
-			<label class="control-label">移交单位：</label>
-			<div class="controls">
-				<sys:treeselect2 url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
-									labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表"></sys:treeselect2>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">移交时间：</label>
-			<div class="controls">
-				<input name="handOverDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${tblScatteredFiles.handOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">经手人：</label>
-			<div class="controls">
-				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">接收人：</label>
-			<div class="controls">
-				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
-		
-			<div class="control-group" id="scatteredId">
-				<label class="control-label">移交材料：</label>
-				<div class="controls">
-					<table id="contentTable" class="table table-striped table-bordered table-condensed">
-						<thead>
-							<tr>
-								<th class="hide"></th>
-								<th>姓名</th>
-								<th>职务</th>
-								<th>材料名称</th>
-								<th>正本（卷）</th>
-								<shiro:hasPermission name="scattereds:tblScatteredFiles:edit"><th width="10">&nbsp;</th></shiro:hasPermission>
-							</tr>
-						</thead>
-						<tbody id="tblHandOverFilesList">
-						</tbody>
-						<tfoot>
-							<tr><td colspan="9"><a  href="javascript:" onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;"  style="font-size : 150%;" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
-						</tfoot>
-					</table>
-					<script type="text/template" id="tblHandOverFilesTpl">//<!--
-						<tr id="tblHandOverFilesList{{idx}}">
-							<td class="hide">
-								<input id="tblHandOverFilesList{{idx}}_id" name="tblHandOverFilesList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
-								<input id="tblHandOverFilesList{{idx}}_delFlag" name="tblHandOverFilesList[{{idx}}].delFlag" type="hidden" value="0"/>
-							</td>
-							<td>
-								<input id="tblHandOverFilesList{{idx}}_name" name="tblHandOverFilesList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
-							</td>
-							<td>
-								<input id="tblHandOverFilesList{{idx}}_duty" name="tblHandOverFilesList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input-small "/>
-							</td>
-							<td>
-								<input id="tblHandOverFilesList{{idx}}_filesNames" name="tblHandOverFilesList[{{idx}}].filesNames" type="text" value="{{row.filesNames}}" maxlength="2000" class="input-small "/>
-							</td>
-							<td>
-								<input id="tblHandOverFilesList{{idx}}_originalNo" name="tblHandOverFilesList[{{idx}}].originalNo" type="text" value="{{row.originalNo}}" maxlength="11" class="input-small  digits"/>
-							</td>
-							<td class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblHandOverFilesList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
-							</td>
-						</tr>//-->
-					</script>
-					<script type="text/javascript">
-						var tblHandOverFilesRowIdx = 0, tblHandOverFilesTpl = $("#tblHandOverFilesTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
-						$(document).ready(function() {
-							var data = ${fns:toJson(tblScatteredFiles.tblHandOverFilesList)};
-							for (var i=0; i<data.length; i++){
-								addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl, data[i]);
-								tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;
-							}
-						});
-					</script>
+			<div class="left fl" style="width:100%;">
+				<div class="search">
+					<div class="fl">
+						<span class="fl" style="font-size:30px;" >移交单位：</span>
+						<sys:treeselect3 url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
+															labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表"></sys:treeselect3>
+					</div>
+					<div class="fr">
+						<span class="fl" style="font-size:30px;" >移交日期：</span>
+						<input class="input_2" id="handOverDate" name="handOverDate" value="${tblScatteredFiles.handOverDate}" type="date"/>
+					</div>
+					<div class="clear"></div>
 				</div>
+				<div class="overflow">
+					<div class="object">
+						<div class="obj_head">
+							<div class="title fl">移交材料</div>
+							<div class="add fr">
+								<a href="javascript:void(0)"  onclick="addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl);tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;" ><img src="${ctxStatic}/images/terminal/add.png"> 新增</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div id="add_content_obj">
+							<div class="obj_con">
+								<table id="contentTable" class="table table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th class="hide"></th>
+											<th>姓名</th>
+											<th>职务</th>
+											<th>材料名称</th>
+											<th>正本（卷）</th>
+											<shiro:hasPermission name="scattereds:tblScatteredFiles:edit"><th width="10">&nbsp;</th></shiro:hasPermission>
+										</tr>
+									</thead>
+									<tbody id="tblHandOverFilesList">
+									</tbody>
+								</table>
+								<script type="text/template" id="tblHandOverFilesTpl">//<!--
+									<tr id="tblHandOverFilesList{{idx}}">
+										<td class="hide">
+											<input id="tblHandOverFilesList{{idx}}_id" name="tblHandOverFilesList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
+											<input id="tblHandOverFilesList{{idx}}_delFlag" name="tblHandOverFilesList[{{idx}}].delFlag" type="hidden" value="0"/>
+										</td>
+										<td>
+											<input id="tblHandOverFilesList{{idx}}_name" name="tblHandOverFilesList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input_1"/>
+										</td>
+										<td>
+											<input id="tblHandOverFilesList{{idx}}_duty" name="tblHandOverFilesList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input_1"/>
+										</td>
+										<td>
+											<input id="tblHandOverFilesList{{idx}}_filesNames" name="tblHandOverFilesList[{{idx}}].filesNames" type="text" value="{{row.filesNames}}" maxlength="2000" class="input_1"/>
+										</td>
+										<td>
+											<input id="tblHandOverFilesList{{idx}}_originalNo" name="tblHandOverFilesList[{{idx}}].originalNo" type="text" value="{{row.originalNo}}" maxlength="11" class="input_1 digits"/>
+										</td>
+										<td class="text-center" width="10">
+											{{#delBtn}}<span class="close" onclick="delRow(this, '#tblHandOverFilesList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
+										</td>
+										</tr>//-->
+								</script>
+								<script type="text/javascript">
+									var tblHandOverFilesRowIdx = 0, tblHandOverFilesTpl = $("#tblHandOverFilesTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
+									$(document).ready(function() {
+										var data = ${fns:toJson(tblScatteredFiles.tblHandOverFilesList)};
+										for (var i=0; i<data.length; i++){
+											addRow('#tblHandOverFilesList', tblHandOverFilesRowIdx, tblHandOverFilesTpl, data[i]);
+											tblHandOverFilesRowIdx = tblHandOverFilesRowIdx + 1;
+										}
+									});
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="search">
+					<div class="fl">
+						<span class="fl" style="font-size:30px;" >&nbsp;&nbsp;&nbsp;经手人：</span>
+						<input class="input_2" style="width:404px;" id="operator" name="operator" value="${tblScatteredFiles.operator}" type="text"/>
+					</div>
+					<div class="fr">
+						<span class="fl" style="font-size:30px;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接收人：</span>
+						<input class="input_2" id="recipient" name="recipient" value="${tblScatteredFiles.recipient}" type="text"/>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<input type="submit" class="save_btn fr" onclick="addScattered()" value="保 存" />
 			</div>
-		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存" onclick="add()"/>&nbsp;
-			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="goBack()"/>
-		</div>
-	</form:form>
-		</div>
-		</div>
+		</form:form>
 	</div>
-	</div>
+	<div class="footer">中共天津市委组织部信息管理处&nbsp;&nbsp;&nbsp;&nbsp;天津市天房科技发展股份有限公司&nbsp;&nbsp;&nbsp;&nbsp;联合开发</div>
 </body>
 </html>

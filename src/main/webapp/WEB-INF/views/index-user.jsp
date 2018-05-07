@@ -39,19 +39,19 @@
 			<div class="container-fluid">
 				<div id="content" class="row-fluid">
 					<div class="row-fluid span3" id="" data-url="${ctx}/terminal/consult">
-						<img class="row-fluid-img" src="${ctxStatic}/mp4/1.png">
+						<img class="row-fluid-img" src="${ctxStatic}/images/terminal/1.png">
 						<img src="${ctxStatic}/mp4/shadow.png">
 					</div>
 					<div class="row-fluid span3" id="" data-url="${ctx}/terminal/borrowArchives">
-						<img class="row-fluid-img" src="${ctxStatic}/mp4/2.png">
+						<img class="row-fluid-img" src="${ctxStatic}/images/terminal/2.png">
 						<img src="${ctxStatic}/mp4/shadow.png">
 					</div>
 					<div class="row-fluid span3" id="" data-url="${ctx}/terminal/rollInArchives">
-						<img class="row-fluid-img" src="${ctxStatic}/mp4/3.png">
+						<img class="row-fluid-img" src="${ctxStatic}/images/terminal/3.png">
 						<img src="${ctxStatic}/mp4/shadow.png">
 					</div>
 					<div class="row-fluid span3" id="" data-url="${ctx}/terminal/scatteredFiles">
-						<img class="row-fluid-img" src="${ctxStatic}/mp4/4.png">
+						<img class="row-fluid-img" src="${ctxStatic}/images/terminal/4.png">
 						<img src="${ctxStatic}/mp4/shadow.png">
 					</div>
 				</div>

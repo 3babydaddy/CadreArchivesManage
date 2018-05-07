@@ -87,7 +87,7 @@
 			<label class="control-label">转递单附件：</label>
 			<div class="controls">
 				<c:if test="${not empty tblRollIn.rollApproveAttachment}">
-					<sys:upFIle input="rollApproveAttachment"  type="files"  name="rollApproveAttachment"  value="${tblRollIn.rollApproveAttachment}"  uploadPath="/file" readonly="true" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+					<sys:upImgMul input="rollApproveAttachment"  type="files"  name="rollApproveAttachment"  value="${tblRollIn.rollApproveAttachment}"  uploadPath="/file" readonly="true" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 				</c:if>
 			</div>
 		</div>

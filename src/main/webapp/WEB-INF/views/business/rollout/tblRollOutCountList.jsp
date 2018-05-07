@@ -55,12 +55,13 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
+			max-width: 380px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
 		}
 		.ul-form li label{
-			width: 161px !important;
+			width: 155px !important;
 		}
 		body {
 			font-family: "微软雅黑";
@@ -149,7 +150,7 @@
 				<td>
 					${fns:getDictLabel(tblRollOutPersons.reason, 'roll_out_reason', '')}
 				</td>
-				<td>
+				<td title="${tblRollOutPersons.saveUnitName}">
 					${tblRollOutPersons.saveUnitName}
 				</td>
 				<td>

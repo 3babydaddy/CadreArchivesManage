@@ -285,8 +285,8 @@ ul li {
 	
 	//提示管理员有新的数据需要审核
     <shiro:hasRole name="admin">
-    	setInterval(function(){
-    	//setTimeout(function(){
+    	//setInterval(function(){
+    	setTimeout(function(){
     		//$.jBox.closeMessager();
 			//系统提供的不好用
     		var len = $(".jbox-close").length;

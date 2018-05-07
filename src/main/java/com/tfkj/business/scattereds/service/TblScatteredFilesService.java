@@ -58,6 +58,9 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 			if (tblHandOverFiles.getId() == null){
 				continue;
 			}
+			if (StringUtils.isBlank(tblHandOverFiles.getName())){
+				continue;
+			}
 			if (TblHandOverFiles.DEL_FLAG_NORMAL.equals(tblHandOverFiles.getDelFlag())){
 				if (StringUtils.isBlank(tblHandOverFiles.getId())){
 					tblHandOverFiles.setMainId(tblScatteredFiles.getId());

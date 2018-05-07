@@ -305,7 +305,7 @@
 		<div class="control-group">
 			<label class="control-label">借阅审批附件：</label>
 			<div class="controls">
-				<sys:upImg input="approveAttachment"  type="files"  name="approveAttachment"  value="${tblConsultArchives.approveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传快照"/>
+				<sys:upImgMul input="approveAttachment"  type="files"  name="approveAttachment"  value="${tblConsultArchives.approveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传快照"/>
 			</div>
 		</div>
 		<div class="control-group">

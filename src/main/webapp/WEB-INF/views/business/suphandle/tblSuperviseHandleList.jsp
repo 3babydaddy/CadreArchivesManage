@@ -73,13 +73,13 @@
 			text-align : center;
 		}
 		.circle {
-			height: 22px;
-			width: 46px;
+			height: 25px;
+			width: 65px;
 			text-align: center;
 			border-radius: 20%;
 		}
 		.ul-form li label{
-			width: 161px !important;
+			width: 155px !important;
 		}
 		body {
 			font-family: "微软雅黑";
@@ -100,13 +100,13 @@
 <body>
 	<div id="importBox" class="hide">
 		<form id="importForm" action="${ctx}/suphandle/tblSuperviseHandle/import" method="post" enctype="multipart/form-data"
-			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
+			class="form-search" style="text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
 			<ul class="ul-form">
 				<li><label>导入文件：</label>
-					<input id="uploadFile" name="file" type="file" style="width:210px"/>
+					<input id="uploadFile" name="file" type="file" style="width:210px;margin-bottom:15px;""/>
 				</li>
 			</ul>
-			<input id="btnImportSubmit" class="btn btn-primary" style="margin-top:5px;width:75px;" type="submit" value="   导    入   "/>&nbsp;&nbsp;
+			<input id="btnImportSubmit" class="btn btn-primary" style="margin-left:-30px;width:75px;" type="submit" value="   导    入   "/>&nbsp;&nbsp;
 			<a href="<c:url value='/static/templet/superviseHandleModel.xls'/>">下载模板</a>
 		</form>
 	</div>
@@ -149,7 +149,7 @@
 					<form:options items="${fns:getDictList('supervise_handle_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<div style="float:right;">
+			<div style="float:right;margin-right:4px;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			</div>
@@ -201,18 +201,20 @@
 					<fmt:formatDate value="${tblSuperviseHandle.raisedTime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
-					${tblSuperviseHandle.countDown}
+					<c:if test="${tblSuperviseHandle.status eq '1'}">
+						${tblSuperviseHandle.countDown}
+					</c:if>
 				</td>
 				<td>
 					${fns:getDictLabel(tblSuperviseHandle.status, 'supervise_handle_status', '')}
 				</td>
 				<td>
 					<c:if test="${tblSuperviseHandle.countDown < 0 || tblSuperviseHandle.status eq '3'}">
-						<label class="circle" style="background: red;"><a href="#" style="color:white;">督办</a></label>
+						<label class="circle" style="background: red;"><a href="#" style="color:white;font-size:18px;">督办</a></label>
 					</c:if>
 					<c:if test="${tblSuperviseHandle.countDown >= 0 && tblSuperviseHandle.status eq '1'}">
 						<label class="circle" style="background: green;">
-							<a href="${ctx}/suphandle/tblSuperviseHandle/updateStatus?id=${tblSuperviseHandle.id}" onclick="return confirmx('该条数据确认要上交吗？', this.href)" style="color:white;">上交</a>
+							<a href="${ctx}/suphandle/tblSuperviseHandle/updateStatus?id=${tblSuperviseHandle.id}" onclick="return confirmx('该条数据确认要上交吗？', this.href)" style="color:white;font-size:18px;">上交</a>
 						</label>
 					</c:if>
 				</td>

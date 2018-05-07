@@ -128,9 +128,10 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
+			max-width: 380px;
 		}
 		.ul-form li label{
-			width: 161px !important;
+			width: 155px !important;
 		}
 		body {
 			font-family: "微软雅黑";
@@ -199,7 +200,7 @@
 					<form:options items="${fns:getDictList('audit_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<div style="float:right;">
+			<div style="float:right;margin-right:4px;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			</div>
@@ -245,7 +246,7 @@
 				<td>
 					<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td>
+				<td title="${fns:getDictLabel(tblBorrowArchives.consultUnit, 'unit_list', '')}">
 					${fns:getDictLabel(tblBorrowArchives.consultUnit, 'unit_list', '')}
 				</td>
 				<td>
@@ -269,7 +270,7 @@
 				<td>
 					${fns:getDictLabel(tblBorrowArchives.status, 'audit_status', '')}
 				</td>
-				<td>
+				<td title="${tblBorrowArchives.remarks}">
 					${tblBorrowArchives.remarks}
 				</td>
 				<shiro:hasPermission name="borrow:tblBorrowArchives:edit"><td>

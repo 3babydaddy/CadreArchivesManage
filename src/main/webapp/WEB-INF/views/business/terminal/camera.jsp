@@ -62,7 +62,25 @@
 					}); */
 					$.post("${ctx}/terminal/createImg", {'imgBase64Str' : canvas.toDataURL("image/png")}, function (msg) {  
                         var picUrl = msg.path;
-                        document.getElementById("photoShow").src = picUrl;
+                        //document.getElementById("photoShow").src = picUrl;
+                        var num = $("#photoShowDiv img").length;
+                        var src = document.getElementById("photoShow").src;
+                        var suffice = src.substring((src.indexOf('.')-4), src.indexOf('.'));
+                      //重新计算高度
+                    	var height = $("#photoShowDiv").height();
+                        if(num == 1 && suffice == 'scan'){
+                        	document.getElementById("photoShow").src = picUrl;
+                            document.getElementById("approveAttachmentId").value = picUrl;
+                            $("#photoShowDiv p").remove();
+                            $("#photoShowDiv").removeClass('right_text');
+                            $("#photoShowDiv img")[0].style.height= height +'px';
+                        }else{
+                        	$("#photoShowDiv").append('<img id="photoShow" src="'+picUrl+'" ondblclick="removeImg(this);" style="height:'+(height/(num+1))+'px" class="img-responsive center-block img-rounded" >');
+                        	document.getElementById("approveAttachmentId").value = document.getElementById("approveAttachmentId").value +','+ picUrl;
+                        	for(var i = 0; i < num; i++){
+                            	$("#photoShowDiv img")[i].style.height= (height/(num+1)) +'px';
+                            }
+                        }
                     });  
 				}
 			},
@@ -125,47 +143,70 @@
 		$.post("${ctx}/terminal/createImg", { type: "data", imgBase64Str: canvas.toDataURL("image/png") }, function (msg) {  
             var picUrl = msg.path;
             //alert(picUrl);
-           document.getElementById("photoShow").src = picUrl;
-           document.getElementById("approveAttachmentId").value = picUrl;
+            var num = $("#photoShowDiv img").length;
+            var src = document.getElementById("photoShow").src;
+            var suffice = src.substring((src.indexOf('.')-4), src.indexOf('.'));
+        	//重新计算高度
+        	var height = $("#photoShowDiv").height();
+            if(num == 1 && suffice == 'scan'){
+            	document.getElementById("photoShow").src = picUrl;
+                document.getElementById("approveAttachmentId").value = picUrl;
+                $("#photoShowDiv p").remove();
+                $("#photoShowDiv").removeClass('right_text');
+                $("#photoShowDiv img")[0].style.height= height +'px';
+            }else{
+            	$("#photoShowDiv").append('<img id="photoShow" src="'+picUrl+'" ondblclick="removeImg(this);" style="height:'+(height/(num+1))+'px" class="img-responsive center-block img-rounded" >');
+            	document.getElementById("approveAttachmentId").value = document.getElementById("approveAttachmentId").value +','+ picUrl;
+            	for(var i = 0; i < num; i++){
+                 	$("#photoShowDiv img")[i].style.height= (height/(num+1)) +'px';
+                 }
+            }
         });
 	}
 
 </script>
 <style type="text/css">
-#webcam>object {
-	border: 1px solid #ccc;
-}
-iframe {
-	height:90% !important;
-}
-
-
-.file {
-    position: relative;
-    display: inline-block;
-    background: #D0EEFF;
-    border: 1px solid #99D3F5;
-    border-radius: 4px;
-    padding: 4px 12px;
-    overflow: hidden;
-    color: #1E88C7;
-    text-decoration: none;
-    text-indent: 0;
-    line-height: 18px;
-}
-.file input {
-    position: absolute;
-    font-size: 14px;
-    right: 0;
-    top: 0;
-    opacity: 0;
-}
-.file:hover {
-    background: #AADFFD;
-    border-color: #78C3F3;
-    color: #004974;
-    text-decoration: none;
-}
+	#webcam>object {
+		border: 1px solid #ccc;
+	}
+	iframe {
+		height:90% !important;
+	}
+	
+	
+	.file {
+	    position: relative;
+	    display: inline-block;
+	    background: #D0EEFF;
+	    border: 1px solid #99D3F5;
+	    border-radius: 4px;
+	    padding: 4px 12px;
+	    overflow: hidden;
+	    color: #1E88C7;
+	    text-decoration: none;
+	    text-indent: 0;
+	    line-height: 18px;
+	}
+	.file input {
+	    position: absolute;
+	    font-size: 14px;
+	    right: 0;
+	    top: 0;
+	    opacity: 0;
+	}
+	.file:hover {
+	    background: #AADFFD;
+	    border-color: #78C3F3;
+	    color: #004974;
+	    text-decoration: none;
+	}
+	.row-fluid{
+		height: 50%;
+	}
+	.btn{
+		width: 80%;
+		height: 32px;
+	}
 </style>
 
 </head>

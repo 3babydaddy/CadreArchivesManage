@@ -124,7 +124,7 @@
 		<div class="control-group">
 			<label class="control-label">转递单附件：</label>
 			<div class="controls">
-				<sys:upFIle input="rollApproveAttachment"  type="files"  name="rollApproveAttachment"  value="${tblRollIn.rollApproveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				<sys:upImgMul input="rollApproveAttachment"  type="files"  name="rollApproveAttachment"  value="${tblRollIn.rollApproveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 			</div>
 		</div>
 		

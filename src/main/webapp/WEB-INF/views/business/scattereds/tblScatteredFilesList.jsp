@@ -121,9 +121,10 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
+			max-width: 380px;
 		}
 		.ul-form li label{
-			width: 161px !important;
+			width: 155px !important;
 		}
 		body {
 			font-family: "微软雅黑";
@@ -144,13 +145,13 @@
 <body>
 	<div id="importBox" class="hide">
 		<form id="importForm" action="${ctx}/scattereds/tblScatteredFiles/import" method="post" enctype="multipart/form-data"
-			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
+			class="form-search" style="text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
 			<ul class="ul-form">
 				<li><label>导入文件：</label>
-					<input name="file" class="change" type="file" style="width:220px"/>
+					<input name="file" class="change" type="file" style="width:220px;margin-bottom:15px;"/>
 				</li>
 			</ul>
-			<input id="btnImportSubmit" style="margin-top:5px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
+			<input id="btnImportSubmit" style="margin-left:-30px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
 			<a class="btns" href="<c:url value='/static/templet/scatteredFilesModel.xls'/>">下载模板</a>
 		</form>
 	</div>
@@ -190,7 +191,7 @@
 					<form:options items="${fns:getDictList('audit_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<div style="float:right;">
+			<div style="float:right;margin-right:4px;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			</div>
@@ -231,7 +232,7 @@
 				<td>
 					<input type="checkbox" value="${tblScatteredFiles.id},${tblScatteredFiles.status}" />
 				</td>
-				<td><a href="${ctx}/scattereds/tblScatteredFiles/personlist?mainId=${tblScatteredFiles.id}">
+				<td title="${tblScatteredFiles.handOverUnitName}"><a href="${ctx}/scattereds/tblScatteredFiles/personlist?mainId=${tblScatteredFiles.id}">
 					${tblScatteredFiles.handOverUnitName}</a>
 				</td>
 				<td>

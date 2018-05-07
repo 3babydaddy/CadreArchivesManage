@@ -55,6 +55,7 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
+			max-width: 300px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
@@ -109,7 +110,7 @@
 					<form:options items="${fns:getDictList('audit_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<div style="float:right;">
+			<div style="float:right;margin-right:2px;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 				<li class="btns"><input id="btnExport" class="btn btn-primary" type="button" onclick="exportData();" value="导出"/></li>
@@ -142,7 +143,7 @@
 				<td rowspan="${tblConsultArchives.tblCheckedTargetList.size()}">
 					<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td rowspan="${tblConsultArchives.tblCheckedTargetList.size()}">
+				<td title="${tblConsultArchives.consultUnitName}" rowspan="${tblConsultArchives.tblCheckedTargetList.size()}">
 					${tblConsultArchives.consultUnitName}
 				</td>
 				<c:forEach items="${tblConsultArchives.tblCheckedTargetList}" var="tblCheckedTarget" varStatus="sign">
@@ -170,7 +171,7 @@
 				<c:if test="${sign.count > 1}">
 					<tr>
 						<td>${tblCheckedTarget.name}</td>
-						<td>${tblCheckedTarget.unitName}</td>
+						<td title="${tblCheckedTarget.unitName}">${tblCheckedTarget.unitName}</td>
 						<td>${tblCheckedTarget.duty}</td>
 						<td>${tblCheckedTarget.politicalStatus}</td>
 					</tr>

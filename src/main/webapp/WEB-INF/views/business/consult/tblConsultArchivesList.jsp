@@ -160,6 +160,7 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
+			max-width: 380px;
 		}
 		.ul-form li label{
 			width: 155px !important;
@@ -214,7 +215,7 @@
 					<form:options items="${fns:getDictList('audit_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<div style="float:right;">
+			<div style="float:right;margin-right:4px;">
 				<li class="btns"><input id="btnSubmit" class="btn btn-lg btn-primary" type="submit" value="查询"/></li>
 				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
 			</div>
@@ -247,7 +248,7 @@
 				<th>查阅内容</th>
 				<th>查阅理由</th>
 				<th>查阅人</th>
-				<td>状态</td>
+				<th>状态</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="consult:tblConsultArchives:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -261,16 +262,16 @@
 				<td>
 					<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td>
+				<td title="${tblConsultArchives.consultUnitName}">
 					${tblConsultArchives.consultUnitName}
 				</td>
 				<td>
 					${tblConsultArchives.tarStr}
 				</td>
-				<td>
+				<td title="${tblConsultArchives.content}">
 					${tblConsultArchives.content}
 				</td>
-				<td>
+				<td title="${tblConsultArchives.reason}">
 					${tblConsultArchives.reason}
 				</td>
 				<td>
@@ -279,7 +280,7 @@
 				<td>
 					${fns:getDictLabel(tblConsultArchives.status, 'audit_status', '')}
 				</td>
-				<td>
+				<td title="${tblConsultArchives.remarks}">
 					${tblConsultArchives.remarks}
 				</td>
 				<shiro:hasPermission name="consult:tblConsultArchives:edit"><td>

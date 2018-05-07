@@ -68,8 +68,16 @@
                       //返回路径
                       var returnPath=res.returnPath;
                       //展示名
+                      
                       var showName=res.showName;
-                      dqInput.val(returnPath);
+                      var dqInputVal=dqInput.val();
+                      if(dqInputVal!=null&&dqInputVal!=''){
+                    	  dqInputVal=dqInputVal+","+returnPath;
+                      }else{
+                    	  dqInputVal=returnPath;
+                      }
+                      dqInput.val(dqInputVal);
+
                       if('${isBorder}'==1){
                           dqA.parents('.benjieCon').css("border",
                           "2px solid red");
@@ -121,8 +129,9 @@
         ${input}Preview();
     }
     function ${input}Preview(dqInput,dqOl,dqA){
-    	var li, urls =dqInput.val().split(",");
+        var li, urls =dqInput.val().split(",");
         dqOl.children().remove();
+        
         for (var i=0; i<urls.length; i++){
             if (urls[i]!=""){
                 li = "<li><img src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:${empty maxWidth ? 200 : maxWidth}px;max-height:${empty maxHeight ? 200 : maxHeight}px;_height:${empty maxHeight ? 200 : maxHeight}px;border:0;padding:3px;\">";
@@ -136,16 +145,13 @@
                     "text-overflow" : "ellipsis",
                     "white-space" : "nowrap"
                 });
-                dqA.hide();
+
             }
-        }
-        if (dqOl.text() == ""){
-        	dqA.show();
         }
     }
     //删除附件内容
-    function delInputFile(input){
-    	debugger;
+    function delInputMultiFile(input){
+    	
     	var divFile=$('.'+input+'AllFile').children(".a-upload").find("input");
     	var dqInput=divFile.parent().prev(".${input}")
         var dqOl=dqInput.prev("ol");

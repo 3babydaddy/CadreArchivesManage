@@ -4,6 +4,7 @@
 <head>
 	<title>转入档案管理</title>
 	<meta name="decorator" content="default"/>
+	<link href="${ctxStatic}/common/index.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript">
 		$(function(){ 
 			//$("#name").focus();
@@ -21,25 +22,6 @@
 						error.insertAfter(element);
 					}
 				}
-			});
-			/**调整页面自适应*/
-			//var h = parent.$("iframe").height();
-			//$("#photoShowDiv").css("height",h + "px");
-			//var h = $(document.body).height();
-			//$("#photoShowDiv").css("height",h + "px");
-			$("#photoShowDiv").click(function(){
-				$.jBox("get:${ctx}/terminal/camera", {  
-				    title: "图像采集",  
-				    width: 400,  
-				    height: 380,
-				    showClose: false,
-				    icon: 'info',
-				    showSpeed:'fast',
-				    buttons: { '关闭': true } /* 窗口的按钮 */
-				    /* loaded: function (h) { 
-				    	h.find("iframe").css("height","90%");
-				    } */
-				});  
 			});
 		});
 		function addRow(list, idx, tpl, row){
@@ -62,6 +44,11 @@
 			var id = $(prefix+"_id");
 			var delFlag = $(prefix+"_delFlag");
 			if (id.val() == ""){
+				$(obj).parent().parent().next().next().next().next().next().remove();
+				$(obj).parent().parent().next().next().next().next().remove();
+				$(obj).parent().parent().next().next().next().remove();
+				$(obj).parent().parent().next().next().remove();
+				$(obj).parent().parent().next().remove();
 				$(obj).parent().parent().remove();
 			}else if(delFlag.val() == "0"){
 				delFlag.val("1");
@@ -97,13 +84,7 @@
     		document.getElementById(siginName).value='';
 		}
 		
-		/* 返回按钮事件 */
-		function goBack(){
-			//this.parent.$(".zhuye")[0].click();
-			window.location.href = "${ctx}";
-		}
-		
-		var add  =  function() {
+		var addRollIn  =  function() {
             $.ajax({
                 type: "POST",//方法类型
                 dataType: "json",//预期服务器返回的数据类型
@@ -111,8 +92,6 @@
                 data: $('#inputForm').serialize(),
                 success: function (result) {
                     //alert(result);
-                    debugger;
-                    
                     if(result){
                     	var submit = function (v, h, f) {
                     	    if (v == 'ok')
@@ -129,6 +108,68 @@
             });
         }
 		
+		var TimeFn = null;
+		function uploadImg(obj){
+			// 取消上次延时未执行的方法
+		    clearTimeout(TimeFn);
+		    //执行延时
+		    TimeFn = setTimeout(function(){
+				/**调整页面自适应*/
+				//var h = parent.$("iframe").height();
+				//$("#photoShowDiv").css("height",h + "px");
+				var h = $(document.body).height();
+				var w = $(document.body).width();
+				//$("#photoShowDiv").css("height",h + "px");
+				$.jBox("get:${ctx}/terminal/camera", {  
+				    title: "图像采集",  
+				    width: (w/2),  
+				    height: (h*3/4),
+				    showClose: false,
+				    icon: 'info',
+				    showSpeed:'fast',
+				    buttons: { '关闭': true } /* 窗口的按钮 */
+				    /* loaded: function (h) { 
+				    	h.find("iframe").css("height","90%");
+				    } */
+				});
+		    },300);
+		}
+		
+		function removeImg(obj){
+			// 取消上次延时未执行的方法
+			clearTimeout(TimeFn);
+			var num = $("#photoShowDiv img").length;
+            var src = document.getElementById("photoShow").src;
+            var suffice = src.substring((src.indexOf('.')-4), src.indexOf('.'));
+            if(num == 1 && suffice != 'scan'){
+            	document.getElementById("photoShow").src = '${ctxStatic}/images/terminal/scan.png';
+            	$("#photoShowDiv img")[0].style.height= '15%';
+                document.getElementById("approveAttachmentId").value = '';
+                $("#photoShowDiv").append('<p style="font-size:30px;">请将您的文件放置于扫描区</p>');
+                $("#photoShowDiv").addClass('right_text');
+            }else if(num > 1){
+            	//删除的文件名
+            	var fileName = obj.src.substring(obj.src.lastIndexOf('/')+1)
+            	$(obj).remove();
+            	//重新计算高度
+            	var height = $("#photoShowDiv").height();
+                for(var i = 0; i < (num-1); i++){
+                	$("#photoShowDiv img")[i].style.height= (height/(num-1)) +'px';
+                }
+                var approveAttachmentId = "";
+                var attArray = $("#approveAttachmentId").val().split(",");
+                for(var j = 0; j < attArray.length; j++){
+                	if(attArray[j].indexOf(fileName) == -1){
+                		if(approveAttachmentId == ""){
+                			approveAttachmentId = attArray[j];
+                		}else{
+                			approveAttachmentId += "," + attArray[j];
+                		}
+                	}
+                }
+                $("#approveAttachmentId").val(approveAttachmentId);
+            }
+      	}
 	</script>
 	<style type="text/css">
 		.td-order-one{
@@ -144,9 +185,6 @@
 			margin-top: -6px;
 			-webkit-border-radius:2px;
 		}
-		#photoShowDiv{
-			border: 10px solid #ccc;
-		}
 		
 		#photoShowDiv>span{ 
 			display:inline-block; height:100%; vertical-align:middle;
@@ -160,191 +198,189 @@
 			width: 100%;
 			height: 100%;
 		}
-		.container-fluid{
+		
+		html,#rowFluid1,#formInfo,#photoShowDiv{
 			height: 100%
 		}
-		html,#rowFluid1,#formInfo,#photoShowDiv,#inputForm,#photoShow{
-			height: 100%
-		}
-		#rowFluid3{
-			height: 80%;
-			position:relative
+		.overflow{
+			height: 485px;
 		}
 		#ulDiv{
 			height: 9%;
 		}
-		.control-group{
-			height:8%;
-		}
-		#aboutInfo{
-			height:auto;
-			margin-bottom: 3%;
-		}
-		a,th,label,#btnCancel,#btnSubmit{
+		
+		a,th,label{
 			font-size : 150%;
+		}
+		span{
+			font-size:30px;
+		}
+		#photoShowDiv{
+		    background-color: rgba(255, 255, 255, 0.5);
+    		filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#40000000,endColorstr=#40000000);
 		}
 	</style>
 </head>
 <body>
-<div class="container-fluid">
-	<div class="row-fluid" id ="rowFluid1">
-		<div id= "photoShowDiv" class="span4">
-			<img id="photoShow" src="${ctxStatic}/images/quesheng.jpg" class="img-responsive center-block img-rounded" ><span></span>
-		</div>
-		<div id = "formInfo" class="span8">
-			<div class="row-fluid" id="ulDiv">
-				<ul class="nav nav-tabs">
-					<li class="active"><a href="${ctx}/rollin/tblRollIn/form?id=${tblRollIn.id}">转入档案<shiro:hasPermission name="rollin:tblRollIn:edit">${not empty tblRollIn.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollin:tblRollIn:edit">查看</shiro:lacksPermission></a></li>
-				</ul>
+	<div class="header">
+		<a href="${ctx}"><img src="${ctxStatic}/images/terminal/goback.png"></a>
+		<img src="${ctxStatic}/images/terminal/top2.png">
+	</div>
+	<div class="content">
+		<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/saveTerminal" method="post" class="form-horizontal">
+			<form:hidden path="id"/>
+			<div style="display:none;">
+				<sys:message content="${message}" />
 			</div>
-			<div class="row-fluid" id="rowFluid3">
-			<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/saveTerminal" method="post" class="form-horizontal">
-				<form:hidden path="id"/>
-				<div style="display:none;">
-					<sys:message content="${message}" />
-				</div>		
-				<div class="control-group">
-					<label class="control-label">批次：</label>
-					<div class="controls">
-						<div  style="float:left;">
-							<form:input path="character" htmlEscape="false" style="width:105px;" maxlength="11" />字
+			<div class="left fl">
+					<div class="search">
+						<table cellpadding="5" border="0" cellspacing="0">
+							<colgroup>
+						 		<col width="200"/>
+						 		<col width="160"/>
+						 		<col width="200"/>
+						 		<col width="160"/>
+						 	</colgroup>
+						 	<tr>
+						 		<td style="text-align:right;">
+									<span>转入批次：</span>
+						 		</td>
+						 		<td style="text-align:left;">
+						 			<input class="input_1" style="width:80px;" id="character" name="character" value="${tblRollIn.character}" type="text"/><span>字</span>
+						 			<input class="input_1" style="width:80px;" id="number" name="number" value="${tblRollIn.number}" type="text"/><span>号</span>
+						 		</td>
+						 	</tr>
+						 	<tr style="height:10px;"></tr>
+							<tr>
+								<td style="text-align:right;">
+									<span>转入时间：</span>
+								</td>
+								<td style="text-align:left;">
+									<input class="input_1" id="rollInTime" name="rollInTime" value="${tblRollIn.rollInTime}" type="date"/>
+								</td>
+								<td style="text-align:right;">
+									<span>经办人：</span>
+								</td>
+								<td style="text-align:left;">
+									<input class="input_1" id="operator" name="operator" style="width:400px;" value="${tblRollIn.operator}" type="text"/>
+								</td>
+							</tr>
+							<tr style="height:10px;"></tr>
+							<tr>
+								<td style="text-align:right;">
+									<span>接收人：</span>
+								</td>
+								<td style="text-align:left;">
+									<input class="input_1" id="recipient" name="recipient" value="${tblRollIn.recipient}" type="text"/>
+								</td>
+								<td style="text-align:right;">
+									<span>原存档单位：</span>
+								</td>
+								<td style="text-align:left;">
+									<sys:treeselect3 url="/sys/dict/treeDataPop" id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollIn.beforeUnit}" 
+																	labelName="beforeUnitName" labelValue="${tblRollIn.beforeUnitName}" title="单位列表"></sys:treeselect3>
+								</td>
+							</tr>
+							<tr style="height:10px;"></tr>
+							<tr>
+								<td style="text-align:right;">
+									<span>原存档电话：</span>
+								</td>
+								<td style="text-align:left;">
+									<input class="input_1" id="beforeUnitTel" name="beforeUnitTel" value="${tblRollIn.beforeUnitTel}" type="text"/>
+								</td>
+								<td style="text-align:right;">
+									<span>现存档单位：</span>
+								</td>
+								<td style="text-align:left;">
+									<sys:treeselect3 url="/sys/dict/treeDataPop" id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollIn.saveUnit}" 
+																labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表"></sys:treeselect3>
+								</td>
+							</tr>
+						</table>
+					</div>
+				<div class="overflow">
+					<div class="object">
+						<div class="obj_head">
+							<div class="title fl">相关信息</div>
+							<div class="add fr">
+								<a href="javascript:void(0)"  onclick="addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl);tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;" ><img src="${ctxStatic}/images/terminal/add.png"> 新增</a>
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div  style="float:left;">
-							<form:input path="number" htmlEscape="false" style="width:105px;margin-left:10px;" maxlength="11" />号
+						<div id="add_content_obj">
+							<div class="obj_con">
+								<table id="contentTable" class="">
+									<tbody id="tblRollInPersonsList">
+									</tbody>
+								</table>
+								<script type="text/template" id="tblRollInPersonsTpl">//<!--
+									<tr id="tblRollInPersonsList{{idx}}">
+										<td class="hide">
+											<input id="tblRollInPersonsList{{idx}}_id" name="tblRollInPersonsList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
+											<input id="tblRollInPersonsList{{idx}}_delFlag" name="tblRollInPersonsList[{{idx}}].delFlag" type="hidden" value="0"/>
+										</td>
+										<td>
+											<span class="fl"><label style="margin-left:120px;">姓名：</label>
+											<input id="tblRollInPersonsList{{idx}}_name" name="tblRollInPersonsList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input3"/></span>
+										</td>
+										<td rowspan="5" class="text-center" style="background:#00000017;" width="2">
+											{{#delBtn}}<span class="close" onclick="delRow(this, '#tblRollInPersonsList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
+										</td>
+									</tr><tr>
+										<td><label>正本：</label> 	
+											<input id="tblRollInPersonsList{{idx}}_originalNo" style="width:150px;" name="tblRollInPersonsList[{{idx}}].originalNo" type="text" value="{{row.originalNo}}" maxlength="11" class="input3  digits"/>
+											<label>卷&nbsp;</label>
+											<label>副本：</label>
+											<input id="tblRollInPersonsList{{idx}}_viceNo" style="width:150px;" name="tblRollInPersonsList[{{idx}}].viceNo" type="text" value="{{row.viceNo}}" maxlength="11" class="input3  digits"/>
+											<label>卷&nbsp;</label>
+											<label>档案材料：</label>
+											<input id="tblRollInPersonsList{{idx}}_filesNo" style="width:150px;" name="tblRollInPersonsList[{{idx}}].filesNo" type="text" value="{{row.filesNo}}" maxlength="11" class="input3  digits"/>
+											<label>卷</label>
+										</td>
+									</tr><tr>
+										<td>
+											<span class="fl"><label>工作单位及职务：</label>
+											<input id="tblRollInPersonsList{{idx}}_duty" name="tblRollInPersonsList{{idx}}.duty" type="text" value="{{row.duty}}" maxlength="64" class="input3"/></span>
+										</td>
+									</tr><tr>
+										<td >
+											<span class="fl"><label style="margin-left:73px;">转入原因：</label>
+											<input id="tblRollInPersonsList{{idx}}_reasonContent" name="tblRollInPersonsList{{idx}}.reasonContent" type="text" value="{{row.reasonContent}}" maxlength="64" class="input3"/></span>
+										</td>
+									</tr><tr>
+										<td>
+											<span class="fl"><label style="margin-left:120px;">备注：</label>
+											<input id="tblRollInPersonsList{{idx}}_remarks" name="tblRollInPersonsList{{idx}}.remarks" type="text" value="{{row.remarks}}" maxlength="128" class="input3"/></span>
+										</td>
+									</tr><tr style="height:25px;"><td colspan="2"></td></tr>
+											
+								</script>
+								<script type="text/javascript">
+									var tblRollInPersonsRowIdx = 0, tblRollInPersonsTpl = $("#tblRollInPersonsTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
+									$(document).ready(function() {
+										var data = ${fns:toJson(tblRollIn.tblRollInPersonsList)};
+										for (var i=0; i<data.length; i++){
+											addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl, data[i]);
+											tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;
+										}
+									});
+								</script>
+							</div>
 						</div>
 					</div>
-				</div>	
-				<div class="control-group">
-					<label class="control-label">转入时间：</label>
-					<div class="controls">
-						<input name="rollInTime" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
-							value="<fmt:formatDate value="${tblRollIn.rollInTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-							onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-					</div>
 				</div>
-				
-				<div class="control-group">
-					<label class="control-label">经办人：</label>
-					<div class="controls">
-						<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label">接收人：</label>
-					<div class="controls">
-						<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label">原存档单位：</label>
-					<div class="controls">
-						<sys:treeselect2 url="/sys/dict/treeDataPop" id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollIn.beforeUnit}" 
-											labelName="beforeUnitName" labelValue="${tblRollIn.beforeUnitName}" title="单位列表"></sys:treeselect2>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<label class="control-label" style="width : 180px">原存档单位电话：</label>
-					<div class="controls">
-						<form:input path="beforeUnitTel" htmlEscape="false" maxlength="11" class="input-xlarge "/>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<label class="control-label">现存档单位：</label>
-					<div class="controls">
-						<sys:treeselect2 url="/sys/dict/treeDataPop" id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollIn.saveUnit}" 
-											labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表"></sys:treeselect2>
-					</div>
-				</div>
-				<input type="hidden" id = "approveAttachmentId" name = "rollApproveAttachment"/>
-				<%-- <div class="control-group">
-			<label class="control-label">借阅审批附件：</label>
-			<div class="controls">
-				<sys:upFIle input="rollApproveAttachment"  type="files"  name="rollApproveAttachment"  value="${tblRollIn.rollApproveAttachment}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				<input type="hidden" name="rollApproveAttachment" id="approveAttachmentId"/>
+				<input type="submit" class="save_btn fr" onclick="addRollIn()" value="保 存" />
 			</div>
-		</div> --%>
-		
-		<div class="control-group" id="aboutInfo">
-			<label class="control-label">相关信息：</label>
-			<div class="controls">
-				<table id="contentTable"  style="width:60%;" class="table table-striped table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th class="hide"></th>
-							
-						</tr>
-					</thead>
-					<tbody id="tblRollInPersonsList">
-					</tbody>
-					<tfoot>
-						<tr><td colspan="12"><a href="javascript:" onclick="addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl);tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;" style="font-size : 150%" class="btn btn-primary"><i class="icon-plus"></i>新增</a></td></tr>
-					</tfoot>
-				</table>
-				<script type="text/template" id="tblRollInPersonsTpl">
-					<tr>
-						<tr id="tblRollInPersonsList{{idx}}">
-							<td class="hide">
-								<input id="tblRollInPersonsList{{idx}}_id" name="tblRollInPersonsList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
-								<input id="tblRollInPersonsList{{idx}}_delFlag" name="tblRollInPersonsList[{{idx}}].delFlag" type="hidden" value="0"/>
-							</td>
-							<td style="text-align:right;width:120px;"><label>姓名：</label></td>
-							<td>
-								<input id="tblRollInPersonsList{{idx}}_name" name="tblRollInPersonsList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
-							</td>
-							<td rowspan="6" class="text-center" width="10">
-								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblRollInPersonsList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
-							</td>
-						</tr><tr>
-							<td colspan="2"><label>正本：</label> 	
-								<input id="tblRollInPersonsList{{idx}}_originalNo" style="width:95px;" name="tblRollInPersonsList[{{idx}}].originalNo" type="text" value="{{row.originalNo}}" maxlength="11" class="input-small  digits"/>
-								<label>卷&nbsp;</label>
-								<label>副本：</label>
-								<input id="tblRollInPersonsList{{idx}}_viceNo" style="width:95px;" name="tblRollInPersonsList[{{idx}}].viceNo" type="text" value="{{row.viceNo}}" maxlength="11" class="input-small  digits"/>
-								<label>卷&nbsp;</label>
-								<label>档案材料：</label>
-								<input id="tblRollInPersonsList{{idx}}_filesNo" style="width:95px;" name="tblRollInPersonsList[{{idx}}].filesNo" type="text" value="{{row.filesNo}}" maxlength="11" class="input-small  digits"/>
-								<label>卷</label>
-							</td>
-						</tr><tr>
-							<td style="text-align:right;"><label>工作单位及职务：</label></td>
-							<td>
-								<input id="tblRollInPersonsList{{idx}}_duty" name="tblRollInPersonsList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="200" class="input-xlarge "/>
-							</td>
-						</tr><tr>
-							<td style="text-align:right;"><label>转入原因：</label></td>
-							<td >
-								<input id="tblRollInPersonsList{{idx}}_reasonContent" name="tblRollInPersonsList[{{idx}}].reasonContent" type="text" value="{{row.reasonContent}}" maxlength="2000" class="input-xlarge "/>
-							</td>
-						</tr><tr>
-							<td style="text-align:right;"><label>备注：</label></td>
-							<td>
-								<textarea id="tblRollInPersonsList{{idx}}_remarks" name="tblRollInPersonsList[{{idx}}].remarks" rows="2" maxlength="255" class="input-xlarge ">{{row.remarks}}</textarea>
-							</td>
-						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
-					</tr>
-					</script>
-				<script type="text/javascript">
-					var tblRollInPersonsRowIdx = 0, tblRollInPersonsTpl = $("#tblRollInPersonsTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
-					$(document).ready(function() {
-						var data = ${fns:toJson(tblRollIn.tblRollInPersonsList)};
-						for (var i=0; i<data.length; i++){
-							addRow('#tblRollInPersonsList', tblRollInPersonsRowIdx, tblRollInPersonsTpl, data[i]);
-							tblRollInPersonsRowIdx = tblRollInPersonsRowIdx + 1;
-						}
-					});
-				</script>
+		</form:form>
+		<div class="right fr">
+			<div class="right_text" id="photoShowDiv" onclick="uploadImg(this);">
+				<img id="photoShow" ondblclick="removeImg(this);" src="${ctxStatic}/images/terminal/scan.png">
+				<p style="font-size:30px;">请将您的文件放置于扫描区</p>
 			</div>
-		</div>
-					
-				<div class="form-actions">
-					<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存" onclick="add()"/>&nbsp;
-					<input id="btnCancel" class="btn" type="button" value="返 回" onclick="goBack()"/>
-				</div>
-			</form:form>
-		</div>
 		</div>
 	</div>
-	</div>
+	<div class="footer">中共天津市委组织部信息管理处&nbsp;&nbsp;&nbsp;&nbsp;天津市天房科技发展股份有限公司&nbsp;&nbsp;&nbsp;&nbsp;联合开发</div>
 </body>
 </html>

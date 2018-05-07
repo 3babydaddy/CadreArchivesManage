@@ -103,7 +103,7 @@ public class NoticeToDoController extends BaseController {
 			Map<String, Object> map4 = new HashMap<>();
 			map4.put("flag", "scatteredFiles");
 			map4.put("url", "/scattereds/tblScatteredFiles/list");
-			map4.put("msg", "零散材料管理有待审核的数据,请尽快处理");
+			map4.put("msg", "零散材料有待审核的数据,请尽快处理");
 			mapList.add(map4);
 			playSound();
 		}

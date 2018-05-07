@@ -216,7 +216,7 @@
 			<label class="control-label">借阅审批附件：</label>
 			<div class="controls">
 				<c:if test="${not empty tblBorrowArchives.approveAttachment}">
-					<sys:upImg input="approveAttachment" type="files" name="approveAttachment" value="${tblBorrowArchives.approveAttachment}" readonly="true" uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+					<sys:upImgMul input="approveAttachment" type="files" name="approveAttachment" value="${tblBorrowArchives.approveAttachment}" readonly="true" uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
 				</c:if>
 			</div>
 		</div>

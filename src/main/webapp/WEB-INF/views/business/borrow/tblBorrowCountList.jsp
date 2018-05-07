@@ -56,12 +56,13 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
+			max-width: 380px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
 		}
 		.ul-form li label{
-			width: 161px !important;
+			width: 155px !important;
 		}
 		body {
 			font-family: "微软雅黑";
@@ -144,7 +145,7 @@
 				<td rowspan="${tblBorrowArchives.tblBorrowTargetList.size()}">
 					<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td rowspan="${tblBorrowArchives.tblBorrowTargetList.size()}">
+				<td title="${tblBorrowArchives.consultUnitName}" rowspan="${tblBorrowArchives.tblBorrowTargetList.size()}">
 					${tblBorrowArchives.consultUnitName}
 				</td>
 				<c:forEach items="${tblBorrowArchives.tblBorrowTargetList}" var="tblBorrowTarget" varStatus="sign">
@@ -172,7 +173,7 @@
 				<c:if test="${sign.count > 1}">
 					<tr>
 						<td>${tblBorrowTarget.name}</td>
-						<td>${tblBorrowTarget.unitName}</td>
+						<td title="${tblBorrowTarget.unitName}">${tblBorrowTarget.unitName}</td>
 						<td>${tblBorrowTarget.duty}</td>
 						<td>${tblBorrowTarget.politicalStatus}</td>
 					</tr>
