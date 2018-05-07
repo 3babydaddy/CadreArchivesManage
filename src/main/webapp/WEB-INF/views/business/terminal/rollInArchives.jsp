@@ -341,17 +341,17 @@
 									</tr><tr>
 										<td>
 											<span class="fl"><label>工作单位及职务：</label>
-											<input id="tblRollInPersonsList{{idx}}_duty" name="tblRollInPersonsList{{idx}}.duty" type="text" value="{{row.duty}}" maxlength="64" class="input3"/></span>
+											<input id="tblRollInPersonsList{{idx}}_duty" name="tblRollInPersonsList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="64" class="input3"/></span>
 										</td>
 									</tr><tr>
 										<td >
 											<span class="fl"><label style="margin-left:73px;">转入原因：</label>
-											<input id="tblRollInPersonsList{{idx}}_reasonContent" name="tblRollInPersonsList{{idx}}.reasonContent" type="text" value="{{row.reasonContent}}" maxlength="64" class="input3"/></span>
+											<input id="tblRollInPersonsList{{idx}}_reasonContent" name="tblRollInPersonsList[{{idx}}].reasonContent" type="text" value="{{row.reasonContent}}" maxlength="64" class="input3"/></span>
 										</td>
 									</tr><tr>
 										<td>
 											<span class="fl"><label style="margin-left:120px;">备注：</label>
-											<input id="tblRollInPersonsList{{idx}}_remarks" name="tblRollInPersonsList{{idx}}.remarks" type="text" value="{{row.remarks}}" maxlength="128" class="input3"/></span>
+											<input id="tblRollInPersonsList{{idx}}_remarks" name="tblRollInPersonsList[{{idx}}].remarks" type="text" value="{{row.remarks}}" maxlength="128" class="input3"/></span>
 										</td>
 									</tr><tr style="height:25px;"><td colspan="2"></td></tr>
 											
