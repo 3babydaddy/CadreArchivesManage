@@ -174,7 +174,7 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 		//移交总材料数
 		long filesNum = 0;
 		for(TblHandOverFiles info : list){
-			filesNum += info.getOriginalNo();
+			filesNum += (info.getOriginalNo() == null ? 0 : info.getOriginalNo());
 		}
 		//新增合计数据
 		TblScatteredFiles scatteredFiles = new TblScatteredFiles();

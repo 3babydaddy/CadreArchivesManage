@@ -220,7 +220,7 @@
 			a.name AS "name",
 			a.duty AS "duty",
 			a.files_no AS "filesNo",
-			b.status as "status",
+			b.status as "status"
 		FROM tbl_roll_in_persons a
 		<include refid="tblRollInPersonsJoins"/>
 		<where>
