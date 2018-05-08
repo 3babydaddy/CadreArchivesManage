@@ -125,7 +125,8 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 			perList.get(i).setXh((page.getPageNo()-1)*30+(perList.size()-i)+"");
 		}
 		//材料总数
-		int filesNo = tblRollInPersonsDao.querySum(tblRollInPersons);
+		String filesNoStr = tblRollInPersonsDao.querySum(tblRollInPersons); 
+		int filesNo = StringUtils.isBlank(filesNoStr) ? 0 : Integer.parseInt(filesNoStr);
 		//第一行数据
 		TblRollInPersons info = new TblRollInPersons();
 		info.setXh("合计");
@@ -144,7 +145,8 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 			perList.get(i).setStatus(dictDao.getLabelByValue(perList.get(i).getStatus(), "audit_status"));
 		}
 		//材料总数
-		int filesNo = tblRollInPersonsDao.querySum(tblRollInPersons);
+		String filesNoStr = tblRollInPersonsDao.querySum(tblRollInPersons); 
+		int filesNo = StringUtils.isBlank(filesNoStr) ? 0 : Integer.parseInt(filesNoStr);
 		//第一行数据
 		TblRollInPersonsExport info = new TblRollInPersonsExport();
 		info.setXh("合计");

@@ -178,16 +178,10 @@
 							]]>
 							</if>
 							<if test="borrow.consultUnit != null and borrow.consultUnit != ''">
-								AND a.consult_unit LIKE 
-									<if test="dbName == 'oracle'">'%'||#{borrow.consultUnit}||'%'</if>
-									<if test="dbName == 'mssql'">'%'+#{borrow.consultUnit}+'%'</if>
-									<if test="dbName == 'mysql'">concat('%',#{borrow.consultUnit},'%')</if>
+								AND a.consult_unit LIKE concat('%',#{borrow.consultUnit},'%')
 							</if>
 							<if test="borrow.operator != null and borrow.operator != ''">
-								AND a.operator LIKE 
-									<if test="dbName == 'oracle'">'%'||#{borrow.operator}||'%'</if>
-									<if test="dbName == 'mssql'">'%'+#{borrow.operator}+'%'</if>
-									<if test="dbName == 'mysql'">concat('%',#{borrow.operator},'%')</if>
+								AND a.operator LIKE concat('%',#{borrow.operator},'%')
 							</if>
 							<if test="borrow.tarStr != null and borrow.tarStr != ''">
 								AND a.id in (select main_id from tbl_borrow_target where main_id = a.id 

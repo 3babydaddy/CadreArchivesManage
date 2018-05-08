@@ -250,7 +250,7 @@
 						 			<input class="input_1" style="width:80px;" id="number" name="number" value="${tblRollIn.number}" type="text"/><span>号</span>
 						 		</td>
 						 	</tr>
-						 	<tr style="height:10px;"></tr>
+						 	<tr style="height:5px;"></tr>
 							<tr>
 								<td style="text-align:right;">
 									<span>转入时间：</span>
@@ -265,7 +265,7 @@
 									<input class="input_1" id="operator" name="operator" style="width:400px;" value="${tblRollIn.operator}" type="text"/>
 								</td>
 							</tr>
-							<tr style="height:10px;"></tr>
+							<tr style="height:5px;"></tr>
 							<tr>
 								<td style="text-align:right;">
 									<span>接收人：</span>
@@ -281,7 +281,7 @@
 																	labelName="beforeUnitName" labelValue="${tblRollIn.beforeUnitName}" title="单位列表"></sys:treeselect3>
 								</td>
 							</tr>
-							<tr style="height:10px;"></tr>
+							<tr style="height:5px;"></tr>
 							<tr>
 								<td style="text-align:right;">
 									<span>原存档电话：</span>

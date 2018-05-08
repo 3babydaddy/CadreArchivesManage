@@ -215,16 +215,10 @@
 			]]>
 			</if>
 			<if test="consultUnit != null and consultUnit != ''">
-				AND a.consult_unit LIKE 
-					<if test="dbName == 'oracle'">'%'||#{consultUnit}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{consultUnit}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{consultUnit},'%')</if>
+				AND a.consult_unit LIKE concat('%',#{consultUnit},'%')
 			</if>
 			<if test="operator != null and operator != ''">
-				AND a.operator LIKE 
-					<if test="dbName == 'oracle'">'%'||#{operator}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{operator}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{operator},'%')</if>
+				AND a.operator LIKE concat('%',#{operator},'%')
 			</if>
 			<if test="tarStr != null and tarStr != ''">
 				AND a.id in (select main_id from tbl_borrow_target where main_id = a.id 
@@ -245,10 +239,7 @@
 			]]>
 			</if>
 			<if test="backOperator != null and backOperator != ''">
-				AND b.return_person LIKE 
-					<if test="dbName == 'oracle'">'%'||#{backOperator}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{backOperator}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{backOperator},'%')</if>
+				AND b.return_person LIKE concat('%',#{backOperator},'%')
 			</if>
 			<if test="status != null and status != ''">
 			<![CDATA[
@@ -293,16 +284,10 @@
 			]]>
 			</if>
 			<if test="consultUnit != null and consultUnit != ''">
-				AND a.consult_unit LIKE 
-					<if test="dbName == 'oracle'">'%'||#{consultUnit}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{consultUnit}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{consultUnit},'%')</if>
+				AND a.consult_unit LIKE concat('%',#{consultUnit},'%')
 			</if>
 			<if test="operator != null and operator != ''">
-				AND a.operator LIKE 
-					<if test="dbName == 'oracle'">'%'||#{operator}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{operator}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{operator},'%')</if>
+				AND a.operator LIKE concat('%',#{operator},'%')
 			</if>
 			<if test="tarStr != null and tarStr != ''">
 				AND a.id in (select main_id from tbl_borrow_target where main_id = a.id 

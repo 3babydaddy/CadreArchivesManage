@@ -23,5 +23,5 @@ public interface TblRollInPersonsDao extends CrudDao<TblRollInPersons> {
 	
 	List<TblRollInPersonsExport> queryCountList(TblRollInPersons tblRollInPersons);
 	
-	int querySum(TblRollInPersons tblRollInPersons);
+	String querySum(TblRollInPersons tblRollInPersons);
 }

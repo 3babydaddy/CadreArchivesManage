@@ -156,10 +156,7 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="handOverUnit != null and handOverUnit != ''">
-				AND a.hand_over_unit LIKE 
-					<if test="dbName == 'oracle'">'%'||#{handOverUnit}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{handOverUnit}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{handOverUnit},'%')</if>
+				AND a.hand_over_unit LIKE concat('%',#{handOverUnit},'%')
 			</if>
 			<if test="startHandOverDate != null and startHandOverDate != ''">
 			<![CDATA[
@@ -172,16 +169,10 @@
 			]]>	
 			</if>
 			<if test="operator != null and operator != ''">
-				AND a.operator LIKE 
-					<if test="dbName == 'oracle'">'%'||#{operator}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{operator}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{operator},'%')</if>
+				AND a.operator LIKE concat('%',#{operator},'%')
 			</if>
 			<if test="recipient != null and recipient != ''">
-				AND a.recipient LIKE 
-					<if test="dbName == 'oracle'">'%'||#{recipient}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{recipient}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{recipient},'%')</if>
+				AND a.recipient LIKE concat('%',#{recipient},'%')
 			</if>
 			<if test="tblHandOverFilesList.size() > 0">
 				and a.id in 

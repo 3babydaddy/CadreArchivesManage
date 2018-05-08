@@ -176,9 +176,6 @@
 				<sys:treeselect id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
 									labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect>
 			</li>
-			<li><label>移交人：</label>
-				<form:input path="handOverStr" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
 			<li><label>经手人：</label>
 				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>

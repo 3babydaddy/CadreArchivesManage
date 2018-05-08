@@ -253,7 +253,7 @@
 		</where>
 			ORDER BY a.create_date ASC
 	</select>
-	<select id="querySum" resultType="java.lang.Integer">
+	<select id="querySum" resultType="java.lang.String">
 		select sum(files_no) from 
 			tbl_roll_in_persons
 		where del_flag = '0' 
