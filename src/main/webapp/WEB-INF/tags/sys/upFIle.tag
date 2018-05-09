@@ -146,7 +146,7 @@
     }
     //删除附件内容
     function delInputFile(input){
-    	debugger;
+    	//debugger;
     	var divFile=$('.'+input+'AllFile').children(".a-upload").find("input");
     	var dqInput=divFile.parent().prev(".${input}")
         var dqOl=dqInput.prev("ol");

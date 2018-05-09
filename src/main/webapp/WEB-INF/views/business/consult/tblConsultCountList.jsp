@@ -149,7 +149,7 @@
 				<c:forEach items="${tblConsultArchives.tblCheckedTargetList}" var="tblCheckedTarget" varStatus="sign">
 						<c:if test="${sign.count == 1}">
 							<td>${tblCheckedTarget.name}</td>
-							<td>${tblCheckedTarget.unitName}</td>
+							<td title="${tblCheckedTarget.unitName}">${tblCheckedTarget.unitName}</td>
 							<td>${tblCheckedTarget.duty}</td>
 							<td>${tblCheckedTarget.politicalStatus}</td>
 						</c:if>

@@ -151,7 +151,7 @@
 				<c:forEach items="${tblBorrowArchives.tblBorrowTargetList}" var="tblBorrowTarget" varStatus="sign">
 						<c:if test="${sign.count == 1}">
 							<td>${tblBorrowTarget.name}</td>
-							<td>${tblBorrowTarget.unitName}</td>
+							<td title="${tblBorrowTarget.unitName}">${tblBorrowTarget.unitName}</td>
 							<td>${tblBorrowTarget.duty}</td>
 							<td>${tblBorrowTarget.politicalStatus}</td>
 						</c:if>

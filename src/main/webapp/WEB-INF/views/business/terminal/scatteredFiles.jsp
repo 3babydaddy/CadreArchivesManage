@@ -150,12 +150,17 @@
 			height: 10% !important;
 			width: 90% !important;
 		}
+		.close{
+			font-size: 35px;
+			left: -10%;
+    		position: relative;
+		}
 	</style>
 </head>
 <body>
 	<div class="header">
 		<a href="${ctx}"><img src="${ctxStatic}/images/terminal/goback.png"></a>
-		<img src="${ctxStatic}/images/terminal/top3.png">
+		<img src="${ctxStatic}/images/terminal/top3.png" style="width:100%;">
 	</div>
 	<div class="content">
 		<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/saveTerminal" method="post" class="form-horizontal">

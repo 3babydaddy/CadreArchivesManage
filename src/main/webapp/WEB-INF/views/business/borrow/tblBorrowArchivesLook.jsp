@@ -73,12 +73,13 @@
 			<label class="control-label">借阅对象：</label>
 			<div class="controls">
 				<table id="contentTable" style="width:60%;" class="table table-striped table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th class="hide"></th>
-							
-						</tr>
-					</thead>
+					<colgroup>
+				 		<col width="15%"/>
+				 		<col width="48%"/>
+				 		<col width="20%"/>
+				 		<col width="15%"/>
+				 		<col width="5%"/>
+				 	</colgroup>
 					<tbody id="tblBorrowTargetList">
 					</tbody>
 					<tfoot>
@@ -92,11 +93,11 @@
 								<input id="tblBorrowTargetList{{idx}}_id" name="tblBorrowTargetList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
 								<input id="tblBorrowTargetList{{idx}}_delFlag" name="tblBorrowTargetList[{{idx}}].delFlag" type="hidden" value="0"/>
 							</td>
-							<td style="text-align:right;width:120px;"><label>姓名：</label></td>
+							<td style="text-align:right;"><label>姓名：</label></td>
 							<td>
 								<input id="tblBorrowTargetList{{idx}}_name" name="tblBorrowTargetList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
 							</td>
-							<td style="text-align:right;width:120px;"><label>政治面貌：</label></td>
+							<td style="text-align:right;"><label>政治面貌：</label></td>
 							<td>
 								<input id="tblBorrowTargetList{{idx}}_politicalStatus" name="tblBorrowTargetList[{{idx}}].politicalStatus" type="text" value="{{row.politicalStatus}}" maxlength="32" class="input-small "/>
 							</td>
@@ -129,12 +130,13 @@
 			<label class="control-label">借阅人员：</label>
 			<div class="controls">
 				<table id="contentTable" style="width:60%;" class="table table-striped table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th class="hide"></th>
-							
-						</tr>
-					</thead>
+					<colgroup>
+				 		<col width="15%"/>
+				 		<col width="48%"/>
+				 		<col width="20%"/>
+				 		<col width="15%"/>
+				 		<col width="5%"/>
+				 	</colgroup>
 					<tbody id="tblBorrowPersonList">
 					</tbody>
 					<tfoot>
@@ -148,34 +150,34 @@
 								<input id="tblBorrowPersonList{{idx}}_id" name="tblBorrowPersonList[{{idx}}].id" type="hidden" value="{{row.id}}"/>
 								<input id="tblBorrowPersonList{{idx}}_delFlag" name="tblBorrowPersonList[{{idx}}].delFlag" type="hidden" value="0"/>
 							</td>
-							<td style="text-align:right;width:120px;"><label>姓名：</label></td>
+							<td style="text-align:right;"><label>姓名：</label></td>
 							<td>
-								<input id="tblBorrowPersonList{{idx}}_name" name="tblBorrowPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
+								<input id="tblBorrowPersonList{{idx}}_name" name="tblBorrowPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-large "/>
 							</td>
-							<td rowspan="2" colspan="2" style="text-align:center;">
+							<td rowspan="4" colspan="2" style="text-align:center;">
 								<sys:upImg input="tblBorrowPersonList{{idx}}_photo"  type="files"  name="tblBorrowPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="头像上传"/>
 							</td>
 						</tr><tr>
-							<td style="text-align:right;width:120px;"><label>政治面貌：</label></td>
+							<td style="text-align:right;"><label>政治面貌：</label></td>
 							<td>
-								<input id="tblBorrowPersonList{{idx}}_politicalStatus" name="tblBorrowPersonList[{{idx}}].politicalStatus" type="text" value="{{row.politicalStatus}}" maxlength="32" class="input-small "/>
+								<input id="tblBorrowPersonList{{idx}}_politicalStatus" name="tblBorrowPersonList[{{idx}}].politicalStatus" type="text" value="{{row.politicalStatus}}" maxlength="32" class="input-large "/>
 							</td>
 						</tr><tr>
-							<td style="text-align:right;width:120px;"><label>职务：</label></td>
-							<td colspan="3">
-								<input id="tblBorrowPersonList{{idx}}_duty" name="tblBorrowPersonList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input-xlarge "/>
+							<td style="text-align:right;"><label>职务：</label></td>
+							<td colspan="1">
+								<input id="tblBorrowPersonList{{idx}}_duty" name="tblBorrowPersonList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input-large "/>
 							</td>
 						</tr><tr>
-							<td style="text-align:right;width:120px;"><label>单位：</label></td>
-							<td colspan="3">
-								<input id="tblBorrowPersonList{{idx}}_unitName" name="tblBorrowPersonList[{{idx}}].unitName" type="text" value="{{row.unitName}}" maxlength="32" class="input-xlarge "/>
+							<td style="text-align:right;"><label>单位：</label></td>
+							<td colspan="1">
+								<input id="tblBorrowPersonList{{idx}}_unitName" name="tblBorrowPersonList[{{idx}}].unitName" type="text" value="{{row.unitName}}" maxlength="32" class="input-large "/>
 							</td>
 						</tr><tr>
-							<td style="text-align:right;width:120px;"><label>联系电话：</label></td>
+							<td style="text-align:right;"><label>联系电话：</label></td>
 							<td>
-								<input id="tblBorrowPersonList{{idx}}_telphone" name="tblBorrowPersonList[{{idx}}].telphone" type="text" value="{{row.telphone}}" maxlength="11" class="input-small "/>
+								<input id="tblBorrowPersonList{{idx}}_telphone" name="tblBorrowPersonList[{{idx}}].telphone" type="text" value="{{row.telphone}}" maxlength="11" class="input-large "/>
 							</td>
-							<td style="text-align:right;width:120px;"><label>签字：</label></td>
+							<td style="text-align:right;"><label>签字：</label></td>
 							<td>
 								<div class="td-order-one" id="tblBorrowPersonList{{idx}}_siginDiv" style="display:none;">  
 									<img id="tblBorrowPersonList{{idx}}_siginImg" src="{{row.siginName}}" />

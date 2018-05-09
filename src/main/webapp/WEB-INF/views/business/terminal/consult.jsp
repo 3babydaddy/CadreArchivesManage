@@ -63,7 +63,6 @@
 			var id = $(prefix+"_id");
 			var delFlag = $(prefix+"_delFlag");
 			if (id.val() == ""){
-				$(obj).parent().parent().next().next().next().next().next().remove();
 				$(obj).parent().parent().next().next().next().next().remove();
 				$(obj).parent().parent().next().next().next().remove();
 				$(obj).parent().parent().next().next().remove();
@@ -237,12 +236,17 @@
 		    background-color: rgba(255, 255, 255, 0.5);
     		filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#40000000,endColorstr=#40000000);
 		}
+		.close{
+			font-size: 35px;
+			left: -10%;
+    		position: relative;
+		}
 	</style>
 </head>
 <body>
 	<div class="header">
 		<a href="${ctx}"><img src="${ctxStatic}/images/terminal/goback.png"></a>
-		<img src="${ctxStatic}/images/terminal/top.png">
+		<img src="${ctxStatic}/images/terminal/top.png" style="width:100%;">
 	</div>
 	<div class="content">
 		<form:form id="inputForm" modelAttribute="tblConsultArchives" action="${ctx}/consult/tblConsultArchives/saveTerminal" method="post" class="form-horizontal">
@@ -275,6 +279,11 @@
 						<div id="add_content_obj">
 							<div class="obj_con">
 								<table id="contentTable" class="">
+									<colgroup>
+										<col width="38%"/>
+								 		<col width="57%"/>
+								 		<col width="4%"/>
+							 		</colgroup>
 									<tbody id="tblCheckedTargetList">
 									</tbody>
 								</table>
@@ -285,7 +294,7 @@
 											<input id="tblCheckedTargetList{{idx}}_delFlag" name="tblCheckedTargetList[{{idx}}].delFlag" type="hidden" value="0"/>
 										</td>
 										<td>
-											<span class="fl"><label>姓名：</label>
+											<span class="fr"><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名：</label>
 											<input id="tblCheckedTargetList{{idx}}_name" name="tblCheckedTargetList[{{idx}}].name" type="text" value="{{row.name}}" class="input1"/></span>
 										</td>
 										<td>
@@ -298,7 +307,7 @@
 										</td>
 									</tr><tr>
 										<td>
-											<span class="fl"><label>职务：</label>
+											<span class="fr"><label>职务：</label>
 											<input id="tblCheckedTargetList{{idx}}_duty" name="tblCheckedTargetList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input1"/></span>
 										</td>
 										<td>
@@ -333,6 +342,11 @@
 						<div id="add_content_obj">
 							<div class="obj_con">
 								<table id="contentTable" class="">
+									<colgroup>
+										<col width="38%"/>
+								 		<col width="57%"/>
+								 		<col width="4%"/>
+							 		</colgroup>
 									<tbody id="tblCheckPersonList">
 									</tbody>
 								</table>
@@ -344,40 +358,38 @@
 														<input id="tblCheckPersonList{{idx}}_delFlag" name="tblCheckPersonList[{{idx}}].delFlag" type="hidden" value="0"/>
 													</td>
 													<td>
-														<span class="fl"><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名：</label>
-														<input id="tblCheckPersonList{{idx}}_name" name="tblCheckPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input3"/></span>
+														<span class="fr"><label>姓名：</label>
+														<input id="tblCheckPersonList{{idx}}_name" name="tblCheckPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input1"/></span>
 													</td>
-													<td rowspan="4" colspan="2" style="text-align:center;border:1px solid #19181840;">
+													<td>
+														<span class="fr"><label>政治面貌：</label>
+														<input id="tblCheckPersonList{{idx}}_politicalStatus" name="tblCheckPersonList[{{idx}}].politicalStatus" type="text" value="{{row.politicalStatus}}" maxlength="32" class="input3"/></span>
+													</td>
+													<td rowspan="3" colspan="2" style="text-align:center;border:1px solid #19181840;display:none;">
 														<sys:upImg input="tblCheckPersonList{{idx}}_photo"  type="files"  name="tblCheckPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="头像上传"/>
 													</td>
-													<td rowspan="5" class="text-center" style="background:#00000017;" width="2">
+													<td rowspan="3" class="text-center" style="background:#00000017;" width="2">
 														{{#delBtn}}<span class="close" onclick="delPerRow(this, '#tblCheckPersonList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
 													</td>
 												</tr><tr>
 													<td>
-														<span class="fl"><label>政治面貌：</label>
-														<input id="tblCheckPersonList{{idx}}_politicalStatus" name="tblCheckPersonList[{{idx}}].politicalStatus" type="text" value="{{row.politicalStatus}}" maxlength="32" class="input3"/></span>
+														<span class="fr"><label>职务：</label>
+														<input id="tblCheckPersonList{{idx}}_duty" name="tblCheckPersonList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input1"/></span>
 													</td>
-												</tr><tr>
 													<td>
-														<span class="fl"><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;职务：</label>
-														<input id="tblCheckPersonList{{idx}}_duty" name="tblCheckPersonList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input3"/></span>
-													</td>
-												</tr><tr>
-													<td>
-														<span class="fl"><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单位：</label>
+														<span class="fr"><label>单位：</label>
 														<sys:treeselect3 url="/sys/dict/treeDataPop" id="tblCheckPersonList{{idx}}_unit" name="tblCheckPersonList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
 															labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect3>
 													</td>
 												</tr><tr>
 													<td>
-														<span class="fl"><label>联系电话：</label>
-														<input id="tblCheckPersonList{{idx}}_telphone" name="tblCheckPersonList[{{idx}}].telphone" type="text" value="{{row.telphone}}" maxlength="11" class="input3"/></span>
+														<span class="fr"><label>联系电话：</label>
+														<input id="tblCheckPersonList{{idx}}_telphone" name="tblCheckPersonList[{{idx}}].telphone" type="text" value="{{row.telphone}}" maxlength="11" class="input1"/></span>
 													</td>
 													<td>
-														<span class="fl"><label>签字：</label>
-														<input id="tblCheckPersonList{{idx}}_siginInput" name="tblCheckPersonList[{{idx}}].siginInput" type="text" onclick=siginOption(this); class="input1"/></span>
-														<input id="tblCheckPersonList{{idx}}_siginName" name="tblCheckPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input1"/></span>
+														<span class="fr"><label>签字：</label>
+														<input id="tblCheckPersonList{{idx}}_siginInput" name="tblCheckPersonList[{{idx}}].siginInput" type="text" onclick=siginOption(this); class="input3"/></span>
+														<input id="tblCheckPersonList{{idx}}_siginName" name="tblCheckPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input3"/></span>
 														
 														<div class="td-order-one" id="tblCheckPersonList{{idx}}_siginDiv" style="display:none;">  
 															<img id="tblCheckPersonList{{idx}}_siginImg" src="{{row.siginName}}" />

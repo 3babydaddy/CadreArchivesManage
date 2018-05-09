@@ -219,12 +219,17 @@
 		    background-color: rgba(255, 255, 255, 0.5);
     		filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#40000000,endColorstr=#40000000);
 		}
+		.close{
+			font-size: 35px;
+			left: -10%;
+    		position: relative;
+		}
 	</style>
 </head>
 <body>
 	<div class="header">
 		<a href="${ctx}"><img src="${ctxStatic}/images/terminal/goback.png"></a>
-		<img src="${ctxStatic}/images/terminal/top2.png">
+		<img src="${ctxStatic}/images/terminal/top2.png" style="width:100%;">
 	</div>
 	<div class="content">
 		<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/saveTerminal" method="post" class="form-horizontal">
@@ -311,6 +316,10 @@
 						<div id="add_content_obj">
 							<div class="obj_con">
 								<table id="contentTable" class="">
+									<colgroup>
+										<col width="94%"/>
+								 		<col width="4%"/>
+							 		</colgroup>
 									<tbody id="tblRollInPersonsList">
 									</tbody>
 								</table>
@@ -324,7 +333,7 @@
 											<span class="fl"><label style="margin-left:120px;">姓名：</label>
 											<input id="tblRollInPersonsList{{idx}}_name" name="tblRollInPersonsList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input3"/></span>
 										</td>
-										<td rowspan="5" class="text-center" style="background:#00000017;" width="2">
+										<td rowspan="5" class="text-center" style="background:#00000017;height:280px;" width="2">
 											{{#delBtn}}<span class="close" onclick="delRow(this, '#tblRollInPersonsList{{idx}}')" title="删除">&times;</span>{{/delBtn}}
 										</td>
 									</tr><tr>

@@ -172,6 +172,9 @@ public class TblScatteredFilesController extends BaseController {
 		}
 		try {
 			String originalFilename = file.getOriginalFilename();
+			if(StringUtils.isBlank(originalFilename)){
+				throw new Exception("导入文档为空！");
+			}
 			ScatteredFileImportUtil util = new ScatteredFileImportUtil();
 			TblScatteredFiles tblScatteredFiles = util.getExcelInfo(originalFilename, file);
 			try{

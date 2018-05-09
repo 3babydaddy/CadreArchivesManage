@@ -107,6 +107,7 @@
 			out_type,
 			reason,
 			reason_content,
+			related_attachment
 			original_no,
 			vice_no,
 			files_no,
@@ -127,6 +128,7 @@
 			#{outType},
 			#{reason},
 			#{reasonContent},
+			#{relatedAttachment},
 			#{originalNo},
 			#{viceNo},
 			#{filesNo},
@@ -150,6 +152,7 @@
 			out_type = #{outType},
 			reason = #{reason},
 			reason_content = #{reasonContent},
+			related_attachment = #{relatedAttachment},
 			original_no = #{originalNo},
 			vice_no = #{viceNo},
 			files_no = #{filesNo},

@@ -184,16 +184,16 @@
 			<li><label>何人档案：</label>
 				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>经办人：</label>
-				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
-			<li class="clearfix"></li>
 			<li><label>借阅人：</label>
 				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>归还人：</label>
 				<form:input path="backOperator" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
+			<li><label>经办人：</label>
+				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li class="clearfix"></li>
 			<li><label>状态：</label>
 				<form:select path="status" class="input-medium" style="width:220px;">
 					<form:option value="" label=""/>
@@ -228,7 +228,6 @@
 				<th>借阅单位</th>
 				<th>何人档案</th>
 				<th>借阅人</th>
-				<th>联系电话</th>
 				<th>归还日期</th>
 				<th>归还人</th>
 				<th>经办人</th>
@@ -254,9 +253,6 @@
 				</td>
 				<td>
 					${tblBorrowArchives.perStr}
-				</td>
-				<td>
-					${tblBorrowArchives.borrowTelPhone}
 				</td>
 				<td>
 					<fmt:formatDate value="${tblBorrowArchives.backDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

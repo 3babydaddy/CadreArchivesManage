@@ -199,12 +199,12 @@
 						</tr><tr>
 							<td style="text-align:right;"><label>转出原因：</label></td>
 							<td colspan="2">
-								<textarea id="tblRollOutPersonsList{{idx}}_reasonContent" name="tblRollOutPersonsList{{idx}}_reasonContent" rows="2" maxlength="255" class="input-xlarge ">{{row.reasonContent}}</textarea>
+								<textarea id="tblRollOutPersonsList{{idx}}_reasonContent" name="tblRollOutPersonsList[{{idx}}].reasonContent" rows="2" maxlength="255" class="input-xlarge ">{{row.reasonContent}}</textarea>
 							</td>
 						</tr><tr>
 							<td style="text-align:right;"><label>相关附件：</label></td>
 							<td colspan="2">
-								<textarea id="tblRollOutPersonsList{{idx}}_relatedAttachment" name="tblRollOutPersonsList{{idx}}_relatedAttachment" rows="2" maxlength="255" class="input-xlarge ">{{row.relatedAttachment}}</textarea>
+								<textarea id="tblRollOutPersonsList{{idx}}_relatedAttachment" name="tblRollOutPersonsList[{{idx}}].relatedAttachment" rows="2" maxlength="255" class="input-xlarge ">{{row.relatedAttachment}}</textarea>
 							</td>
 						</tr><tr>
 							<td style="text-align:right;"><label>备注：</label></td>
