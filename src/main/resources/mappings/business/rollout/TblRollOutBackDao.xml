@@ -109,4 +109,10 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="getBackInfoByMainId" resultType="TblRollOutBack">
+		SELECT 
+			<include refid="tblRollOutBackColumns"/>
+		FROM tbl_roll_out_back a
+		where a.main_id = #{rollOutId}
+	</select>
 </mapper>

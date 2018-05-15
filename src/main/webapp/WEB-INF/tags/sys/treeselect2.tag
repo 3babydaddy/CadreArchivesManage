@@ -22,7 +22,7 @@
 <%@ attribute name="hideBtn" type="java.lang.Boolean" required="false" description="是否显示按钮"%>
 <%@ attribute name="disabled" type="java.lang.String" required="false" description="是否限制选择，如果限制，设置为disabled"%>
 <%@ attribute name="dataMsgRequired" type="java.lang.String" required="false" description=""%>
-<div class="input-append"  style="display:inline">
+<div class="input-append"  >
 	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"/>
 	<input id="${id}Name" name="${labelName}" ${allowInput?'':'readonly="readonly"'} type="text" value="${labelValue}" data-msg-required="${dataMsgRequired}"
 		class="${cssClass}" style="${cssStyle};width:240px;"/><a id="${id}Button" href="javascript:" class="btn ${disabled} ${hideBtn ? 'hide' : ''}" style="${smallBtn?'padding:4px 2px;':''};width:30px;height:30px;background:#ccc;">&nbsp;<i class="icon-search""></i>&nbsp;</a>&nbsp;&nbsp;
@@ -40,6 +40,9 @@
 		    350,
 		    470,
 		    {
+				draggable: false, /* 是否可以拖动窗口 */  
+	            dragLimit: true, /* 在可以拖动窗口的情况下，是否限制在可视范围 */  
+	            persistent: true,
 				ajaxData:{selectIds: $("#${id}Id").val()},
 				buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true},
 				submit:function(v, h, f){

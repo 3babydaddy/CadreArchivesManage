@@ -22,6 +22,14 @@
 					}
 				}
 			});
+			$("#btnSubmit").click(function(){
+				setTimeout(function(){ 
+					var errorArry = $("label.error");
+					for(var i = 0; i < errorArry.length; i++){
+						$("label.error")[i].innerHTML="必填信息";
+					}
+				}, 100);	
+			});
 		});
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
@@ -64,7 +72,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交人员列表</a></li>
-		<li class="active"><a href="#">零散材料移交人员编辑<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblScatteredFiles.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">零散材料移交人员<c:if test="${empty tblScatteredFiles.id }">新增</c:if><c:if test="${not empty tblScatteredFiles.id }">编辑</c:if></a></li>
 	</ul><br/>
 	<sys:message content="${message}"/>		
 	<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">
@@ -73,13 +81,13 @@
 			<label class="control-label">移交单位：</label>
 			<div class="controls">
 				<sys:treeselect2 url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
-								labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表"></sys:treeselect2>
+								labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表" cssClass="required"></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">移交时间：</label>
 			<div class="controls">
-				<input name="handOverDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
+				<input name="handOverDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${tblScatteredFiles.handOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</div>
@@ -112,13 +120,13 @@
 								<input id="tblHandOverFilesList{{idx}}_delFlag" name="tblHandOverFilesList[{{idx}}].delFlag" type="hidden" value="0"/>
 							</td>
 							<td>
-								<input id="tblHandOverFilesList{{idx}}_name" name="tblHandOverFilesList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
+								<input id="tblHandOverFilesList{{idx}}_name" name="tblHandOverFilesList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small required"/>
 							</td>
 							<td>
 								<input id="tblHandOverFilesList{{idx}}_duty" name="tblHandOverFilesList[{{idx}}].duty" type="text" value="{{row.duty}}" maxlength="32" class="input-small "/>
 							</td>
 							<td>
-								<input id="tblHandOverFilesList{{idx}}_filesNames" name="tblHandOverFilesList[{{idx}}].filesNames" type="text" value="{{row.filesNames}}" maxlength="2000" class="input-small "/>
+								<input id="tblHandOverFilesList{{idx}}_filesNames" name="tblHandOverFilesList[{{idx}}].filesNames" type="text" value="{{row.filesNames}}" maxlength="2000" class="input-small"/>
 							</td>
 							<td>
 								<input id="tblHandOverFilesList{{idx}}_originalNo" name="tblHandOverFilesList[{{idx}}].originalNo" type="text" value="{{row.originalNo}}" maxlength="11" class="input-small  digits"/>
@@ -142,15 +150,15 @@
 			</div>
 		
 		<div class="control-group">
-			<label class="control-label">经手人：</label>
+			<label class="control-label">经办人：</label>
 			<div class="controls">
-				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 				<label class="control-label">接收人：</label>
 				<div class="controls">
-					<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+					<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				</div>
 			</div>
 		</div>

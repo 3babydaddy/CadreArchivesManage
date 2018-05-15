@@ -29,7 +29,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/rollin/tblRollIn/">转入管理人员列表</a></li>
-		<li class="active"><a href="${ctx}/rollin/tblRollIn/look?id=${tblRollIn.id}">转入管理人员查看<shiro:hasPermission name="rollins:tblRollIn:edit">${not empty tblRollIn.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollins:tblRollIn:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">转入管理人员查看</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

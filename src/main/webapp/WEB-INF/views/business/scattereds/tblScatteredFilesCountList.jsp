@@ -56,7 +56,7 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
-			max-width: 380px;
+			max-width: 310px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
@@ -134,8 +134,8 @@
 				<th>材料总数</th>
 				<th>经办人</th>
 				<th>接收人</th>
-				<th>录入时间</th>
-				<th>录入人</th>
+				<!-- <th>录入时间</th>
+				<th>录入人</th> -->
 				<th>状态</th>
 			</tr>
 		</thead>
@@ -151,7 +151,7 @@
 				<td>
 					<fmt:formatDate value="${tblScatteredFiles.handOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td>
+				<td title="${tblScatteredFiles.handOverStr}">
 					${tblScatteredFiles.handOverStr}
 				</td>
 				<td>
@@ -166,12 +166,12 @@
 				<td>
 					${tblScatteredFiles.recipient}
 				</td>
-				<td>
+			<%-- 	<td>
 					<fmt:formatDate value="${tblScatteredFiles.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${tblScatteredFiles.createBy.id}
-				</td>
+				</td> --%>
 				<td>
 					${fns:getDictLabel(tblScatteredFiles.status, 'audit_status', '')}
 				</td>

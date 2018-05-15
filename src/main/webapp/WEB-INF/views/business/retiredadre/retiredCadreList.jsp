@@ -145,11 +145,11 @@
 			class="form-search" style="text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
 			<ul class="ul-form">
 				<li><label>导入文件：</label>
-					<input name="file" type="file" style="width:200px;margin-bottom:15px;""/>
+					<input name="file" type="file" style="width:180px;margin-bottom:15px;""/>
 				</li>
 			</ul>
 			<input id="btnImportSubmit" style="margin-left:-30px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
-			<a href="<c:url value='/static/templet/retiredCadreModel.xls'/>">下载模板</a>
+			<a href="${ctx}/retiredadre/retiredCadre/moduleDown">下载模板</a>
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
@@ -214,7 +214,7 @@
 				<th>退休工作单位</th>
 				<th>状态</th>
 				<th>转死亡时间</th>
-				<th>转档案局时间</th>
+				<th>转档案时间</th>
 				<!-- <shiro:hasPermission name="retiredadre:retiredCadre:edit"><th>操作</th></shiro:hasPermission>  -->
 			</tr>
 		</thead>

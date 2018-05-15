@@ -65,7 +65,7 @@
 			]]>
 			</if>
 			<if test="unitDuty != null and unitDuty != ''">
-				AND a.unit_duty = #{unitDuty}
+				AND a.unit_duty like concat('%',#{unitDuty},'%')
 			</if>
 			<if test="status != null and status != ''">
 				AND a.status = #{status}

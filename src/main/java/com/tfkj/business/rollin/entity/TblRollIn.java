@@ -117,7 +117,7 @@ public class TblRollIn extends DataEntity<TblRollIn> {
 		this.saveUnit = saveUnit;
 	}
 	
-	@Length(min=0, max=1000, message="转递单附件长度必须介于 0 和 100 之间")
+	@Length(min=0, max=1000, message="转递单附件长度必须介于 0 和 1000 之间")
 	public String getRollApproveAttachment() {
 		return rollApproveAttachment;
 	}

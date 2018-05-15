@@ -38,10 +38,15 @@
 			}
 			for(var i = 0; i < rows.length; i++){
 				var mainId = rows[i].value.slice(0, rows[i].value.indexOf(','));
+				var status = rows[i].value.slice(rows[i].value.indexOf(',')+1);
 				if(idStr == ""){
 					idStr = mainId; 
 				}else{
 					idStr += "," + mainId; 
+				}
+				if(status == '3'){
+					alertx("已审核的数据不能删除！");
+					return;
 				}
 			}
 			var url = "${ctx}/consult/tblConsultArchives/delete?idStr="+idStr;
@@ -55,6 +60,11 @@
 				return;
 			}
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			var status = rows[0].value.slice(rows[0].value.indexOf(',')+1);
+			if(status == '3'){
+				alertx("已审核的数据不能编辑！");
+				return;
+			}
 			window.location.href = "${ctx}/consult/tblConsultArchives/form?id="+mainId;
 		}
 		
@@ -203,10 +213,10 @@
 				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}" 
 									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect>
 			</li>
-			<li><label>何人档案：</label>
+			<li><label>查档对象：</label>
 				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>查阅人：</label>
+			<li><label>查档人员：</label>
 				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>状态：</label>
@@ -244,10 +254,10 @@
 				<th><input id="selected" type="checkbox" /></th> 
 				<th>查阅日期</th>
 				<th>查阅单位</th>
-				<th>何人档案</th>
-				<th>查阅内容</th>
-				<th>查阅理由</th>
-				<th>查阅人</th>
+				<th>查档对象</th>
+				<th>查档事由</th>
+				<th>查档内容</th>
+				<th>查档人员</th>
 				<th>状态</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="consult:tblConsultArchives:edit"><th>操作</th></shiro:hasPermission>
@@ -265,14 +275,14 @@
 				<td title="${tblConsultArchives.consultUnitName}">
 					${tblConsultArchives.consultUnitName}
 				</td>
-				<td>
+				<td title="${tblConsultArchives.tarStr}">
 					${tblConsultArchives.tarStr}
-				</td>
-				<td title="${tblConsultArchives.content}">
-					${tblConsultArchives.content}
 				</td>
 				<td title="${tblConsultArchives.reason}">
 					${tblConsultArchives.reason}
+				</td>
+				<td title="${tblConsultArchives.content}">
+					${tblConsultArchives.content}
 				</td>
 				<td>
 					${tblConsultArchives.perStr}

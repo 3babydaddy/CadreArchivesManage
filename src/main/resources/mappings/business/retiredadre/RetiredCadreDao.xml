@@ -176,7 +176,10 @@
 			record_office_time = #{recordOfficeTime},
 			work_unit = #{workUnit},
 			record_office_address = #{recordOfficeAddress},
-			certificate_no = #{certificateNo}
+			certificate_no = #{certificateNo},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
 	

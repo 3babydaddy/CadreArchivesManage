@@ -290,9 +290,9 @@ public class WordExportController extends BaseController {
         	 //材料卷数
         	 long filesNo = 0;
         	 for(TblRollInPersons info : perList){
-        		 originalNo += info.getOriginalNo();
-        		 viceNo += info.getViceNo();
-        		 filesNo += info.getFilesNo();
+        		 originalNo += (info.getOriginalNo() == null ? 0 : info.getOriginalNo());
+        		 viceNo += (info.getViceNo() == null ? 0 : info.getViceNo());
+        		 filesNo += (info.getFilesNo() == null ? 0 : info.getFilesNo());
         	 }
         	 dataMap.put("originalNo", originalNo);
         	 dataMap.put("viceNo", viceNo);

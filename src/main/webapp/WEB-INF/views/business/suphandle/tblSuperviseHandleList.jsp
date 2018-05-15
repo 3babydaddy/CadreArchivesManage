@@ -103,11 +103,11 @@
 			class="form-search" style="text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
 			<ul class="ul-form">
 				<li><label>导入文件：</label>
-					<input id="uploadFile" name="file" type="file" style="width:210px;margin-bottom:15px;""/>
+					<input id="uploadFile" name="file" type="file" style="width:180px;margin-bottom:15px;""/>
 				</li>
 			</ul>
 			<input id="btnImportSubmit" class="btn btn-primary" style="margin-left:-30px;width:75px;" type="submit" value="   导    入   "/>&nbsp;&nbsp;
-			<a href="<c:url value='/static/templet/superviseHandleModel.xls'/>">下载模板</a>
+			<a href="${ctx}/suphandle/tblSuperviseHandle/moduleDown">下载模板</a>
 		</form>
 	</div>
 	<ul class="nav nav-tabs">

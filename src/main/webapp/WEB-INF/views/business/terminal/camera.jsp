@@ -185,7 +185,7 @@
 	    color: #1E88C7;
 	    text-decoration: none;
 	    text-indent: 0;
-	    line-height: 18px;
+	    line-height: 36px;
 	}
 	.file input {
 	    position: absolute;
@@ -205,7 +205,7 @@
 	}
 	.btn{
 		width: 80%;
-		height: 32px;
+		height: 48px;
 	}
 </style>
 

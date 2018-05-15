@@ -13,7 +13,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/retiredadre/retiredCadre/">退休干部信息操作列表</a></li>
-		<li class="active"><a href="${ctx}/retiredadre/retiredCadre/look?id=${retiredCadre.id}">退休干部信息查看<shiro:hasPermission name="retiredadre:retiredCadre:edit">${not empty retiredCadre.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="retiredadre:retiredCadre:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">退休干部信息查看</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="retiredCadre" action="${ctx}/retiredadre/retiredCadre/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -82,7 +82,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">退休单位：</label>
+			<label class="control-label">退休工作单位：</label>
 			<div class="controls">
 				<form:input path="workUnitName" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>

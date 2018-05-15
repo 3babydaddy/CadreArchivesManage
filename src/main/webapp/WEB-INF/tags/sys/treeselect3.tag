@@ -40,6 +40,9 @@
 		    550,
 		    650,
 		    {
+				draggable: false, /* 是否可以拖动窗口 */  
+	            dragLimit: true, /* 在可以拖动窗口的情况下，是否限制在可视范围 */  
+	            persistent: true,
 				ajaxData:{selectIds: $("#${id}Id").val()},
 				buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true},
 				submit:function(v, h, f){

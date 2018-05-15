@@ -102,6 +102,7 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 		return page;
 	}
 	
+	@SuppressWarnings("static-access")
 	@Transactional(readOnly = false)
 	public void save(TblBorrowArchives tblBorrowArchives) {
 		super.save(tblBorrowArchives);
@@ -122,6 +123,11 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 			}else{
 				tblBorrowPersonDao.delete(tblBorrowPerson);
 			}
+			try{
+				Thread.currentThread().sleep(300);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		//新增、更改或者删除借阅人的数据
 		for (TblBorrowTarget tblBorrowTarget : tblBorrowArchives.getTblBorrowTargetList()){
@@ -139,6 +145,11 @@ public class TblBorrowArchivesService extends CrudService<TblBorrowArchivesDao, 
 				}
 			}else{
 				tblBorrowTargetDao.delete(tblBorrowTarget);
+			}
+			try{
+				Thread.currentThread().sleep(300);
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 		

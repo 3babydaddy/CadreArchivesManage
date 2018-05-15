@@ -110,7 +110,7 @@ public class TblRollOut extends DataEntity<TblRollOut> {
 		this.isReturn = isReturn;
 	}
 	
-	@Length(min=0, max=64, message="转递单附件长度必须介于 0 和 64 之间")
+	@Length(min=0, max=120, message="转递单附件长度必须介于 0 和 120之间")
 	public String getRollApproveAttachment() {
 		return rollApproveAttachment;
 	}

@@ -3,6 +3,7 @@
  */
 package com.tfkj.business.retiredadre.web;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import com.tfkj.framework.core.utils.StringUtils;
 import com.tfkj.framework.core.utils.excel.ExportExcel;
 import com.tfkj.framework.core.utils.excel.ImportExcel;
 import com.tfkj.framework.core.web.BaseController;
+import com.tfkj.framework.system.utils.FileUtils;
 
 
 /**
@@ -138,6 +140,22 @@ public class RetiredCadreController extends BaseController {
     }
     
     /**
+   	 * 干部管理模板下载
+   	 * @param response
+   	 * @param redirectAttributes
+   	 * @return
+   	 */
+      @RequestMapping(value = "moduleDown")
+      public void moduleDown(HttpServletResponse response) {
+   	   try{
+   		    File file = new File(this.getClass().getResource("/templet/retiredCadreModel.xls").getPath());
+   			FileUtils.download("干部信息模板.xls", file, response);
+   		}catch(Exception e){
+   			e.printStackTrace();
+   		}
+      }
+    
+    /**
 	 * 导入离退休干部人员数据
 	 * @param file
 	 * @param redirectAttributes
@@ -150,6 +168,14 @@ public class RetiredCadreController extends BaseController {
 			return "redirect:"+Global.getAdminPath()+"/retiredadre/retiredCadre/?repage";
 		}
 		try {
+			String originalFilename = file.getOriginalFilename();
+			if(StringUtils.isBlank(originalFilename)){
+				throw new Exception("导入文档为空！");
+			}
+			if(!originalFilename.contains(".xlsx") && !originalFilename.contains(".xls")){
+				throw new Exception("请根据下载的模板进行数据的录入并上传!");
+			}
+			
 			StringBuilder failureMsg = new StringBuilder();
 			ImportExcel ei = new ImportExcel(file, 1, 0);
 			

@@ -94,6 +94,7 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 		return page;
 	}
 	
+	@SuppressWarnings("static-access")
 	@Transactional(readOnly = false)
 	public void save(TblConsultArchives tblConsultArchives) {
 		super.save(tblConsultArchives);
@@ -114,6 +115,12 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 			}else{
 				tblCheckedTargetDao.delete(tblCheckedTarget);
 			}
+			try{
+				//避免顺序发生变化
+				Thread.currentThread().sleep(300);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		//新增、更改或者删除查阅人的数据
 		for (TblCheckPerson tblCheckPerson : tblConsultArchives.getTblCheckPersonList()){
@@ -131,6 +138,11 @@ public class TblConsultArchivesService extends CrudService<TblConsultArchivesDao
 				}
 			}else{
 				tblCheckPersonDao.delete(tblCheckPerson);
+			}
+			try{
+				Thread.currentThread().sleep(300);
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 	}

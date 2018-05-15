@@ -85,28 +85,78 @@
 		}
 		
 		var addRollIn  =  function() {
-            $.ajax({
-                type: "POST",//方法类型
-                dataType: "json",//预期服务器返回的数据类型
-                url: "${ctx}/rollin/tblRollIn/saveTerminal",//url
-                data: $('#inputForm').serialize(),
-                success: function (result) {
-                    //alert(result);
-                    if(result){
-                    	var submit = function (v, h, f) {
-                    	    if (v == 'ok')
-                    	    	window.location.href="${ctx}";
-                    	    return true; //close
-                    	};
-                    	$.jBox.confirm("确定吗？", "提示", submit);
-                    	
-                    };
-                },
-                error : function() {
-                    alert("异常！");
-                }
-            });
+           
+           if(validateDate()){
+        	   $.ajax({
+                   type: "POST",//方法类型
+                   dataType: "json",//预期服务器返回的数据类型
+                   url: "${ctx}/rollin/tblRollIn/saveTerminal",//url
+                   data: $('#inputForm').serialize(),
+                   success: function (result) {
+                       //alert(result);
+                       if(result){
+                       	var submit = function (v, h, f) {
+                       	    if (v == 'ok')
+                       	    	window.location.href="${ctx}";
+                       	    return true; //close
+                       	};
+                       	$.jBox.confirm("确定吗？", "提示", submit);
+                       	
+                       };
+                   },
+                   error : function() {
+                       alert("异常！");
+                   }
+               });
+           }
         }
+		
+		function validateDate(){
+			var character = $("#character").val();
+			if(character == ""){
+				alertx("批次的字不能为空！");
+				return false;
+			}
+			var number = $("#number").val();
+			if(number == ""){
+				alertx("批次的号不能为空！");
+				return false;
+			}
+			var rollInTime = $("#rollInTime").val();
+			if(rollInTime == ""){
+				alertx("转入日期不能为空！");
+				return false;
+			}
+			var operator = $("#operator").val();
+			if(operator == ""){
+				alertx("经办人不能为空！");
+				return false;
+			}
+			var recipient = $("#recipient").val();
+			if(recipient == ""){
+				alertx("接收人不能为空！");
+				return false;
+			}
+			var beforeUnitId = $("#beforeUnitId").val();
+			if(beforeUnitId == ""){
+				alertx("原存档单位不能为空！");
+				return false;
+			}
+			var saveUnitId = $("#saveUnitId").val();
+			if(saveUnitId == ""){
+				alertx("现存档单位不能为空！");
+				return false;
+			}
+			for(var i = 0; i < tblRollInPersonsRowIdx; i++){
+				var name = $("#tblRollInPersonsList"+i+"_name").val()
+				if(name == ""){
+					alertx("转入人员的姓名不能为空！");
+					return false;
+					break;
+				}
+			}
+			return true;
+		}
 		
 		var TimeFn = null;
 		function uploadImg(obj){
@@ -250,7 +300,7 @@
 						 		<td style="text-align:right;">
 									<span>转入批次：</span>
 						 		</td>
-						 		<td style="text-align:left;">
+						 		<td style="text-align:left;" colspan="3">
 						 			<input class="input_1" style="width:80px;" id="character" name="character" value="${tblRollIn.character}" type="text"/><span>字</span>
 						 			<input class="input_1" style="width:80px;" id="number" name="number" value="${tblRollIn.number}" type="text"/><span>号</span>
 						 		</td>

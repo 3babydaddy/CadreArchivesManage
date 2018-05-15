@@ -22,7 +22,14 @@
 					}
 				}
 			});
-			
+			$("#btnSubmit").click(function(){
+				setTimeout(function(){ 
+					var errorArry = $("label.error");
+					for(var i = 0; i < errorArry.length; i++){
+						$("label.error")[i].innerHTML="必填信息";
+					}
+				}, 100);	
+			});
 		});
 		
 		function addRow(list, idx, tpl, row){
@@ -127,7 +134,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/borrow/tblBorrowArchives/">借阅管理列表</a></li>
-		<li class="active"><a href="${ctx}/borrow/tblBorrowArchives/form?id=${tblBorrowArchives.id}">借阅管理编辑<shiro:hasPermission name="borrow:tblBorrowArchives:edit">${not empty tblBorrowArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="borrow:tblBorrowArchives:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">借阅管理<c:if test="${empty tblBorrowArchives.id }">新增</c:if><c:if test="${not empty tblBorrowArchives.id }">编辑</c:if></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -135,7 +142,7 @@
 		<div class="control-group">
 			<label class="control-label">借阅日期：</label>
 			<div class="controls">
-				<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
+				<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</div>
@@ -144,7 +151,7 @@
 			<label class="control-label">借阅单位：</label>
 			<div class="controls">
 				<sys:treeselect2 url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblBorrowArchives.consultUnit}" 
-									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表"></sys:treeselect2>
+									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表" cssClass="required" ></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
@@ -173,7 +180,7 @@
 							</td>
 							<td style="text-align:right;"><label>姓名：</label></td>
 							<td>
-								<input id="tblBorrowTargetList{{idx}}_name" name="tblBorrowTargetList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
+								<input id="tblBorrowTargetList{{idx}}_name" name="tblBorrowTargetList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small required"/>
 							</td>
 							<td style="text-align:right;"><label>政治面貌：</label></td>
 							<td>
@@ -195,7 +202,7 @@
 							</td>
 						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
 					</tr>//-->
-					</script>
+				</script>
 				<script type="text/javascript">
 					var tblBorrowTargetRowIdx = 0, tblBorrowTargetTpl = $("#tblBorrowTargetTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g,"");
 					$(document).ready(function() {
@@ -234,7 +241,7 @@
 							</td>
 							<td style="text-align:right;"><label>姓名：</label></td>
 							<td>
-								<input id="tblBorrowPersonList{{idx}}_name" name="tblBorrowPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-large "/>
+								<input id="tblBorrowPersonList{{idx}}_name" name="tblBorrowPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small required"/>
 							</td>
 							<td rowspan="4" colspan="2" style="text-align:center;">
 								<sys:upImg input="tblBorrowPersonList{{idx}}_photo"  type="files"  name="tblBorrowPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="头像上传"/>

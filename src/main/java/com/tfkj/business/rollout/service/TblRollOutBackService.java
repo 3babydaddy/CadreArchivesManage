@@ -29,6 +29,8 @@ public class TblRollOutBackService extends CrudService<TblRollOutBackDao, TblRol
 
 	@Autowired
 	private TblRollOutService tblRollOutService;
+	@Autowired
+	private TblRollOutBackDao tblRollOutBackDao;
 	
 	public TblRollOutBack get(String id) {
 		return super.get(id);
@@ -59,12 +61,19 @@ public class TblRollOutBackService extends CrudService<TblRollOutBackDao, TblRol
 		tblRollOut.setIsReturn("1");
 		tblRollOutService.save(tblRollOut);
 		
-		TblRollOutBack tblRollOutBack = new TblRollOutBack();
-		tblRollOutBack.setMainId(rollOutId);
-		tblRollOutBack.setRecipient(tblRollOut.getOperator());
-		tblRollOutBack.setReturnTime(new Date());
-		tblRollOutBack.setReturnAttmentId(rollApproveAttachment);
-		super.save(tblRollOutBack);
+		TblRollOutBack tblRollOutBack = tblRollOutBackDao.getBackInfoByMainId(rollOutId);
+		if(tblRollOutBack == null){
+			TblRollOutBack rollOutBack = new TblRollOutBack();
+			rollOutBack.setMainId(rollOutId);
+			rollOutBack.setRecipient(tblRollOut.getOperator());
+			rollOutBack.setReturnTime(new Date());
+			rollOutBack.setReturnAttmentId(rollApproveAttachment);
+			super.save(rollOutBack);
+		}else{
+			tblRollOutBack.setReturnTime(new Date());
+			tblRollOutBack.setReturnAttmentId(rollApproveAttachment);
+			super.save(tblRollOutBack);
+		}
 	}
 	
 }

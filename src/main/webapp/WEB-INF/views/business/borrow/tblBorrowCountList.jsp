@@ -56,7 +56,7 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
-			max-width: 380px;
+			max-width: 310px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;

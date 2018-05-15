@@ -55,7 +55,7 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
-			max-width: 300px;
+			max-width: 310px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
@@ -101,7 +101,7 @@
 				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}" 
 									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect>
 			</li>
-			<li><label>查阅人：</label>
+			<li><label>查阅人员：</label>
 				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>状态：</label>
@@ -129,7 +129,7 @@
 				<th>职务</th>
 				<th>政治面貌</th>
 				<th>被查阅人数</th>
-				<th>查阅人</th>
+				<th>查阅人员</th>
 				<th>查阅人数</th>
 				<th>状态</th>
 			</tr>

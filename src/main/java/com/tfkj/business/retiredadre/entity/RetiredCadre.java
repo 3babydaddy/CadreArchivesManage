@@ -36,7 +36,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	private String workUnit;		// 退休工作单位
 	private String recordOfficeAddress;		// 档案局地址
 	private String certificateNo;   //证件号
-	private String remarks;       //备注
+	//private String remarks;       //备注
 	
 	private Date startBir;
 	private Date endBir;

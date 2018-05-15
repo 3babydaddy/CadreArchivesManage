@@ -53,7 +53,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/consult/tblConsultArchives/">查阅档案列表</a></li>
-		<li class="active"><a href="${ctx}/consult/tblConsultArchives/look?id=${tblConsultArchives.id}">查阅档案查看<shiro:hasPermission name="consult:tblConsultArchives:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="consult:tblConsultArchives:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">查阅档案查看</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblConsultArchives" action="${ctx}/consult/tblConsultArchives/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

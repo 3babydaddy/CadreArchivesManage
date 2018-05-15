@@ -47,6 +47,11 @@
 				}else{
 					idStr += "," + mainId; 
 				}
+				var status = rows[i].value.slice(rows[i].value.indexOf(',')+1);
+				if(status == '3'){
+					alertx("已审核的数据不能删除！");
+					return;
+				}
 			}
 			var url = "${ctx}/scattereds/tblScatteredFiles/delete?idStr="+idStr;
 			confirmx('确定要删除选择的数据！！！', url);
@@ -59,6 +64,11 @@
 				return;
 			}
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			var status = rows[0].value.slice(rows[0].value.indexOf(',')+1);
+			if(status == '3'){
+				alertx("已审核的数据不能编辑！");
+				return;
+			}
 			window.location.href = "${ctx}/scattereds/tblScatteredFiles/form?id="+mainId;
 		}
 		
@@ -148,11 +158,11 @@
 			class="form-search" style="text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
 			<ul class="ul-form">
 				<li><label>导入文件：</label>
-					<input name="file" class="change" type="file" style="width:220px;margin-bottom:15px;"/>
+					<input name="file" class="change" type="file" style="width:180px;margin-bottom:15px;"/>
 				</li>
 			</ul>
 			<input id="btnImportSubmit" style="margin-left:-30px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
-			<a class="btns" href="<c:url value='/static/templet/scatteredFilesModel.xls'/>">下载模板</a>
+			<a class="btns" href="${ctx}/scattereds/tblScatteredFiles/moduleDown">下载模板</a>
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
@@ -176,7 +186,7 @@
 				<sys:treeselect id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
 									labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect>
 			</li>
-			<li><label>经手人：</label>
+			<li><label>经办人：</label>
 				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>接收人：</label>

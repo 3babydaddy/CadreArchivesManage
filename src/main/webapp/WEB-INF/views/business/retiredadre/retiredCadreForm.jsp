@@ -22,13 +22,21 @@
 					}
 				}
 			});
+			$("#btnSubmit").click(function(){
+				setTimeout(function(){ 
+					var errorArry = $("label.error");
+					for(var i = 0; i < errorArry.length; i++){
+						$("label.error")[i].innerHTML="必填信息";
+					}
+				}, 100);	
+			});
 		});
 	</script>
 </head>
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/retiredadre/retiredCadre/">退休干部信息操作列表</a></li>
-		<li class="active"><a href="${ctx}/retiredadre/retiredCadre/form?id=${retiredCadre.id}">退休干部信息编辑<shiro:hasPermission name="retiredadre:retiredCadre:edit">${not empty retiredCadre.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="retiredadre:retiredCadre:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">退休干部信息<c:if test="${empty retiredCadre.id }">新增</c:if><c:if test="${not empty retiredCadre.id }">编辑</c:if></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="retiredCadre" action="${ctx}/retiredadre/retiredCadre/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -36,7 +44,7 @@
 		<div class="control-group">
 			<label class="control-label">编号：</label>
 			<div class="controls">
-				<form:input path="sort" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
+				<form:input path="sort" htmlEscape="false" maxlength="11" class="input-xlarge number required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -56,7 +64,7 @@
 		<div class="control-group">
 			<label class="control-label">出生日期：</label>
 			<div class="controls">
-				<input name="birthday" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="birthday" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${retiredCadre.birthday}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" style="width:268px;" />
 			</div>
@@ -64,7 +72,7 @@
 		<div class="control-group">
 			<label class="control-label">学历：</label>
 			<div class="controls">
-				<form:select path="education" class="input-xlarge" style="width:284px;">
+				<form:select path="education" class="input-xlarge required" style="width:284px;">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('education')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
@@ -79,7 +87,7 @@
 		<div class="control-group">
 			<label class="control-label">建档时间：</label>
 			<div class="controls">
-				<input name="archivesCreatetime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="archivesCreatetime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${retiredCadre.archivesCreatetime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" style="width:268px;" />
 			</div>
@@ -95,13 +103,13 @@
 		<div class="control-group">
 			<label class="control-label">转档案时间：</label>
 			<div class="controls">
-				<input name="recordOfficeTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="recordOfficeTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${retiredCadre.recordOfficeTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" style="width:268px;" />
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">退休单位：</label>
+			<label class="control-label">退休工作单位：</label>
 			<div class="controls">
 				<sys:treeselect2 url="/sys/dict/treeDataPop" id="workUnit" name="workUnit" allowClear="true" value="${retiredCadre.workUnit}" 
 									labelName="workUnitName" labelValue="${retiredCadre.workUnitName}" title="单位列表"></sys:treeselect2>
@@ -110,19 +118,19 @@
 		<div class="control-group">
 			<label class="control-label">档案局地址：</label>
 			<div class="controls">
-				<form:input path="recordOfficeAddress" htmlEscape="false" maxlength="64" class="input-xlarge"/>
+				<form:input path="recordOfficeAddress" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">证件号：</label>
 			<div class="controls">
-				<form:input path="certificateNo" htmlEscape="false" maxlength="64" class="input-xlarge"/>
+				<form:input path="certificateNo" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">状态：</label>
 			<div class="controls">
-				<form:select path="status" class="input-xlarge" style="width:284px;">
+				<form:select path="status" class="input-xlarge required" style="width:284px;">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('retired_cadre_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>

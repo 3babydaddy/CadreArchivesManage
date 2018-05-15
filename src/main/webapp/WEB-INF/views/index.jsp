@@ -291,7 +291,10 @@ ul li {
 			//系统提供的不好用
     		var len = $(".jbox-close").length;
 			for(var s = 0; s < len; s++){
-				$(".jbox-close")[s].click();
+				//避免关闭页面当中的弹窗
+				if($(".jbox-title")[s].innerHTML == "系统提示"){
+					$(".jbox-close")[s].click();
+				}
 			}
 			//防止弹窗没有完全关闭，就执行下面的js
 			setTimeout(function(){
@@ -303,23 +306,22 @@ ul li {
 		            success: function (data) {
 		            	for(var i = 0; i < data.length; i++){
 		            		$.jBox.messager('<div style="margin: 18px 0 0 48px;"><span class="jbox-icon jbox-icon-info" style="position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;"></span>'
-	            					+'<a href="${ctx}/'+data[i].url+'" target="mainFrame" ><font style="font-size:120%;">'+data[i].msg+'</font></a></div>', '提示', 0, 
-	            					{ height: 110,
-	            					  closed: function () { //手动关闭回调函数
-	            						  var tem = $(".jbox-close").length;
-            							  for(var i = 0; i < tem; i++){
-            			            		  var height = 110 * (tem-i-1);
-            			            		  $(".jbox-container")[i].style.marginBottom = height+"px";
-            			            	  }
-	            					  }
-	           					});
+	            					+'<a href="${ctx}/'+data[i].url+'" target="mainFrame" ><font style="font-size:120%;">'+data[i].msg+'</font></a></div>', '系统提示', 0, 
+            					{ height: 110,
+            					  closed: function () { //手动关闭回调函数
+            						  var sum = 0;//记录右下角的弹窗的数量
+            						  var tem = $(".jbox-close").length;//页面弹窗的数量
+            						  for(var t = 0; t < tem; t++){
+            							  if($(".jbox-title")[t].innerHTML == "系统提示"){
+            								  sum++;
+            							  }
+            						  }
+            						  calHeight(sum);
+            					  }
+	           				});
 		            	}
 		            	//手动计算弹窗的位置
-		            	var num = data.length
-		            	for(var j = 0; j < num; j++){
-		            		var height = 110 * (num-j-1);
-		            		$(".jbox-container")[j].style.marginBottom = height+"px";
-		            	}
+		            	calHeight(data.length);
 		            },
 		            error: function (XMLHttpRequest, textStatus, errorThrown) {
 		                //alertx("error！");
@@ -328,6 +330,17 @@ ul li {
 			}, 1000);
 		}, 19000);
 	</shiro:hasRole>
+	
+	function calHeight(num){
+		var index = 0;//记录页面的jbox数
+		for(var j = 0; j < num; j++){
+			//根据title判断jbox是否是右下角弹窗的 是：计算高度，j加一  否：j减一
+    		if($(".jbox-title")[index].innerHTML == "系统提示"){
+    			var height = 110 * (num-j-1);
+        		$(".jbox-container")[index].style.marginBottom = height+"px";
+    		}else{ j--;} index++;
+    	}
+	}
 </script>
 </head>
 <body>

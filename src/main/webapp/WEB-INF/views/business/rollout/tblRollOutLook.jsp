@@ -36,7 +36,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/rollout/tblRollOut/">转出管理人员列表</a></li>
-		<li class="active"><a href="${ctx}/rollout/tblRollOut/look?id=${tblRollOut.id}">转出管理人员查看<shiro:hasPermission name="rollouts:tblRollOut:edit">${not empty tblRollOut.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollouts:tblRollOut:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">转出管理人员查看</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblRollOut" action="${ctx}/rollout/tblRollOut/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

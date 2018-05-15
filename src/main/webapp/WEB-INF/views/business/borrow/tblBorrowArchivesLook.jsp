@@ -51,7 +51,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/borrow/tblBorrowArchives/">借阅管理列表</a></li>
-		<li class="active"><a href="${ctx}/borrow/tblBorrowArchives/look?id=${tblBorrowArchives.id}">借阅管理查看<shiro:hasPermission name="borrow:tblBorrowArchives:edit">${not empty tblBorrowArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="borrow:tblBorrowArchives:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">借阅管理查看</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

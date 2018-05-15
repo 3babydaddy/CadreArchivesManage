@@ -104,8 +104,9 @@
     		document.getElementById(siginName).value='';
 		}
 		
-		var addConsult  =  function() {
-	            $.ajax({
+		function addConsult() {
+			if(validateDate()){
+				$.ajax({
 	                type: "POST",//方法类型
 	                dataType: "json",//预期服务器返回的数据类型
 	                url: "${ctx}/consult/tblConsultArchives/saveTerminal",//url
@@ -128,7 +129,38 @@
 	                    alert("异常！");
 	                }
 	            });
-	        }
+			}
+	    }
+		
+		function validateDate(){
+			var borrowDate = $("#borrowDate").val();
+			if(borrowDate == ""){
+				alertx("查阅日期不能为空！");
+				return false;
+			}
+			var consultUnitId = $("#consultUnitId").val();
+			if(consultUnitId == ""){
+				alertx("查阅单位不能为空！");
+				return false;
+			}
+			for(var i = 0; i < tblCheckedTargetRowIdx; i++){
+				var tarName = $("#tblCheckedTargetList"+i+"_name").val()
+				if(tarName == ""){
+					alertx("查档对象的姓名不能为空！");
+					return false;
+					break;
+				}
+			}
+			for(var i = 0; i < tblCheckPersonRowIdx; i++){
+				var perName = $("#tblCheckPersonList"+i+"_name").val()
+				if(perName == ""){
+					alertx("查档人员的姓名不能为空！");
+					return false;
+					break;
+				}
+			}
+			return true;
+		}
 		
 		var TimeFn = null;
 		function uploadImg(obj){
@@ -425,7 +457,7 @@
 					</div>
 				</div>
 				<input type="hidden" name="approveAttachment" id="approveAttachmentId"/>
-				<input type="submit" class="save_btn fr" onclick="addConsult()" value="保 存" />
+				<input type="button" class="save_btn fr" onclick="addConsult();" value="保 存" />
 			</div>
 		</form:form>
 		<div class="right fr">

@@ -105,31 +105,63 @@
     		document.getElementById(siginName).value='';
 		}
 		
-		var addBorrow  =  function() {
-            $.ajax({
-                type: "POST",//方法类型
-                dataType: "json",//预期服务器返回的数据类型
-                url: "${ctx}/borrow/tblBorrowArchives/saveTerminal",//url
-                data: $('#inputForm').serialize(),
-                success: function (result) {
-                    //alert(result);
-                    //debugger;
-                    
-                    if(result){
-                    	var submit = function (v, h, f) {
-                    	    if (v == 'ok')
-                    	    	window.location.href="${ctx}";
-                    	    return true; //close
-                    	};
-                    	$.jBox.confirm("确定吗？", "提示", submit);
-                    	
-                    };
-                },
-                error : function() {
-                    alert("异常！");
-                }
-            });
+		function addBorrow() {
+			if(validateDate()){
+				$.ajax({
+	                type: "POST",//方法类型
+	                dataType: "json",//预期服务器返回的数据类型
+	                url: "${ctx}/borrow/tblBorrowArchives/saveTerminal",//url
+	                data: $('#inputForm').serialize(),
+	                success: function (result) {
+	                    //alert(result);
+	                    //debugger;
+	                    
+	                    if(result){
+	                    	var submit = function (v, h, f) {
+	                    	    if (v == 'ok')
+	                    	    	window.location.href="${ctx}";
+	                    	    return true; //close
+	                    	};
+	                    	$.jBox.confirm("确定吗？", "提示", submit);
+	                    	
+	                    };
+	                },
+	                error : function() {
+	                    alert("异常！");
+	                }
+	            });
+			}
         }
+		
+		function validateDate(){
+			var borrowDate = $("#borrowDate").val();
+			if(borrowDate == ""){
+				alertx("借阅日期不能为空！");
+				return false;
+			}
+			var consultUnitId = $("#consultUnitId").val();
+			if(consultUnitId == ""){
+				alertx("接阅单位不能为空！");
+				return false;
+			}
+			for(var i = 0; i < tblBorrowTargetRowIdx; i++){
+				var tarName = $("#tblBorrowTargetList"+i+"_name").val()
+				if(tarName == ""){
+					alertx("借阅对象的姓名不能为空！");
+					return false;
+					break;
+				}
+			}
+			for(var i = 0; i < tblBorrowPersonRowIdx; i++){
+				var perName = $("#tblBorrowPersonList"+i+"_name").val()
+				if(perName == ""){
+					alertx("借阅人员的姓名不能为空！");
+					return false;
+					break;
+				}
+			}
+			return true;
+		}
 		
 		var TimeFn = null;
 		function uploadImg(obj){
@@ -421,7 +453,7 @@
 					</div>
 				</div>
 				<input type="hidden" name="approveAttachment" id="approveAttachmentId"/>
-				<input type="submit" class="save_btn fr" onclick="addBorrow()" value="保 存" />
+				<input type="button" class="save_btn fr" onclick="addBorrow();" value="保 存" />
 			</div>
 		</form:form>
 		<div class="right fr">

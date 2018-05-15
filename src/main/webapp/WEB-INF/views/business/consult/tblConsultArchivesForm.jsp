@@ -22,6 +22,15 @@
 					}
 				}
 			});
+			
+			$("#btnSubmit").click(function(){
+				setTimeout(function(){ 
+					var errorArry = $("label.error");
+					for(var i = 0; i < errorArry.length; i++){
+						$("label.error")[i].innerHTML="必填信息";
+					}
+				}, 100);	
+			});
 		});
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
@@ -134,7 +143,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/consult/tblConsultArchives/">查阅档案列表</a></li>
-		<li class="active"><a href="${ctx}/consult/tblConsultArchives/form?id=${tblConsultArchives.id}">查阅档案编辑<shiro:hasPermission name="consult:tblConsultArchives:edit">${not empty tblConsultArchives.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="consult:tblConsultArchives:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">查阅档案<c:if test="${empty tblConsultArchives.id }">新增</c:if><c:if test="${not empty tblConsultArchives.id }">编辑</c:if></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblConsultArchives" action="${ctx}/consult/tblConsultArchives/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -142,7 +151,7 @@
 		<div class="control-group">
 			<label class="control-label">查阅日期：</label>
 			<div class="controls">
-				<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate "
+				<input name="borrowDate" type="text" readonly="readonly" style="width:268px;" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</div>
@@ -151,7 +160,7 @@
 			<label class="control-label">查阅单位：</label>
 			<div class="controls">
 				<sys:treeselect2 url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}"  
-									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect2>
+									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表" cssClass="required" ></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
@@ -179,7 +188,7 @@
 								<input id="tblCheckedTargetList{{idx}}_delFlag" name="tblCheckedTargetList[{{idx}}].delFlag" type="hidden" value="0"/>
 							</td>
 							<td style="text-align:right;"><label>姓名：</label></td><td>
-								<input id="tblCheckedTargetList{{idx}}_name" name="tblCheckedTargetList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
+								<input id="tblCheckedTargetList{{idx}}_name" name="tblCheckedTargetList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small required"/>
 							</td>
 							<td style="text-align:right;"><label>政治面貌：</label></td><td>
 								<input id="tblCheckedTargetList{{idx}}_politicalStatus" name="tblCheckedTargetList[{{idx}}].politicalStatus" type="text" value="{{row.politicalStatus}}" maxlength="32" class="input-small "/>
@@ -239,7 +248,7 @@
 							</td>
 							<td style="text-align:right;"><label>姓名：</label></td>
 							<td>
-								<input id="tblCheckPersonList{{idx}}_name" name="tblCheckPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-large "/>
+								<input id="tblCheckPersonList{{idx}}_name" name="tblCheckPersonList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small required"/>
 							</td>
 							<td rowspan="4" colspan="2" style="text-align:center;">
 								<sys:upImg input="tblCheckPersonList{{idx}}_photo"  type="files"  name="tblCheckPersonList[{{idx}}].photo"  value="{{row.photo}}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="头像上传"/>

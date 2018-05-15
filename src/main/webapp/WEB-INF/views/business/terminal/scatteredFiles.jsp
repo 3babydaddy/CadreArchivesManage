@@ -80,30 +80,64 @@
 		}
 		
 		var addScattered  =  function() {
-            $.ajax({
-                type: "POST",//方法类型
-                dataType: "json",//预期服务器返回的数据类型
-                url: "${ctx}/scattereds/tblScatteredFiles/saveTerminal",//url
-                data: $('#inputForm').serialize(),
-                success: function (result) {
-                    //alert(result);
-                    //debugger;
-                    
-                    if(result){
-                    	var submit = function (v, h, f) {
-                    	    if (v == 'ok')
-                    	    	window.location.href="${ctx}";
-                    	    return true; //close
-                    	};
-                    	$.jBox.confirm("确定吗？", "提示", submit);
-                    	
-                    };
-                },
-                error : function() {
-                    alert("异常！");
-                }
-            });
+			if(validateDate()){
+				$.ajax({
+	                type: "POST",//方法类型
+	                dataType: "json",//预期服务器返回的数据类型
+	                url: "${ctx}/scattereds/tblScatteredFiles/saveTerminal",//url
+	                data: $('#inputForm').serialize(),
+	                success: function (result) {
+	                    //alert(result);
+	                    //debugger;
+	                    
+	                    if(result){
+	                    	var submit = function (v, h, f) {
+	                    	    if (v == 'ok')
+	                    	    	window.location.href="${ctx}";
+	                    	    return true; //close
+	                    	};
+	                    	$.jBox.confirm("确定吗？", "提示", submit);
+	                    	
+	                    };
+	                },
+	                error : function() {
+	                    alert("异常！");
+	                }
+	            }); 
+			}
         }
+		
+		function validateDate(){
+			var handOverDate = $("#handOverDate").val();
+			if(handOverDate == ""){
+				alertx("移交日期不能为空！");
+				return false;
+			}
+			var operator = $("#operator").val();
+			if(operator == ""){
+				alertx("经办人不能为空！");
+				return false;
+			}
+			var recipient = $("#recipient").val();
+			if(recipient == ""){
+				alertx("接收人不能为空！");
+				return false;
+			}
+			var handOverUnitId = $("#handOverUnitId").val();
+			if(handOverUnitId == ""){
+				alertx("移交单位不能为空！");
+				return false;
+			}
+			for(var i = 0; i < tblHandOverFilesRowIdx; i++){
+				var name = $("#tblHandOverFilesList"+i+"_name").val()
+				if(name == ""){
+					alertx("移交人员的姓名不能为空！");
+					return false;
+					break;
+				}
+			}
+			return true;
+		}
 	</script>
 	<style type="text/css">
 		.td-order-one{
@@ -148,7 +182,7 @@
 		}
 		.table input{
 			height: 10% !important;
-			width: 90% !important;
+			width: 75% !important;
 		}
 		.close{
 			font-size: 35px;

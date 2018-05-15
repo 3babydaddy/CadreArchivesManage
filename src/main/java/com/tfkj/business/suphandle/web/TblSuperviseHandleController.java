@@ -3,6 +3,7 @@
  */
 package com.tfkj.business.suphandle.web;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +28,7 @@ import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.utils.StringUtils;
 import com.tfkj.framework.core.utils.excel.ImportExcel;
 import com.tfkj.framework.core.web.BaseController;
+import com.tfkj.framework.system.utils.FileUtils;
 
 /**
  * 督查督办Controller
@@ -83,18 +85,43 @@ public class TblSuperviseHandleController extends BaseController {
 	}
 
 	/**
+   	 * 干部管理模板下载
+   	 * @param response
+   	 * @param redirectAttributes
+   	 * @return
+   	 */
+      @RequestMapping(value = "moduleDown")
+      public void moduleDown(HttpServletResponse response) {
+   	   try{
+   		    File file = new File(this.getClass().getResource("/templet/superviseHandleModel.xls").getPath());
+   			FileUtils.download("督查督办模板.xls", file, response);
+   		}catch(Exception e){
+   			e.printStackTrace();
+   		}
+      }
+	
+	/**
 	 * 导入督查督办数据
 	 * @param file
 	 * @param redirectAttributes
 	 * @return
 	 */
-    @RequestMapping(value = "import", method=RequestMethod.POST)
+    @SuppressWarnings("static-access")
+	@RequestMapping(value = "import", method=RequestMethod.POST)
     public String importFile(MultipartFile file, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:" + adminPath + "/suphandle/tblSuperviseHandle/list?repage";
 		}
 		try {
+			String originalFilename = file.getOriginalFilename();
+			if(StringUtils.isBlank(originalFilename)){
+				throw new Exception("导入文档为空！");
+			}
+			if(!originalFilename.contains(".xlsx") && !originalFilename.contains(".xls")){
+				throw new Exception("请根据下载的模板进行数据的录入并上传!");
+			}
+			
 			Calendar calendar = Calendar.getInstance();
 			long nd = 1000 * 24 * 60 * 60;
 			int successNum = 0;

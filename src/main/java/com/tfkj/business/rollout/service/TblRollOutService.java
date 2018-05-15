@@ -52,6 +52,7 @@ public class TblRollOutService extends CrudService<TblRollOutDao, TblRollOut> {
 		return super.findPage(page, tblRollOut);
 	}
 	
+	@SuppressWarnings("static-access")
 	@Transactional(readOnly = false)
 	public void save(TblRollOut tblRollOut) {
 		super.save(tblRollOut);
@@ -70,6 +71,11 @@ public class TblRollOutService extends CrudService<TblRollOutDao, TblRollOut> {
 				}
 			}else{
 				tblRollOutPersonsDao.delete(tblRollOutPersons);
+			}
+			try{
+				Thread.currentThread().sleep(300);
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 	}

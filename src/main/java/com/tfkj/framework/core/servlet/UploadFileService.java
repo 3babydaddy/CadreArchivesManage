@@ -169,6 +169,7 @@ public class UploadFileService {
 				map.put("success", true);
 				map.put("returnPath", returnPath);
 				map.put("showName", showFileName);
+				map.put("fileId", attach.getId());
 				return map;
 			} else {
 				map.put("message", "不能识别该文件 或文件已损坏");

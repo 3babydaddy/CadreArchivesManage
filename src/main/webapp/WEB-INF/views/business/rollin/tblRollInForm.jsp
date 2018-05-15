@@ -22,6 +22,16 @@
 					}
 				}
 			});
+			
+			$("#btnSubmit").click(function(){
+				setTimeout(function(){ 
+					var errorArry = $("label.error");
+					for(var i = 0; i < errorArry.length; i++){
+						$("label.error")[i].innerHTML="必填信息";
+					}
+				}, 100);	
+			});
+			
 		});
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
@@ -64,7 +74,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/rollin/tblRollIn/">转入管理人员列表</a></li>
-		<li class="active"><a href="${ctx}/rollin/tblRollIn/form?id=${tblRollIn.id}">转入管理人员编辑<shiro:hasPermission name="rollins:tblRollIn:edit">${not empty tblRollIn.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="rollins:tblRollIn:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">转入管理人员<c:if test="${empty tblRollIn.id }">新增</c:if><c:if test="${not empty tblRollIn.id }">编辑</c:if></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -73,18 +83,18 @@
 			<label class="control-label">批次：</label>
 			<div class="controls">
 				<div  style="float:left;">
-					<form:input path="character" htmlEscape="false" style="width:105px;" maxlength="11" />字
+					<form:input path="character" htmlEscape="false" style="width:105px;" maxlength="11" class="required" />字
 				</div>
 				
 				<div  style="float:left;">
-					<form:input path="number" htmlEscape="false" style="width:105px;margin-left:10px;" maxlength="11" />号
+					<form:input path="number" htmlEscape="false" style="width:105px;margin-left:10px;" maxlength="11" class="required" />号
 				</div>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">转入时间：</label>
 			<div class="controls">
-				<input name="rollInTime" type="text" readonly="readonly" maxlength="20" style="width:268px;" class="input-medium Wdate "
+				<input name="rollInTime" type="text" readonly="readonly" maxlength="20" style="width:268px;" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${tblRollIn.rollInTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</div>
@@ -92,33 +102,33 @@
 		<div class="control-group">
 			<label class="control-label">经办人：</label>
 			<div class="controls">
-				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">接收人：</label>
 			<div class="controls">
-				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="recipient" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">原存档单位：</label>
 			<div class="controls">
 				<sys:treeselect2 id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollIn.beforeUnit}" 
-									labelName="beforeUnitName" labelValue="${tblRollIn.beforeUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect2>
+									labelName="beforeUnitName" labelValue="${tblRollIn.beforeUnitName}" title="单位列表" url="/sys/dict/treeDataPop" cssClass="required"></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">原存档单位电话：</label>
 			<div class="controls">
-				<form:input path="beforeUnitTel" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+				<form:input path="beforeUnitTel" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">现存档单位：</label>
 			<div class="controls">
 				<sys:treeselect2 id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollIn.saveUnit}" 
-									labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect2>
+									labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" cssClass="required"></sys:treeselect2>
 			</div>
 		</div>
 		<div class="control-group">
@@ -153,7 +163,7 @@
 							</td>
 							<td style="text-align:right;width:120px;"><label>姓名：</label></td>
 							<td>
-								<input id="tblRollInPersonsList{{idx}}_name" name="tblRollInPersonsList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small "/>
+								<input id="tblRollInPersonsList{{idx}}_name" name="tblRollInPersonsList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="64" class="input-small required"/>
 							</td>
 							<td rowspan="6" class="text-center" width="10">
 								{{#delBtn}}<span class="close" onclick="delRow(this, '#tblRollInPersonsList{{idx}}')" title="删除">&times;</span>{{/delBtn}}

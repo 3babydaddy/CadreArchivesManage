@@ -51,6 +51,7 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 		return super.findPage(page, tblScatteredFiles);
 	}
 	
+	@SuppressWarnings("static-access")
 	@Transactional(readOnly = false)
 	public void save(TblScatteredFiles tblScatteredFiles) {
 		super.save(tblScatteredFiles);
@@ -72,6 +73,11 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 				}
 			}else{
 				tblHandOverFilesDao.delete(tblHandOverFiles);
+			}
+			try{
+				Thread.currentThread().sleep(300);
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 	}
@@ -121,6 +127,7 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 		return page;
 	}
 	
+	@SuppressWarnings("static-access")
 	@Transactional(readOnly = false)
 	public void saveScatteredInfo(TblScatteredFiles tblScatteredFiles) {
 		super.save(tblScatteredFiles);
@@ -128,6 +135,12 @@ public class TblScatteredFilesService extends CrudService<TblScatteredFilesDao, 
 			tblHandOverFiles.setMainId(tblScatteredFiles.getId());
 			tblHandOverFiles.preInsert();
 			tblHandOverFilesDao.insert(tblHandOverFiles);
+			try{
+				//避免顺序发生变化
+				Thread.currentThread().sleep(300);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 	

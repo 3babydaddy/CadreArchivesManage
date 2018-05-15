@@ -51,6 +51,7 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 		return super.findPage(page, tblRollIn);
 	}
 	
+	@SuppressWarnings("static-access")
 	@Transactional(readOnly = false)
 	public void save(TblRollIn tblRollIn) {
 		super.save(tblRollIn);
@@ -69,6 +70,11 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 				}
 			}else{
 				tblRollInPersonsDao.delete(tblRollInPersons);
+			}
+			try{
+				Thread.currentThread().sleep(300);
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 	}

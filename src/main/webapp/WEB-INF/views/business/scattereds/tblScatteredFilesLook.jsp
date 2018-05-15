@@ -49,7 +49,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交人员列表</a></li>
-		<li class="active"><a href="${ctx}/scattereds/tblScatteredFiles/look?id=${tblScatteredFiles.id}">零散材料移交人员查看<shiro:hasPermission name="scattereds:tblScatteredFiles:edit">${not empty tblScatteredFiles.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="scattereds:tblScatteredFiles:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="#">零散材料移交人员查看</a></li>
 	</ul><br/>
 	<sys:message content="${message}"/>		
 	<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">
@@ -122,7 +122,7 @@
 			</div>
 		
 		<div class="control-group">
-			<label class="control-label">经手人：</label>
+			<label class="control-label">经办人：</label>
 			<div class="controls">
 				<form:input path="operator" htmlEscape="false" readonly="true" maxlength="64" class="input-xlarge "/>
 			</div>

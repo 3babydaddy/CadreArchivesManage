@@ -6,7 +6,6 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			
 			//全选或全取消
 			$("#selected").click(function(){
 				var flag = document.getElementById("selected").checked;
@@ -36,6 +35,11 @@
 				return;
 			}
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			var status = rows[0].value.slice(rows[0].value.indexOf(',')+1);
+			if(status == '3'){
+				alertx("已审核的数据不能编辑！");
+				return;
+			}
 			window.location.href = "${ctx}/borrow/tblBorrowArchives/form?id="+mainId;
 		}
 		
@@ -62,6 +66,11 @@
 					idStr = mainId; 
 				}else{
 					idStr += "," + mainId; 
+				}
+				var status = rows[i].value.slice(rows[i].value.indexOf(',')+1);
+				if(status == '3'){
+					alertx("已审核的数据不能删除！");
+					return;
 				}
 			}
 			
@@ -181,10 +190,10 @@
 					value="<fmt:formatDate value="${tblBorrowArchives.endBackDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
-			<li><label>何人档案：</label>
+			<li><label>借阅对象：</label>
 				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>借阅人：</label>
+			<li><label>借阅人员：</label>
 				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>归还人：</label>
@@ -226,8 +235,8 @@
 				<th><input id="selected" type="checkbox" /></th> 
 				<th>借阅日期</th>
 				<th>借阅单位</th>
-				<th>何人档案</th>
-				<th>借阅人</th>
+				<th>借阅对象</th>
+				<th>借阅人员</th>
 				<th>归还日期</th>
 				<th>归还人</th>
 				<th>经办人</th>
@@ -248,10 +257,10 @@
 				<td title="${fns:getDictLabel(tblBorrowArchives.consultUnit, 'unit_list', '')}">
 					${fns:getDictLabel(tblBorrowArchives.consultUnit, 'unit_list', '')}
 				</td>
-				<td>
+				<td title="${tblBorrowArchives.tarStr}">
 					${tblBorrowArchives.tarStr}
 				</td>
-				<td>
+				<td title="${tblBorrowArchives.perStr}">
 					${tblBorrowArchives.perStr}
 				</td>
 				<td>

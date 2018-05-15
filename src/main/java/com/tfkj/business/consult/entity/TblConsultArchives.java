@@ -21,15 +21,15 @@ import com.tfkj.framework.core.persistence.DataEntity;
 public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 	
 	private static final long serialVersionUID = 1L;
-	private Date borrowDate;		// 借阅日期
-	private String consultUnit;		// 借阅单位
-	private String reason;		// 借阅事由
+	private Date borrowDate;		// 查阅日期
+	private String consultUnit;		// 查阅单位
+	private String reason;		// 查阅事由
 	private String content;		// 查档内容
-	private String borrowUnitOpinion;		// 借阅单位意见
-	private Date borrowApproveTime;		// 借阅单位批示时间
+	private String borrowUnitOpinion;		// 查阅单位意见
+	private Date borrowApproveTime;		// 查阅单位批示时间
 	private String municipalOpinion;		// 市委领导意见
 	private Date municipalApproveTime;		// 市委批示时间
-	private String approveAttachment;		// 借阅审批附件
+	private String approveAttachment;		// 查阅审批附件
 	private String operator;		// 经办人
 	private String status;		// 业务状态
 	private List<TblCheckedTarget> tblCheckedTargetList = Lists.newArrayList();		// 子表列表
@@ -61,7 +61,7 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 		this.borrowDate = borrowDate;
 	}
 	
-	@Length(min=0, max=255, message="借阅单位长度必须介于 0 和 255 之间")
+	@Length(min=0, max=255, message="查阅单位长度必须介于 0 和 255 之间")
 	public String getConsultUnit() {
 		return consultUnit;
 	}
@@ -70,7 +70,7 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 		this.consultUnit = consultUnit;
 	}
 	
-	@Length(min=0, max=500, message="借阅事由长度必须介于 0 和 500 之间")
+	@Length(min=0, max=500, message="查档事由长度必须介于 0 和 500 之间")
 	public String getReason() {
 		return reason;
 	}
@@ -88,7 +88,7 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 		this.content = content;
 	}
 	
-	@Length(min=0, max=500, message="借阅单位意见长度必须介于 0 和 500 之间")
+	@Length(min=0, max=500, message="查阅单位意见长度必须介于 0 和 500 之间")
 	public String getBorrowUnitOpinion() {
 		return borrowUnitOpinion;
 	}
@@ -124,7 +124,7 @@ public class TblConsultArchives extends DataEntity<TblConsultArchives> {
 		this.municipalApproveTime = municipalApproveTime;
 	}
 	
-	@Length(min=0, max=1000, message="借阅审批附件长度必须介于 0 和 100 之间")
+	@Length(min=0, max=1000, message="查阅审批附件长度必须介于 0 和 1000 之间")
 	public String getApproveAttachment() {
 		return approveAttachment;
 	}

@@ -107,7 +107,7 @@
 			out_type,
 			reason,
 			reason_content,
-			related_attachment
+			related_attachment,
 			original_no,
 			vice_no,
 			files_no,

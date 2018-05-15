@@ -59,7 +59,7 @@ public class TblRollOutBack extends DataEntity<TblRollOutBack> {
 		this.returnTime = returnTime;
 	}
 	
-	@Length(min=0, max=64, message="回执附件长度必须介于 0 和 64 之间")
+	@Length(min=0, max=120, message="回执附件长度必须介于 0 和 120之间")
 	public String getReturnAttmentId() {
 		return returnAttmentId;
 	}

@@ -1,5 +1,6 @@
 package com.tfkj.business.scattereds.web;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import com.tfkj.framework.core.utils.excel.ScatteredFileImportUtil;
 import com.tfkj.framework.core.web.BaseController;
 import com.tfkj.framework.system.dao.DictDao;
 import com.tfkj.framework.system.entity.Dict;
+import com.tfkj.framework.system.utils.FileUtils;
 
 /**
  * 零散材料移交人员Controller
@@ -138,7 +140,7 @@ public class TblScatteredFilesController extends BaseController {
 	@RequestMapping(value = "auditData")
 	public String auditData(TblScatteredFiles tblScatteredFiles, String idStr, String status, RedirectAttributes redirectAttributes) {
 		tblScatteredFilesService.auditData(tblScatteredFiles, idStr, status);
-		addMessage(redirectAttributes, "审核借阅记录成功");
+		addMessage(redirectAttributes, "审核零散材料记录成功");
 		return "redirect:"+Global.getAdminPath()+"/scattereds/tblScatteredFiles/?repage";
 	}
 	
@@ -159,6 +161,22 @@ public class TblScatteredFilesController extends BaseController {
 	}
 
 	/**
+   	 * 移交人员模板下载
+   	 * @param response
+   	 * @param redirectAttributes
+   	 * @return
+   	 */
+      @RequestMapping(value = "moduleDown")
+      public void moduleDown(HttpServletResponse response) {
+   	   try{
+   		   File file = new File(this.getClass().getResource("/templet/scatteredFilesModel.xls").getPath());
+   		   FileUtils.download("零散材料模板.xls", file, response);
+   		}catch(Exception e){
+   			e.printStackTrace();
+   		}
+      }
+	
+	/**
 	 * 导入移交人员数据
 	 * @param file
 	 * @param redirectAttributes
@@ -174,6 +192,9 @@ public class TblScatteredFilesController extends BaseController {
 			String originalFilename = file.getOriginalFilename();
 			if(StringUtils.isBlank(originalFilename)){
 				throw new Exception("导入文档为空！");
+			}
+			if(!originalFilename.contains(".xlsx") && !originalFilename.contains(".xls")){
+				throw new Exception("请根据下载的模板进行数据的录入并上传!");
 			}
 			ScatteredFileImportUtil util = new ScatteredFileImportUtil();
 			TblScatteredFiles tblScatteredFiles = util.getExcelInfo(originalFilename, file);

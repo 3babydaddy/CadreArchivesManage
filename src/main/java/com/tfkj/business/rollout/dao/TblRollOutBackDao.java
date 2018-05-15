@@ -3,6 +3,8 @@
  */
 package com.tfkj.business.rollout.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.tfkj.business.rollout.entity.TblRollOutBack;
 import com.tfkj.framework.core.persistence.CrudDao;
 import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
@@ -15,4 +17,5 @@ import com.tfkj.framework.core.persistence.annotation.MyBatisDao;
 @MyBatisDao
 public interface TblRollOutBackDao extends CrudDao<TblRollOutBack> {
 	
+	TblRollOutBack getBackInfoByMainId(@Param("rollOutId") String rollOutId);
 }

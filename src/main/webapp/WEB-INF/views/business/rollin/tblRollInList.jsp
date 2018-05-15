@@ -43,6 +43,11 @@
 				}else{
 					idStr += "," + mainId; 
 				}
+				var status = rows[i].value.slice(rows[i].value.indexOf(',')+1);
+				if(status == '3'){
+					alertx("已审核的数据不能删除！");
+					return;
+				}
 			}
 			var url = "${ctx}/rollin/tblRollIn/delete?idStr="+idStr;
 			confirmx('确定要删除选择的数据！！！', url);
@@ -55,6 +60,11 @@
 				return;
 			}
 			var mainId = rows[0].value.slice(0, rows[0].value.indexOf(','));
+			var status = rows[0].value.slice(rows[0].value.indexOf(',')+1);
+			if(status == '3'){
+				alertx("已审核的数据不能编辑！");
+				return;
+			}
 			window.location.href = "${ctx}/rollin/tblRollIn/form?id="+mainId;
 		}
 		
