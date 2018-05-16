@@ -114,8 +114,8 @@
 		<div class="control-group">
 			<label class="control-label">原存档单位：</label>
 			<div class="controls">
-				<sys:treeselect2 id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollIn.beforeUnit}" 
-									labelName="beforeUnitName" labelValue="${tblRollIn.beforeUnitName}" title="单位列表" url="/sys/dict/treeDataPop" cssClass="required"></sys:treeselect2>
+				<sys:treeselect id="beforeUnit" name="beforeUnit" allowClear="true" value="${tblRollIn.beforeUnit}"  cssStyle="width:240px;"
+									labelName="beforeUnitName" labelValue="${tblRollIn.beforeUnitName}" title="单位列表" url="/sys/dict/treeDataPop" cssClass="required"></sys:treeselect>
 			</div>
 		</div>
 		<div class="control-group">
@@ -127,8 +127,8 @@
 		<div class="control-group">
 			<label class="control-label">现存档单位：</label>
 			<div class="controls">
-				<sys:treeselect2 id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollIn.saveUnit}" 
-									labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" cssClass="required"></sys:treeselect2>
+				<sys:treeselect id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollIn.saveUnit}" cssStyle="width:240px;"
+									labelName="saveUnitName" labelValue="${tblRollIn.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" cssClass="required"></sys:treeselect>
 			</div>
 		</div>
 		<div class="control-group">

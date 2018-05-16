@@ -178,7 +178,7 @@
 			</li>
 			<li><label>借阅单位：</label>
 				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblBorrowArchives.consultUnit}" 
-									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表"></sys:treeselect>
+									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表" cssStyle="width:179px;"></sys:treeselect>
 			</li>
 			<li><label>归还开始日期：</label>
 				<input name="startBackDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"

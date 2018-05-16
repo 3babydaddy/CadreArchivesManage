@@ -111,8 +111,8 @@
 		<div class="control-group">
 			<label class="control-label">退休工作单位：</label>
 			<div class="controls">
-				<sys:treeselect2 url="/sys/dict/treeDataPop" id="workUnit" name="workUnit" allowClear="true" value="${retiredCadre.workUnit}" 
-									labelName="workUnitName" labelValue="${retiredCadre.workUnitName}" title="单位列表"></sys:treeselect2>
+				<sys:treeselect url="/sys/dict/treeDataPop" id="workUnit" name="workUnit" allowClear="true" value="${retiredCadre.workUnit}" 
+									labelName="workUnitName" labelValue="${retiredCadre.workUnitName}" title="单位列表" cssStyle="width:240px;"></sys:treeselect>
 			</div>
 		</div>
 		<div class="control-group">

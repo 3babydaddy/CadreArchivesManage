@@ -159,8 +159,8 @@
 		<div class="control-group">
 			<label class="control-label">查阅单位：</label>
 			<div class="controls">
-				<sys:treeselect2 url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}"  
-									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表" cssClass="required" ></sys:treeselect2>
+				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}"  
+									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表" cssClass="required" cssStyle="width:240px;" ></sys:treeselect>
 			</div>
 		</div>
 		<div class="control-group">
@@ -204,8 +204,8 @@
 						</tr><tr>
 							<td style="text-align:right;"><label>单位：</label></td>
 							<td colspan="3">
-								<sys:treeselect2 url="/sys/dict/treeDataPop" id="tblCheckedTargetList{{idx}}_unit" name="tblCheckedTargetList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
-									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect2>
+								<sys:treeselect url="/sys/dict/treeDataPop" id="tblCheckedTargetList{{idx}}_unit" name="tblCheckedTargetList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
+									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表" cssStyle="width:240px;"></sys:treeselect>
 							</td>
 						</tr><tr style="height:25px;"><td colspan="5"></td></tr>
 					</tr>//-->
@@ -270,7 +270,7 @@
 							<td style="text-align:right;"><label>单位：</label></td>
 							<td colspan="1">
 								<sys:treeselect url="/sys/dict/treeDataPop" id="tblCheckPersonList{{idx}}_unit" name="tblCheckPersonList[{{idx}}].unit" allowClear="true" value="{{row.unit}}" 
-									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表"></sys:treeselect>
+									labelName="unitName" labelValue="{{row.unitName}}" title="单位列表" cssStyle="width:179px;"></sys:treeselect>
 							</td>
 						</tr><tr>
 							<td style="text-align:right;"><label>联系电话：</label></td>

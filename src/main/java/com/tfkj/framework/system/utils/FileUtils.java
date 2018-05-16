@@ -6,19 +6,25 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class FileUtils {
 
-	public static void download(String fileName, File file, HttpServletResponse response) {
+	public static void download(String fileName, File file, HttpServletRequest request, HttpServletResponse response) {
 
 		PrintWriter out = null;
 		FileInputStream in = null;
 		try {
+			if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {  
+        	    fileName = URLEncoder.encode(fileName, "UTF-8");  
+        	} else {  
+        		fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");  
+        	}
 			response.reset();
 			response.setContentType("APPLICATION/OCTET-STREAM");
 			response.setHeader("Content-Length", file.length() + "");
-			response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName,"UTF-8"));
+			response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
 			
 			in = new FileInputStream(file);
 			out = response.getWriter();

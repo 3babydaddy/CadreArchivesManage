@@ -211,7 +211,7 @@
 			</li>
 			<li><label>查阅单位：</label>
 				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblConsultArchives.consultUnit}" 
-									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表"></sys:treeselect>
+									labelName="consultUnitName" labelValue="${tblConsultArchives.consultUnitName}" title="单位列表" cssStyle="width:179px;"></sys:treeselect>
 			</li>
 			<li><label>查档对象：</label>
 				<form:input path="tarStr" htmlEscape="false" maxlength="64" class="input-medium"/>

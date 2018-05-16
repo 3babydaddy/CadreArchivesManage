@@ -146,10 +146,10 @@ public class RetiredCadreController extends BaseController {
    	 * @return
    	 */
       @RequestMapping(value = "moduleDown")
-      public void moduleDown(HttpServletResponse response) {
+      public void moduleDown(HttpServletRequest request, HttpServletResponse response) {
    	   try{
    		    File file = new File(this.getClass().getResource("/templet/retiredCadreModel.xls").getPath());
-   			FileUtils.download("干部信息模板.xls", file, response);
+   			FileUtils.download("干部信息模板.xls", file, request, response);
    		}catch(Exception e){
    			e.printStackTrace();
    		}

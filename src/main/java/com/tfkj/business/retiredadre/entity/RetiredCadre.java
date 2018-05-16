@@ -193,7 +193,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@Length(min=0, max=64, message="退休工作单位长度必须介于 0 和 120 之间")
-	@ExcelField(title = "何时调往何处工作", align = 2, sort = 90)
+	@ExcelField(title = "退休工作单位", type = 1, align = 2, sort = 90)
 	public String getWorkUnit() {
 		return workUnit;
 	}
@@ -203,7 +203,7 @@ public class RetiredCadre extends DataEntity<RetiredCadre> {
 	}
 	
 	@Length(min=0, max=64, message="档案局地址长度必须介于 0 和 120 之间")
-	@ExcelField(title = "档案何时转往何处", align = 2, sort = 100)
+	@ExcelField(title = "档案局地址", type = 1, align = 2, sort = 100)
 	public String getRecordOfficeAddress() {
 		return recordOfficeAddress;
 	}

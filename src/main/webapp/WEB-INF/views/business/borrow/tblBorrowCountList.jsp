@@ -101,7 +101,7 @@
 			</li>
 			<li><label>借阅单位：</label>
 				<sys:treeselect url="/sys/dict/treeDataPop" id="consultUnit" name="consultUnit" allowClear="true" value="${tblBorrowArchives.consultUnit}" 
-									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表"></sys:treeselect>
+									labelName="consultUnitName" labelValue="${tblBorrowArchives.consultUnitName}" title="单位列表" cssStyle="width:179px;"></sys:treeselect>
 			</li>
 			<li><label>借阅人：</label>
 				<form:input path="perStr" htmlEscape="false" maxlength="64" class="input-medium"/>

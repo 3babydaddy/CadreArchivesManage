@@ -80,8 +80,8 @@
 		<div class="control-group">
 			<label class="control-label">移交单位：</label>
 			<div class="controls">
-				<sys:treeselect2 url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
-								labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表" cssClass="required"></sys:treeselect2>
+				<sys:treeselect url="/sys/dict/treeDataPop" id="handOverUnit" name="handOverUnit" allowClear="true" value="${tblScatteredFiles.handOverUnit}" 
+								labelName="handOverUnitName" labelValue="${tblScatteredFiles.handOverUnitName}" title="单位列表" cssClass="required" cssStyle="width:240px;"></sys:treeselect>
 			</div>
 		</div>
 		<div class="control-group">

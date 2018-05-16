@@ -91,10 +91,10 @@ public class TblSuperviseHandleController extends BaseController {
    	 * @return
    	 */
       @RequestMapping(value = "moduleDown")
-      public void moduleDown(HttpServletResponse response) {
+      public void moduleDown(HttpServletRequest request, HttpServletResponse response) {
    	   try{
    		    File file = new File(this.getClass().getResource("/templet/superviseHandleModel.xls").getPath());
-   			FileUtils.download("督查督办模板.xls", file, response);
+   			FileUtils.download("督查督办模板.xls", file, request, response);
    		}catch(Exception e){
    			e.printStackTrace();
    		}

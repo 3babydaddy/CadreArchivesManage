@@ -99,7 +99,7 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 			</li>
 			<li><label>接收单位：</label>
-				<sys:treeselect id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollOutPersons.saveUnit}" 
+				<sys:treeselect id="saveUnit" name="saveUnit" allowClear="true" value="${tblRollOutPersons.saveUnit}" cssStyle="width:179px;"
 									labelName="saveUnitName" labelValue="${tblRollOutPersons.saveUnitName}" title="单位列表" url="/sys/dict/treeDataPop" ></sys:treeselect>
 			</li>
 			<li><label>接收人：</label>

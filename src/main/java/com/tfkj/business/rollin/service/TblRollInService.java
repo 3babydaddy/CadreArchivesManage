@@ -141,6 +141,7 @@ public class TblRollInService extends CrudService<TblRollInDao, TblRollIn> {
 		
 		Collections.reverse(perList);
 		page.setList(perList);
+		page.setCount((long)(perList.size()-1));
 		return page;
 	}
 	
