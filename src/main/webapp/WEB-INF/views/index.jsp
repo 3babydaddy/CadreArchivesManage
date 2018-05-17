@@ -292,7 +292,7 @@ ul li {
     		var len = $(".jbox-close").length;
 			for(var s = 0; s < len; s++){
 				//避免关闭页面当中的弹窗
-				if($(".jbox-title")[s].innerHTML == "系统提示"){
+				if($(".jbox-title")[s].innerHTML == "系统提醒"){
 					$(".jbox-close")[s].click();
 				}
 			}
@@ -306,13 +306,13 @@ ul li {
 		            success: function (data) {
 		            	for(var i = 0; i < data.length; i++){
 		            		$.jBox.messager('<div style="margin: 18px 0 0 48px;"><span class="jbox-icon jbox-icon-info" style="position: absolute; top: 55px; left: 15px; width: 32px; height: 32px;"></span>'
-	            					+'<a href="${ctx}/'+data[i].url+'" target="mainFrame" ><font style="font-size:120%;">'+data[i].msg+'</font></a></div>', '系统提示', 0, 
+	            					+'<a href="${ctx}/'+data[i].url+'" target="mainFrame" ><font style="font-size:120%;">'+data[i].msg+'</font></a></div>', '系统提醒', 0, 
             					{ height: 110,
             					  closed: function () { //手动关闭回调函数
             						  var sum = 0;//记录右下角的弹窗的数量
             						  var tem = $(".jbox-close").length;//页面弹窗的数量
             						  for(var t = 0; t < tem; t++){
-            							  if($(".jbox-title")[t].innerHTML == "系统提示"){
+            							  if($(".jbox-title")[t].innerHTML == "系统提醒"){
             								  sum++;
             							  }
             						  }
@@ -335,7 +335,7 @@ ul li {
 		var index = 0;//记录页面的jbox数
 		for(var j = 0; j < num; j++){
 			//根据title判断jbox是否是右下角弹窗的 是：计算高度，j加一  否：j减一
-    		if($(".jbox-title")[index].innerHTML == "系统提示"){
+    		if($(".jbox-title")[index].innerHTML == "系统提醒"){
     			var height = 110 * (num-j-1);
         		$(".jbox-container")[index].style.marginBottom = height+"px";
     		}else{ j--;} index++;
