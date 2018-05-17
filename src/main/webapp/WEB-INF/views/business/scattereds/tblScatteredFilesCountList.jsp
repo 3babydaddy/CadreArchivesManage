@@ -57,6 +57,7 @@
 		.table th, .table td{
 			text-align : center;
 			max-width: 310px;
+			min-width: 60px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
@@ -75,14 +76,16 @@
 		}
 		a,th,td,label,select{
 			font-size : 120%;
-			white-space:nowrap;
 			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
 		}
 	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#">零散材料移交人员列表</a></li>
+		<li class="active"><a href="#">零散材料移交统计列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/querycountlist" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -145,13 +148,13 @@
 				<td>
 					${tblScatteredFiles.xh}
 				</td>
-				<td title="${tblScatteredFiles.handOverUnitName}">
+				<td>
 					${tblScatteredFiles.handOverUnitName}
 				</td>
 				<td>
 					<fmt:formatDate value="${tblScatteredFiles.handOverDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td title="${tblScatteredFiles.handOverStr}">
+				<td>
 					${tblScatteredFiles.handOverStr}
 				</td>
 				<td>

@@ -137,7 +137,8 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
-			max-width: 380px;
+			max-width: 310px;
+			min-width: 60px;
 		}
 		.ul-form li label{
 			width: 155px !important;
@@ -153,8 +154,10 @@
 		}
 		a,th,td,label,select{
 			font-size : 120%;
-			white-space:nowrap;
 			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
 		}
 	</style>
 </head>
@@ -254,13 +257,13 @@
 				<td>
 					<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td title="${fns:getDictLabel(tblBorrowArchives.consultUnit, 'unit_list', '')}">
+				<td>
 					${fns:getDictLabel(tblBorrowArchives.consultUnit, 'unit_list', '')}
 				</td>
-				<td title="${tblBorrowArchives.tarStr}">
+				<td>
 					${tblBorrowArchives.tarStr}
 				</td>
-				<td title="${tblBorrowArchives.perStr}">
+				<td>
 					${tblBorrowArchives.perStr}
 				</td>
 				<td>
@@ -275,7 +278,7 @@
 				<td>
 					${fns:getDictLabel(tblBorrowArchives.status, 'audit_status', '')}
 				</td>
-				<td title="${tblBorrowArchives.remarks}">
+				<td>
 					${tblBorrowArchives.remarks}
 				</td>
 				<shiro:hasPermission name="borrow:tblBorrowArchives:edit"><td>

@@ -6,6 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
 	<link href="${ctxStatic}/common/index.css" rel="stylesheet" type="text/css">
+	<script src="${ctxStatic}/My97DatePicker/WdatePickerByUser.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function(){ 
 			//$("#name").focus();
@@ -83,7 +84,7 @@
 		function siginOption(obj){
 			var h = $(document.body).height();
 			var w = $(document.body).width();
-			$.jBox("iframe:${ctx}/consult/tblConsultArchives/drowSigin?siginId="+obj.id, {  
+			$.jBox("iframe:${ctx}/consult/tblConsultArchives/drowSiginByUser?siginId="+obj.id, {  
 			    title: "绘制签名",  
 			    width: (w*2/3),  
 			    height: (h/2+20),
@@ -94,15 +95,19 @@
 		function delSigin(obj){
 			var siginId = obj.id;
 			var siginImg = siginId.replace('aline', 'siginImg');
-    		var siginDiv = siginId.replace('aline', 'siginDiv');
     		var siginName = siginId.replace('aline', 'siginName');
     		var siginInput = siginId.replace('aline', 'siginInput');
     		
-    		document.getElementById(siginInput).style.display='';
-    		document.getElementById(siginDiv).style.display='none';
-    		
-    		document.getElementById(siginImg).src='';
-    		document.getElementById(siginName).value='';
+    		//展示签名的input
+    		$("#"+siginInput).show();
+    		//清空签名img的路径
+    		$("#"+siginImg)[0].src = '';
+    		//清空隐藏得实体类字段的值
+    		$("#"+siginName).val('');
+    		//隐藏img标签
+    		$("#"+siginImg).hide();
+    		//隐藏img删除按钮
+    		$("#"+siginId).hide();
 		}
 		
 		function addBorrow() {
@@ -227,19 +232,6 @@
       	}
 	</script>
 	<style type="text/css">
-		.td-order-one{
-			margin-left: 10px;
-			margin-right: 10px;
-			float: left;
-			white-space: nowrap;
-		}
-		.td-order-one img{
-			max-width: 120px;
-			max-heigth: 30px;
-			border-radius: 2px;
-			margin-top: -6px;
-			-webkit-border-radius:2px;
-		}
 		
 		#photoShowDiv>span{ 
 			display:inline-block; height:100%; vertical-align:middle;
@@ -287,7 +279,8 @@
 				<div class="search">
 					<div class="fl">
 						<span class="fl" style="font-size:30px;" >借阅日期：</span>
-						<input class="input_1" id="borrowDate" name="borrowDate" value="${tblBorrowArchives.borrowDate}" type="date"/>
+						<input id="borrowDate" name="borrowDate" type="text" maxlength="20" class="input_1 Wdate"
+							onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					</div>
 					<div class="fr">
 						<span class="fl" style="font-size:30px;" >借阅单位：</span>
@@ -415,14 +408,13 @@
 														<input id="tblBorrowPersonList{{idx}}_telphone" name="tblBorrowPersonList[{{idx}}].telphone" type="text" value="{{row.telphone}}" maxlength="11" class="input1"/></span>
 													</td>
 													<td>
-														<span class="fr"><label>签字：</label>
-														<input id="tblBorrowPersonList{{idx}}_siginInput" name="tblBorrowPersonList[{{idx}}].siginInput" type="text" onclick=siginOption(this); class="input3"/></span>
-														<input id="tblBorrowPersonList{{idx}}_siginName" name="tblBorrowPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input3"/></span>
+														<div class="fr"><label>签字：</label>
+															<input id="tblBorrowPersonList{{idx}}_siginInput" name="tblBorrowPersonList[{{idx}}].siginInput" type="text" onclick=siginOption(this); class="input3"/></span>
+															<input id="tblBorrowPersonList{{idx}}_siginName" name="tblBorrowPersonList[{{idx}}].siginName" type="hidden"  value="{{row.siginName}}"  maxlength="120" class="input3"/>
 														
-														<div class="td-order-one" id="tblBorrowPersonList{{idx}}_siginDiv" style="display:none;">  
-															<img id="tblBorrowPersonList{{idx}}_siginImg" src="{{row.siginName}}" />
-															<a id="tblBorrowPersonList{{idx}}_aline" onclick="delSigin(this)">&times;</a>
-       							 						</div>  
+															<img id="tblBorrowPersonList{{idx}}_siginImg" style="display:none;width:383px;" class="input3" src="{{row.siginName}}" />
+															<a id="tblBorrowPersonList{{idx}}_aline" style="display:none;" onclick="delSigin(this)">&times;</a>
+       							 						</div>
 													</td>
 												</tr><tr style="height:25px;"><td colspan="5"></td></tr>
 											</tr>//-->

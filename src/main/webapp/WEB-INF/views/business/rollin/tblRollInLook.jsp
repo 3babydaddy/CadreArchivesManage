@@ -8,6 +8,13 @@
 		$(document).ready(function() {
 			
 		});
+		
+		window.onload = function(){
+			$(document.body).find("input[id!='btnCancel'], textarea").each(function(){
+				$(this).attr('disabled', 'disabled');
+			});
+		}
+		
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
 				idx: idx, delBtn: true, row: row
@@ -28,8 +35,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/rollin/tblRollIn/">转入管理人员列表</a></li>
-		<li class="active"><a href="#">转入管理人员查看</a></li>
+		<li><a href="${ctx}/rollin/tblRollIn/">转入管理信息列表</a></li>
+		<li class="active"><a href="#">转入管理信息查看</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

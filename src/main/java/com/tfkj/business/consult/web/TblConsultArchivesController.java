@@ -110,6 +110,19 @@ public class TblConsultArchivesController extends BaseController {
 	}
 	
 	/**
+	 * 签名功能
+	 * @param siginId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "drowSiginByUser")
+	public String drowSiginByUser(String siginId, Model model) {
+		
+		model.addAttribute("siginId", siginId);
+		return "business/terminal/drowSigin";
+	}
+	
+	/**
 	 * 送审，更改借阅数据的状态
 	 * @param tblConsultArchives
 	 * @param idStr

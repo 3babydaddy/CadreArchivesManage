@@ -56,6 +56,7 @@
 		.table th, .table td{
 			text-align : center;
 			max-width: 310px;
+			min-width: 60px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
@@ -74,14 +75,16 @@
 		}
 		a,th,td,label,select{
 			font-size : 120%;
-			white-space:nowrap;
 			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
 		}
 	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#">查阅档案列表</a></li>
+		<li class="active"><a href="#">查阅档案统计列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblConsultArchives" action="${ctx}/consult/tblConsultArchives/querycountlist" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -143,13 +146,13 @@
 				<td rowspan="${tblConsultArchives.tblCheckedTargetList.size()}">
 					<fmt:formatDate value="${tblConsultArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td title="${tblConsultArchives.consultUnitName}" rowspan="${tblConsultArchives.tblCheckedTargetList.size()}">
+				<td rowspan="${tblConsultArchives.tblCheckedTargetList.size()}">
 					${tblConsultArchives.consultUnitName}
 				</td>
 				<c:forEach items="${tblConsultArchives.tblCheckedTargetList}" var="tblCheckedTarget" varStatus="sign">
 						<c:if test="${sign.count == 1}">
 							<td>${tblCheckedTarget.name}</td>
-							<td title="${tblCheckedTarget.unitName}">${tblCheckedTarget.unitName}</td>
+							<td>${tblCheckedTarget.unitName}</td>
 							<td>${tblCheckedTarget.duty}</td>
 							<td>${tblCheckedTarget.politicalStatus}</td>
 						</c:if>
@@ -171,7 +174,7 @@
 				<c:if test="${sign.count > 1}">
 					<tr>
 						<td>${tblCheckedTarget.name}</td>
-						<td title="${tblCheckedTarget.unitName}">${tblCheckedTarget.unitName}</td>
+						<td>${tblCheckedTarget.unitName}</td>
 						<td>${tblCheckedTarget.duty}</td>
 						<td>${tblCheckedTarget.politicalStatus}</td>
 					</tr>

@@ -70,11 +70,16 @@
 			}
 		}
 	</script>
+	<style type="text/css">
+		input[readonly]{
+			background-color: white;
+		}
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/rollin/tblRollIn/">转入管理人员列表</a></li>
-		<li class="active"><a href="#">转入管理人员<c:if test="${empty tblRollIn.id }">新增</c:if><c:if test="${not empty tblRollIn.id }">编辑</c:if></a></li>
+		<li><a href="${ctx}/rollin/tblRollIn/">转入管理信息列表</a></li>
+		<li class="active"><a href="#">转入管理信息<c:if test="${empty tblRollIn.id }">新增</c:if><c:if test="${not empty tblRollIn.id }">编辑</c:if></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

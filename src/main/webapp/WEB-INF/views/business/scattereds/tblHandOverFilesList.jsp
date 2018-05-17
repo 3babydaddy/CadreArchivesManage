@@ -49,6 +49,9 @@
 			white-space:nowrap;
 			overflow:hidden;
 		}
+		input[readonly]{
+			background-color: white;
+		}
 	</style>
 </head>
 <body>

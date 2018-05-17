@@ -8,6 +8,13 @@
 		$(document).ready(function() {
 			
 		});
+		
+		window.onload = function(){
+			$(document.body).find("input[id!='btnCancel'], textarea").each(function(){
+				$(this).attr('disabled', 'disabled');
+			});
+		}
+		
 		//生成审批单
 		function createAuditBill(num){
 			$("#inputForm")[0].action='${ctx}/order/createAuditBill?num='+num;
@@ -35,8 +42,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/rollout/tblRollOut/">转出管理人员列表</a></li>
-		<li class="active"><a href="#">转出管理人员查看</a></li>
+		<li><a href="${ctx}/rollout/tblRollOut/">转出管理信息列表</a></li>
+		<li class="active"><a href="#">转出管理信息查看</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="tblRollOut" action="${ctx}/rollout/tblRollOut/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

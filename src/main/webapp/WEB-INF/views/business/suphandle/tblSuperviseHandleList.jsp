@@ -71,6 +71,8 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
+			max-width: 310px;
+			min-width: 60px;
 		}
 		.circle {
 			height: 25px;
@@ -92,8 +94,10 @@
 		}
 		a,th,td,label,select{
 			font-size : 120%;
-			white-space:nowrap;
 			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
 		}
 	</style>
 </head>
@@ -107,7 +111,7 @@
 				</li>
 			</ul>
 			<input id="btnImportSubmit" class="btn btn-primary" style="margin-left:-30px;width:75px;" type="submit" value="   导    入   "/>&nbsp;&nbsp;
-			<a href="${ctx}/suphandle/tblSuperviseHandle/moduleDown">下载模板</a>
+			<button class="btn btn-primary" style="font-size:12px;"><a href="${ctx}/suphandle/tblSuperviseHandle/moduleDown" style="color:white;">下载模板</a></button>
 		</form>
 	</div>
 	<ul class="nav nav-tabs">

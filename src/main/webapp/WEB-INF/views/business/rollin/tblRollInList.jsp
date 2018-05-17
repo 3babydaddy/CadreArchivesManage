@@ -138,7 +138,8 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
-			max-width: 380px;
+			max-width: 310px;
+			min-width: 60px;
 		}
 		.ul-form li label{
 			width: 155px !important;
@@ -154,14 +155,16 @@
 		}
 		a,th,td,label,select{
 			font-size : 120%;
-			white-space:nowrap;
 			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
 		}
 	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#">转入管理人员列表</a></li>
+		<li class="active"><a href="#">转入管理信息列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblRollIn" action="${ctx}/rollin/tblRollIn/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -241,7 +244,7 @@
 				<td>
 					<fmt:formatDate value="${tblRollIn.rollInTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td title="${tblRollIn.beforeUnitName}">
+				<td>
 					${tblRollIn.beforeUnitName}
 				</td>
 				<td>

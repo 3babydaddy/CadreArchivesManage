@@ -56,6 +56,7 @@
 		.table th, .table td{
 			text-align : center;
 			max-width: 310px;
+			min-width: 60px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
@@ -74,15 +75,17 @@
 		}
 		a,th,td,label,select{
 			font-size : 120%;
-			white-space:nowrap;
 			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
 		}
 	</style>
 </head>
 <body>
 	
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#">转出管理人员列表</a></li>
+		<li class="active"><a href="#">转出管理统计列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblRollOutPersons" action="${ctx}/rollout/tblRollOut/querycountlist" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -150,7 +153,7 @@
 				<td>
 					${fns:getDictLabel(tblRollOutPersons.reason, 'roll_out_reason', '')}
 				</td>
-				<td title="${tblRollOutPersons.saveUnitName}">
+				<td>
 					${tblRollOutPersons.saveUnitName}
 				</td>
 				<td>

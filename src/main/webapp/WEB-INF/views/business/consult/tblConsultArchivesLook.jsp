@@ -9,6 +9,12 @@
 			
 		});
 		
+		window.onload = function(){
+			$(document.body).find("input[id!='btnCancel']").each(function(){
+				$(this).attr('disabled', 'disabled');
+			});
+		}
+		
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
 				idx: idx, delBtn: true, row: row

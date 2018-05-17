@@ -129,6 +129,9 @@
 			margin-top: -6px;
 			-webkit-border-radius:2px;
 		}
+		input[readonly]{
+			background-color: white;
+		}
 	</style>
 </head>
 <body>

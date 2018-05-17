@@ -5,6 +5,7 @@
 	<title>查阅档案管理</title>
 	<meta name="decorator" content="default"/>
 	<link href="${ctxStatic}/common/index.css" rel="stylesheet" type="text/css">
+	<script src="${ctxStatic}/My97DatePicker/WdatePickerByUser.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function(){ 
 			//$("#name").focus();
@@ -56,29 +57,6 @@
 			}
 		}
 		
-		function siginOption(obj){
-			$.jBox("iframe:${ctx}/scattereds/tblScatteredFiles/drowSigin?siginId="+obj.id, {  
-			    title: "绘制签名",  
-			    width: 900,  
-			    height: 400,
-			    showClose: false,
-			    buttons: { '关闭': true }  
-			});  
-		}
-		function delSigin(obj){
-			var siginId = obj.id;
-			var siginImg = siginId.replace('aline', 'siginImg');
-    		var siginDiv = siginId.replace('aline', 'siginDiv');
-    		var siginName = siginId.replace('aline', 'siginName');
-    		var siginInput = siginId.replace('aline', 'siginInput');
-    		
-    		document.getElementById(siginInput).style.display='';
-    		document.getElementById(siginDiv).style.display='none';
-    		
-    		document.getElementById(siginImg).src='';
-    		document.getElementById(siginName).value='';
-		}
-		
 		var addScattered  =  function() {
 			if(validateDate()){
 				$.ajax({
@@ -108,6 +86,11 @@
         }
 		
 		function validateDate(){
+			var handOverUnitId = $("#handOverUnitId").val();
+			if(handOverUnitId == ""){
+				alertx("移交单位不能为空！");
+				return false;
+			}
 			var handOverDate = $("#handOverDate").val();
 			if(handOverDate == ""){
 				alertx("移交日期不能为空！");
@@ -123,11 +106,6 @@
 				alertx("接收人不能为空！");
 				return false;
 			}
-			var handOverUnitId = $("#handOverUnitId").val();
-			if(handOverUnitId == ""){
-				alertx("移交单位不能为空！");
-				return false;
-			}
 			for(var i = 0; i < tblHandOverFilesRowIdx; i++){
 				var name = $("#tblHandOverFilesList"+i+"_name").val()
 				if(name == ""){
@@ -140,24 +118,6 @@
 		}
 	</script>
 	<style type="text/css">
-		.td-order-one{
-			margin-left: 10px;
-			margin-right: 10px;
-			float: left;
-			white-space: nowrap;
-		}
-		.td-order-one img{
-			max-width: 120px;
-			max-heigth: 30px;
-			border-radius: 2px;
-			margin-top: -6px;
-			-webkit-border-radius:2px;
-		}
-		
-		.img-responsive{
-			vertical-align:middle;
-		} 
-		
 		body {
 			font-family: "微软雅黑";
 			font-size:120%;
@@ -169,10 +129,6 @@
 		}
 		.overflow{
 			height: 622px;
-		}
-		}
-		#ulDiv{
-			height: 9%;
 		}
 		a,th,label{
 			font-size : 150%;
@@ -211,7 +167,8 @@
 					</div>
 					<div class="fr">
 						<span class="fl" style="font-size:30px;" >移交日期：</span>
-						<input class="input_2" id="handOverDate" name="handOverDate" value="${tblScatteredFiles.handOverDate}" type="date"/>
+						<input id="handOverDate" name="handOverDate" type="text" maxlength="20" class="input_2 Wdate"
+										onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					</div>
 					<div class="clear"></div>
 				</div>

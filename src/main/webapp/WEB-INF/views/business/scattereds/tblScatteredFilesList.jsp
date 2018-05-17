@@ -131,7 +131,8 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
-			max-width: 380px;
+			max-width: 310px;
+			min-width: 60px;
 		}
 		.ul-form li label{
 			width: 155px !important;
@@ -147,8 +148,10 @@
 		}
 		a,th,td,label,select{
 			font-size : 120%;
-			white-space:nowrap;
 			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
 		}
 	</style>
 </head>
@@ -162,11 +165,11 @@
 				</li>
 			</ul>
 			<input id="btnImportSubmit" style="margin-left:-30px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
-			<a class="btns" href="${ctx}/scattereds/tblScatteredFiles/moduleDown">下载模板</a>
+			<button class="btn btn-primary" style="font-size:12px;"><a href="${ctx}/scattereds/tblScatteredFiles/moduleDown" style="color:white;">下载模板</a></button>
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#">零散材料移交人员列表</a></li>
+		<li class="active"><a href="#">零散材料移交信息列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -239,7 +242,7 @@
 				<td>
 					<input type="checkbox" value="${tblScatteredFiles.id},${tblScatteredFiles.status}" />
 				</td>
-				<td title="${tblScatteredFiles.handOverUnitName}"><a href="${ctx}/scattereds/tblScatteredFiles/personlist?mainId=${tblScatteredFiles.id}">
+				<td><a href="${ctx}/scattereds/tblScatteredFiles/personlist?mainId=${tblScatteredFiles.id}">
 					${tblScatteredFiles.handOverUnitName}</a>
 				</td>
 				<td>

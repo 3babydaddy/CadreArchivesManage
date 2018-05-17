@@ -67,12 +67,15 @@
 		.table th, .table td, .table input{
 			text-align : center;
 		}
+		input[readonly]{
+			background-color: white;
+		}
 	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交人员列表</a></li>
-		<li class="active"><a href="#">零散材料移交人员<c:if test="${empty tblScatteredFiles.id }">新增</c:if><c:if test="${not empty tblScatteredFiles.id }">编辑</c:if></a></li>
+		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交信息列表</a></li>
+		<li class="active"><a href="#">零散材料移交信息<c:if test="${empty tblScatteredFiles.id }">新增</c:if><c:if test="${not empty tblScatteredFiles.id }">编辑</c:if></a></li>
 	</ul><br/>
 	<sys:message content="${message}"/>		
 	<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">

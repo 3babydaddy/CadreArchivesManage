@@ -35,10 +35,10 @@
 		}
 		// 正常打开	
 		top.$.jBox.open(
-			"iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&isAll=${isAll}",
+			"iframe:${ctx}/tag/treeselectByUser?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&isAll=${isAll}",
 			"选择${title}",
-		    550,
-		    650,
+		    600,
+		    750,
 		    {
 				draggable: false, /* 是否可以拖动窗口 */  
 	            dragLimit: true, /* 在可以拖动窗口的情况下，是否限制在可视范围 */  

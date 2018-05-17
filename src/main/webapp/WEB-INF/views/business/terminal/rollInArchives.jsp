@@ -5,6 +5,7 @@
 	<title>转入档案管理</title>
 	<meta name="decorator" content="default"/>
 	<link href="${ctxStatic}/common/index.css" rel="stylesheet" type="text/css">
+	<script src="${ctxStatic}/My97DatePicker/WdatePickerByUser.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function(){ 
 			//$("#name").focus();
@@ -61,31 +62,7 @@
 			}
 		}
 		
-		function siginOption(obj){
-			$.jBox("iframe:${ctx}/rollin/tblRollIn/drowSigin?siginId="+obj.id, {  
-			    title: "绘制签名",  
-			    width: 900,  
-			    height: 400,
-			    showClose: false,
-			    buttons: { '关闭': true }  
-			});  
-		}
-		function delSigin(obj){
-			var siginId = obj.id;
-			var siginImg = siginId.replace('aline', 'siginImg');
-    		var siginDiv = siginId.replace('aline', 'siginDiv');
-    		var siginName = siginId.replace('aline', 'siginName');
-    		var siginInput = siginId.replace('aline', 'siginInput');
-    		
-    		document.getElementById(siginInput).style.display='';
-    		document.getElementById(siginDiv).style.display='none';
-    		
-    		document.getElementById(siginImg).src='';
-    		document.getElementById(siginName).value='';
-		}
-		
 		var addRollIn  =  function() {
-           
            if(validateDate()){
         	   $.ajax({
                    type: "POST",//方法类型
@@ -222,19 +199,6 @@
       	}
 	</script>
 	<style type="text/css">
-		.td-order-one{
-			margin-left: 10px;
-			margin-right: 10px;
-			float: left;
-			white-space: nowrap;
-		}
-		.td-order-one img{
-			max-width: 120px;
-			max-heigth: 30px;
-			border-radius: 2px;
-			margin-top: -6px;
-			-webkit-border-radius:2px;
-		}
 		
 		#photoShowDiv>span{ 
 			display:inline-block; height:100%; vertical-align:middle;
@@ -254,9 +218,6 @@
 		}
 		.overflow{
 			height: 485px;
-		}
-		#ulDiv{
-			height: 9%;
 		}
 		
 		a,th,label{
@@ -311,7 +272,8 @@
 									<span>转入时间：</span>
 								</td>
 								<td style="text-align:left;">
-									<input class="input_1" id="rollInTime" name="rollInTime" value="${tblRollIn.rollInTime}" type="date"/>
+									<input id="rollInTime" name="rollInTime" type="text" maxlength="20" class="input_1 Wdate"
+										onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 								</td>
 								<td style="text-align:right;">
 									<span>经办人：</span>

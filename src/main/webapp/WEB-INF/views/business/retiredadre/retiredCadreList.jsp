@@ -118,7 +118,8 @@
 	<style type="text/css">
 		.table th, .table td{
 			text-align : center;
-			max-width: 380px;
+			max-width: 310px;
+			min-width: 60px;
 		}
 		.ul-form li label{
 			width: 155px !important;
@@ -134,8 +135,10 @@
 		}
 		a,th,td,label,select{
 			font-size : 120%;
-			white-space:nowrap;
 			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
 		}
 	</style>
 </head>
@@ -149,11 +152,11 @@
 				</li>
 			</ul>
 			<input id="btnImportSubmit" style="margin-left:-30px;" class="btn btn-primary" type="submit" value="   导  入   "/>&nbsp;&nbsp;
-			<a href="${ctx}/retiredadre/retiredCadre/moduleDown">下载模板</a>
+			<button class="btn btn-primary" style="font-size:12px;"><a href="${ctx}/retiredadre/retiredCadre/moduleDown" style="color:white;">下载模板</a></button>
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#">退休干部信息操作列表</a></li>
+		<li class="active"><a href="#">退休干部信息列表</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="retiredCadre" action="${ctx}/retiredadre/retiredCadre/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -236,7 +239,7 @@
 				<td>
 					<fmt:formatDate value="${retiredCadre.birthday}" pattern="yyyy-MM-dd"/>
 				</td>
-				<td title="${retiredCadre.workUnitName}">
+				<td>
 					${retiredCadre.workUnitName}
 				</td>
 				<td>

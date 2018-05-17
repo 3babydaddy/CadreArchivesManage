@@ -32,6 +32,11 @@
 			});
 		});
 	</script>
+	<style type="text/css">
+		input[readonly]{
+			background-color: white;
+		}
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">

@@ -57,6 +57,7 @@
 		.table th, .table td{
 			text-align : center;
 			max-width: 310px;
+			min-width: 60px;
 		}
 		.ul-form li.btns{
 			padding-left: 0px !important;
@@ -75,14 +76,16 @@
 		}
 		a,th,td,label,select{
 			font-size : 120%;
-			white-space:nowrap;
 			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
 		}
 	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#">借阅管理列表</a></li>
+		<li class="active"><a href="#">借阅档案统计列表</a></li>
 	</ul>
 	<sys:message content="${message}"/>		
 	<form:form id="searchForm" modelAttribute="tblBorrowArchives" action="${ctx}/borrow/tblBorrowArchives/querycountlist" method="post" class="breadcrumb form-search">
@@ -145,13 +148,13 @@
 				<td rowspan="${tblBorrowArchives.tblBorrowTargetList.size()}">
 					<fmt:formatDate value="${tblBorrowArchives.borrowDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
-				<td title="${tblBorrowArchives.consultUnitName}" rowspan="${tblBorrowArchives.tblBorrowTargetList.size()}">
+				<td rowspan="${tblBorrowArchives.tblBorrowTargetList.size()}">
 					${tblBorrowArchives.consultUnitName}
 				</td>
 				<c:forEach items="${tblBorrowArchives.tblBorrowTargetList}" var="tblBorrowTarget" varStatus="sign">
 						<c:if test="${sign.count == 1}">
 							<td>${tblBorrowTarget.name}</td>
-							<td title="${tblBorrowTarget.unitName}">${tblBorrowTarget.unitName}</td>
+							<td>${tblBorrowTarget.unitName}</td>
 							<td>${tblBorrowTarget.duty}</td>
 							<td>${tblBorrowTarget.politicalStatus}</td>
 						</c:if>
@@ -173,7 +176,7 @@
 				<c:if test="${sign.count > 1}">
 					<tr>
 						<td>${tblBorrowTarget.name}</td>
-						<td title="${tblBorrowTarget.unitName}">${tblBorrowTarget.unitName}</td>
+						<td>${tblBorrowTarget.unitName}</td>
 						<td>${tblBorrowTarget.duty}</td>
 						<td>${tblBorrowTarget.politicalStatus}</td>
 					</tr>

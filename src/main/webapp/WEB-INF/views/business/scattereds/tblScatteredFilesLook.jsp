@@ -8,6 +8,13 @@
 		$(document).ready(function() {
 			
 		});
+		
+		window.onload = function(){
+			$(document.body).find("input[id!='btnCancel']").each(function(){
+				$(this).attr('disabled', 'disabled');
+			});
+		}
+		
 		function addRow(list, idx, tpl, row){
 			$(list).append(Mustache.render(tpl, {
 				idx: idx, delBtn: true, row: row
@@ -48,8 +55,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交人员列表</a></li>
-		<li class="active"><a href="#">零散材料移交人员查看</a></li>
+		<li><a href="${ctx}/scattereds/tblScatteredFiles/">零散材料移交信息列表</a></li>
+		<li class="active"><a href="#">零散材料移交信息查看</a></li>
 	</ul><br/>
 	<sys:message content="${message}"/>		
 	<form:form id="inputForm" modelAttribute="tblScatteredFiles" action="${ctx}/scattereds/tblScatteredFiles/save" method="post" class="form-horizontal">

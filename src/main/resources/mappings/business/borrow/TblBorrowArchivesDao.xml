@@ -303,6 +303,6 @@
 			]]>
 			</if>
 		</where>
-			ORDER BY a.update_date 
+			ORDER BY a.update_date, t.update_date desc 
 	</select>
 </mapper>
