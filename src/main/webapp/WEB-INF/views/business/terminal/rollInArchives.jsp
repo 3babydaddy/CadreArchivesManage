@@ -63,30 +63,33 @@
 		}
 		
 		var addRollIn  =  function() {
-           if(validateDate()){
-        	   $.ajax({
-                   type: "POST",//方法类型
-                   dataType: "json",//预期服务器返回的数据类型
-                   url: "${ctx}/rollin/tblRollIn/saveTerminal",//url
-                   data: $('#inputForm').serialize(),
-                   success: function (result) {
-                       //alert(result);
-                       if(result){
-                       	var submit = function (v, h, f) {
-                       	    if (v == 'ok')
-                       	    	window.location.href="${ctx}";
-                       	    return true; //close
-                       	};
-                       	$.jBox.confirm("确定吗？", "提示", submit);
-                       	
-                       };
-                   },
-                   error : function() {
-                       alert("异常！");
-                   }
-               });
-           }
-        }
+			if(validateDate()){
+				top.$.jBox.confirm("<span style='font-size:24px;'>确定提交吗？</span>",'系统提示',function(v,h,f){
+					if(v=='ok'){
+						$.ajax({
+        	                type: "POST",//方法类型
+        	               // dataType: "json",//预期服务器返回的数据类型
+        	                url: "${ctx}/rollin/tblRollIn/saveTerminal",//url
+        	                data: $('#inputForm').serialize(),
+        	                success: function (result) {
+        	                	if(result){
+        	                		top.$.jBox.tip("<span style='font-size:32px;'>保存成功</span>", "", {
+        	            				width: 200,
+        	            				persistent : true,
+        	            				opacity : 0
+        	            			});
+        	                    	setTimeout(function(){window.location.href="${ctx}"}, 200);
+        	                    };
+        	                },
+        	                error : function() {
+        	                	alertx("异常！");
+        	                }
+        	            });
+					}
+				});
+				top.$('.jbox-body .jbox-icon').css('top','55px');
+			}
+		}
 		
 		function validateDate(){
 			var character = $("#character").val();
@@ -235,6 +238,9 @@
 			left: -10%;
     		position: relative;
 		}
+		input[readonly]{
+			background-color: white;
+		}
 	</style>
 </head>
 <body>
@@ -272,7 +278,7 @@
 									<span>转入时间：</span>
 								</td>
 								<td style="text-align:left;">
-									<input id="rollInTime" name="rollInTime" type="text" maxlength="20" class="input_1 Wdate"
+									<input id="rollInTime" name="rollInTime" type="text" readonly="readonly" maxlength="20" class="input_1 Wdate"
 										onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 								</td>
 								<td style="text-align:right;">

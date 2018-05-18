@@ -2,135 +2,116 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>日志管理</title>
+	<title>系统日志管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-
-	//列表
-	 $(function() {
-	        $('#search').click(function() {
-	            $('#table').bootstrapTable('refresh');
-	        });
-	        $('#table').bootstrapTable({
-	        	method: "get",
-	            url : '${ctx}/sys/log/list',
-	            pagination : true,
-	            paginationDetailHAlign : 'right',
-	            paginationHAlign : 'left',
-	            paginationPreText : '上一页',
-	            paginationNextText : '下一页',
-	            sidePagination : 'server',
-	            sortName : 'a.create_date',
-	            sortOrder : 'desc',
-	            clickToSelect : true,
-	            pageSize : 10,
-	            pageNumber : 1,
-	            pageList: [5, 10, 15, 20, 25],  //记录数可选列表 
-	            queryParams : 'queryParams',
-	            detailView : true,
-	            detailFormatter:'detailFormatter',
-	            columns : [ 
-	             {
-	                field : 'id',
-	                visible : false
-	            }, {
-	                field : 'title',
-	                title : '操作菜单',
-	                	formatter :  function nameFormatter(value, row) {
-		                    return '<a href="${ctx}/sys/log/form?id=' + row.id + '">' + value + '</a>';
-		                }
-	            }, {
-	                field : 'createBy.name',
-	                title : '用户名'
-	            }, {
-	                field : 'createBy.office.name',
-	                title : '所在单位',
-	            },  {
-	                field : 'requestUri',
-	                title : '操作路径'
-	            }, {
-	                field : 'method',
-	                title : '提交方式'
-	            }, {
-	                field : 'detail',
-	                title : '操作内容'
-	            }, {
-	                field : 'ip',
-	                title : '操作者IP'
-	            }, {
-	                field : 'createDate',
-	                title : '操作时间'
-	            } ]
-	           
-	        });
-	 });
-	//设置传入参数
-	//依次遍历上下文所有的含有name属性的input标签 
-	//each就表示每一个,
-	//可以用$(this)来代表当前正选中的那一个控件
-	 function queryParams(params) {
-		 $('#searchbar').find('input[name]').each(function() {
-            params[$(this).attr('name')] = $(this).val();
-	        });
-		 $('#labelbar').find('input[name]').each(function() {
-	            params[$(this).attr('name')] = $(this).val();
-		        });
-		 //当checkbox为选中状态时赋值
-		 if($('#exception').prop("checked")){
-       		params.exception='1';
-		 }
-	   return params;
-	 }
-
-        function detailFormatter(index, row) {
-            var html = [];
-            $.each(row, function(key, value) {
-                html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-            });
-            return html.join('');
+		$(document).ready(function() {
+			
+		});
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
+			$("#searchForm").submit();
+        	return false;
         }
-    </script>
+		function setNull(){
+			$("input[type='text']").each(function(){
+				$(this).val("");
+			});
+			$("input[type='hidden']").each(function(){
+				$(this).val("");
+			});
+			$("select").val("");
+			//$("select").each(function(){
+			//	$(this).select2("val","");
+			//})
+		}
+	</script>
+	<style type="text/css">
+		.table th, .table td{
+			text-align : center;
+			max-width: 310px;
+			min-width: 60px;
+		}
+		.ul-form li label{
+			width: 155px !important;
+		}
+		body {
+			font-family: "微软雅黑";
+			font-size:120%;
+		}
+		#btnCancel,#btnSubmit{
+			font-size : 150%;
+			white-space:nowrap;
+			overflow:hidden;
+		}
+		a,th,td,label,select{
+			font-size : 120%;
+			overflow:hidden;
+		}
+		input[readonly]{
+			background-color: white;
+		}
+	</style>
 </head>
 <body>
-	
-	<ul class="breadcrumb">
-        <li class="active">日志列表</li>
-    </ul>
-    
-    <div id="searchbar" class="form-search breadcrumb">
-        <div class="input-prepend">
-          <span class="add-on">操作菜单：</span>
-          <input name="title" class="input-small" type="text" />
-        </div>
-       <div class="input-prepend">
-          <span class="add-on">用户名：</span>
-          <input name="createBy.name" class="input-small" type="text" />
-        </div>
-        <div class="input-prepend">
-          <span class="add-on">所在单位：</span>
-          <input name="createBy.office.name" class="input-small" type="text" />
-        </div>
-        <div class="input-prepend">
-          <span class="add-on">操作用户IP：</span>
-          <input name="ip" class="input-small" type="text" />
-        </div></div>
-        <div>
-    <div id="labelbar" class="form-search breadcrumb">
-          <span class="add-on">操作时间：</span>
-	<input id="beginDate" name="beginDate" type="text" readonly="readonly" maxlength="20" class="input-mini Wdate"
-			value="<fmt:formatDate value="${logDate.beginDate}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-	<label>--</label>
-	<input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-mini Wdate"
-			value="<fmt:formatDate value="${logDate.endDate}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-	
-	<label for="exception"><input id="exception"  type="checkbox" value=''/>只查询异常信息</label>
-	<input id="search" class="btn btn-primary" type="button" value="查询" />
-	
-	</div>
-		
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#">系统日志列表</a></li>
+	</ul>
+	<form:form id="searchForm" modelAttribute="log" action="${ctx}/sys/log/list" method="post" class="breadcrumb form-search">
+		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
+		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+		<ul class="ul-form">
+			<li><label>日志标题：</label>
+				<form:input path="title" htmlEscape="false" maxlength="255" class="input-medium"/>
+			</li>
+			<div style="float:right;margin-right:4px;">
+				<li class="btns"><input id="btnSubmit" class="btn btn-lg btn-primary" type="submit" value="查询"/></li>
+				<li class="btns"><input id="btnCancel" class="btn btn-primary" type="button" onclick="setNull();" value="重置"/></li>
+			</div>
+		</ul>
+	</form:form>
 	<sys:message content="${message}"/>
-	<div id="content">
-        <table id="table"></table>
-    </div>
+	<table id="contentTable" class="table table-striped table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>操作内容</th>
+				<th>类型</th>
+				<th>操作路径</th>
+				<th>提交方式</th>
+				<th>操作者IP</th>
+				<th>操作者</th>
+				<th>操作时间</th>
+			</tr>
+		</thead>
+		<tbody>
+		<c:forEach items="${page.list}" var="sysLog">
+			<tr>
+				<td><a href="${ctx}/syslog/sysLog/form?id=${sysLog.id}"></a>
+					${sysLog.title}
+				</td>
+				<td>
+					${fns:getDictLabel(sysLog.type, 'logType', '')}
+				</td>
+				<td title="${sysLog.requestUri}">
+					${sysLog.requestUri}
+				</td>
+				<td>
+					${sysLog.method}
+				</td>
+				<td>
+					${sysLog.ip}
+				</td>
+				<td>
+					${sysLog.createBy.id}
+				</td>
+				<td>
+					<fmt:formatDate value="${sysLog.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+			</tr>
+		</c:forEach>
+		</tbody>
+	</table>
+	<div class="pagination">${page}</div>
 </body>
 </html>

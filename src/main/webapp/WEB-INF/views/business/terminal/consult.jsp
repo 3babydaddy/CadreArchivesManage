@@ -110,29 +110,30 @@
 		
 		function addConsult() {
 			if(validateDate()){
-				$.ajax({
-	                type: "POST",//方法类型
-	                dataType: "json",//预期服务器返回的数据类型
-	                url: "${ctx}/consult/tblConsultArchives/saveTerminal",//url
-	                data: $('#inputForm').serialize(),
-	                success: function (result) {
-	                    //alert(result);
-	                    //debugger;
-	                    
-	                    if(result){
-	                    	var submit = function (v, h, f) {
-	                    	    if (v == 'ok')
-	                    	    	window.location.href="${ctx}";
-	                    	    return true; //close
-	                    	};
-	                    	$.jBox.confirm("确定吗？", "提示", submit);
-	                    	
-	                    };
-	                },
-	                error : function() {
-	                    alert("异常！");
-	                }
-	            });
+				top.$.jBox.confirm("<span style='font-size:24px;'>确定提交吗？</span>",'系统提示',function(v,h,f){
+					if(v=='ok'){
+						$.ajax({
+        	                type: "POST",//方法类型
+        	               // dataType: "json",//预期服务器返回的数据类型
+        	                url: "${ctx}/consult/tblConsultArchives/saveTerminal",//url
+        	                data: $('#inputForm').serialize(),
+        	                success: function (result) {
+        	                	if(result){
+        	                		top.$.jBox.tip("<span style='font-size:32px;'>保存成功</span>", "", {
+        	            				width: 200,
+        	            				persistent : true,
+        	            				opacity : 0
+        	            			});
+        	                    	setTimeout(function(){window.location.href="${ctx}"}, 200);
+        	                    };
+        	                },
+        	                error : function() {
+        	                	alertx("异常！");
+        	                }
+        	            });
+					}
+				});
+				top.$('.jbox-body .jbox-icon').css('top','55px');
 			}
 	    }
 		
@@ -264,6 +265,9 @@
 			left: -10%;
     		position: relative;
 		}
+		input[readonly]{
+			background-color: white;
+		}
 	</style>
 </head>
 <body>
@@ -272,7 +276,7 @@
 		<img src="${ctxStatic}/images/terminal/top.png" style="width:100%;">
 	</div>
 	<div class="content">
-		<form:form id="inputForm" modelAttribute="tblConsultArchives" action="${ctx}/consult/tblConsultArchives/saveTerminal" method="post" class="form-horizontal">
+		<form:form id="inputForm" modelAttribute="tblConsultArchives" action="" method="post" class="form-horizontal">
 			<form:hidden path="id"/>
 			<div style="display:none;">
 				<sys:message content="${message}" />
@@ -281,7 +285,7 @@
 				<div class="search">
 					<div class="fl">
 						<span class="fl" style="font-size:30px;" >查阅日期：</span>
-						<input id="borrowDate" name="borrowDate" type="text" maxlength="20" class="input_1 Wdate"
+						<input id="borrowDate" name="borrowDate" type="text" readonly="readonly" maxlength="20" class="input_1 Wdate"
 							onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					</div>
 					<div class="fr">

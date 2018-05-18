@@ -7,6 +7,7 @@
 		SELECT 
 			a.id,
 			a.title,
+			a.type,
 			a.request_uri as "requestUri",
 			a.detail,
 			a.ip,
@@ -17,8 +18,8 @@
 			a.CREATE_DATE AS "createDate",
             o.name AS "createBy.office.name"
 		FROM sys_log a
-		JOIN sys_user u ON u.id = a.create_by
-        JOIN sys_office o ON o.id = u.office_id
+		left JOIN sys_user u ON u.id = a.create_by
+        left JOIN sys_office o ON o.id = u.office_id
 		WHERE 1=1
 		<if test="title != null and title != ''">
 			AND a.title LIKE 

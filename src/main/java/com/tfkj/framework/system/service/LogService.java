@@ -3,9 +3,12 @@
  */
 package com.tfkj.framework.system.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tfkj.framework.core.persistence.Page;
 import com.tfkj.framework.core.service.CrudService;
 import com.tfkj.framework.core.utils.DateUtils;
 import com.tfkj.framework.system.dao.LogDao;
@@ -20,6 +23,29 @@ import com.tfkj.framework.system.entity.Log;
 @Service
 @Transactional(readOnly = true)
 public class LogService extends CrudService<LogDao, Log> {
+	
+	public Log get(String id) {
+		return super.get(id);
+	}
+	
+	public List<Log> findList(Log sysLog) {
+		return super.findList(sysLog);
+	}
+	
+	public Page<Log> findPage(Page<Log> page, Log sysLog) {
+		return super.findPage(page, sysLog);
+	}
+	
+	@Transactional(readOnly = false)
+	public void save(Log sysLog) {
+		super.save(sysLog);
+	}
+	
+	@Transactional(readOnly = false)
+	public void delete(Log sysLog) {
+		super.delete(sysLog);
+	}
+	
 	/**
 	 * 搜索框日志的起止时间
 	 * 

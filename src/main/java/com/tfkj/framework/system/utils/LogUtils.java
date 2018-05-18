@@ -21,6 +21,7 @@ import com.tfkj.framework.core.utils.CacheUtils;
 import com.tfkj.framework.core.utils.Exceptions;
 import com.tfkj.framework.core.utils.SpringContextHolder;
 import com.tfkj.framework.core.utils.StringUtils;
+import com.tfkj.framework.system.dao.DictDao;
 import com.tfkj.framework.system.dao.LogDao;
 import com.tfkj.framework.system.dao.MenuDao;
 import com.tfkj.framework.system.entity.Log;
@@ -38,6 +39,7 @@ public class LogUtils {
 
 	private static LogDao logDao = SpringContextHolder.getBean(LogDao.class);
 	private static MenuDao menuDao = SpringContextHolder.getBean(MenuDao.class);
+	private static DictDao dictDao = SpringContextHolder.getBean(DictDao.class);
 
 	/**
 	 * 保存日志
@@ -61,7 +63,7 @@ public class LogUtils {
 			log.setMethod(request.getMethod());
 			log.setCreateDate(new Date());
 			// 异步保存日志
-			//new SaveLogThread(log, handler, ex).start();
+			new SaveLogThread(log, handler, ex).start();
 		}
 	}
 
@@ -91,7 +93,8 @@ public class LogUtils {
 					RequiresPermissions rp = m.getAnnotation(RequiresPermissions.class);
 					permission = (rp != null ? StringUtils.join(rp.value(), ",") : "");
 				}
-				log.setTitle(getMenuNamePath(log.getRequestUri(), permission));
+				//log.setTitle(getMenuNamePath(log.getRequestUri(), permission));
+				log.setTitle(getMenuNamePathSelf(log.getRequestUri(), permission));
 			}
 			// 如果有异常，设置异常信息
 			log.setException(Exceptions.getStackTraceAsString(ex));
@@ -158,6 +161,20 @@ public class LogUtils {
 			if (menuNamePath == null) {
 				return "";
 			}
+		}
+		return menuNamePath;
+	}
+	
+	/**
+	 * 获取菜单名称路径
+	 */
+	public static String getMenuNamePathSelf(String requestUri, String permission) {
+		String href = StringUtils.substringAfter(requestUri, Global.getAdminPath());
+		String menuNamePath = "";
+		if(StringUtils.isBlank(href)){
+			return menuNamePath;
+		}else{
+			menuNamePath = dictDao.getLabelByValue(href, "sysLogTitle");
 		}
 		return menuNamePath;
 	}

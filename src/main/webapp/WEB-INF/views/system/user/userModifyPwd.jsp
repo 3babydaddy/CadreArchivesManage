@@ -34,15 +34,13 @@
 	</script>
 </head>
 <body>
-    <ul class="breadcrumb">
-        <li class="active"><a href="${ctx}/sys/user/modifyPwd">修改密码</a></li>
-    </ul>
+    <ul class="nav nav-tabs">
+		<li class="active"><a href="#">修改密码</a></li>
+	</ul>
     <div id="toolbar">
         <ul class="nav nav-pills">
             <li><a id="baocun" href="javascript:void(0)"><i
                     class="icon-save"></i>&nbsp;保存</a></li>
-            <li><a href="javascript:history.go(-1)"><i
-                    class="icon-arrow-left"></i>&nbsp;返回</a></li>
         </ul>
     </div>
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/modifyPwd" method="post" class="form-horizontal">

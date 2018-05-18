@@ -84,7 +84,7 @@
 			}
 			$("#rollOutId").val(rows[0].value);
 			$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
-				bottomText:"请选择相应的回执单文件进行上传且不能超过30M！"});
+				bottomText:"请选择相应的回执单文件进行上传且不能超过5M！"});
 		}
 		
 		function getRowData(){

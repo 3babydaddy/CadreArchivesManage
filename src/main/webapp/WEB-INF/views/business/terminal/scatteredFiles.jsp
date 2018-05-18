@@ -58,30 +58,32 @@
 		}
 		
 		var addScattered  =  function() {
+			
 			if(validateDate()){
-				$.ajax({
-	                type: "POST",//方法类型
-	                dataType: "json",//预期服务器返回的数据类型
-	                url: "${ctx}/scattereds/tblScatteredFiles/saveTerminal",//url
-	                data: $('#inputForm').serialize(),
-	                success: function (result) {
-	                    //alert(result);
-	                    //debugger;
-	                    
-	                    if(result){
-	                    	var submit = function (v, h, f) {
-	                    	    if (v == 'ok')
-	                    	    	window.location.href="${ctx}";
-	                    	    return true; //close
-	                    	};
-	                    	$.jBox.confirm("确定吗？", "提示", submit);
-	                    	
-	                    };
-	                },
-	                error : function() {
-	                    alert("异常！");
-	                }
-	            }); 
+				top.$.jBox.confirm("<span style='font-size:24px;'>确定提交吗？</span>",'系统提示',function(v,h,f){
+					if(v=='ok'){
+						$.ajax({
+        	                type: "POST",//方法类型
+        	               // dataType: "json",//预期服务器返回的数据类型
+        	                url: "${ctx}/scattereds/tblScatteredFiles/saveTerminal",//url
+        	                data: $('#inputForm').serialize(),
+        	                success: function (result) {
+        	                	if(result){
+        	                		top.$.jBox.tip("<span style='font-size:32px;'>保存成功</span>", "", {
+        	            				width: 200,
+        	            				persistent : true,
+        	            				opacity : 0
+        	            			});
+        	                    	setTimeout(function(){window.location.href="${ctx}"}, 200);
+        	                    };
+        	                },
+        	                error : function() {
+        	                	alertx("异常！");
+        	                }
+        	            });
+					}
+				});
+				top.$('.jbox-body .jbox-icon').css('top','55px');
 			}
         }
 		
@@ -145,6 +147,9 @@
 			left: -10%;
     		position: relative;
 		}
+		input[readonly]{
+			background-color: white;
+		}
 	</style>
 </head>
 <body>
@@ -167,7 +172,7 @@
 					</div>
 					<div class="fr">
 						<span class="fl" style="font-size:30px;" >移交日期：</span>
-						<input id="handOverDate" name="handOverDate" type="text" maxlength="20" class="input_2 Wdate"
+						<input id="handOverDate" name="handOverDate" type="text" readonly="readonly" maxlength="20" class="input_2 Wdate"
 										onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
 					</div>
 					<div class="clear"></div>
