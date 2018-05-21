@@ -13,6 +13,8 @@
 			$(document.body).find("input[id!='btnCancel']").each(function(){
 				$(this).attr('disabled', 'disabled');
 			});
+			
+			$("#approveAttachmentShowType").hide();
 		}
 		
 		function addRow(list, idx, tpl, row){

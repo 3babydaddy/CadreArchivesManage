@@ -13,6 +13,10 @@
 			$(document.body).find("input[id!='btnCancel'], textarea").each(function(){
 				$(this).attr('disabled', 'disabled');
 			});
+			
+			for(var i = 0; i < tblCheckPersonRowIdx; i++){
+				$("#tblRollOutPersonsList"+i+"_approveAttachmentShowType").hide()
+			}
 		}
 		
 		//生成审批单

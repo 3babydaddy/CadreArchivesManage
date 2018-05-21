@@ -43,30 +43,37 @@
 		<div class="control-group">
 			<label class="control-label">归还人：</label>
 			<div class="controls">
-				<form:input path="returnPerson" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="returnPerson" disabled="${tblGiveBack.status == '2' ? true : ''}" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">归还人照片：</label>
 			<div class="controls">
-				<sys:upImg input="photo" type="files" name="photo" value="${tblGiveBack.photo}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				<c:if test="${tblGiveBack.status ne '2'}">
+					<sys:upImg input="photo" type="files" name="photo" value="${tblGiveBack.photo}"  uploadPath="/file" selectMultiple="false" maxWidth="100" maxHeight="100" text="上传"/>
+				</c:if>
+				<c:if test="${tblGiveBack.status eq '2'}">
+					<input type="image" src="${tblGiveBack.photo}" disabled="disabled" style="width:106px;height:31px;" /> 
+				</c:if>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">经办人：</label>
 			<div class="controls">
-				<form:input path="operator" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="operator" disabled="${tblGiveBack.status == '2' ? true : ''}" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="2" maxlength="255" class="input-xlarge "/>
+				<form:textarea path="remarks" disabled="${tblGiveBack.status == '2' ? true : ''}" htmlEscape="false" rows="2" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
 		<input type="hidden" id="mainId" name="mainId" value="${tblGiveBack.mainId }" />
 		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
+			<c:if test="${tblGiveBack.status ne '2'}">
+				<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
+			</c:if>
 			<input id="btnCancel" class="btn btn-primary" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
